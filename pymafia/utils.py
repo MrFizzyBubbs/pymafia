@@ -46,21 +46,24 @@ def execute(command):
     )
 
 
-def get_property(name, return_type=str):
-    if return_type == str:
-        return km.Preferences.getString(None, name)
-    value = km.Preferences.getObject(None, name)
-    return value if return_type is None else return_type(value)
+def get_property(name, t=str):
+    if t is bool:
+        return km.Preferences.getBoolean(name)
+    if t is int:
+        return km.Preferences.getInteger(name)
+    if t is float:
+        return km.Preferences.getFloat(name)
+    return t(km.Preferences.getString(name))
 
 
 def set_property(name, value=""):
     if isinstance(value, bool):
-        return km.Preferences.setBoolean(None, name, value)
+        return km.Preferences.setBoolean(name, value)
     if isinstance(value, int):
-        return km.Preferences.setInteger(None, name, value)
+        return km.Preferences.setInteger(name, value)
     if isinstance(value, float):
-        return km.Preferences.setFloat(None, name, value)
-    return km.Preferences.setString(None, name, str(value))
+        return km.Preferences.setFloat(name, value)
+    return km.Preferences.setString(name, str(value))
 
 
 def force_continue():
