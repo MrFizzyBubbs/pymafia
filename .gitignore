@@ -1,11 +1,23 @@
-__pycache__
-ccs
-data
-images
-relay
-scripts
-sessions
-settings
-kolmafia.jar
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Prototyping
 test.ipynb
 .ipynb_checkpoints
+
+# KoLmafia
+ccs/
+chats/
+data/
+images/
+relay/
+scripts/
+sessions/
+settings/
+kolmafia.jar
+
+# Distribution / packaging
+dist/
+*.egg-info/
