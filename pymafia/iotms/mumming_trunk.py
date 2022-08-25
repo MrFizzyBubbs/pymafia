@@ -1,40 +1,41 @@
-from pymafia import ash
-from pymafia.datatypes import Item
-from pymafia.utils import get_property
-from pymafia.utils import have as _have
+import re
+from enum import IntEnum
+from typing import List
 
-item = Item("mumming trunk")
+from pymafia import ash, utils
+from pymafia.datatypes import Familiar, Item
 
-costume_choices = {
-    "meat": 0,
-    "mp": 1,
-    "musc": 2,
-    "item": 3,
-    "myst": 4,
-    "hp": 5,
-    "mox": 6,
-}
+ITEM = Item("mumming trunk")
 
 
-def have():
+class Costume(IntEnum):
+    MEAT = 0
+    MP = 1
+    MUSCLE = 2
+    ITEM = 3
+    MYST = 4
+    HP = 5
+    MOXIE = 6
+
+
+def have() -> bool:
     """Return True if the player has the mumming trunk available, False otherwise."""
-    return _have(item)
+    return utils.have(ITEM)
 
 
-def costumes_used():
+def costumes_used() -> List[Costume]:
     """Return a list of the costumes applied today."""
-    uses = [int(x) for x in get_property("_mummeryUses").split(",") if x]
-    return [name for name, choice in costume_choices.items() if choice in uses]
+    return [Costume(x) for x in utils.get_property("_mummeryUses").split(",") if x]
 
 
-def apply_costume(costume):
-    """Dress up the player's current familiar with a costume."""
+def apply_costume(familiar: Familiar, costume: Costume) -> bool:
+    """Dress up a familiar with a costume."""
     if not have():
-        raise RuntimeError("need a mumming trunk")
+        return False
     if costume in costumes_used():
-        raise RuntimeError(f"already applied the {costume!r} costume today")
-    if not ash.my_familiar():
-        raise RuntimeError("need to have a familiar to put a costume on")
+        return True  # TODO return True if costume is equipped on desired familiar
+    if not utils.have(familiar):
+        return False
 
-    choice = costume_choices[costume]
-    ash.cli_execute(f"mummery {choice}")
+    ash.use_familiar(familiar)
+    return ash.cli_execute(f"mummery {int(costume)}")

@@ -1,47 +1,45 @@
-from pymafia import ash
+from enum import Enum
+from pymafia import ash, utils
 from pymafia.datatypes import Item, Location, Monster
-from pymafia.utils import get_property
-from pymafia.utils import have as _have
 
-item = Item("protonic accelerator pack")
+ITEM = Item("protonic accelerator pack")
 
-ghosts = [
-    Monster("boneless blobghost"),
-    Monster("Emily Koops, a spooky lime"),
-    Monster("The ghost of Ebenoozer Screege"),
-    Monster("The ghost of Jim Unfortunato"),
-    Monster("The ghost of Lord Montague Spookyraven"),
-    Monster("the ghost of Monsieur Baguelle"),
-    Monster("the ghost of Oily McBindle"),
-    Monster("The ghost of Richard Cockingham"),
-    Monster("the ghost of Sam McGee"),
-    Monster('the ghost of Vanillica "Trashblossom" Gorton'),
-    Monster("The ghost of Waldo the Carpathian"),
-    Monster("The Headless Horseman"),
-    Monster("The Icewoman"),
-]
+class Ghost(Enum):
+    OILY = Monster("the ghost of Oily McBindle")
+    SKIN = Monster("boneless blobghost")
+    BAGEL = Monster("the ghost of Monsieur Baguelle")
+    HORSE = Monster("The Headless Horseman")
+    ICEWOMAN = Monster("The Icewoman")
+    SCREEGE =  Monster("The ghost of Ebenoozer Screege")
+    SRAVEN = Monster("The ghost of Lord Montague Spookyraven")
+    HIPPY = Monster('the ghost of Vanillica "Trashblossom" Gorton')
+    FLAME = Monster("the ghost of Sam McGee")
+    CENSOR = Monster("The ghost of Richard Cockingham")
+    WALDO = Monster("The ghost of Waldo the Carpathian")
+    LIME = Monster("Emily Koops, a spooky lime")
+    FORTUNADO = Monster("The ghost of Jim Unfortunato")
 
 
-def have():
+def have() -> bool:
     """Return True if the player has the protonic accelerator pack available, False otherwise."""
-    return _have(item)
+    return utils.have(ITEM)
 
 
-def ghost_location():
+def ghost_location() -> Location:
     """Return the current location of the protonic ghost."""
-    return get_property("ghostLocation", Location)
+    return utils.get_property("ghostLocation", Location)
 
 
-def streams_crossed():
+def streams_crossed() -> bool:
     """Return True if the player has crossed streams today, False otherwise."""
-    return get_property("_streamsCrossed", bool)
+    return utils.get_property("_streamsCrossed", bool)
 
 
-def cross_streams():
+def cross_streams() -> bool:
     """Cross streams with the target in preference "streamCrossDefaultTarget"."""
     if not have():
-        raise RuntimeError("need a protonic accelerator pack")
+        return False
     if streams_crossed():
-        raise RuntimeError("already crossed streams today")
+        return True
 
-    ash.cli_execute("crossstreams")
+    return ash.cli_execute("crossstreams")

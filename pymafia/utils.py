@@ -86,6 +86,10 @@ def set_property(name, value=""):
     return km.Preferences.setString(name, str(value))
 
 
+def set_choice(choice, value):
+    set_property(f"choiceAdventure{choice}", value)
+
+
 def have(thing, quantity=1):
     if isinstance(thing, Effect):
         return ash.have_effect(thing) >= quantity

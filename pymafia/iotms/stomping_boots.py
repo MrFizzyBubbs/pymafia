@@ -1,21 +1,19 @@
-from pymafia import ash
+from pymafia import ash, utils
 from pymafia.datatypes import Familiar
-from pymafia.utils import get_property
-from pymafia.utils import have as _have
 
-familiar = Familiar("Pair of Stomping Boots")
+FAMILIAR = Familiar("Pair of Stomping Boots")
 
 
-def have():
+def have() -> bool:
     """Return True if the player has the Pair of Stomping Boots in their terrarium, False otherwise."""
-    return _have(familiar)
+    return utils.have(FAMILIAR)
 
 
-def runaways_used():
+def runaways_used() -> int:
     """Return the number of free bander runaways used today."""
-    return get_property("banderRunaways", int)
+    return utils.get_property("banderRunaways", int)
 
 
-def runaways_left():
+def runaways_left() -> int:
     """Return the total number of free bander runaways the player can get from their Stomping Boots."""
-    return (ash.familiar_weight(familiar) + ash.weight_adjustment()) // 5
+    return (ash.familiar_weight(FAMILIAR) + ash.weight_adjustment()) // 5

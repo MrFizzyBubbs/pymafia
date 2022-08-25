@@ -1,37 +1,42 @@
-from pymafia import ash
+from pymafia import ash, utils
 from pymafia.combat import Macro
-from pymafia.datatypes import Skill
-from pymafia.utils import get_property
-from pymafia.utils import have as _have
-from pymafia.utils import in_choice, in_combat
+from pymafia.datatypes import Location, Monster, Skill
 
-passive = Skill("Comprehensive Cartography")
-skill = Skill("Map the Monsters")
+PASSIVE = Skill("Comprehensive Cartography")
+SKILL = Skill("Map the Monsters")
 
 
-def have():
+def have() -> bool:
     """Return True if the player has the Comprehensive Cartography skill, False otherwise."""
-    return _have(passive)
+    return utils.have(PASSIVE)
 
 
-def monsters_mapped():
+def monsters_mapped() -> bool:
     """Return the number of Map the Monsters skill uses today."""
-    return get_property("_monstersMapped", int)
+    return utils.get_property("_monstersMapped", int)
 
 
-def map_monster(location, monster, macro=Macro()):
+def map_monster(location: Location, monster: Monster, macro: Macro = Macro()) -> bool:
     """Map to a monster in a location."""
     if not have():
-        raise RuntimeError("need the Comprehensive Cartography skill")
+        return False
     if monsters_mapped() >= 3:
-        raise RuntimeError("already mapped three monsters today")
+        return False
+    if not ash.can_adventure(location):
+        return False
 
-    if not get_property("mappingMonsters"):
-        ash.use_skill(skill)
-    ash.visit_url(location.url)
-    if not in_choice(1435):
-        raise RuntimeError("failed to encounter the Leading Yourself Right to Them noncombat adventure")  # fmt: skip
-    ash.visit_url(f"choice.php?pwd=&whichchoice=1435&option=1&heyscriptswhatsupwinkwink={monster.id}")  # fmt: skip
-    if not in_combat(monster):
-        raise RuntimeError(f"failed to start fight with {monster!r}")
-    ash.run_combat(macro)
+    if not utils.get_property("mappingMonsters", bool):
+        ash.use_skill(SKILL)
+
+    turns = ash.my_turncount()
+    while not utils.in_combat():
+        if ash.my_turncount() > turns:
+            raise RuntimeError("Map the Monsters unsuccessful?")
+        ash.visit_url(location.url)
+        if utils.in_choice(1435):
+            ash.run_choice(1, False, f"heyscriptswhatsupwinkwink={monster.id}")
+            ash.run_combat(macro)
+            return True
+        else:
+            ash.run_choice(-1, False)
+    return False

@@ -1,9 +1,25 @@
-from pymafia import ash
-from pymafia.datatypes import Element, Item, Stat
-from pymafia.utils import have as _have
+from enum import Enum, IntEnum
 
-item = Item("portable pantogram")
-pants = Item("pantogram pants")
+from pymafia import ash, utils
+from pymafia.datatypes import Element, Item, Stat
+
+ITEM = Item("portable pantogram")
+PANTS = Item("pantogram pants")
+
+
+class PantogramAlignment(IntEnum):
+    MUSCLE = 1
+    MYSTICALITY = 2
+    MOXIE = 3
+
+
+class PantogramElement(IntEnum):
+    HOT = 1
+    COLD = 2
+    SPOOKY = 3
+    SLEAZE = 4
+    STENCH = 5
+
 
 alignments = {Stat.MUSCLE: 1, Stat.MYSTICALITY: 2, Stat.MOXIE: 3}
 elements = {
@@ -55,34 +71,36 @@ middle_sacrifices = {
 
 def have():
     """Return True if the player has the portable pantogram available, False otherwise."""
-    return _have(item)
+    return utils.have(ITEM)
 
 
 def have_pants():
     """Return True if the player has the pantogram pants available today, False otherwise."""
-    return _have(pants)
+    return utils.have(PANTS)
 
 
 def summon_pants(alignment, element, left, right, middle):
     """Summon pantogram pants."""
-    if not have() or have_pants():
+    if not have():
         return False
+    if have_pants():
+        return False  # TODO check enchantments
 
     m = alignments[alignment]
     e = elements[element]
 
     sacrifice, quantity = left_sacrifices[left]
-    if isinstance(sacrifice, Item) and not _have(sacrifice, quantity):
+    if isinstance(sacrifice, Item) and not utils.have(sacrifice, quantity):
         return False
     s1 = f"{int(sacrifice)},{quantity}"
 
     sacrifice, quantity = right_sacrifices[right]
-    if isinstance(sacrifice, Item) and not _have(sacrifice, quantity):
+    if isinstance(sacrifice, Item) and not utils.have(sacrifice, quantity):
         return False
     s2 = f"{int(sacrifice)},{quantity}"
 
     sacrifice, quantity = middle_sacrifices[middle]
-    if isinstance(sacrifice, Item) and not _have(sacrifice, quantity):
+    if isinstance(sacrifice, Item) and not utils.have(sacrifice, quantity):
         return False
     s3 = f"{int(sacrifice)},{quantity}"
 

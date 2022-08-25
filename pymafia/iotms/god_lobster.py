@@ -1,49 +1,50 @@
-from pymafia import ash
+from enum import Enum, IntEnum
+
+from pymafia import ash, utils
 from pymafia.combat import Macro
 from pymafia.datatypes import Familiar, Item
-from pymafia.utils import get_property
-from pymafia.utils import have as _have
 
-familiar = Familiar("God Lobster")
-
-reward_choices = {"regalia": 1, "blessing": 2, "experience": 3}
-regalia = [
-    Item("God Lobster's Scepter"),
-    Item("God Lobster's Ring"),
-    Item("God Lobster's Rod"),
-    Item("God Lobster's Robe"),
-    Item("God Lobster's Crown"),
-]
+FAMILIAR = Familiar("God Lobster")
 
 
-def have():
+class Reward(IntEnum):
+    REGALIA = 1
+    BLESSING = 2
+    EXPERIENCE = 3
+
+
+class Regalia(Enum):
+    SCEPTER = Item("God Lobster's Scepter")
+    RING = Item("God Lobster's Ring")
+    ROD = Item("God Lobster's Rod")
+    ROBE = Item("God Lobster's Robe")
+    CROWN = Item("God Lobster's Crown")
+
+
+def have() -> bool:
     """Return True if the player has the God Lobster in their terrarium, False otherwise."""
-    return _have(familiar)
+    return utils.have(FAMILIAR)
 
 
-def fights_today():
+def fights_today() -> int:
     """Return the number of God Lobster fights used today."""
-    return get_property("godLobsterFights", int)
+    return utils.get_property("godLobsterFights", int)
 
 
-def fights_left():
+def fights_left() -> int:
     """Return the number of God Lobster fights remaining today."""
     return 3 - fights_today()
 
 
-def fight(reward, macro=Macro()):
+def fight(reward: Reward, macro: Macro = Macro()) -> bool:
     """Fight the God Lobster and choose a reward."""
     if not have():
-        raise RuntimeError("need a God Lobster")
+        return False
     if fights_left() < 1:
-        raise RuntimeError("out of God Lobster fights")
+        return False
 
-    choice = reward_choices[reward]
-    ash.use_familiar(familiar)
-    initial_fights = fights_today()
+    ash.use_familiar(FAMILIAR)
     ash.visit_url("main.php?fightgodlobster=1")
     ash.run_combat(macro)
-    ash.run_choice(choice)
-
-    if fights_today() != initial_fights + 1:
-        raise RuntimeError("failed to fight the God Lobster")
+    ash.run_choice(int(reward))
+    return True

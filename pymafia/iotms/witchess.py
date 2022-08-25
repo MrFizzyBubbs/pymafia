@@ -1,56 +1,51 @@
-from pymafia import ash
+from enum import Enum
+
+from pymafia import ash, utils
 from pymafia.combat import Macro
 from pymafia.datatypes import Item, Monster
-from pymafia.utils import get_property, in_choice, in_combat
 
-item = Item("Witchess Set")
-
-pieces = [
-    Monster("Witchess Pawn"),
-    Monster("Witchess Knight"),
-    Monster("Witchess Bishop"),
-    Monster("Witchess Rook"),
-    Monster("Witchess Ox"),
-    Monster("Witchess King"),
-    Monster("Witchess Witch"),
-    Monster("Witchess Queen"),
-]
+ITEM = Item("Witchess Set")
 
 
-def have():
+class Piece(Enum):
+    PAWN = Monster("Witchess Pawn")
+    KNIGHT = Monster("Witchess Knight")
+    BISHOP = Monster("Witchess Bishop")
+    ROOK = Monster("Witchess Rook")
+    OX = Monster("Witchess Ox")
+    KING = Monster("Witchess King")
+    WITCH = Monster("Witchess Witch")
+    QUEEN = Monster("Witchess Queen")
+
+
+def have() -> bool:
     """Return True if the player has the Witchess Set in their campground, False otherwise."""
-    return item in ash.get_campground()
+    return ITEM in ash.get_campground()
 
 
-def fights_today():
+def fights_today() -> int:
     """Return the number of Witchess fights used today."""
-    return get_property("_witchessFights", int)
+    return utils.get_property("_witchessFights", int)
 
 
-def fights_left():
+def fights_left() -> int:
     """Return the number of Witchess fights left today."""
     return 5 - fights_today()
 
 
-def fight(piece, macro=Macro()):
+def fight(piece: Piece, macro: Macro = Macro()) -> bool:
     """Fight a Witchess piece."""
     if not have():
-        raise RuntimeError("need a Witchess Set installed")
+        return False
     if fights_left() < 1:
-        raise RuntimeError("out of Witchess fights")
-    if piece not in pieces:
-        raise ValueError(f"unknown piece: {piece!r}")
+        return False
 
     ash.visit_url("campground.php?action=witchess")
-    if not in_choice(1181):
-        raise RuntimeError("failed to open Witchess")
     ash.run_choice(1)
-    if not in_choice(1182):
-        raise RuntimeError("failed to visit shrink ray")
     ash.visit_url(
-        f"choice.php?option=1&pwd={ash.my_hash()}&whichchoice=1182&piece={piece.id}",
-        False,
+        f"choice.php?option=1&pwd&whichchoice=1182&piece={piece.value.id}", False,
     )
-    if not in_combat(piece):
-        raise RuntimeError("failed to start fight")
+    if not utils.in_combat(piece):
+        return False
     ash.run_combat(macro)
+    return True

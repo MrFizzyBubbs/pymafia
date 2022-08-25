@@ -1,47 +1,45 @@
-from pymafia import ash
+from enum import IntEnum
+
+from pymafia import ash, utils
 from pymafia.datatypes import Location
-from pymafia.utils import get_property
 
-location = Location("The X-32-F Combat Training Snowman")
-
-setting_choices = {
-    "MUSCLE": 1,
-    "MYSTICALITY": 2,
-    "MOXIE": 3,
-    "TOURNAMENT": 4,
-}
+LOCATION = Location("The X-32-F Combat Training Snowman")
 
 
-def have():
+class Setting(IntEnum):
+    MUSCLE = 1
+    MYSTICALITY = 2
+    MOXIE = 3
+    TOURNAMENT = 4
+
+
+def have() -> bool:
     """Return True if the player has The Snojo available, False otherwise"""
-    return get_property("snojoAvailable", bool)
+    return utils.get_property("snojoAvailable", bool)
 
 
-def setting():
+def current_setting() -> Setting:
     """Return the current snojo setting."""
-    return get_property("snojoSetting")
+    return Setting[utils.get_property("snojoSetting")]
 
 
-def free_fights_today():
+def free_fights_today() -> int:
     """Return the number of free snojo fights used today."""
-    return get_property("_snojoFreeFights", int)
+    return utils.get_property("_snojoFreeFights", int)
 
 
-def free_fights_left():
+def free_fights_left() -> int:
     """Return the number of free snojo fights left today."""
     return 10 - free_fights_today()
 
 
-def change_setting(new_setting):
+def change_setting(setting: Setting) -> bool:
     """Change the snojo setting."""
     if not have():
-        raise RuntimeError("need access to The Snojo")
-    if new_setting == setting():
-        return
+        return False
+    if current_setting() is setting:
+        return True
 
-    choice = setting_choices[new_setting]
     ash.visit_url("place.php?whichplace=snojo&action=snojo_controller")
-    ash.run_choice(choice)
-
-    if setting() != new_setting:
-        raise RuntimeError("failed to change snojo setting")
+    ash.run_choice(int(setting))
+    return True

@@ -1,40 +1,39 @@
-from pymafia import ash
+from enum import IntEnum
+
+from pymafia import ash, utils
 from pymafia.datatypes import Item
-from pymafia.utils import get_property
-from pymafia.utils import have as _have
 
-item = Item("Fourth of May Cosplay Saber")
-upgrade_choices = {"mp": 1, "ml": 2, "resistance": 3, "familiar": 4}
+ITEM = Item("Fourth of May Cosplay Saber")
 
 
-def have():
+class Upgrade(IntEnum):
+    NONE = 0
+    MP = 1
+    ML = 2
+    RESISTANCE = 3
+    FAMILIAR = 4
+
+
+def have() -> bool:
     """Return True if the player has the Fourth of May Cosplay Saber available, False otherwise."""
-    return _have(item)
+    return utils.have(ITEM)
 
 
-def current_upgrade():
+def current_upgrade() -> Upgrade:
     """Return the current Fourth of May Cosplay Saber upgrade."""
-    mod = get_property("_saberMod", int)
-    for name, choice in upgrade_choices.items():
-        if choice == mod:
-            return name
-    return None
+    return Upgrade(utils.get_property("_saberMod", int))
 
 
-def is_upgraded():
+def is_upgraded() -> bool:
     """Return True if the Fourth of May Cosplay Saber has been upgraded today, False otherwise."""
-    return current_upgrade() is not None
+    return current_upgrade() is not Upgrade.NONE
 
 
-def upgrade(new_upgrade):
+def upgrade(new_upgrade: Upgrade) -> bool:
     """Upgrade the Fourth of May Cosplay Saber."""
     if not have():
-        raise RuntimeError("need a Fourth of May Cosplay Saber")
-    if is_upgraded() and current_upgrade() == new_upgrade:
-        return
+        return False
     if is_upgraded():
-        raise RuntimeError("already upgraded the saber today")
-    if new_upgrade not in upgrade_choices:
-        raise ValueError(f"unknown upgrade: {new_upgrade!r}")
+        return current_upgrade() == new_upgrade
 
-    ash.cli_execute(f"saber {new_upgrade}")
+    return ash.cli_execute(f"saber {new_upgrade.name.lower()}")
