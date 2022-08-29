@@ -2,7 +2,7 @@ import json
 import os
 import re
 import sys
-import urllib
+import urllib.request
 import zipfile
 
 import jnius_config
