@@ -13,6 +13,9 @@ pyjnius = "^1.4.2"
 
 [tool.poetry.dev-dependencies]
 ipykernel = "^6.15.1"
+black = "^22.6.0"
+isort = "^5.10.1"
+docformatter = "^1.5.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

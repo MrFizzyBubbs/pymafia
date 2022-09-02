@@ -1,8 +1,9 @@
 from enum import IntEnum
 
-from pymafia import ash, utils
+from pymafia import ash
 from pymafia.combat import Macro
 from pymafia.datatypes import Location
+from pymafia.property import get_property, set_property
 
 LOCATION = Location("The Tunnel of L.O.V.E.")
 
@@ -31,12 +32,12 @@ class LOVItem(IntEnum):
 
 def have() -> bool:
     """Return True if the player has The Tunnel of L.O.V.E available, False otherwise."""
-    return utils.get_property("loveTunnelAvailable", bool)
+    return get_property("loveTunnelAvailable", bool)
 
 
 def is_used() -> bool:
     """Return True if The Tunnel of L.O.V.E has been used today, False otherwise."""
-    return utils.get_property("_loveTunnelUsed", bool)
+    return get_property("_loveTunnelUsed", bool)
 
 
 def fight_all(
@@ -48,11 +49,11 @@ def fight_all(
     if is_used():
         return True
 
-    utils.set_property("choiceAdventure1222", 1)  # Entrance
-    utils.set_property("choiceAdventure1223", 1)  # Fight LOV Enforcer
-    utils.set_property("choiceAdventure1224", int(equipment))
-    utils.set_property("choiceAdventure1225", 1)  # Fight LOV Engineer
-    utils.set_property("choiceAdventure1226", int(effect))
-    utils.set_property("choiceAdventure1227", 1)  # Fight LOV Equivocator
-    utils.set_property("choiceAdventure1228", int(item))
+    set_property("choiceAdventure1222", 1)  # Entrance
+    set_property("choiceAdventure1223", 1)  # Fight LOV Enforcer
+    set_property("choiceAdventure1224", int(equipment))
+    set_property("choiceAdventure1225", 1)  # Fight LOV Engineer
+    set_property("choiceAdventure1226", int(effect))
+    set_property("choiceAdventure1227", 1)  # Fight LOV Equivocator
+    set_property("choiceAdventure1228", int(item))
     return ash.adv1(LOCATION, -1, macro)

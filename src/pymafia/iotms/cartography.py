@@ -1,6 +1,7 @@
-from pymafia import ash, utils
+from pymafia import ash, player
 from pymafia.combat import Macro
 from pymafia.datatypes import Location, Monster, Skill
+from pymafia.property import get_property
 
 PASSIVE = Skill("Comprehensive Cartography")
 SKILL = Skill("Map the Monsters")
@@ -8,12 +9,12 @@ SKILL = Skill("Map the Monsters")
 
 def have() -> bool:
     """Return True if the player has the Comprehensive Cartography skill, False otherwise."""
-    return utils.have(PASSIVE)
+    return player.have(PASSIVE)
 
 
 def monsters_mapped() -> bool:
     """Return the number of Map the Monsters skill uses today."""
-    return utils.get_property("_monstersMapped", int)
+    return get_property("_monstersMapped", int)
 
 
 def map_monster(location: Location, monster: Monster, macro: Macro = Macro()) -> bool:
@@ -25,15 +26,15 @@ def map_monster(location: Location, monster: Monster, macro: Macro = Macro()) ->
     if not ash.can_adventure(location):
         return False
 
-    if not utils.get_property("mappingMonsters", bool):
+    if not get_property("mappingMonsters", bool):
         ash.use_skill(SKILL)
 
     turns = ash.my_turncount()
-    while not utils.in_combat():
+    while not player.in_combat():
         if ash.my_turncount() > turns:
             raise RuntimeError("Map the Monsters unsuccessful?")
         ash.visit_url(location.url)
-        if utils.in_choice(1435):
+        if player.in_choice(1435):
             ash.run_choice(1, False, f"heyscriptswhatsupwinkwink={monster.id}")
             ash.run_combat(macro)
             return True

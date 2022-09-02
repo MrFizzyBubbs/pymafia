@@ -1,7 +1,8 @@
 from enum import Enum
 
-from pymafia import ash, utils
+from pymafia import ash, player
 from pymafia.datatypes import Item
+from pymafia.property import get_property
 
 ITEM = Item("SongBoom™ BoomBox")
 
@@ -17,17 +18,17 @@ class SongboomSong(str, Enum):
 
 def have() -> bool:
     """Return True if the player has the SongBoom™ BoomBox available, False otherwise."""
-    return utils.have(ITEM)
+    return player.have(ITEM)
 
 
 def current_song() -> SongboomSong:
     """Return the current SongBoom™ Boombox song."""
-    return SongboomSong[utils.get_property("boomBoxSong")]
+    return SongboomSong[get_property("boomBoxSong")]
 
 
 def song_changes_left() -> int:
     """Return the number of SongBoom™ Boombox song changes left today."""
-    return utils.get_property("_boomBoxSongsLeft", int)
+    return get_property("_boomBoxSongsLeft", int)
 
 
 def set_song(song: SongboomSong) -> bool:
@@ -44,4 +45,4 @@ def set_song(song: SongboomSong) -> bool:
 
 def drop_progress() -> int:
     """Return the progress to next SongBoom™ Boombox drop (e.g. gathered meat-clip)."""
-    return utils.get_property("_boomBoxFights", int)
+    return get_property("_boomBoxFights", int)

@@ -5,7 +5,6 @@ from . import (
     cosplay_saber,
     crimbo_shrub,
     god_lobster,
-    kramco,
     love_tunnel,
     mumming_trunk,
     pantogram,

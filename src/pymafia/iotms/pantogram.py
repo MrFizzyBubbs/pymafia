@@ -1,6 +1,6 @@
-from enum import Enum, IntEnum
+from enum import IntEnum
 
-from pymafia import ash, utils
+from pymafia import ash, player
 from pymafia.datatypes import Element, Item, Stat
 
 ITEM = Item("portable pantogram")
@@ -71,12 +71,12 @@ middle_sacrifices = {
 
 def have():
     """Return True if the player has the portable pantogram available, False otherwise."""
-    return utils.have(ITEM)
+    return player.have(ITEM)
 
 
 def have_pants():
     """Return True if the player has the pantogram pants available today, False otherwise."""
-    return utils.have(PANTS)
+    return player.have(PANTS)
 
 
 def summon_pants(alignment, element, left, right, middle):
@@ -90,17 +90,17 @@ def summon_pants(alignment, element, left, right, middle):
     e = elements[element]
 
     sacrifice, quantity = left_sacrifices[left]
-    if isinstance(sacrifice, Item) and not utils.have(sacrifice, quantity):
+    if isinstance(sacrifice, Item) and not player.have(sacrifice, quantity):
         return False
     s1 = f"{int(sacrifice)},{quantity}"
 
     sacrifice, quantity = right_sacrifices[right]
-    if isinstance(sacrifice, Item) and not utils.have(sacrifice, quantity):
+    if isinstance(sacrifice, Item) and not player.have(sacrifice, quantity):
         return False
     s2 = f"{int(sacrifice)},{quantity}"
 
     sacrifice, quantity = middle_sacrifices[middle]
-    if isinstance(sacrifice, Item) and not utils.have(sacrifice, quantity):
+    if isinstance(sacrifice, Item) and not player.have(sacrifice, quantity):
         return False
     s3 = f"{int(sacrifice)},{quantity}"
 

@@ -1,8 +1,11 @@
 from enum import Enum
-from pymafia import ash, utils
+
+from pymafia import ash, player
 from pymafia.datatypes import Item, Location, Monster
+from pymafia.property import get_property
 
 ITEM = Item("protonic accelerator pack")
+
 
 class Ghost(Enum):
     OILY = Monster("the ghost of Oily McBindle")
@@ -10,7 +13,7 @@ class Ghost(Enum):
     BAGEL = Monster("the ghost of Monsieur Baguelle")
     HORSE = Monster("The Headless Horseman")
     ICEWOMAN = Monster("The Icewoman")
-    SCREEGE =  Monster("The ghost of Ebenoozer Screege")
+    SCREEGE = Monster("The ghost of Ebenoozer Screege")
     SRAVEN = Monster("The ghost of Lord Montague Spookyraven")
     HIPPY = Monster('the ghost of Vanillica "Trashblossom" Gorton')
     FLAME = Monster("the ghost of Sam McGee")
@@ -22,17 +25,17 @@ class Ghost(Enum):
 
 def have() -> bool:
     """Return True if the player has the protonic accelerator pack available, False otherwise."""
-    return utils.have(ITEM)
+    return player.have(ITEM)
 
 
 def ghost_location() -> Location:
     """Return the current location of the protonic ghost."""
-    return utils.get_property("ghostLocation", Location)
+    return get_property("ghostLocation", Location)
 
 
 def streams_crossed() -> bool:
     """Return True if the player has crossed streams today, False otherwise."""
-    return utils.get_property("_streamsCrossed", bool)
+    return get_property("_streamsCrossed", bool)
 
 
 def cross_streams() -> bool:

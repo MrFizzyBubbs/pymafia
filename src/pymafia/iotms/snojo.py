@@ -1,7 +1,8 @@
 from enum import IntEnum
 
-from pymafia import ash, utils
+from pymafia import ash
 from pymafia.datatypes import Location
+from pymafia.property import get_property
 
 LOCATION = Location("The X-32-F Combat Training Snowman")
 
@@ -15,17 +16,17 @@ class Setting(IntEnum):
 
 def have() -> bool:
     """Return True if the player has The Snojo available, False otherwise"""
-    return utils.get_property("snojoAvailable", bool)
+    return get_property("snojoAvailable", bool)
 
 
 def current_setting() -> Setting:
     """Return the current snojo setting."""
-    return Setting[utils.get_property("snojoSetting")]
+    return Setting[get_property("snojoSetting")]
 
 
 def free_fights_today() -> int:
     """Return the number of free snojo fights used today."""
-    return utils.get_property("_snojoFreeFights", int)
+    return get_property("_snojoFreeFights", int)
 
 
 def free_fights_left() -> int:

@@ -1,7 +1,8 @@
 from enum import IntEnum
 
-from pymafia import ash, utils
+from pymafia import ash, player
 from pymafia.datatypes import Item
+from pymafia.property import get_property
 
 ITEM = Item("Fourth of May Cosplay Saber")
 
@@ -16,12 +17,12 @@ class Upgrade(IntEnum):
 
 def have() -> bool:
     """Return True if the player has the Fourth of May Cosplay Saber available, False otherwise."""
-    return utils.have(ITEM)
+    return player.have(ITEM)
 
 
 def current_upgrade() -> Upgrade:
     """Return the current Fourth of May Cosplay Saber upgrade."""
-    return Upgrade(utils.get_property("_saberMod", int))
+    return Upgrade(get_property("_saberMod", int))
 
 
 def is_upgraded() -> bool:

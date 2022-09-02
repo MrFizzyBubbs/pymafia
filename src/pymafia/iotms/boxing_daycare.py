@@ -1,16 +1,17 @@
-from pymafia import ash, utils
+from pymafia import ash
+from pymafia.property import get_property
 
 
 def have() -> bool:
     """Return True if the player has the Boxing Daycare open, False otherwise."""
-    return utils.get_property("daycareOpen", bool)
+    return get_property("daycareOpen", bool)
 
 
 def daydream() -> bool:
     """Have a Boxing Daydream."""
     if not have():
         return False
-    if utils.get_property("_daycareNap", bool):
+    if get_property("_daycareNap", bool):
         return True
 
     return ash.cli_execute("daycare item")
@@ -20,7 +21,7 @@ def free_scavenge() -> bool:
     """Free scavenge for gym equipment."""
     if not have():
         return False
-    if utils.get_property("_daycareGymScavenges", int) > 0:
+    if get_property("_daycareGymScavenges", int) > 0:
         return True
 
     ash.visit_url("place.php?whichplace=town_wrong&action=townwrong_boxingdaycare")

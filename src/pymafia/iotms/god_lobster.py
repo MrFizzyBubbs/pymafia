@@ -1,8 +1,9 @@
 from enum import Enum, IntEnum
 
-from pymafia import ash, utils
+from pymafia import ash, player
 from pymafia.combat import Macro
 from pymafia.datatypes import Familiar, Item
+from pymafia.property import get_property
 
 FAMILIAR = Familiar("God Lobster")
 
@@ -23,12 +24,12 @@ class Regalia(Enum):
 
 def have() -> bool:
     """Return True if the player has the God Lobster in their terrarium, False otherwise."""
-    return utils.have(FAMILIAR)
+    return player.have(FAMILIAR)
 
 
 def fights_today() -> int:
     """Return the number of God Lobster fights used today."""
-    return utils.get_property("godLobsterFights", int)
+    return get_property("godLobsterFights", int)
 
 
 def fights_left() -> int:

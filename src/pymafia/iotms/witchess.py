@@ -1,8 +1,9 @@
 from enum import Enum
 
-from pymafia import ash, utils
+from pymafia import ash, player
 from pymafia.combat import Macro
 from pymafia.datatypes import Item, Monster
+from pymafia.property import get_property
 
 ITEM = Item("Witchess Set")
 
@@ -25,7 +26,7 @@ def have() -> bool:
 
 def fights_today() -> int:
     """Return the number of Witchess fights used today."""
-    return utils.get_property("_witchessFights", int)
+    return get_property("_witchessFights", int)
 
 
 def fights_left() -> int:
@@ -43,9 +44,10 @@ def fight(piece: Piece, macro: Macro = Macro()) -> bool:
     ash.visit_url("campground.php?action=witchess")
     ash.run_choice(1)
     ash.visit_url(
-        f"choice.php?option=1&pwd&whichchoice=1182&piece={piece.value.id}", False,
+        f"choice.php?option=1&pwd&whichchoice=1182&piece={piece.value.id}",
+        False,
     )
-    if not utils.in_combat(piece):
+    if not player.in_combat(piece):
         return False
     ash.run_combat(macro)
     return True

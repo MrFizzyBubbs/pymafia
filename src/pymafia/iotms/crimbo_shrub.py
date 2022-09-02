@@ -1,8 +1,9 @@
 from enum import IntEnum
 from typing import Tuple
 
-from pymafia import ash, utils
+from pymafia import ash, player
 from pymafia.datatypes import Familiar, Item
+from pymafia.property import get_property
 
 FAMILIAR = Familiar("Crimbo Shrub")
 DECORATIONS = Item("box of old Crimbo decorations")
@@ -37,21 +38,21 @@ class Gift(IntEnum):
 
 def have() -> bool:
     """Return True is the player has the Crimbo Shrub in their terrarium, False otherwise."""
-    return utils.have(FAMILIAR)
+    return player.have(FAMILIAR)
 
 
 def is_decorated() -> bool:
     """Return True if the Crimbo Shrub has been decorated today, False otherwise."""
-    return utils.get_property("_shrubDecorated", bool)
+    return get_property("_shrubDecorated", bool)
 
 
 def current_decorations() -> Tuple[Topper, Lights, Garland, Gift]:
     """Current Crimbo Shrub decorations."""
     return (
-        Topper(utils.get_property("shrubTopper")),
-        Lights(utils.get_property("shrubLights")),
-        Garland(utils.get_property("shrubGarland")),
-        Gift(utils.get_property("shrubGifts")),
+        Topper(get_property("shrubTopper")),
+        Lights(get_property("shrubLights")),
+        Garland(get_property("shrubGarland")),
+        Gift(get_property("shrubGifts")),
     )
 
 
@@ -62,7 +63,7 @@ def decorate(topper: Topper, lights: Lights, garland: Garland, gift: Gift) -> bo
     if is_decorated():
         return current_decorations() == (topper, lights, garland, gift)
 
-    if not utils.have(DECORATIONS):
+    if not player.have(DECORATIONS):
         ash.use_familiar(FAMILIAR)
     ash.visit_url(f"inv_use.php?pwd=&which=99&whichitem={DECORATIONS.id}")
     ash.visit_url(

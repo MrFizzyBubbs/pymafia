@@ -2,8 +2,9 @@ import re
 from enum import IntEnum
 from typing import List
 
-from pymafia import ash, utils
+from pymafia import ash, player
 from pymafia.datatypes import Familiar, Item
+from pymafia.property import get_property
 
 ITEM = Item("mumming trunk")
 
@@ -20,12 +21,12 @@ class Costume(IntEnum):
 
 def have() -> bool:
     """Return True if the player has the mumming trunk available, False otherwise."""
-    return utils.have(ITEM)
+    return player.have(ITEM)
 
 
 def costumes_used() -> List[Costume]:
     """Return a list of the costumes applied today."""
-    return [Costume(x) for x in utils.get_property("_mummeryUses").split(",") if x]
+    return [Costume(x) for x in get_property("_mummeryUses").split(",") if x]
 
 
 def apply_costume(familiar: Familiar, costume: Costume) -> bool:
@@ -34,7 +35,7 @@ def apply_costume(familiar: Familiar, costume: Costume) -> bool:
         return False
     if costume in costumes_used():
         return True  # TODO return True if costume is equipped on desired familiar
-    if not utils.have(familiar):
+    if not player.have(familiar):
         return False
 
     ash.use_familiar(familiar)
