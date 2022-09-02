@@ -1,5 +1,4 @@
 import pymafia.kolmafia as km
-from pymafia import ash
 
 
 class Servant:
@@ -44,6 +43,8 @@ class Servant:
 
     @classmethod
     def all(cls):
+        from pymafia import ash
+
         values = km.DataTypes.SERVANT_TYPE.allValues()
         return sorted(ash.to_python(values), key=lambda x: x.id)
 

@@ -1,7 +1,6 @@
 from enum import Enum
 
 import pymafia.kolmafia as km
-from pymafia import ash, datatypes
 
 
 class ItemQuality(Enum):
@@ -58,6 +57,8 @@ class Item:
 
     @classmethod
     def all(cls):
+        from pymafia import ash
+
         values = km.DataTypes.ITEM_TYPE.allValues()
         return ash.to_python(values)
 
@@ -261,14 +262,18 @@ class Item:
     @property
     def seller(self):
         """Return which Coinmaster sells this Item, if any."""
+        from . import Coinmaster
+
         data = km.CoinmasterRegistry.findSeller(self.id)
-        return None if data is None else datatypes.Coinmaster(data.getMaster())
+        return None if data is None else Coinmaster(data.getMaster())
 
     @property
     def buyer(self):
         """Return which Coinmaster buys this Item, if any."""
+        from . import Coinmaster
+
         data = km.CoinmasterRegistry.findBuyer(self.id)
-        return None if data is None else datatypes.Coinmaster(data.getMaster())
+        return None if data is None else Coinmaster(data.getMaster())
 
     @property
     def name_length(self):
@@ -278,7 +283,9 @@ class Item:
     @property
     def noob_skill(self):
         """Return the noob Skill granted by absorbing this Item."""
-        return datatypes.Skill(km.ItemDatabase.getNoobSkillId(self.id)) or None
+        from . import Skill
+
+        return Skill(km.ItemDatabase.getNoobSkillId(self.id)) or None
 
     @property
     def tcrs_name(self):

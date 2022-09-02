@@ -1,5 +1,4 @@
 import pymafia.kolmafia as km
-from pymafia import ash, datatypes
 
 
 class Skill:
@@ -40,6 +39,8 @@ class Skill:
 
     @classmethod
     def all(cls):
+        from pymafia import ash
+
         values = km.DataTypes.SKILL_TYPE.allValues()
         return sorted(ash.to_python(values), key=lambda x: x.id)
 
@@ -61,7 +62,9 @@ class Skill:
 
     @property
     def class_(self):
-        return datatypes.Class(km.SkillDatabase.getSkillCategory(self.id) or None)
+        from . import Class
+
+        return Class(km.SkillDatabase.getSkillCategory(self.id) or None)
 
     @property
     def libram(self):

@@ -1,5 +1,4 @@
 import pymafia.kolmafia as km
-from pymafia import ash, datatypes
 
 
 class Location:
@@ -46,6 +45,8 @@ class Location:
 
     @classmethod
     def all(cls):
+        from pymafia import ash
+
         values = km.DataTypes.LOCATION_TYPE.allValues()
         return sorted(ash.to_python(values), key=lambda x: x.id)
 
@@ -82,10 +83,12 @@ class Location:
 
     @property
     def bounty(self):
+        from . import Bounty
+
         if not self:
             return None
         bounty = km.AdventureDatabase.getBounty(self.adventure)
-        return None if bounty is None else datatypes.Bounty(bounty.getName())
+        return None if bounty is None else Bounty(bounty.getName())
 
     @property
     def combat_queue(self):

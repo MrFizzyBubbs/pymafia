@@ -1,7 +1,6 @@
 from enum import IntEnum
 
 import pymafia.kolmafia as km
-from pymafia import ash
 
 
 class EffectQuality(IntEnum):
@@ -49,6 +48,8 @@ class Effect:
 
     @classmethod
     def all(cls):
+        from pymafia import ash
+
         values = km.DataTypes.EFFECT_TYPE.allValues()
         return sorted(ash.to_python(values), key=lambda x: x.id)
 

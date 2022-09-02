@@ -1,5 +1,4 @@
 import pymafia.kolmafia as km
-from pymafia import ash, datatypes
 
 
 class Thrall:
@@ -44,6 +43,8 @@ class Thrall:
 
     @classmethod
     def all(cls):
+        from pymafia import ash
+
         values = km.DataTypes.THRALL_TYPE.allValues()
         return sorted(ash.to_python(values), key=lambda x: x.id)
 
@@ -65,7 +66,9 @@ class Thrall:
 
     @property
     def skill(self):
-        return datatypes.Skill(self.data[3]) if self else None
+        from . import Skill
+
+        return Skill(self.data[3]) if self else None
 
     @property
     def current_modifiers(self):

@@ -1,5 +1,4 @@
 import pymafia.kolmafia as km
-from pymafia import ash, datatypes
 
 Integer = km.autoclass("java.lang.Integer")
 
@@ -47,6 +46,8 @@ class Monster:
 
     @classmethod
     def all(cls):
+        from pymafia import ash
+
         values = km.DataTypes.MONSTER_TYPE.allValues()
         return sorted(ash.to_python(values), key=lambda x: x.id)
 
@@ -84,18 +85,22 @@ class Monster:
 
     @property
     def attack_element(self):
+        from . import Element
+
         return (
-            datatypes.Element(self.monster.getAttackElement().toString())
+            Element(self.monster.getAttackElement().toString())
             if self
-            else datatypes.Element.NONE
+            else Element.NONE
         )
 
     @property
     def defense_element(self):
+        from . import Element
+
         return (
-            datatypes.Element(self.monster.getDefenseElement().toString())
+            Element(self.monster.getDefenseElement().toString())
             if self
-            else datatypes.Element.NONE
+            else Element.NONE
         )
 
     @property
@@ -124,14 +129,14 @@ class Monster:
 
     @property
     def phylum(self):
-        return (
-            datatypes.Phylum(self.monster.getPhylum().toString())
-            if self
-            else datatypes.Phylum.NONE
-        )
+        from . import Phylum
+
+        return Phylum(self.monster.getPhylum().toString()) if self else Phylum.NONE
 
     @property
     def poison(self):
+        from . import Effect
+
         if not self:
             return None
         poison_level = self.monster.getPoison()
@@ -140,7 +145,7 @@ class Monster:
         poison_name = km.EffectDatabase.getEffectName(
             km.EffectDatabase.POISON_ID[poison_level]
         )
-        return datatypes.Effect(poison_name)
+        return Effect(poison_name)
 
     @property
     def boss(self):

@@ -1,5 +1,4 @@
 import pymafia.kolmafia as km
-from pymafia import ash, datatypes
 
 
 class Coinmaster:
@@ -35,6 +34,8 @@ class Coinmaster:
 
     @classmethod
     def all(cls):
+        from pymafia import ash
+
         values = km.DataTypes.COINMASTER_TYPE.allValues()
         return sorted(ash.to_python(values), key=lambda x: x.name)
 
@@ -44,10 +45,12 @@ class Coinmaster:
 
     @property
     def item(self):
+        from . import Item
+
         if not self:
             return None
         item = self.coinmaster.getItem()
-        return None if item is None else datatypes.Item(item.getItemId())
+        return None if item is None else Item(item.getItemId())
 
     @property
     def property_(self):

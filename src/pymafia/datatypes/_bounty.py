@@ -1,5 +1,4 @@
 import pymafia.kolmafia as km
-from pymafia import ash, datatypes
 
 
 class Bounty:
@@ -34,6 +33,8 @@ class Bounty:
 
     @classmethod
     def all(cls):
+        from pymafia import ash
+
         values = km.DataTypes.BOUNTY_TYPE.allValues()
         return sorted(ash.to_python(values), key=lambda x: x.name)
 
@@ -63,8 +64,12 @@ class Bounty:
 
     @property
     def monster(self):
-        return datatypes.Monster(km.BountyDatabase.getMonster(self.name)) or None
+        from . import Monster
+
+        return Monster(km.BountyDatabase.getMonster(self.name)) or None
 
     @property
     def location(self):
-        return datatypes.Location(km.BountyDatabase.getLocation(self.name)) or None
+        from . import Location
+
+        return Location(km.BountyDatabase.getLocation(self.name)) or None
