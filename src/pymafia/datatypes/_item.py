@@ -93,7 +93,7 @@ class Item:
     @property
     def quality(self):
         """Return the quality of the Item if it is a consumable."""
-        return ItemQuality(km.ConsumablesDatabase.getQuality(self.name))
+        return ItemQuality(km.ConsumablesDatabase.getQuality(self.name).getName())
 
     @property
     def adventures(self):
