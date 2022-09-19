@@ -7,6 +7,7 @@ from ._familiar import Familiar
 from ._item import CandyType, Item, ItemQuality
 from ._location import Location
 from ._monster import Monster
+from ._path import Path
 from ._phylum import Phylum
 from ._servant import Servant
 from ._skill import Skill

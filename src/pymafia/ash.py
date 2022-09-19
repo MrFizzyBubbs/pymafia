@@ -11,6 +11,7 @@ from pymafia.datatypes import (
     Item,
     Location,
     Monster,
+    Path,
     Phylum,
     Servant,
     Skill,
@@ -42,6 +43,7 @@ SIMPLE_TYPES = {
     km.DataTypes.TYPE_THRALL: Thrall,
     km.DataTypes.TYPE_SERVANT: Servant,
     km.DataTypes.TYPE_VYKEA: Vykea,
+    km.DataTypes.TYPE_PATH: Path,
 }
 
 TreeMap = km.autoclass("java.util.TreeMap")
