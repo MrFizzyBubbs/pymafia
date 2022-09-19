@@ -4,7 +4,7 @@ from typing import List
 
 from pymafia import ash, player
 from pymafia.datatypes import Familiar, Item
-from pymafia.property import get_property
+from pymafia.property_ import get_property
 
 ITEM = Item("mumming trunk")
 

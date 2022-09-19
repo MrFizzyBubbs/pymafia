@@ -1,6 +1,6 @@
 from pymafia import ash, player
 from pymafia.datatypes import Familiar
-from pymafia.property import get_property
+from pymafia.property_ import get_property
 
 FAMILIAR = Familiar("Pair of Stomping Boots")
 

@@ -3,7 +3,7 @@ from enum import IntEnum
 from pymafia import ash
 from pymafia.combat import Macro
 from pymafia.datatypes import Location
-from pymafia.property import get_property, set_property
+from pymafia.property_ import get_property, set_property
 
 LOCATION = Location("The Tunnel of L.O.V.E.")
 

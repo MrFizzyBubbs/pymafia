@@ -2,7 +2,7 @@ from enum import IntEnum
 
 from pymafia import ash
 from pymafia.datatypes import Location
-from pymafia.property import get_property
+from pymafia.property_ import get_property
 
 LOCATION = Location("The X-32-F Combat Training Snowman")
 

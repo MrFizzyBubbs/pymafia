@@ -1,7 +1,7 @@
 from pymafia import ash, player
 from pymafia.combat import Macro
 from pymafia.datatypes import Location, Monster, Skill
-from pymafia.property import get_property
+from pymafia.property_ import get_property
 
 PASSIVE = Skill("Comprehensive Cartography")
 SKILL = Skill("Map the Monsters")

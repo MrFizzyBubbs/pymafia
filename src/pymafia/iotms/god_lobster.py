@@ -3,7 +3,7 @@ from enum import Enum, IntEnum
 from pymafia import ash, player
 from pymafia.combat import Macro
 from pymafia.datatypes import Familiar, Item
-from pymafia.property import get_property
+from pymafia.property_ import get_property
 
 FAMILIAR = Familiar("God Lobster")
 

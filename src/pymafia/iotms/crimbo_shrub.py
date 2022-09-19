@@ -3,7 +3,7 @@ from typing import Tuple
 
 from pymafia import ash, player
 from pymafia.datatypes import Familiar, Item
-from pymafia.property import get_property
+from pymafia.property_ import get_property
 
 FAMILIAR = Familiar("Crimbo Shrub")
 DECORATIONS = Item("box of old Crimbo decorations")

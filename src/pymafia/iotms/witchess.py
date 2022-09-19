@@ -3,7 +3,7 @@ from enum import Enum
 from pymafia import ash, player
 from pymafia.combat import Macro
 from pymafia.datatypes import Item, Monster
-from pymafia.property import get_property
+from pymafia.property_ import get_property
 
 ITEM = Item("Witchess Set")
 

@@ -2,7 +2,7 @@ from enum import Enum
 
 from pymafia import ash, player
 from pymafia.datatypes import Item, Location, Monster
-from pymafia.property import get_property
+from pymafia.property_ import get_property
 
 ITEM = Item("protonic accelerator pack")
 
