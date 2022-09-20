@@ -10,13 +10,17 @@ if TYPE_CHECKING:
     from ._skill import Skill
 
 
-class ItemQuality(Enum):
+class ConsumableQuality (Enum):
     NONE = ""
     CRAPPY = "crappy"
     DECENT = "decent"
     GOOD = "good"
     AWESOME = "awesome"
     EPIC = "EPIC"
+    QUEST = "quest"
+    CHANGING = "???"
+    DRIPPY = "drippy"
+    SUSHI = "sushi"
 
 
 class CandyType(Enum):
@@ -102,9 +106,9 @@ class Item:
         return km.ConsumablesDatabase.getLevelReqByName(self.name) or 0
 
     @property
-    def quality(self) -> ItemQuality:
+    def quality(self) -> ConsumableQuality:
         """Return the quality of the Item if it is a consumable."""
-        return ItemQuality(km.ConsumablesDatabase.getQuality(self.name).getName())
+        return ConsumableQuality (km.ConsumablesDatabase.getQuality(self.name).getName())
 
     @property
     def adventures(self) -> str:
