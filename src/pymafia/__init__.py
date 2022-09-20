@@ -4,6 +4,6 @@ from pymafia.combat import Macro
 from pymafia.datatypes import *
 from pymafia.iotms import *
 from pymafia.player import *
-from pymafia.property_ import *
+from pymafia.preference import *
 from pymafia.utils import *
 from pymafia.wanderer import *

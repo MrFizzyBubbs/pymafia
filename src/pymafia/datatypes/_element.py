@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from enum import Enum
 
 
@@ -11,10 +13,10 @@ class Element(Enum):
     SLIME = "slime"
     SUPERCOLD = "supercold"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.value
 
-    def __bool__(self):
+    def __bool__(self) -> bool:
         return self is not self.NONE
 
     @classmethod
@@ -24,11 +26,11 @@ class Element(Enum):
         return super()._missing_(value)
 
     @classmethod
-    def all(cls):
+    def all(cls) -> list[Element]:
         return list(cls)
 
     @property
-    def image(self):
+    def image(self) -> str:
         if self is self.NONE:
             return "circle.gif"
         if self is self.COLD:

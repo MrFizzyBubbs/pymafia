@@ -3,7 +3,7 @@ from typing import Tuple
 
 from pymafia import ash, player
 from pymafia.datatypes import Familiar, Item
-from pymafia.property_ import get_property
+from pymafia.preference import get_property
 
 FAMILIAR = Familiar("Crimbo Shrub")
 DECORATIONS = Item("box of old Crimbo decorations")
@@ -49,10 +49,10 @@ def is_decorated() -> bool:
 def current_decorations() -> Tuple[Topper, Lights, Garland, Gift]:
     """Current Crimbo Shrub decorations."""
     return (
-        Topper(get_property("shrubTopper")),
-        Lights(get_property("shrubLights")),
-        Garland(get_property("shrubGarland")),
-        Gift(get_property("shrubGifts")),
+        Topper(get_property("shrubTopper", int)),
+        Lights(get_property("shrubLights", int)),
+        Garland(get_property("shrubGarland", int)),
+        Gift(get_property("shrubGifts", int)),
     )
 
 

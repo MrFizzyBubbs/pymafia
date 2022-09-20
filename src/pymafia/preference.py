@@ -1,11 +1,21 @@
-from typing import Any, Type, TypeVar
+from typing import Any, Type, TypeVar, overload
 
 from pymafia import km
 
 T = TypeVar("T")
 
 
-def get_property(name: str, t: Type[T] = str) -> T:
+@overload
+def get_property(name: str) -> str:
+    ...
+
+
+@overload
+def get_property(name: str, t: Type[T]) -> T:
+    ...
+
+
+def get_property(name, t=str):
     """Return the value of a KoLmafia property."""
     if t is bool:
         return km.Preferences.getBoolean(name)

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from enum import Enum
 
 
@@ -29,18 +31,18 @@ class Slot(Enum):
     BOOTSPUR = "bootspur"
     FAKEHAND = "fakehand"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.value
 
-    def __bool__(self):
+    def __bool__(self) -> str:
         return self is not self.NONE
 
     @classmethod
-    def _missing_(cls, value):
+    def _missing_(cls, value) -> Slot:
         if value is None:
             return cls.NONE
         return super()._missing_(value)
 
     @classmethod
-    def all(cls):
+    def all(cls) -> list[Slot]:
         return list(cls)

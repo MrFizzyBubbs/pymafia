@@ -1,5 +1,5 @@
 from pymafia import ash
-from pymafia.property_ import get_property
+from pymafia.preference import get_property
 
 
 def have() -> bool:

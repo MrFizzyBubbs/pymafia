@@ -4,7 +4,7 @@ from typing import List
 
 from pymafia import ash, player
 from pymafia.datatypes import Familiar, Item
-from pymafia.property_ import get_property
+from pymafia.preference import get_property
 
 ITEM = Item("mumming trunk")
 
@@ -26,7 +26,7 @@ def have() -> bool:
 
 def costumes_used() -> List[Costume]:
     """Return a list of the costumes applied today."""
-    return [Costume(x) for x in get_property("_mummeryUses").split(",") if x]
+    return [Costume(int(x)) for x in get_property("_mummeryUses").split(",") if x]
 
 
 def apply_costume(familiar: Familiar, costume: Costume) -> bool:

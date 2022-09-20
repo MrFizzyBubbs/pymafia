@@ -1,5 +1,5 @@
 from pymafia import ash
-from pymafia.property_ import get_property
+from pymafia.preference import get_property
 
 WANDERER_HOLIDAYS = {
     "El Dia De Los Muertos Borrachos",

@@ -2,7 +2,7 @@ from enum import Enum
 
 from pymafia import ash, player
 from pymafia.datatypes import Item
-from pymafia.property_ import get_property
+from pymafia.preference import get_property
 
 ITEM = Item("SongBoom™ BoomBox")
 

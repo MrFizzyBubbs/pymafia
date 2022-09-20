@@ -1,7 +1,7 @@
 from pymafia import ash, player
 from pymafia.combat import Macro
 from pymafia.datatypes import Location, Monster, Skill
-from pymafia.property_ import get_property
+from pymafia.preference import get_property
 
 PASSIVE = Skill("Comprehensive Cartography")
 SKILL = Skill("Map the Monsters")
@@ -12,7 +12,7 @@ def have() -> bool:
     return player.have(PASSIVE)
 
 
-def monsters_mapped() -> bool:
+def monsters_mapped() -> int:
     """Return the number of Map the Monsters skill uses today."""
     return get_property("_monstersMapped", int)
 

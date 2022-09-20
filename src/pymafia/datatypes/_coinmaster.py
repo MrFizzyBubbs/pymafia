@@ -1,73 +1,77 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Any
+
 import pymafia.kolmafia as km
+
+if TYPE_CHECKING:
+    from ._item import Item
 
 
 class Coinmaster:
-    name = "none"
-    coinmaster = None
+    name: str = "none"
+    coinmaster: Any = None
 
-    def __init__(self, key=None):
+    def __init__(self, key: str | None = None):
         if key in (None, self.name):
             return
 
         coinmaster = km.CoinmasterRegistry.findCoinmaster(key)
-
         if coinmaster is None:
             raise ValueError(f"{type(self).__name__} {key!r} not found")
 
         self.name = coinmaster.getMaster()
         self.coinmaster = coinmaster
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"{type(self).__name__}({str(self)!r})"
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash(self.name)
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         return isinstance(other, type(self)) and self.name == other.name
 
-    def __bool__(self):
+    def __bool__(self) -> bool:
         return self.name != type(self).name
 
     @classmethod
-    def all(cls):
+    def all(cls) -> list[Coinmaster]:
         from pymafia import ash
 
         values = km.DataTypes.COINMASTER_TYPE.allValues()
         return sorted(ash.to_python(values), key=lambda x: x.name)
 
     @property
-    def token(self):
-        return self.coinmaster.getToken() if self else None
+    def token(self) -> str:
+        return self.coinmaster.getToken() if self else ""
 
     @property
-    def item(self):
-        from . import Item
-
+    def item(self) -> Item:
         if not self:
-            return None
+            return Item(None)
         item = self.coinmaster.getItem()
-        return None if item is None else Item(item.getItemId())
+        return Item(None) if item is None else Item(item.getItemId())
 
     @property
-    def property_(self):
-        return self.coinmaster.getProperty() if self else None
+    def preference(self) -> str:
+        return self.coinmaster.getProperty() if self else ""
 
     @property
-    def available_tokens(self):
+    def available_tokens(self) -> int:
         return self.coinmaster.availableTokens() if self else 0
 
     @property
-    def buys(self):
+    def buys(self) -> bool:
         return self.coinmaster.getSellAction() is not None if self else False
 
     @property
-    def sells(self):
+    def sells(self) -> bool:
         return self.coinmaster.getBuyAction() is not None if self else False
 
     @property
-    def nickname(self):
-        return self.coinmaster.getNickname() if self else None
+    def nickname(self) -> str:
+        return self.coinmaster.getNickname() if self else ""

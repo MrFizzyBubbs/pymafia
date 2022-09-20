@@ -3,7 +3,7 @@ from enum import Enum
 from pymafia import ash, player
 from pymafia.combat import Macro
 from pymafia.datatypes import Item, Monster
-from pymafia.property_ import get_property
+from pymafia.preference import get_property
 
 ITEM = Item("Witchess Set")
 
@@ -47,7 +47,7 @@ def fight(piece: Piece, macro: Macro = Macro()) -> bool:
         f"choice.php?option=1&pwd&whichchoice=1182&piece={piece.value.id}",
         False,
     )
-    if not player.in_combat(piece):
+    if not player.in_combat(piece.value):
         return False
     ash.run_combat(macro)
     return True

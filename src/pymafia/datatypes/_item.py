@@ -1,6 +1,13 @@
+from __future__ import annotations
+
 from enum import Enum
+from typing import TYPE_CHECKING
 
 import pymafia.kolmafia as km
+
+if TYPE_CHECKING:
+    from ._coinmaster import Coinmaster
+    from ._skill import Skill
 
 
 class ItemQuality(Enum):
@@ -20,65 +27,69 @@ class CandyType(Enum):
 
 
 class Item:
-    id = -1
-    name = "none"
+    id: int = -1
+    name: str = "none"
 
-    def __init__(self, key=None):
+    def __init__(self, key: int | str | None = None):
         if key in (None, self.id, self.name):
             return
 
-        id_ = km.ItemDatabase.getItemId(key) if isinstance(key, str) else key
-        name = km.ItemDatabase.getItemDataName(id_)
-
+        id = km.ItemDatabase.getItemId(key) if isinstance(key, str) else key
+        name = km.ItemDatabase.getItemDataName(id)
         if name is None:
             raise ValueError(f"{type(self).__name__} {key!r} not found")
 
-        self.id = id_
+        self.id = id
         self.name = name
 
-    def __str__(self):
+    def __str__(self) -> str:
         ids = km.ItemDatabase.getItemIds(self.name, 1, False)
         return f"[{self.id}]{self.name}" if len(ids) > 1 else self.name
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"{type(self).__name__}({str(self)!r})"
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((self.id, self.name))
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         return isinstance(other, type(self)) and (self.id, self.name) == (
             other.id,
             other.name,
         )
 
-    def __bool__(self):
+    def __bool__(self) -> bool:
         return (self.id, self.name) != (type(self).id, type(self).name)
 
     @classmethod
-    def all(cls):
+    def all(cls) -> list[Item]:
         from pymafia import ash
 
         values = km.DataTypes.ITEM_TYPE.allValues()
         return ash.to_python(values)
 
     @property
-    def plural(self):
+    def tcrs_name(self) -> str:
+        """Return the name of the Item as it appears in your current Two Crazy Random Summer run. If you are not in a TCRS run, the regular Item name is returned."""
+        return km.TCRSDatabase.getTCRSName(self.id) or ""
+
+    @property
+    def plural(self) -> str:
         """Return the plural of the Item. If the official plural is not known, return the name of the Item with an "s" appended."""
         return km.ItemDatabase.getPluralName(self.id)
 
     @property
-    def descid(self):
+    def descid(self) -> str:
         """Return the descid of the Item. This is the identifier used to see the description of the Item."""
         return km.ItemDatabase.getDescriptionId(self.id)
 
     @property
-    def image(self):
+    def image(self) -> str:
         """Return the filename of the image associated with the Item."""
         return km.ItemDatabase.getImage(self.id)
 
     @property
-    def smallimage(self):
+    def smallimage(self) -> str:
         """Returns the filename of the small image associated with the Item. For items with an image that is usually larger than 30x30, returns their 30x30 equivalent.
 
         For example, "folders" from the "over-the-shoulder Folder Holder" will normally return a 100x100 image but a 30x30 image here.
@@ -86,77 +97,77 @@ class Item:
         return km.ItemDatabase.getSmallImage(self.id)
 
     @property
-    def levelreq(self):
+    def levelreq(self) -> int:
         """Return the level requirement for consuming or equipping the Item."""
         return km.ConsumablesDatabase.getLevelReqByName(self.name) or 0
 
     @property
-    def quality(self):
+    def quality(self) -> ItemQuality:
         """Return the quality of the Item if it is a consumable."""
         return ItemQuality(km.ConsumablesDatabase.getQuality(self.name).getName())
 
     @property
-    def adventures(self):
+    def adventures(self) -> str:
         """Return the range of adventures gained from consuming the Item. The string will either contain the adventures for invariant gains, or a hyphen-separated minimum and maximum for variant gains."""
         return km.ConsumablesDatabase.getAdvRangeByName(self.name)
 
     @property
-    def muscle(self):
+    def muscle(self) -> str:
         """Return the range of muscle substats gained from consuming the Item. The string will either contain the substats for invariant gains, or a hyphen-separated minimum and maximum for variant gains. Note that substat gains can be negative."""
         return km.ConsumablesDatabase.getMuscleByName(self.name)
 
     @property
-    def mysticality(self):
+    def mysticality(self) -> str:
         """Return the range of mysticality substats gained from consuming the Item. The string will either contain the substats for invariant gains, or a hyphen-separated minimum and maximum for variant gains. Note that substat gains can be negative."""
         return km.ConsumablesDatabase.getMysticalityByName(self.name)
 
     @property
-    def moxie(self):
+    def moxie(self) -> str:
         """Return the range of moxie substats gained from consuming the Item. The string will either contain the substats for invariant gains, or a hyphen-separated minimum and maximum for variant gains. Note that substat gains can be negative."""
         return km.ConsumablesDatabase.getMoxieByName(self.name)
 
     @property
-    def fullness(self):
+    def fullness(self) -> int:
         """Return the stomach size of Item. If the Item is not edible, return 0."""
         return km.ConsumablesDatabase.getFullness(self.name)
 
     @property
-    def inebriety(self):
+    def inebriety(self) -> int:
         """Return the liver size of Item. If the Item is not drinkable, return 0."""
         return km.ConsumablesDatabase.getInebriety(self.name)
 
     @property
-    def spleen(self):
+    def spleen(self) -> int:
         """Return the spleen size of Item. If the Item is not chewable, return 0."""
         return km.ConsumablesDatabase.getSpleenHit(self.name)
 
     @property
-    def minhp(self):
+    def minhp(self) -> int:
         """Return the minimum HP restored by consuming this Item."""
         return km.RestoresDatabase.getHPMin(self.name)
 
     @property
-    def maxhp(self):
+    def maxhp(self) -> int:
         """Return the maximum HP restored by consuming this Item."""
         return km.RestoresDatabase.getHPMax(self.name)
 
     @property
-    def minmp(self):
+    def minmp(self) -> int:
         """Return the minimum MP restored by consuming this Item."""
         return km.RestoresDatabase.getMPMin(self.name)
 
     @property
-    def maxmp(self):
+    def maxmp(self) -> int:
         """Return the maximum MP restored by consuming this Item."""
         return km.RestoresDatabase.getMPMax(self.name)
 
     @property
-    def dailyusesleft(self):
+    def dailyusesleft(self) -> int:
         """Return the number of daily uses remaining for this Item."""
         return km.UseItemRequest.maximumUses(self.id)
 
     @property
-    def notes(self):
+    def notes(self) -> str:
         """Return any notes that exist for the Item. Examples of (comma-separated) contents are:
 
         - The name and duration of any effects granted by consumption, if applicable.
@@ -167,46 +178,46 @@ class Item:
         return km.ConsumablesDatabase.getNotes(self.name) or ""
 
     @property
-    def quest(self):
+    def quest(self) -> bool:
         """Return True if the Item is a quest item, else False."""
         return km.ItemDatabase.isQuestItem(self.id)
 
     @property
-    def gift(self):
+    def gift(self) -> bool:
         """Return True if the Item is a gift item, else False."""
         return km.ItemDatabase.isGiftItem(self.id)
 
     @property
-    def tradeable(self):
+    def tradeable(self) -> bool:
         """Return True if the Item is tradeable, else False."""
         return km.ItemDatabase.isTradeable(self.id)
 
     @property
-    def discardable(self):
+    def discardable(self) -> bool:
         """Return True if the Item is discardable, else False."""
         return km.ItemDatabase.isDiscardable(self.id)
 
     @property
-    def combat(self):
+    def combat(self) -> bool:
         """Return True if the Item is usable in combat, else False. This returns True whether the Item is consumed by being used or not."""
         return km.ItemDatabase.getAttribute(
             self.id, km.ItemDatabase.ATTR_COMBAT | km.ItemDatabase.ATTR_COMBAT_REUSABLE
         )
 
     @property
-    def combat_reusable(self):
+    def combat_reusable(self) -> bool:
         """Return True if the Item is usable in combat and is not consumed when doing so, else False."""
         return km.ItemDatabase.getAttribute(
             self.id, km.ItemDatabase.ATTR_COMBAT_REUSABLE
         )
 
     @property
-    def usable(self):
+    def usable(self) -> bool:
         """Return True if the Item is usable, else False. This returns True whether the Item is consumed by being used or not."""
         return km.ItemDatabase.isUsable(self.id)
 
     @property
-    def reusable(self):
+    def reusable(self) -> bool:
         """Return True if the Item is usable and is not consumed when doing so, else False."""
         return km.ItemDatabase.getConsumptionType(
             self.id
@@ -215,79 +226,73 @@ class Item:
         )
 
     @property
-    def multi(self):
+    def multi(self) -> bool:
         """Return True if the Item is multiusable, else False."""
         return km.ItemDatabase.isMultiUsable(self.id)
 
     @property
-    def fancy(self):
+    def fancy(self) -> bool:
         """Return True if the Item is a "fancy" ingredient, else False."""
         return km.ItemDatabase.isFancyItem(self.id)
 
     @property
-    def pasteable(self):
+    def pasteable(self) -> bool:
         """Return True if the Item is a meatpasting ingredient, else False."""
         return km.ItemDatabase.isPasteable(self.id)
 
     @property
-    def smithable(self):
+    def smithable(self) -> bool:
         """Return True if the Item is a meatsmithing ingredient, else False."""
         return km.ItemDatabase.isSmithable(self.id)
 
     @property
-    def cookable(self):
+    def cookable(self) -> bool:
         """Return True if the Item is a cooking ingredient, else False."""
         return km.ItemDatabase.isCookable(self.id)
 
     @property
-    def mixable(self):
+    def mixable(self) -> bool:
         """Return True if the Item is a cocktailcrafting ingredient, else False."""
         return km.ItemDatabase.isMixable(self.id)
 
     @property
-    def candy(self):
+    def candy(self) -> bool:
         """Return True if the Item is a candy, else False."""
         return km.ItemDatabase.isCandyItem(self.id)
 
     @property
-    def candy_type(self):
+    def candy_type(self) -> CandyType:
         """Return the candy type of the Item."""
         return CandyType(km.CandyDatabase.getCandyType(self.id))
 
     @property
-    def chocolate(self):
+    def chocolate(self) -> bool:
         """Return True if the Item is a chocolate, else False."""
         return km.ItemDatabase.isChocolateItem(self.id)
 
     @property
-    def seller(self):
+    def potion(self) -> bool:
+        """Return True if the Item is a potion, else False."""
+        return km.ItemDatabase.isPotion(self.id)
+
+    @property
+    def seller(self) -> Coinmaster:
         """Return which Coinmaster sells this Item, if any."""
-        from . import Coinmaster
-
         data = km.CoinmasterRegistry.findSeller(self.id)
-        return None if data is None else Coinmaster(data.getMaster())
+        return Coinmaster(data.getMaster() if data is not None else None)
 
     @property
-    def buyer(self):
+    def buyer(self) -> Coinmaster:
         """Return which Coinmaster buys this Item, if any."""
-        from . import Coinmaster
-
         data = km.CoinmasterRegistry.findBuyer(self.id)
-        return None if data is None else Coinmaster(data.getMaster())
+        return Coinmaster(data.getMaster() if data is not None else None)
 
     @property
-    def name_length(self):
+    def name_length(self) -> int:
         """Return the length of the Item's display name."""
         return km.ItemDatabase.getNameLength(self.id)
 
     @property
-    def noob_skill(self):
+    def noob_skill(self) -> Skill:
         """Return the noob Skill granted by absorbing this Item."""
-        from . import Skill
-
-        return Skill(km.ItemDatabase.getNoobSkillId(self.id)) or None
-
-    @property
-    def tcrs_name(self):
-        """Return the name of the Item as it appears in your current Two Crazy Random Summer run. If you are not in a TCRS run, the regular Item name is returned."""
-        return km.TCRSDatabase.getTCRSName(self.id) or ""
+        return Skill(km.ItemDatabase.getNoobSkillId(self.id))
