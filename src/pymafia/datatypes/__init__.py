@@ -4,7 +4,7 @@ from ._coinmaster import Coinmaster
 from ._effect import Effect, EffectQuality
 from ._element import Element
 from ._familiar import Familiar
-from ._item import CandyType, Item, ItemQuality
+from ._item import CandyType, Item, ConsumableQuality
 from ._location import Location
 from ._monster import Monster
 from ._path import Path
