@@ -69,6 +69,8 @@ class Vykea:
 
     @property
     def rune(self) -> Item:
+        from ._item import Item
+
         return Item(self.companion.getRune().getItemId())
 
     @property
@@ -85,4 +87,6 @@ class Vykea:
 
     @property
     def attack_element(self) -> Element:
+        from ._element import Element
+
         return Element(self.companion.getAttackElement().toString())

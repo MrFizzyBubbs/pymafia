@@ -68,6 +68,8 @@ class Skill:
 
     @property
     def class_(self) -> Class:
+        from ._class import Class
+
         return Class(km.SkillDatabase.getSkillCategory(self.id) or None)
 
     @property

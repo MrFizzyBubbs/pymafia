@@ -52,6 +52,8 @@ class Class:
 
     @property
     def primestat(self) -> Stat:
+        from ._stat import Stat
+
         if not self:
             return Stat.NONE
         prime_index = self.ascension_class.getPrimeStatIndex()

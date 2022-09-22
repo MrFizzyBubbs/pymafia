@@ -51,6 +51,8 @@ class Coinmaster:
 
     @property
     def item(self) -> Item:
+        from ._item import Item
+
         if not self:
             return Item(None)
         item = self.coinmaster.getItem()

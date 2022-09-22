@@ -1,4 +1,5 @@
 from pymafia.datatypes._bounty import Bounty
+
 from ._class import Class
 from ._coinmaster import Coinmaster
 from ._effect import Effect, EffectQuality

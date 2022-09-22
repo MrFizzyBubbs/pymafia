@@ -95,6 +95,8 @@ class Monster:
 
     @property
     def attack_element(self) -> Element:
+        from ._element import Element
+
         return (
             Element(self.monster.getAttackElement().toString())
             if self
@@ -107,6 +109,8 @@ class Monster:
 
     @property
     def defense_element(self) -> Element:
+        from ._element import Element
+
         return (
             Element(self.monster.getDefenseElement().toString())
             if self
@@ -147,10 +151,14 @@ class Monster:
 
     @property
     def phylum(self) -> Phylum:
+        from ._phylum import Phylum
+
         return Phylum(self.monster.getPhylum().toString()) if self else Phylum.NONE
 
     @property
     def poison(self) -> Effect:
+        from ._effect import Effect
+
         if not self:
             return Effect(None)
         poison_level = self.monster.getPoison()
