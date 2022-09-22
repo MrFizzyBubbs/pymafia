@@ -3,7 +3,7 @@ from __future__ import annotations
 from enum import IntEnum
 from typing import TYPE_CHECKING, Any
 
-import pymafia.kolmafia as km
+from pymafia.kolmafia import km
 
 if TYPE_CHECKING:
     from ._element import Element

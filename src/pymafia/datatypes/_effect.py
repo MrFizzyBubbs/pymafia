@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from enum import IntEnum
 
-import pymafia.kolmafia as km
+from pymafia.kolmafia import km
 
 
 class EffectQuality(IntEnum):

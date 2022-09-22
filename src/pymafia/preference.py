@@ -1,6 +1,6 @@
 from typing import Any, Type, TypeVar, overload
 
-from pymafia import km
+from pymafia.kolmafia import km
 
 T = TypeVar("T")
 

@@ -1,6 +1,5 @@
 import collections
 
-import pymafia.kolmafia as km
 from pymafia.datatypes import (
     Bounty,
     Class,
@@ -20,6 +19,7 @@ from pymafia.datatypes import (
     Thrall,
     Vykea,
 )
+from pymafia.kolmafia import km
 
 SIMPLE_TYPES = {
     km.DataTypes.TYPE_BOOLEAN: bool,

@@ -34,7 +34,7 @@ class Slot(Enum):
     def __str__(self) -> str:
         return self.value
 
-    def __bool__(self) -> str:
+    def __bool__(self) -> bool:
         return self is not self.NONE
 
     @classmethod

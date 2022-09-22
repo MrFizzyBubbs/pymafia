@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-import pymafia.kolmafia as km
+from pymafia.kolmafia import km
 
 if TYPE_CHECKING:
     from ._class import Class

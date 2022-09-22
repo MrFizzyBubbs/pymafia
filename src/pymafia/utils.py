@@ -1,6 +1,6 @@
 from html import escape
 
-import pymafia.kolmafia as km
+from pymafia.kolmafia import km
 
 
 def launch_gui():
@@ -20,7 +20,7 @@ def login(username: str, password: str | None = None) -> bool:
 
 def abort(message: str = ""):
     """Immediately halt KoLmafia."""
-    MafiaState = getattr(km, "net/sourceforge/kolmafia/KoLConstants$MafiaState")
+    MafiaState = getattr(km, "KoLConstants$MafiaState")
     km.KoLmafia.updateDisplay(MafiaState.ABORT, message)
 
 
@@ -36,8 +36,10 @@ def log(message: str, html: bool = False):
 def execute(command: str) -> str:
     """Execute a command in the KoLmafia CLI and return the output."""
     ByteArrayOutputStream = km.autoclass("java.io.ByteArrayOutputStream")
+    PrintStream = km.autoclass("java.io.PrintStream")
+
     ostream = km.cast("java.io.OutputStream", ByteArrayOutputStream())
-    out = km.autoclass("java.io.PrintStream")(ostream)
+    out = PrintStream(ostream)
     km.RequestLogger.openCustom(out)
     km.KoLmafiaCLI.DEFAULT_SHELL.executeLine(command)
     return ostream.toString()

@@ -3,14 +3,14 @@ from __future__ import annotations
 from enum import Enum
 from typing import TYPE_CHECKING
 
-import pymafia.kolmafia as km
+from pymafia.kolmafia import km
 
 if TYPE_CHECKING:
     from ._coinmaster import Coinmaster
     from ._skill import Skill
 
 
-class ConsumableQuality (Enum):
+class ConsumableQuality(Enum):
     NONE = ""
     CRAPPY = "crappy"
     DECENT = "decent"
@@ -108,7 +108,7 @@ class Item:
     @property
     def quality(self) -> ConsumableQuality:
         """Return the quality of the Item if it is a consumable."""
-        return ConsumableQuality (km.ConsumablesDatabase.getQuality(self.name).getName())
+        return ConsumableQuality(km.ConsumablesDatabase.getQuality(self.name).getName())
 
     @property
     def adventures(self) -> str:
