@@ -72,6 +72,8 @@ class Thrall:
 
     @property
     def skill(self) -> Skill:
+        from ._skill import Skill
+
         return Skill(self.data[3] if self else None)
 
     @property

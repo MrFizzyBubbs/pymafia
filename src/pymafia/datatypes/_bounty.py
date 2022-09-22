@@ -75,8 +75,12 @@ class Bounty:
 
     @property
     def monster(self) -> Monster:
+        from ._monster import Monster
+
         return Monster(km.BountyDatabase.getMonster(self.name))
 
     @property
     def location(self) -> Location:
+        from ._location import Location
+
         return Location(km.BountyDatabase.getLocation(self.name))

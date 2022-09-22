@@ -282,12 +282,16 @@ class Item:
     @property
     def seller(self) -> Coinmaster:
         """Return which Coinmaster sells this Item, if any."""
+        from ._coinmaster import Coinmaster
+
         data = km.CoinmasterRegistry.findSeller(self.id)
         return Coinmaster(data.getMaster() if data is not None else None)
 
     @property
     def buyer(self) -> Coinmaster:
         """Return which Coinmaster buys this Item, if any."""
+        from ._coinmaster import Coinmaster
+
         data = km.CoinmasterRegistry.findBuyer(self.id)
         return Coinmaster(data.getMaster() if data is not None else None)
 
@@ -299,4 +303,6 @@ class Item:
     @property
     def noob_skill(self) -> Skill:
         """Return the noob Skill granted by absorbing this Item."""
+        from ._skill import Skill
+
         return Skill(km.ItemDatabase.getNoobSkillId(self.id))

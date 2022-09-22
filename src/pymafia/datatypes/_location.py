@@ -89,6 +89,8 @@ class Location:
 
     @property
     def bounty(self) -> Bounty:
+        from ._bounty import Bounty
+
         if not self:
             return Bounty(None)
         bounty = km.AdventureDatabase.getBounty(self.adventure)

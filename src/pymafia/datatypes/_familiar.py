@@ -51,6 +51,8 @@ class Familiar:
 
     @property
     def hatchling(self) -> Item:
+        from ._item import Item
+
         return Item(km.FamiliarDatabase.getFamiliarLarva(self.id))
 
     @property
@@ -88,6 +90,8 @@ class Familiar:
 
     @property
     def drop_item(self) -> Item:
+        from ._item import Item
+
         item = km.FamiliarData.dropItem(self.id)
         return Item(item.getItemId() if item is not None else None)
 
