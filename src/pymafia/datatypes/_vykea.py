@@ -42,12 +42,17 @@ class Vykea:
     def __hash__(self) -> int:
         return hash((self.type_, self.rune, self.level))
 
-    def __eq__(self, other) -> bool:
-        return isinstance(other, type(self)) and (
-            self.type_,
-            self.rune,
-            self.level,
-        ) == (other.type_, other.rune, other.level)
+    def __eq__(self, other: Any) -> bool:
+        if isinstance(other, type(self)):
+            return (
+                self.type_,
+                self.rune,
+                self.level,
+            ) == (other.type_, other.rune, other.level)
+        return NotImplemented
+
+    def __lt__(self, other: Any) -> bool:
+        raise NotImplementedError
 
     def __bool__(self) -> bool:
         return self.companion != type(self).companion

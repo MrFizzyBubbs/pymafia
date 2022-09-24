@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from functools import total_ordering
 from typing import TYPE_CHECKING, Any
 
 from pymafia.kolmafia import km
@@ -8,6 +9,7 @@ if TYPE_CHECKING:
     from ._item import Item
 
 
+@total_ordering
 class Coinmaster:
     name: str = "none"
     coinmaster: Any = None
@@ -32,8 +34,15 @@ class Coinmaster:
     def __hash__(self) -> int:
         return hash(self.name)
 
-    def __eq__(self, other) -> bool:
-        return isinstance(other, type(self)) and self.name == other.name
+    def __eq__(self, other: Any) -> bool:
+        if isinstance(other, type(self)):
+            return self.name == other.name
+        return NotImplemented
+
+    def __lt__(self, other: Any) -> bool:
+        if isinstance(other, type(self)):
+            return self.name < other.name
+        return NotImplemented
 
     def __bool__(self) -> bool:
         return self.name != type(self).name
@@ -43,7 +52,7 @@ class Coinmaster:
         from pymafia import ash
 
         values = km.DataTypes.COINMASTER_TYPE.allValues()
-        return sorted(ash.to_python(values), key=lambda x: x.name)
+        return sorted(ash.to_python(values))
 
     @property
     def token(self) -> str:

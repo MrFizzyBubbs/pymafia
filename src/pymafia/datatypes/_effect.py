@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from enum import IntEnum
+from functools import total_ordering
+from typing import Any
 
 from pymafia.kolmafia import km
 
@@ -12,12 +14,13 @@ class EffectQuality(IntEnum):
     BAD = 2
 
 
+@total_ordering
 class Effect:
     id: int = -1
     name: str = "none"
 
     def __init__(self, key: int | str | None = None):
-        if key in (None, self.id, self.name):
+        if key in (None, self.name, self.id):
             return
 
         id = km.EffectDatabase.getEffectId(key) if isinstance(key, str) else key
@@ -36,23 +39,27 @@ class Effect:
         return f"{type(self).__name__}({str(self)!r})"
 
     def __hash__(self) -> int:
-        return hash((self.id, self.name))
+        return hash(self.id)
 
-    def __eq__(self, other) -> bool:
-        return isinstance(other, type(self)) and (self.id, self.name) == (
-            other.id,
-            other.name,
-        )
+    def __eq__(self, other: Any) -> bool:
+        if isinstance(other, type(self)):
+            return self.id == other.id
+        return NotImplemented
+
+    def __lt__(self, other: Any) -> bool:
+        if isinstance(other, type(self)):
+            return self.id < other.id
+        return NotImplemented
 
     def __bool__(self) -> bool:
-        return (self.id, self.name) != (type(self).id, type(self).name)
+        return self.id != type(self).id
 
     @classmethod
     def all(cls) -> list[Effect]:
         from pymafia import ash
 
         values = km.DataTypes.EFFECT_TYPE.allValues()
-        return sorted(ash.to_python(values), key=lambda x: x.id)
+        return sorted(ash.to_python(values))
 
     @property
     def default(self) -> str:

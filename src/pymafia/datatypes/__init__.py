@@ -1,5 +1,4 @@
-from pymafia.datatypes._bounty import Bounty
-
+from ._bounty import Bounty
 from ._class import Class
 from ._coinmaster import Coinmaster
 from ._effect import Effect, EffectQuality
@@ -16,3 +15,4 @@ from ._slot import Slot
 from ._stat import Stat
 from ._thrall import Thrall
 from ._vykea import Vykea
+from ._zodiac import Zodiac

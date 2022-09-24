@@ -1,17 +1,19 @@
 from __future__ import annotations
 
+from functools import total_ordering
 from typing import Any
 
 from pymafia.kolmafia import km
 
 
+@total_ordering
 class Servant:
     id: int = 0
     name: str = "none"
     data: Any = None
 
     def __init__(self, key: int | str | None = None):
-        if key in (None, self.id, self.name):
+        if key in (None, self.name, self.id):
             return
 
         data = (
@@ -33,23 +35,27 @@ class Servant:
         return f"{type(self).__name__}({str(self)!r})"
 
     def __hash__(self) -> int:
-        return hash((self.id, self.name))
+        return hash(self.id)
 
-    def __eq__(self, other) -> bool:
-        return isinstance(other, type(self)) and (self.id, self.name) == (
-            other.id,
-            other.name,
-        )
+    def __eq__(self, other: Any) -> bool:
+        if isinstance(other, type(self)):
+            return self.id == other.id
+        return NotImplemented
+
+    def __lt__(self, other: Any) -> bool:
+        if isinstance(other, type(self)):
+            return self.id < other.id
+        return NotImplemented
 
     def __bool__(self) -> bool:
-        return (self.id, self.name) != (type(self).id, type(self).name)
+        return self.id != type(self).id
 
     @classmethod
     def all(cls) -> list[Servant]:
         from pymafia import ash
 
         values = km.DataTypes.SERVANT_TYPE.allValues()
-        return sorted(ash.to_python(values), key=lambda x: x.id)
+        return sorted(ash.to_python(values))
 
     @property
     def servant(self) -> Any:

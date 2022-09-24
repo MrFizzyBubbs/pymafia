@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from functools import total_ordering
+from typing import TYPE_CHECKING, Any
 
 from pymafia.kolmafia import km
 
@@ -9,10 +10,11 @@ if TYPE_CHECKING:
     from ._monster import Monster
 
 
+@total_ordering
 class Bounty:
     name: str = "none"
 
-    def __init__(self, key: int | str | None = None):
+    def __init__(self, key: str | None = None):
         if key in (None, self.name):
             return
 
@@ -32,8 +34,15 @@ class Bounty:
     def __hash__(self) -> int:
         return hash(self.name)
 
-    def __eq__(self, other) -> bool:
-        return isinstance(other, type(self)) and self.name == other.name
+    def __eq__(self, other: Any) -> bool:
+        if isinstance(other, type(self)):
+            return self.name == other.name
+        return NotImplemented
+
+    def __lt__(self, other: Any) -> bool:
+        if isinstance(other, type(self)):
+            return self.name < other.name
+        return NotImplemented
 
     def __bool__(self) -> bool:
         return self.name != type(self).name
@@ -43,7 +52,7 @@ class Bounty:
         from pymafia import ash
 
         values = km.DataTypes.BOUNTY_TYPE.allValues()
-        return sorted(ash.to_python(values), key=lambda x: x.name)
+        return sorted(ash.to_python(values))
 
     @property
     def plural(self) -> str:
