@@ -4,7 +4,7 @@ A Python module and bridge for reflecting KoLmafia's Java environment.
 
 ## Overview
 
-The aim of the `pymafia` module is to provide an easy-to-use environment for scripting [Kingdom of Loathing](https://www.kingdomofloathing.com/) in Python. It achieves this by reflecting and wrapping the community-developed [KoLmafia](https://github.com/kolmafia/kolmafia) desktop tool. While [other languages](https://loathing-associates-scripting-society.github.io/KoL-Scripting-Resources/) for scripting KoL exist, they are arguably less approachable to non-developers than Python (although the efforts of [LASS](https://github.com/Loathing-Associates-Scripting-Society) have made this less so).
+The aim of the `pymafia` module is to provide an easy-to-use environment for scripting [Kingdom of Loathing](https://www.kingdomofloathing.com/) in Python. It achieves this by reflecting and wrapping the community-developed [KoLmafia](https://github.com/kolmafia/kolmafia) desktop tool. While [other languages](https://loathing-associates-scripting-society.github.io/KoL-Scripting-Resources/) for scripting KoL exist, they are arguably less approachable to non-developers than Python (although the efforts of [LASS](https://github.com/Loathing-Associates-Scripting-Society) have made this less so). This project was inspired by Samuel Gaus's [frattlesnake repository](https://github.com/gausie/frattlesnake).
 
 ## Installation
 
