@@ -11,6 +11,9 @@ if TYPE_CHECKING:
     from .phylum import Phylum
 
 
+Integer = km.autoclass("java.lang.Integer")
+
+
 @total_ordering
 class Monster:
     id: int = 0
@@ -110,8 +113,10 @@ class Monster:
         )
 
     @property
-    def attack_elements(self):
-        raise NotImplementedError
+    def attack_elements(self) -> list[Element]:
+        if not self:
+            return []
+        return [Element(x.toString()) for x in self.monster.getAttackElements()]
 
     @property
     def defense_element(self) -> Element:
@@ -168,7 +173,7 @@ class Monster:
         if not self:
             return Effect(None)
         poison_level = self.monster.getPoison()
-        if poison_level == km.autoclass("java.lang.Integer").MAX_VALUE:
+        if poison_level == Integer.MAX_VALUE:
             return Effect(None)
         poison_name = km.EffectDatabase.getEffectName(
             km.EffectDatabase.POISON_ID[poison_level]

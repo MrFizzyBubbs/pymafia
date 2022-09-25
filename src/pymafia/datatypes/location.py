@@ -9,29 +9,32 @@ if TYPE_CHECKING:
     from .bounty import Bounty
 
 
+Integer = km.autoclass("java.lang.Integer")
+
+
 @total_ordering
 class Location:
     id: int = -1
     name: str = "none"
-    adventure: Any = None
+    kol_adventure: Any = None
 
     def __init__(self, key: int | str | None = None):
         if key in (None, self.name, self.id):
             return
 
-        adventure = (
+        kol_adventure = (
             km.AdventureDatabase.getAdventure(key)
             if isinstance(key, str)
             else km.AdventureDatabase.getAdventureByURL(
                 f"adventure.php?snarfblat={key}"
             )
         )
-        if adventure is None:
+        if kol_adventure is None:
             raise ValueError(f"{type(self).__name__} {key!r} not found")
 
-        self.id = adventure.getSnarfblat()
-        self.name = adventure.getAdventureName()
-        self.adventure = adventure
+        self.id = kol_adventure.getSnarfblat()
+        self.name = kol_adventure.getAdventureName()
+        self.kol_adventure = kol_adventure
 
     def __str__(self) -> str:
         return self.name
@@ -68,30 +71,30 @@ class Location:
 
     @property
     def nocombats(self) -> bool:
-        return self.adventure.isNonCombatsOnly() if self else False
+        return self.kol_adventure.isNonCombatsOnly() if self else False
 
     @property
     def combat_percent(self) -> float:
         if not self:
             return 0
-        area = self.adventure.getAreaSummary()
+        area = self.kol_adventure.getAreaSummary()
         return 0 if area is None else area.areaCombatPercent()
 
     @property
     def zone(self) -> str:
-        return self.adventure.getZone() if self else ""
+        return self.kol_adventure.getZone() if self else ""
 
     @property
     def parent(self) -> str:
-        return self.adventure.getParentZone() if self else ""
+        return self.kol_adventure.getParentZone() if self else ""
 
     @property
     def parentdesc(self) -> str:
-        return self.adventure.getParentZoneDescription() if self else ""
+        return self.kol_adventure.getParentZoneDescription() if self else ""
 
     @property
     def environment(self) -> str:
-        return self.adventure.getEnvironment() if self else ""
+        return self.kol_adventure.getEnvironment() if self else ""
 
     @property
     def bounty(self) -> Bounty:
@@ -99,55 +102,60 @@ class Location:
 
         if not self:
             return Bounty(None)
-        bounty = km.AdventureDatabase.getBounty(self.adventure)
+        bounty = km.AdventureDatabase.getBounty(self.kol_adventure)
         return Bounty(None) if bounty is None else Bounty(bounty.getName())
 
     @property
     def combat_queue(self) -> list[str]:
         if not self:
             return []
-        zone_queue = km.AdventureQueueDatabase.getZoneQueue(self.adventure)
+        zone_queue = km.AdventureQueueDatabase.getZoneQueue(self.kol_adventure)
         return [] if zone_queue is None else list(zone_queue)
 
     @property
     def noncombat_queue(self) -> list[str]:
         if not self:
             return []
-        zone_queue = km.AdventureQueueDatabase.getZoneNoncombatQueue(self.adventure)
+        zone_queue = km.AdventureQueueDatabase.getZoneNoncombatQueue(self.kol_adventure)
         return [] if zone_queue is None else list(zone_queue)
 
     @property
     def turns_spent(self) -> int:
-        return km.AdventureSpentDatabase.getTurns(self.adventure, True) if self else 0
+        return (
+            km.AdventureSpentDatabase.getTurns(self.kol_adventure, True) if self else 0
+        )
 
     @property
     def kisses(self) -> int:
-        return km.FightRequest.dreadKisses(self.adventure) if self else 0
+        return km.FightRequest.dreadKisses(self.kol_adventure) if self else 0
 
     @property
     def recommended_stat(self) -> int:
-        return self.adventure.getRecommendedStat() if self else 0
+        return self.kol_adventure.getRecommendedStat() if self else 0
 
     @property
     def poison(self) -> int:
-        raise NotImplementedError
+        if not self:
+            return Integer.MAX_VALUE
+        area = self.kol_adventure.getAreaSummary()
+        return Integer.MAX_VALUE if area is None else area.poison()
 
     @property
     def water_level(self) -> int:
         return (
-            self.adventure.getWaterLevel()
+            self.kol_adventure.getWaterLevel()
             if self and km.KoLCharacter.inRaincore()
             else 0
         )
 
     @property
     def wanderers(self) -> bool:
-        return self.adventure.hasWanderers() if self else False
+        return self.kol_adventure.hasWanderers() if self else False
 
     @property
     def fire_level(self) -> int:
         return (
-            km.WildfireCampRequest.getFireLevel(self.adventure)
+            km.WildfireCampRequest.getFireLevel(self.kol_adventure)
             if self and km.KoLCharacter.inFirecore()
             else 0
         )

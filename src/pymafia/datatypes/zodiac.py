@@ -20,7 +20,7 @@ class Zodiac(Enum):
     BAD_MOON = 10
 
     def __str__(self) -> str:
-        return self.value
+        return self.name_
 
     def __lt__(self, other: Any) -> bool:
         if isinstance(other, type(self)):
