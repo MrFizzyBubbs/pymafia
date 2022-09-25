@@ -6,9 +6,9 @@ from typing import TYPE_CHECKING, Any
 from pymafia.kolmafia import km
 
 if TYPE_CHECKING:
-    from ._effect import Effect
-    from ._element import Element
-    from ._phylum import Phylum
+    from .effect import Effect
+    from .element import Element
+    from .phylum import Phylum
 
 
 @total_ordering
@@ -101,7 +101,7 @@ class Monster:
 
     @property
     def attack_element(self) -> Element:
-        from ._element import Element
+        from .element import Element
 
         return (
             Element(self.monster.getAttackElement().toString())
@@ -115,7 +115,7 @@ class Monster:
 
     @property
     def defense_element(self) -> Element:
-        from ._element import Element
+        from .element import Element
 
         return (
             Element(self.monster.getDefenseElement().toString())
@@ -157,13 +157,13 @@ class Monster:
 
     @property
     def phylum(self) -> Phylum:
-        from ._phylum import Phylum
+        from .phylum import Phylum
 
         return Phylum(self.monster.getPhylum().toString()) if self else Phylum.NONE
 
     @property
     def poison(self) -> Effect:
-        from ._effect import Effect
+        from .effect import Effect
 
         if not self:
             return Effect(None)

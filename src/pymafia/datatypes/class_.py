@@ -6,30 +6,26 @@ from typing import TYPE_CHECKING, Any
 from pymafia.kolmafia import km
 
 if TYPE_CHECKING:
-    from ._skill import Skill
+    from .stat import Stat
 
 
 @total_ordering
-class Thrall:
+class Class:
     id: int = 0
     name: str = "none"
-    data: Any = None
+    ascension_class: Any = None
 
     def __init__(self, key: int | str | None = None):
         if key in (None, self.name, self.id):
             return
 
-        data = (
-            km.PastaThrallData.typeToData(key)
-            if isinstance(key, str)
-            else km.PastaThrallData.idToData(key)
-        )
-        if data is None:
+        ascension_class = km.AscensionClass.find(key)
+        if ascension_class is None:
             raise ValueError(f"{type(self).__name__} {key!r} not found")
 
-        self.id = data[1]
-        self.name = data[0]
-        self.data = data
+        self.id = ascension_class.getId()
+        self.name = ascension_class.getName()
+        self.ascension_class = ascension_class
 
     def __str__(self) -> str:
         return self.name
@@ -54,34 +50,18 @@ class Thrall:
         return self.id != type(self).id
 
     @classmethod
-    def all(cls) -> list[Thrall]:
+    def all(cls) -> list[Class]:
         from pymafia import ash
 
-        values = km.DataTypes.THRALL_TYPE.allValues()
+        values = km.DataTypes.CLASS_TYPE.allValues()
         return sorted(ash.to_python(values))
 
     @property
-    def thrall(self) -> Any:
-        return km.KoLCharacter.findPastaThrall(self.name)
+    def primestat(self) -> Stat:
+        from .stat import Stat
 
-    @property
-    def level(self) -> int:
-        return self.thrall.getLevel() if self else 0
-
-    @property
-    def image(self) -> str:
-        return self.data[6] if self else ""
-
-    @property
-    def tinyimage(self) -> str:
-        return self.data[7] if self else ""
-
-    @property
-    def skill(self) -> Skill:
-        from ._skill import Skill
-
-        return Skill(self.data[3] if self else None)
-
-    @property
-    def current_modifiers(self) -> str:
-        return self.thrall.getCurrentModifiers() if self else ""
+        if not self:
+            return Stat.NONE
+        prime_index = self.ascension_class.getPrimeStatIndex()
+        name = km.AdventureResult.STAT_NAMES[prime_index]
+        return Stat[name.upper()]

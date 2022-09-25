@@ -6,8 +6,8 @@ from typing import TYPE_CHECKING, Any
 from pymafia.kolmafia import km
 
 if TYPE_CHECKING:
-    from ._location import Location
-    from ._monster import Monster
+    from .location import Location
+    from .monster import Monster
 
 
 @total_ordering
@@ -84,12 +84,12 @@ class Bounty:
 
     @property
     def monster(self) -> Monster:
-        from ._monster import Monster
+        from .monster import Monster
 
         return Monster(km.BountyDatabase.getMonster(self.name))
 
     @property
     def location(self) -> Location:
-        from ._location import Location
+        from .location import Location
 
         return Location(km.BountyDatabase.getLocation(self.name))

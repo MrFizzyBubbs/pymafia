@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any
 from pymafia.kolmafia import km
 
 if TYPE_CHECKING:
-    from ._class import Class
+    from .class_ import Class
 
 
 @total_ordering
@@ -74,7 +74,7 @@ class Skill:
 
     @property
     def class_(self) -> Class:
-        from ._class import Class
+        from .class_ import Class
 
         return Class(km.SkillDatabase.getSkillCategory(self.id) or None)
 

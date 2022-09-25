@@ -6,8 +6,8 @@ from typing import TYPE_CHECKING, Any
 from pymafia.kolmafia import km
 
 if TYPE_CHECKING:
-    from ._element import Element
-    from ._item import Item
+    from .element import Element
+    from .item import Item
 
 
 class VykeaType(IntEnum):
@@ -74,7 +74,7 @@ class Vykea:
 
     @property
     def rune(self) -> Item:
-        from ._item import Item
+        from .item import Item
 
         return Item(self.companion.getRune().getItemId())
 
@@ -92,6 +92,6 @@ class Vykea:
 
     @property
     def attack_element(self) -> Element:
-        from ._element import Element
+        from .element import Element
 
         return Element(self.companion.getAttackElement().toString())

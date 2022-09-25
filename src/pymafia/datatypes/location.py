@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any
 from pymafia.kolmafia import km
 
 if TYPE_CHECKING:
-    from ._bounty import Bounty
+    from .bounty import Bounty
 
 
 @total_ordering
@@ -95,7 +95,7 @@ class Location:
 
     @property
     def bounty(self) -> Bounty:
-        from ._bounty import Bounty
+        from .bounty import Bounty
 
         if not self:
             return Bounty(None)
