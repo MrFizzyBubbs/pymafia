@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from enum import IntEnum
+from enum import Enum
 from typing import TYPE_CHECKING, Any
 
 from pymafia.kolmafia import km
@@ -10,14 +10,14 @@ if TYPE_CHECKING:
     from .item import Item
 
 
-class VykeaType(IntEnum):
-    NONE = km.VYKEACompanionData.NONE
-    BOOKSHELF = km.VYKEACompanionData.BOOKSHELF
-    DRESSER = km.VYKEACompanionData.DRESSER
-    CEILING_FAN = km.VYKEACompanionData.CEILING_FAN
-    COUCH = km.VYKEACompanionData.COUCH
-    LAMP = km.VYKEACompanionData.LAMP
-    DISHRACK = km.VYKEACompanionData.DISHRACK
+class VykeaType(Enum):
+    NONE = getattr(km, "VYKEACompanionData$VYKEACompanionType").NONE
+    BOOKSHELF = getattr(km, "VYKEACompanionData$VYKEACompanionType").BOOKSHELF
+    DRESSER = getattr(km, "VYKEACompanionData$VYKEACompanionType").DRESSER
+    CEILING_FAN = getattr(km, "VYKEACompanionData$VYKEACompanionType").CEILING_FAN
+    COUCH = getattr(km, "VYKEACompanionData$VYKEACompanionType").COUCH
+    LAMP = getattr(km, "VYKEACompanionData$VYKEACompanionType").LAMP
+    DISHRACK = getattr(km, "VYKEACompanionData$VYKEACompanionType").DISHRACK
 
 
 class Vykea:
