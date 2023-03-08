@@ -10,21 +10,11 @@ if TYPE_CHECKING:
     from .item import Item
 
 
-class VykeaType(Enum):
-    NONE = getattr(km, "VYKEACompanionData$VYKEACompanionType").NONE
-    BOOKSHELF = getattr(km, "VYKEACompanionData$VYKEACompanionType").BOOKSHELF
-    DRESSER = getattr(km, "VYKEACompanionData$VYKEACompanionType").DRESSER
-    CEILING_FAN = getattr(km, "VYKEACompanionData$VYKEACompanionType").CEILING_FAN
-    COUCH = getattr(km, "VYKEACompanionData$VYKEACompanionType").COUCH
-    LAMP = getattr(km, "VYKEACompanionData$VYKEACompanionType").LAMP
-    DISHRACK = getattr(km, "VYKEACompanionData$VYKEACompanionType").DISHRACK
-
-
 class Vykea:
     companion: Any = km.VYKEACompanionData.NO_COMPANION
 
     def __init__(self, key: str | None = None):
-        if key in (None, "none"):
+        if key in ("none", None):
             return
 
         companion = km.VYKEACompanionData.fromString(key)
@@ -69,8 +59,8 @@ class Vykea:
         return self.companion.getName()
 
     @property
-    def type_(self) -> VykeaType:
-        return VykeaType(self.companion.getType())
+    def type_(self) -> str:
+        return self.companion.getType()
 
     @property
     def rune(self) -> Item:

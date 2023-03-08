@@ -11,16 +11,16 @@ if TYPE_CHECKING:
 
 @total_ordering
 class Class:
-    id: int = 0
+    id: int = -1
     name: str = "none"
     ascension_class: Any = None
 
     def __init__(self, key: int | str | None = None):
-        if key in (None, self.name, self.id):
+        if key in (self.id, self.name, None):
             return
 
         ascension_class = km.AscensionClass.find(key)
-        if ascension_class is None:
+        if ascension_class is None or ascension_class.getId() < 0:
             raise ValueError(f"{type(self).__name__} {key!r} not found")
 
         self.id = ascension_class.getId()

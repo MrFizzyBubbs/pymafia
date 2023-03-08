@@ -1,54 +1,51 @@
 from __future__ import annotations
 
 from enum import Enum
+from functools import total_ordering
 from typing import Any
 
+from pymafia.kolmafia import km
 
-class Slot(Enum):
-    NONE = "none"
-    HAT = "hat"
-    WEAPON = "weapon"
-    HOLSTER = "holster"
-    OFFHAND = "off-hand"
-    BACK = "back"
-    SHIRT = "shirt"
-    PANTS = "pants"
-    ACC1 = "acc1"
-    ACC2 = "acc2"
-    ACC3 = "acc3"
-    FAMILIAR = "familiar"
-    CROWNOFTHRONES = "crown-of-thrones"
-    STICKER1 = "sticker1"
-    STICKER2 = "sticker2"
-    STICKER3 = "sticker3"
-    CARDSLEEVE = "card-sleeve"
-    FOLDER1 = "folder1"
-    FOLDER2 = "folder2"
-    FOLDER3 = "folder3"
-    FOLDER4 = "folder4"
-    FOLDER5 = "folder5"
-    BUDDYBJORN = "buddy-bjorn"
-    BOOTSKIN = "bootskin"
-    BOOTSPUR = "bootspur"
-    FAKEHAND = "fakehand"
+
+@total_ordering
+class Slot:
+    name: str = "none"
+
+    def __init__(self, key: str | None = None):
+        if key in (self.name, None):
+            return
+
+        slot = km.EquipmentRequest.slotNumber(key)
+        if slot == km.Slot.NONE:
+            raise ValueError(f"{type(self).__name__} {key!r} not found")
+
+        self.name = slot.toString()
 
     def __str__(self) -> str:
-        return self.value
+        return self.name
+
+    def __repr__(self) -> str:
+        return f"{type(self).__name__}({str(self)!r})"
+
+    def __hash__(self) -> int:
+        return hash(self.name)
+
+    def __eq__(self, other: Any) -> bool:
+        if isinstance(other, type(self)):
+            return self.name == other.name
+        return NotImplemented
 
     def __lt__(self, other: Any) -> bool:
         if isinstance(other, type(self)):
-            return self.value < other.value
+            return self.name < other.name
         return NotImplemented
 
     def __bool__(self) -> bool:
-        return self is not self.NONE
-
-    @classmethod
-    def _missing_(cls, value) -> Slot:
-        if value is None:
-            return cls.NONE
-        return super()._missing_(value)
+        return self.name != type(self).name
 
     @classmethod
     def all(cls) -> list[Slot]:
-        return list(cls)
+        from pymafia import ash
+
+        values = km.DataTypes.SLOT_TYPE.allValues()
+        return sorted(ash.to_python(values))

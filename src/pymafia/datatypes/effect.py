@@ -20,7 +20,7 @@ class Effect:
     name: str = "none"
 
     def __init__(self, key: int | str | None = None):
-        if key in (None, self.name, self.id):
+        if key in (self.id, self.name, None):
             return
 
         id = km.EffectDatabase.getEffectId(key) if isinstance(key, str) else key

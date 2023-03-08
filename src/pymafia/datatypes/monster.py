@@ -21,7 +21,7 @@ class Monster:
     monster: Any = None
 
     def __init__(self, key: int | str | None = None):
-        if key in (None, self.name, self.id):
+        if key in (self.id, self.name, None):
             return
 
         monster = (

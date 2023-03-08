@@ -15,7 +15,7 @@ class Coinmaster:
     coinmaster: Any = None
 
     def __init__(self, key: str | None = None):
-        if key in (None, self.name):
+        if key in (self.name, None):
             return
 
         coinmaster = km.CoinmasterRegistry.findCoinmaster(key)
