@@ -16,7 +16,7 @@ class Thrall:
     data: Any = None
 
     def __init__(self, key: int | str | None = None):
-        if key in (self.id, self.type_, None):
+        if key.casefold() == self.type_.casefold() or key in (self.id, None):
             return
 
         data = (
@@ -63,7 +63,7 @@ class Thrall:
     @property
     def thrall(self) -> Any:
         return km.KoLCharacter.findPastaThrall(self.name)
-    
+
     @property
     def name(self) -> str:
         return self.thrall.getName() if self else ""

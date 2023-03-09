@@ -16,7 +16,7 @@ class Class:
     ascension_class: Any = None
 
     def __init__(self, key: int | str | None = None):
-        if key in (self.id, self.name, None):
+        if key.casefold() == self.name.casefold() or key in (self.id, None):
             return
 
         ascension_class = km.AscensionClass.find(key)
@@ -61,7 +61,7 @@ class Class:
         from .stat import Stat
 
         if not self:
-            return Stat.NONE
+            return Stat(None)
         prime_index = self.ascension_class.getPrimeStatIndex()
         name = km.AdventureResult.STAT_NAMES[prime_index]
-        return Stat[name.upper()]
+        return Stat(name)

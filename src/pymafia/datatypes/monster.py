@@ -21,7 +21,7 @@ class Monster:
     monster: Any = None
 
     def __init__(self, key: int | str | None = None):
-        if key in (self.id, self.name, None):
+        if key.casefold() == self.name.casefold() or key in (self.id, None):
             return
 
         monster = (
@@ -109,7 +109,7 @@ class Monster:
         return (
             Element(self.monster.getAttackElement().toString())
             if self
-            else Element.NONE
+            else Element(None)
         )
 
     @property
@@ -125,7 +125,7 @@ class Monster:
         return (
             Element(self.monster.getDefenseElement().toString())
             if self
-            else Element.NONE
+            else Element(None)
         )
 
     @property
@@ -164,7 +164,7 @@ class Monster:
     def phylum(self) -> Phylum:
         from .phylum import Phylum
 
-        return Phylum(self.monster.getPhylum().toString()) if self else Phylum.NONE
+        return Phylum(self.monster.getPhylum().toString()) if self else Phylum(None)
 
     @property
     def poison(self) -> Effect:

@@ -15,7 +15,7 @@ class Familiar:
     name: str = "none"
 
     def __init__(self, key: int | str | None = None):
-        if key in (self.id, self.name, None):
+        if key.casefold() == self.name.casefold() or key in (self.id, None):
             return
 
         id = km.FamiliarDatabase.getFamiliarId(key) if isinstance(key, str) else key

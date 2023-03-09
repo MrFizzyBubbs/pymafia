@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from enum import Enum
 from functools import total_ordering
 from typing import Any
 
@@ -12,7 +11,7 @@ class Slot:
     name: str = "none"
 
     def __init__(self, key: str | None = None):
-        if key in (self.name, None):
+        if key.casefold() == self.name.casefold() or key is None:
             return
 
         slot = km.EquipmentRequest.slotNumber(key)

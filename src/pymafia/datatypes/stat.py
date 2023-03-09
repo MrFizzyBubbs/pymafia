@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from enum import Enum
 from functools import total_ordering
 from typing import Any
 
@@ -12,7 +11,7 @@ class Stat:
     name: str = "none"
 
     def __init__(self, key: str | None = None):
-        if key in (self.name, None):
+        if key.casefold() == self.name.casefold() or key is None:
             return
 
         for stat in km.DataTypes.STAT_VALUES:
@@ -51,4 +50,3 @@ class Stat:
 
         values = km.DataTypes.STAT_TYPE.allValues()
         return sorted(ash.to_python(values))
-    

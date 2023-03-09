@@ -14,7 +14,7 @@ class Element:
     element: Any = None
 
     def __init__(self, key: str | None = None):
-        if key in (self.name, None):
+        if key.casefold() == self.name.casefold() or key is None:
             return
 
         element = km.MonsterDatabase.stringToElement(key)
