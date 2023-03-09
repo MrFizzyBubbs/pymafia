@@ -21,13 +21,13 @@ class PantogramElement(IntEnum):
     STENCH = 5
 
 
-alignments = {Stat.MUSCLE: 1, Stat.MYSTICALITY: 2, Stat.MOXIE: 3}
+alignments = {Stat("Muscle"): 1, Stat("Mysticality"): 2, Stat("Moxie"): 3}
 elements = {
-    Element.HOT: 1,
-    Element.COLD: 2,
-    Element.SPOOKY: 3,
-    Element.SLEAZE: 4,
-    Element.STENCH: 5,
+    Element("hot"): 1,
+    Element("cold"): 2,
+    Element("spooky"): 3,
+    Element("sleaze"): 4,
+    Element("stench"): 5,
 }
 left_sacrifices = {
     "Maximum HP: 40": (-1, 0),
