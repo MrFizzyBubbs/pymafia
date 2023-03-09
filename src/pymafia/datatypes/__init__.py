@@ -17,6 +17,26 @@ from .thrall import Thrall
 from .vykea import Vykea
 from .zodiac import Zodiac
 
+MAFIA_TYPES = [
+    Item,
+    Location,
+    Class,
+    Stat,
+    Skill,
+    Effect,
+    Familiar,
+    Slot,
+    Monster,
+    Element,
+    Coinmaster,
+    Phylum,
+    Bounty,
+    Thrall,
+    Servant,
+    Vykea,
+    Path,
+]
+
 __all__ = [
     "Bounty",
     "Class",

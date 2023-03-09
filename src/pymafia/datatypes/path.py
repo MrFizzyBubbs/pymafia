@@ -5,6 +5,8 @@ from typing import Any
 
 from pymafia.kolmafia import km
 
+AscensionPath = getattr(km, "AscensionPath$Path")
+
 
 @total_ordering
 class Path:
@@ -13,7 +15,7 @@ class Path:
     ascension_path: Any = None
 
     def __init__(self, key: int | str | None = None):
-        if key in (None, self.name, self.id):
+        if key.casefold() == self.name.casefold() or key in (self.id, None):
             return
 
         ascension_path = (
@@ -21,7 +23,7 @@ class Path:
             if isinstance(key, str)
             else km.AscensionPath.idToPath(key)
         )
-        if ascension_path == getattr(km, "AscensionPath$Path").NONE:
+        if ascension_path == AscensionPath.NONE:
             raise ValueError(f"{type(self).__name__} {key!r} not found")
 
         self.id = ascension_path.getId()

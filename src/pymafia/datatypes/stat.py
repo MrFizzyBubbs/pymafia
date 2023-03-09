@@ -1,35 +1,52 @@
 from __future__ import annotations
 
-from enum import Enum
+from functools import total_ordering
 from typing import Any
 
+from pymafia.kolmafia import km
 
-class Stat(Enum):
-    NONE = "none"
-    MUSCLE = "Muscle"
-    MYSTICALITY = "Mysticality"
-    MOXIE = "Moxie"
-    SUBMUSCLE = "SubMuscle"
-    SUBMYSTICALITY = "SubMysticality"
-    SUBMOXIE = "SubMoxie"
+
+@total_ordering
+class Stat:
+    name: str = "none"
+
+    def __init__(self, key: str | None = None):
+        if key.casefold() == self.name.casefold() or key is None:
+            return
+
+        for stat in km.DataTypes.STAT_VALUES:
+            name = stat.toString()
+            if name.casefold() == key.casefold():
+                self.name = name
+                return
+
+        raise ValueError(f"{type(self).__name__} {key!r} not found")
 
     def __str__(self) -> str:
-        return self.value
+        return self.name
+
+    def __repr__(self) -> str:
+        return f"{type(self).__name__}({str(self)!r})"
+
+    def __hash__(self) -> int:
+        return hash(self.name)
+
+    def __eq__(self, other: Any) -> bool:
+        if isinstance(other, type(self)):
+            return self.name == other.name
+        return NotImplemented
 
     def __lt__(self, other: Any) -> bool:
         if isinstance(other, type(self)):
-            return self.value < other.value
+            return self.name < other.name
         return NotImplemented
 
     def __bool__(self) -> bool:
-        return self is not self.NONE
-
-    @classmethod
-    def _missing_(cls, value) -> Stat:
-        if value is None:
-            return cls.NONE
-        return super()._missing_(value)
+        return self.name != type(self).name
 
     @classmethod
     def all(cls) -> list[Stat]:
-        return list(cls)
+        from pymafia import ash
+
+        values = km.DataTypes.STAT_TYPE.allValues()
+        return sorted(ash.to_python(values))

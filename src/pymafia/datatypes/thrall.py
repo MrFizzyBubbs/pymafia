@@ -12,11 +12,11 @@ if TYPE_CHECKING:
 @total_ordering
 class Thrall:
     id: int = 0
-    name: str = "none"
+    type_: str = "none"
     data: Any = None
 
     def __init__(self, key: int | str | None = None):
-        if key in (None, self.name, self.id):
+        if key.casefold() == self.type_.casefold() or key in (self.id, None):
             return
 
         data = (
@@ -27,12 +27,12 @@ class Thrall:
         if data is None:
             raise ValueError(f"{type(self).__name__} {key!r} not found")
 
-        self.id = data[1]
-        self.name = data[0]
+        self.id = km.PastaThrallData.dataToId(data)
+        self.type_ = km.PastaThrallData.dataToType(data)
         self.data = data
 
     def __str__(self) -> str:
-        return self.name
+        return self.type_
 
     def __repr__(self) -> str:
         return f"{type(self).__name__}({str(self)!r})"
@@ -65,22 +65,26 @@ class Thrall:
         return km.KoLCharacter.findPastaThrall(self.name)
 
     @property
+    def name(self) -> str:
+        return self.thrall.getName() if self else ""
+
+    @property
     def level(self) -> int:
         return self.thrall.getLevel() if self else 0
 
     @property
     def image(self) -> str:
-        return self.data[6] if self else ""
+        return km.PastaThrallData.dataToImage(self.data) if self else ""
 
     @property
     def tinyimage(self) -> str:
-        return self.data[7] if self else ""
+        return km.PastaThrallData.dataToTinyImage(self.data) if self else ""
 
     @property
     def skill(self) -> Skill:
         from .skill import Skill
 
-        return Skill(self.data[3] if self else None)
+        return Skill(km.PastaThrallData.dataToSkillId(self.data) if self else None)
 
     @property
     def current_modifiers(self) -> str:

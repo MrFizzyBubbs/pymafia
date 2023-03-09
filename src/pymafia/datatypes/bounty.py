@@ -15,7 +15,7 @@ class Bounty:
     name: str = "none"
 
     def __init__(self, key: str | None = None):
-        if key in (None, self.name):
+        if key.casefold() == self.name.casefold() or key is None:
             return
 
         bounties = km.BountyDatabase.getMatchingNames(key)

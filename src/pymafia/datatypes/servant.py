@@ -13,7 +13,7 @@ class Servant:
     data: Any = None
 
     def __init__(self, key: int | str | None = None):
-        if key in (None, self.name, self.id):
+        if key.casefold() == self.name.casefold() or key in (self.id, None):
             return
 
         data = (
@@ -24,8 +24,8 @@ class Servant:
         if data is None:
             raise ValueError(f"{type(self).__name__} {key!r} not found")
 
-        self.id = data[2]
-        self.name = data[0]
+        self.id = km.EdServantData.dataToId(data)
+        self.name = km.EdServantData.dataToType(data)
         self.data = data
 
     def __str__(self) -> str:
@@ -71,20 +71,20 @@ class Servant:
 
     @property
     def image(self) -> str:
-        return self.data[3] if self else ""
+        return km.EdServantData.dataToImage(self.data) if self else ""
 
     @property
     def level1_ability(self) -> str:
-        return self.data[4] if self else ""
+        return km.EdServantData.dataToLevel1Ability(self.data) if self else ""
 
     @property
     def level7_ability(self) -> str:
-        return self.data[5] if self else ""
+        return km.EdServantData.dataToLevel7Ability(self.data) if self else ""
 
     @property
     def level14_ability(self) -> str:
-        return self.data[6] if self else ""
+        return km.EdServantData.dataToLevel14Ability(self.data) if self else ""
 
     @property
     def level21_ability(self) -> str:
-        return self.data[7] if self else ""
+        return km.EdServantData.dataToLevel21Ability(self.data) if self else ""

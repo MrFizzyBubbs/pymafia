@@ -8,7 +8,6 @@ from pymafia.kolmafia import km
 if TYPE_CHECKING:
     from .bounty import Bounty
 
-
 Integer = km.autoclass("java.lang.Integer")
 
 
@@ -19,7 +18,7 @@ class Location:
     kol_adventure: Any = None
 
     def __init__(self, key: int | str | None = None):
-        if key in (None, self.name, self.id):
+        if key.casefold() == self.name.casefold() or key in (self.id, None):
             return
 
         kol_adventure = (

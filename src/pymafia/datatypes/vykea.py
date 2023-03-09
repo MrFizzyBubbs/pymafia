@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from enum import IntEnum
+from enum import Enum
 from typing import TYPE_CHECKING, Any
 
 from pymafia.kolmafia import km
@@ -10,21 +10,11 @@ if TYPE_CHECKING:
     from .item import Item
 
 
-class VykeaType(IntEnum):
-    NONE = km.VYKEACompanionData.NONE
-    BOOKSHELF = km.VYKEACompanionData.BOOKSHELF
-    DRESSER = km.VYKEACompanionData.DRESSER
-    CEILING_FAN = km.VYKEACompanionData.CEILING_FAN
-    COUCH = km.VYKEACompanionData.COUCH
-    LAMP = km.VYKEACompanionData.LAMP
-    DISHRACK = km.VYKEACompanionData.DISHRACK
-
-
 class Vykea:
     companion: Any = km.VYKEACompanionData.NO_COMPANION
 
     def __init__(self, key: str | None = None):
-        if key in (None, "none"):
+        if key.casefold() == "none".casefold() or key is None:
             return
 
         companion = km.VYKEACompanionData.fromString(key)
@@ -69,8 +59,8 @@ class Vykea:
         return self.companion.getName()
 
     @property
-    def type_(self) -> VykeaType:
-        return VykeaType(self.companion.getType())
+    def type_(self) -> str:
+        return self.companion.getType()
 
     @property
     def rune(self) -> Item:
