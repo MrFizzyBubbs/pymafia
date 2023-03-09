@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pymafia"
-version = "0.1.7"
+version = "0.0.0"  # 0.0.0 is the standard placeholder for poetry-dynamic-versioning
 description = "A Python module and bridge for reflecting KoLmafia's Java environment."
 license = "MIT"
 authors = ["MrFizzyBubbs <MrFizzyBubbs@protonmail.com>"]
@@ -24,6 +24,11 @@ profile = "black"
 [tool.mypy]
 ignore_missing_imports = true
 
+[tool.poetry-dynamic-versioning]
+enable = true
+style = "semver"
+strict = true
+
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]
+build-backend = "poetry_dynamic_versioning.backend"
