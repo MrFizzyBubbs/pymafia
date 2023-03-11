@@ -21,7 +21,7 @@ class Monster:
     monster: Any = None
 
     def __init__(self, key: int | str | None = None):
-        if key.casefold() == self.name.casefold() or key in (self.id, None):
+        if (isinstance(key, str) and key.casefold() == self.name.casefold()) or key in (self.id, None):
             return
 
         monster = (

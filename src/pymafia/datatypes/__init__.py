@@ -15,7 +15,6 @@ from .slot import Slot
 from .stat import Stat
 from .thrall import Thrall
 from .vykea import Vykea
-from .zodiac import Zodiac
 
 MAFIA_TYPES = [
     Item,
@@ -58,5 +57,4 @@ __all__ = [
     "Stat",
     "Thrall",
     "Vykea",
-    "Zodiac",
 ]

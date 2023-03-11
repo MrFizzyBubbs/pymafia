@@ -15,10 +15,9 @@ class Skill:
     name: str = "none"
 
     def __init__(self, key: int | str | None = None):
-        if key.casefold() == self.name.casefold() or key in (self.id, None):
+        if (isinstance(key, str) and key.casefold() == self.name.casefold()) or key in (self.id, None):
             return
 
-        # Deviate from the behavior of mafia's DataTypes.parseSkillValue
         id = km.SkillDatabase.getSkillId(key) if isinstance(key, str) else key
         name = km.SkillDatabase.getSkillName(id)
         if name is None:
