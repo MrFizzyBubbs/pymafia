@@ -16,7 +16,10 @@ class Class:
     ascension_class: Any = None
 
     def __init__(self, key: int | str | None = None):
-        if (isinstance(key, str) and key.casefold() == self.name.casefold()) or key in (self.id, None):
+        if (isinstance(key, str) and key.casefold() == self.name.casefold()) or key in (
+            self.id,
+            None,
+        ):
             return
 
         ascension_class = km.AscensionClass.find(key)

@@ -11,7 +11,9 @@ class Stat:
     name: str = "none"
 
     def __init__(self, key: str | None = None):
-        if (isinstance(key, str) and key.casefold() == self.name.casefold()) or key is None:
+        if (
+            isinstance(key, str) and key.casefold() == self.name.casefold()
+        ) or key is None:
             return
 
         for stat in km.DataTypes.STAT_VALUES:

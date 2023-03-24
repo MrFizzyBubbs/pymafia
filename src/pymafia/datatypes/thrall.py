@@ -16,7 +16,9 @@ class Thrall:
     data: Any = None
 
     def __init__(self, key: int | str | None = None):
-        if (isinstance(key, str) and key.casefold() == self.type_.casefold()) or key in (self.id, None):
+        if (
+            isinstance(key, str) and key.casefold() == self.type_.casefold()
+        ) or key in (self.id, None):
             return
 
         data = (

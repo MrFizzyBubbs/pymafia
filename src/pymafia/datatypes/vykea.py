@@ -14,7 +14,9 @@ class Vykea:
     companion: Any = km.VYKEACompanionData.NO_COMPANION
 
     def __init__(self, key: str | None = None):
-        if (isinstance(key, str) and key.casefold() == "none".casefold()) or key is None:
+        if (
+            isinstance(key, str) and key.casefold() == "none".casefold()
+        ) or key is None:
             return
 
         companion = km.VYKEACompanionData.fromString(key)
