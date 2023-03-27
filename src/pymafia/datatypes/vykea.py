@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from enum import Enum
+from enum import IntEnum
 from typing import TYPE_CHECKING, Any
 
 from pymafia.kolmafia import km
@@ -8,6 +8,11 @@ from pymafia.kolmafia import km
 if TYPE_CHECKING:
     from .element import Element
     from .item import Item
+
+VYKEACompanionData = getattr(km, "VYKEACompanionData$VYKEACompanionType")
+VYKEACompanionType = IntEnum(
+    "VYKEACompanionType", {x.name(): x.ordinal() for x in VYKEACompanionData.values()}
+)
 
 
 class Vykea:
@@ -44,7 +49,15 @@ class Vykea:
         return NotImplemented
 
     def __lt__(self, other: Any) -> bool:
-        raise NotImplementedError
+        if isinstance(other, type(self)):
+            if self.type_ != other.type_:
+                return self.type_ < other.type_
+            if self.rune != other.rune:
+                return self.rune < other.rune
+            if self.level != other.level:
+                return self.level < other.level
+            return False
+        return NotImplemented
 
     def __bool__(self) -> bool:
         return self.companion != type(self).companion
@@ -61,8 +74,8 @@ class Vykea:
         return self.companion.getName()
 
     @property
-    def type_(self) -> str:
-        return self.companion.getType()
+    def type_(self) -> VYKEACompanionType:
+        return VYKEACompanionType(self.companion.getType().ordinal())
 
     @property
     def rune(self) -> Item:
