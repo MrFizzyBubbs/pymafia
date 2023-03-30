@@ -4,7 +4,9 @@ from pymafia import datatypes
 from pymafia.kolmafia import km
 
 TypeSpec = getattr(km, "textui.DataTypes$TypeSpec")
-TypeSpec.__hash__ = TypeSpec.hashCode  # Monkey-patch to make hashable
+TypeSpec.__wrapped__.__hash__ = (
+    TypeSpec.__wrapped__.hashCode
+)  # Monkey-patch to make hashable
 
 TYPE_CONVERSIONS = {
     TypeSpec.BOOLEAN: bool,
