@@ -5,14 +5,14 @@ from typing import Any
 
 from pymafia.kolmafia import km
 
-AscensionPath = getattr(km, "AscensionPath$Path")
+JAscensionPath = getattr(km, "AscensionPath$Path")
 
 
 @total_ordering
 class Path:
     id: int = 0
     name: str = "none"
-    ascension_path: Any = None
+    ascension_path: Any = JAscensionPath.NONE
 
     def __init__(self, key: int | str | None = None):
         if (isinstance(key, str) and key.casefold() == self.name.casefold()) or key in (
@@ -26,7 +26,7 @@ class Path:
             if isinstance(key, str)
             else km.AscensionPath.idToPath(key)
         )
-        if ascension_path == AscensionPath.NONE:
+        if ascension_path == JAscensionPath.NONE:
             raise ValueError(f"{type(self).__name__} {key!r} not found")
 
         self.id = ascension_path.getId()
@@ -40,20 +40,20 @@ class Path:
         return f"{type(self).__name__}({str(self)!r})"
 
     def __hash__(self) -> int:
-        return hash(self.id)
+        return hash((self.id, self.name))
 
     def __eq__(self, other: Any) -> bool:
         if isinstance(other, type(self)):
-            return self.id == other.id
+            return (self.id, self.name) == (other.id, other.name)
         return NotImplemented
 
     def __lt__(self, other: Any) -> bool:
         if isinstance(other, type(self)):
-            return self.id < other.id
+            return (self.id, self.name) < (other.id, other.name)
         return NotImplemented
 
     def __bool__(self) -> bool:
-        return self.id != type(self).id
+        return (self.id, self.name) != (type(self).id, type(self).name)
 
     @classmethod
     def all(cls) -> list[Path]:

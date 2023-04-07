@@ -2,6 +2,8 @@ from html import escape
 
 from pymafia.kolmafia import km
 
+JMafiaState = getattr(km, "KoLConstants$MafiaState")
+
 
 def launch_gui():
     """Launch the KoLmafia GUI."""
@@ -20,8 +22,7 @@ def login(username: str, password: str | None = None) -> bool:
 
 def abort(message: str = ""):
     """Immediately halt KoLmafia."""
-    MafiaState = getattr(km, "KoLConstants$MafiaState")
-    km.KoLmafia.updateDisplay(MafiaState.ABORT, message)
+    km.KoLmafia.updateDisplay(JMafiaState.ABORT, message)
 
 
 def log(message: str, html: bool = False):

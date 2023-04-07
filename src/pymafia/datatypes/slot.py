@@ -5,6 +5,9 @@ from typing import Any
 
 from pymafia.kolmafia import km
 
+# The name property of km.Slot is inaccessible, most likely due to a collision with java's Enum.name()
+NAMES = {e.value: e.key for e in km.Slot.nameToSlot.entrySet()}
+
 
 @total_ordering
 class Slot:
@@ -20,7 +23,7 @@ class Slot:
         if slot == km.Slot.NONE:
             raise ValueError(f"{type(self).__name__} {key!r} not found")
 
-        self.name = slot.toString()
+        self.name = NAMES[slot]
 
     def __str__(self) -> str:
         return self.name

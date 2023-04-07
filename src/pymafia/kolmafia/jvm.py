@@ -17,6 +17,8 @@ def download_kolmafia(location: str):
 
 if not os.path.isfile(JAR_LOCATION):
     download_kolmafia(JAR_LOCATION)
-
 jnius_config.set_classpath(JAR_LOCATION)
+
 import jnius  # Start the JVM
+
+jnius.protocol_map["java.lang.Enum"] = {"__hash__": lambda self: self.hashCode()}

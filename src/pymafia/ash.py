@@ -4,9 +4,10 @@ from pymafia import datatypes
 from pymafia.kolmafia import km
 
 TypeSpec = getattr(km, "textui.DataTypes$TypeSpec")
-TypeSpec.__wrapped__.__hash__ = (
-    TypeSpec.__wrapped__.hashCode
-)  # Monkey-patch to make hashable
+TreeMap = km.autoclass("java.util.TreeMap")
+ArrayList = km.autoclass("java.util.ArrayList")
+String = km.autoclass("java.lang.String")
+ByteArrayInputStream = km.autoclass("java.io.ByteArrayInputStream")
 
 TYPE_CONVERSIONS = {
     TypeSpec.BOOLEAN: bool,
@@ -33,11 +34,6 @@ TYPE_CONVERSIONS = {
     TypeSpec.PATH: datatypes.Path,
 }
 
-TreeMap = km.autoclass("java.util.TreeMap")
-ArrayList = km.autoclass("java.util.ArrayList")
-String = km.autoclass("java.lang.String")
-ByteArrayInputStream = km.autoclass("java.io.ByteArrayInputStream")
-
 
 def __getattr__(name):
     return AshFunction(name)
@@ -47,7 +43,7 @@ def to_java(obj):
     if obj is None or isinstance(obj, (int, float, str)):
         return km.Value(obj)
 
-    if isinstance(obj, tuple(datatypes.MAFIA_TYPES)):
+    if isinstance(obj, tuple(datatypes.MAFIA_DATATYPES)):
         parser = getattr(km.DataTypes, f"parse{type(obj).__name__}Value")
         return parser(str(obj), False)
 

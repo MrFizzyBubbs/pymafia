@@ -40,20 +40,20 @@ class Thrall:
         return f"{type(self).__name__}({str(self)!r})"
 
     def __hash__(self) -> int:
-        return hash(self.id)
+        return hash((self.id, self.type_))
 
     def __eq__(self, other: Any) -> bool:
         if isinstance(other, type(self)):
-            return self.id == other.id
+            return (self.id, self.type_) == (other.id, other.type_)
         return NotImplemented
 
     def __lt__(self, other: Any) -> bool:
         if isinstance(other, type(self)):
-            return self.id < other.id
+            return (self.id, self.type_) < (other.id, other.type_)
         return NotImplemented
 
     def __bool__(self) -> bool:
-        return self.id != type(self).id
+        return (self.id, self.type_) != (type(self).id, type(self).type_)
 
     @classmethod
     def all(cls) -> list[Thrall]:
@@ -64,7 +64,7 @@ class Thrall:
 
     @property
     def thrall(self) -> Any:
-        return km.KoLCharacter.findPastaThrall(self.name)
+        return km.KoLCharacter.findPastaThrall(self.type_)
 
     @property
     def name(self) -> str:

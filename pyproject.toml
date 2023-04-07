@@ -14,10 +14,12 @@ wrapt = "^1.15.0"
 
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.15.1"
-black = "^22.6.0"
+black = "^23.3.0"
 isort = "^5.10.1"
 docformatter = "^1.5.0"
 mypy = "^0.971"
+pytest = "^7.2.2"
+pytest-cov = "^4.0.0"
 
 [tool.isort]
 profile = "black"
@@ -30,6 +32,9 @@ enable = true
 format = "{base}"
 style = "pep440"
 strict = true
+
+[tool.pytest.ini_options]
+pythonpath = "src/"
 
 [build-system]
 requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]

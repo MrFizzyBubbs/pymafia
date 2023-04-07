@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from enum import Enum
+from enum import Enum, IntEnum
 from functools import total_ordering
 from typing import TYPE_CHECKING, Any
 
@@ -9,6 +9,20 @@ from pymafia.kolmafia import km
 if TYPE_CHECKING:
     from .coinmaster import Coinmaster
     from .skill import Skill
+
+
+JSet = km.autoclass("java.util.Set")
+JAttribute = getattr(km, "persistence.ItemDatabase$Attribute")
+JConsumptionType = getattr(km, "KoLConstants$ConsumptionType")
+
+
+CandyType = IntEnum(
+    "CandyType",
+    {
+        x.name(): x.ordinal()
+        for x in getattr(km, "persistence.CandyDatabase$CandyType").values()
+    },
+)
 
 
 class ConsumableQuality(Enum):
@@ -22,13 +36,6 @@ class ConsumableQuality(Enum):
     CHANGING = "???"
     DRIPPY = "drippy"
     SUSHI = "sushi"
-
-
-class CandyType(Enum):
-    NONE = "none"
-    UNSPADED = "unspaded"
-    SIMPLE = "simple"
-    COMPLEX = "complex"
 
 
 @total_ordering
@@ -59,20 +66,20 @@ class Item:
         return f"{type(self).__name__}({str(self)!r})"
 
     def __hash__(self) -> int:
-        return hash(self.id)
+        return hash((self.id, self.name))
 
     def __eq__(self, other: Any) -> bool:
         if isinstance(other, type(self)):
-            return self.id == other.id
+            return (self.id, self.name) == (other.id, other.name)
         return NotImplemented
 
     def __lt__(self, other: Any) -> bool:
         if isinstance(other, type(self)):
-            return self.id < other.id
+            return (self.id, self.name) < (other.id, other.name)
         return NotImplemented
 
     def __bool__(self) -> bool:
-        return self.id != type(self).id
+        return (self.id, self.name) != (type(self).id, type(self).name)
 
     @classmethod
     def all(cls) -> list[Item]:
@@ -122,22 +129,22 @@ class Item:
     @property
     def adventures(self) -> str:
         """Return the range of adventures gained from consuming the Item. The string will either contain the adventures for invariant gains, or a hyphen-separated minimum and maximum for variant gains."""
-        return km.ConsumablesDatabase.getAdvRangeByName(self.name)
+        return km.ConsumablesDatabase.getBaseAdventureRange(self.name)
 
     @property
     def muscle(self) -> str:
         """Return the range of muscle substats gained from consuming the Item. The string will either contain the substats for invariant gains, or a hyphen-separated minimum and maximum for variant gains. Note that substat gains can be negative."""
-        return km.ConsumablesDatabase.getMuscleByName(self.name)
+        return km.ConsumablesDatabase.getBaseMuscleByName(self.name)
 
     @property
     def mysticality(self) -> str:
         """Return the range of mysticality substats gained from consuming the Item. The string will either contain the substats for invariant gains, or a hyphen-separated minimum and maximum for variant gains. Note that substat gains can be negative."""
-        return km.ConsumablesDatabase.getMysticalityByName(self.name)
+        return km.ConsumablesDatabase.getBaseMysticalityByName(self.name)
 
     @property
     def moxie(self) -> str:
         """Return the range of moxie substats gained from consuming the Item. The string will either contain the substats for invariant gains, or a hyphen-separated minimum and maximum for variant gains. Note that substat gains can be negative."""
-        return km.ConsumablesDatabase.getMoxieByName(self.name)
+        return km.ConsumablesDatabase.getBaseMoxieByName(self.name)
 
     @property
     def fullness(self) -> int:
@@ -213,16 +220,15 @@ class Item:
     @property
     def combat(self) -> bool:
         """Return True if the Item is usable in combat, else False. This returns True whether the Item is consumed by being used or not."""
-        return km.ItemDatabase.getAttribute(
-            self.id, km.ItemDatabase.ATTR_COMBAT | km.ItemDatabase.ATTR_COMBAT_REUSABLE
+        mask = km.cast(
+            "java.util.EnumSet", JSet.of(JAttribute.COMBAT, JAttribute.COMBAT_REUSABLE)
         )
+        return km.ItemDatabase.getAttribute(self.id, mask)
 
     @property
     def combat_reusable(self) -> bool:
         """Return True if the Item is usable in combat and is not consumed when doing so, else False."""
-        return km.ItemDatabase.getAttribute(
-            self.id, km.ItemDatabase.ATTR_COMBAT_REUSABLE
-        )
+        return km.ItemDatabase.getAttribute(self.id, JAttribute.COMBAT_REUSABLE)
 
     @property
     def usable(self) -> bool:
@@ -234,8 +240,8 @@ class Item:
         """Return True if the Item is usable and is not consumed when doing so, else False."""
         return km.ItemDatabase.getConsumptionType(
             self.id
-        ) == km.KoLConstants.INFINITE_USES or km.ItemDatabase.getAttribute(
-            self.id, km.ItemDatabase.ATTR_REUSABLE
+        ) == JConsumptionType.USE_INFINITE or km.ItemDatabase.getAttribute(
+            self.id, JAttribute.REUSABLE
         )
 
     @property
@@ -276,7 +282,7 @@ class Item:
     @property
     def candy_type(self) -> CandyType:
         """Return the candy type of the Item."""
-        return CandyType(km.CandyDatabase.getCandyType(self.id))
+        return CandyType(km.CandyDatabase.getCandyType(self.id).ordinal())
 
     @property
     def chocolate(self) -> bool:
@@ -314,4 +320,7 @@ class Item:
         """Return the noob Skill granted by absorbing this Item."""
         from .skill import Skill
 
-        return Skill(km.ItemDatabase.getNoobSkillId(self.id))
+        try:
+            return Skill(km.ItemDatabase.getNoobSkillId(self.id))
+        except ValueError:
+            return Skill(None)

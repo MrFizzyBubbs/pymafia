@@ -37,20 +37,20 @@ class Skill:
         return f"{type(self).__name__}({str(self)!r})"
 
     def __hash__(self) -> int:
-        return hash(self.id)
+        return hash((self.id, self.name))
 
     def __eq__(self, other: Any) -> bool:
         if isinstance(other, type(self)):
-            return self.id == other.id
+            return (self.id, self.name) == (other.id, other.name)
         return NotImplemented
 
     def __lt__(self, other: Any) -> bool:
         if isinstance(other, type(self)):
-            return self.id < other.id
+            return (self.id, self.name) < (other.id, other.name)
         return NotImplemented
 
     def __bool__(self) -> bool:
-        return self.id != type(self).id
+        return (self.id, self.name) != (type(self).id, type(self).name)
 
     @classmethod
     def all(cls) -> list[Skill]:

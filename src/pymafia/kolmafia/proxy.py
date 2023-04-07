@@ -4,7 +4,7 @@ import wrapt
 
 from pymafia.kolmafia.jvm import jnius
 
-KoLmafia = jnius.autoclass("net.sourceforge.kolmafia.KoLmafia")
+JKoLmafia = jnius.autoclass("net.sourceforge.kolmafia.KoLmafia")
 jnius_classes = tuple(x[1] for x in inspect.getmembers(jnius, inspect.isclass))
 
 
@@ -19,9 +19,9 @@ class JniusProxy(wrapt.ObjectProxy):
             kwargs = {key: self.unwrap(value) for key, value in kwargs.items()}
             return self.wrap(self.__wrapped__(*args, **kwargs))
         finally:
-            if not KoLmafia.permitsContinue():
-                KoLmafia.forceContinue()
-                raise MafiaError(KoLmafia.getLastMessage())
+            if not JKoLmafia.permitsContinue():
+                JKoLmafia.forceContinue()
+                raise MafiaError(JKoLmafia.getLastMessage())
 
     def __getattr__(self, name):
         return self.wrap(getattr(self.__wrapped__, name))
@@ -33,6 +33,18 @@ class JniusProxy(wrapt.ObjectProxy):
         if isinstance(other, type(self)):
             return self.__wrapped__ == other.__wrapped__
         return NotImplemented
+
+    def __ne__(self, other):
+        return not self == other
+
+    def __getitem__(self, key):
+        return self.wrap(self.__wrapped__[key])
+
+    def __iter__(self):
+        return self.wrap(iter(self.__wrapped__))
+
+    def __next__(self):
+        return self.wrap(next(self.__wrapped__))
 
     @classmethod
     def wrap(cls, value):

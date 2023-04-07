@@ -14,9 +14,9 @@ from .skill import Skill
 from .slot import Slot
 from .stat import Stat
 from .thrall import Thrall
-from .vykea import Vykea
+from .vykea import Vykea, VykeaCompanionType
 
-MAFIA_TYPES = [
+MAFIA_DATATYPES = [
     Item,
     Location,
     Class,
@@ -57,4 +57,5 @@ __all__ = [
     "Stat",
     "Thrall",
     "Vykea",
+    "VykeaCompanionType",
 ]

@@ -9,9 +9,9 @@ if TYPE_CHECKING:
     from .element import Element
     from .item import Item
 
-VYKEACompanionData = getattr(km, "VYKEACompanionData$VYKEACompanionType")
-VYKEACompanionType = IntEnum(
-    "VYKEACompanionType", {x.name(): x.ordinal() for x in VYKEACompanionData.values()}
+JVYKEACompanionType = getattr(km, "VYKEACompanionData$VYKEACompanionType")
+VykeaCompanionType = IntEnum(
+    "VykeaCompanionType", {x.name(): x.ordinal() for x in JVYKEACompanionType.values()}
 )
 
 
@@ -50,13 +50,11 @@ class Vykea:
 
     def __lt__(self, other: Any) -> bool:
         if isinstance(other, type(self)):
-            if self.type_ != other.type_:
-                return self.type_ < other.type_
-            if self.rune != other.rune:
-                return self.rune < other.rune
-            if self.level != other.level:
-                return self.level < other.level
-            return False
+            return (
+                self.type_,
+                self.rune,
+                self.level,
+            ) < (other.type_, other.rune, other.level)
         return NotImplemented
 
     def __bool__(self) -> bool:
@@ -74,8 +72,8 @@ class Vykea:
         return self.companion.getName()
 
     @property
-    def type_(self) -> VYKEACompanionType:
-        return VYKEACompanionType(self.companion.getType().ordinal())
+    def type_(self) -> VykeaCompanionType:
+        return VykeaCompanionType(self.companion.getType().ordinal())
 
     @property
     def rune(self) -> Item:
