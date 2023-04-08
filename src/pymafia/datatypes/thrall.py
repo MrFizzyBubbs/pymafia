@@ -12,13 +12,14 @@ if TYPE_CHECKING:
 @total_ordering
 class Thrall:
     id: int = 0
-    type_: str = "none"
+    type: str = "none"
     data: Any = None
 
     def __init__(self, key: int | str | None = None):
-        if (
-            isinstance(key, str) and key.casefold() == self.type_.casefold()
-        ) or key in (self.id, None):
+        if (isinstance(key, str) and key.casefold() == self.type.casefold()) or key in (
+            self.id,
+            None,
+        ):
             return
 
         data = (
@@ -30,30 +31,30 @@ class Thrall:
             raise ValueError(f"{type(self).__name__} {key!r} not found")
 
         self.id = km.PastaThrallData.dataToId(data)
-        self.type_ = km.PastaThrallData.dataToType(data)
+        self.type = km.PastaThrallData.dataToType(data)
         self.data = data
 
     def __str__(self) -> str:
-        return self.type_
+        return self.type
 
     def __repr__(self) -> str:
         return f"{type(self).__name__}({str(self)!r})"
 
     def __hash__(self) -> int:
-        return hash((self.id, self.type_))
+        return hash((self.id, self.type))
 
     def __eq__(self, other: Any) -> bool:
         if isinstance(other, type(self)):
-            return (self.id, self.type_) == (other.id, other.type_)
+            return (self.id, self.type) == (other.id, other.type)
         return NotImplemented
 
     def __lt__(self, other: Any) -> bool:
         if isinstance(other, type(self)):
-            return (self.id, self.type_) < (other.id, other.type_)
+            return (self.id, self.type) < (other.id, other.type)
         return NotImplemented
 
     def __bool__(self) -> bool:
-        return (self.id, self.type_) != (type(self).id, type(self).type_)
+        return (self.id, self.type) != (type(self).id, type(self).type)
 
     @classmethod
     def all(cls) -> list[Thrall]:
@@ -64,7 +65,7 @@ class Thrall:
 
     @property
     def thrall(self) -> Any:
-        return km.KoLCharacter.findPastaThrall(self.type_)
+        return km.KoLCharacter.findPastaThrall(self.type)
 
     @property
     def name(self) -> str:

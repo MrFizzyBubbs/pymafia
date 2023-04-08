@@ -5,13 +5,11 @@ from typing import Any
 
 from pymafia.kolmafia import km
 
-JPhylum = getattr(km, "persistence.MonsterDatabase$Phylum")
-
 
 @total_ordering
 class Phylum:
     name: str = "none"
-    phylum: Any = JPhylum.NONE
+    phylum: Any = km.MonsterDatabase.Phylum.NONE
 
     def __init__(self, key: str | None = None):
         if (
@@ -19,8 +17,8 @@ class Phylum:
         ) or key is None:
             return
 
-        phylum = JPhylum.find(key)
-        if phylum == JPhylum.NONE:
+        phylum = km.MonsterDatabase.Phylum.find(key)
+        if phylum == km.MonsterDatabase.Phylum.NONE:
             raise ValueError(f"{type(self).__name__} {key!r} not found")
 
         self.name = phylum.toString()
@@ -57,6 +55,6 @@ class Phylum:
 
     @property
     def image(self) -> str:
-        if self.phylum == JPhylum.NONE:
+        if self.phylum == km.MonsterDatabase.Phylum.NONE:
             return ""
         return self.phylum.getImage()

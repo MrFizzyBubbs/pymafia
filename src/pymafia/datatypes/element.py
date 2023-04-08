@@ -5,8 +5,6 @@ from typing import Any
 
 from pymafia.kolmafia import km
 
-JElement = getattr(km, "persistence.MonsterDatabase$Element")
-
 
 @total_ordering
 class Element:
@@ -20,7 +18,7 @@ class Element:
             return
 
         element = km.MonsterDatabase.stringToElement(key)
-        if element == JElement.NONE:
+        if element == km.MonsterDatabase.Element.NONE:
             raise ValueError(f"{type(self).__name__} {key!r} not found")
 
         self.name = element.toString()
@@ -59,19 +57,19 @@ class Element:
     def image(self) -> str:
         # No image for Slime or Supercold in Manuel
         if self.element in [
-            JElement.NONE,
-            JElement.SLIME,
-            JElement.SUPERCOLD,
+            km.MonsterDatabase.Element.NONE,
+            km.MonsterDatabase.Element.SLIME,
+            km.MonsterDatabase.Element.SUPERCOLD,
         ]:
             return "circle.gif"
-        if self.element == JElement.COLD:
+        if self.element == km.MonsterDatabase.Element.COLD:
             return "snowflake.gif"
-        if self.element == JElement.HOT:
+        if self.element == km.MonsterDatabase.Element.HOT:
             return "fire.gif"
-        if self.element == JElement.SLEAZE:
+        if self.element == km.MonsterDatabase.Element.SLEAZE:
             return "wink.gif"
-        if self.element == JElement.SPOOKY:
+        if self.element == km.MonsterDatabase.Element.SPOOKY:
             return "skull.gif"
-        if self.element == JElement.STENCH:
+        if self.element == km.MonsterDatabase.Element.STENCH:
             return "stench.gif"
         return ""

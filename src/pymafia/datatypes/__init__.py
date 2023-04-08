@@ -1,10 +1,10 @@
 from .bounty import Bounty
 from .class_ import Class
 from .coinmaster import Coinmaster
-from .effect import Effect, EffectQuality
+from .effect import Effect
 from .element import Element
 from .familiar import Familiar
-from .item import CandyType, ConsumableQuality, Item
+from .item import Item
 from .location import Location
 from .monster import Monster
 from .path import Path
@@ -14,7 +14,7 @@ from .skill import Skill
 from .slot import Slot
 from .stat import Stat
 from .thrall import Thrall
-from .vykea import Vykea, VykeaCompanionType
+from .vykea import Vykea
 
 MAFIA_DATATYPES = [
     Item,
@@ -41,11 +41,8 @@ __all__ = [
     "Class",
     "Coinmaster",
     "Effect",
-    "EffectQuality",
     "Element",
     "Familiar",
-    "CandyType",
-    "ConsumableQuality",
     "Item",
     "Location",
     "Monster",
@@ -57,5 +54,4 @@ __all__ = [
     "Stat",
     "Thrall",
     "Vykea",
-    "VykeaCompanionType",
 ]

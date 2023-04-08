@@ -21,8 +21,8 @@ from pymafia.datatypes import (
     Stat,
     Thrall,
     Vykea,
-    VykeaCompanionType,
 )
+from pymafia.kolmafia import km
 
 STANDARD_NONE_KEYS = [None, "none", "NONE"]
 
@@ -33,9 +33,9 @@ def fields(obj):
     if isinstance(obj, (Class, Effect, Familiar, Location, Monster, Path, Servant, Skill, Item)):  # fmt: skip
         return (obj.id, obj.name)
     if isinstance(obj, Thrall):
-        return (obj.id, obj.type_)
+        return (obj.id, obj.type)
     if isinstance(obj, Vykea):
-        return (obj.type_, obj.rune, obj.level)
+        return (obj.type, obj.rune, obj.level)
 
 
 def get_property_names(cls):
@@ -83,9 +83,13 @@ def get_property_names(cls):
         *[(Stat, key, "none") for key in STANDARD_NONE_KEYS],
         *[(Thrall, key, (1, "Vampieroghi")) for key in [1, "Vampieroghi"]],
         *[(Thrall, key, (0, "none")) for key in [*STANDARD_NONE_KEYS, 0]],
-        (Vykea, "level 1 bookshelf", (VykeaCompanionType.BOOKSHELF, Item(), 1)),
+        (
+            Vykea,
+            "level 1 bookshelf",
+            (km.VYKEACompanionData.VYKEACompanionType.BOOKSHELF, Item(), 1),
+        ),
         *[
-            (Vykea, key, (VykeaCompanionType.NONE, Item(), 0))
+            (Vykea, key, (km.VYKEACompanionData.VYKEACompanionType.NONE, Item(), 0))
             for key in STANDARD_NONE_KEYS
         ],
     ],

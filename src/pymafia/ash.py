@@ -1,37 +1,38 @@
 import collections
 
+from jpype import JClass
+
 from pymafia import datatypes
 from pymafia.kolmafia import km
 
-TypeSpec = getattr(km, "textui.DataTypes$TypeSpec")
-TreeMap = km.autoclass("java.util.TreeMap")
-ArrayList = km.autoclass("java.util.ArrayList")
-String = km.autoclass("java.lang.String")
-ByteArrayInputStream = km.autoclass("java.io.ByteArrayInputStream")
+TreeMap = JClass("java.util.TreeMap")
+ArrayList = JClass("java.util.ArrayList")
+String = JClass("java.lang.String")
+ByteArrayInputStream = JClass("java.io.ByteArrayInputStream")
 
 TYPE_CONVERSIONS = {
-    TypeSpec.BOOLEAN: bool,
-    TypeSpec.INT: int,
-    TypeSpec.FLOAT: float,
-    TypeSpec.STRING: str,
-    TypeSpec.BUFFER: str,
-    TypeSpec.ITEM: datatypes.Item,
-    TypeSpec.LOCATION: datatypes.Location,
-    TypeSpec.CLASS: datatypes.Class,
-    TypeSpec.STAT: datatypes.Stat,
-    TypeSpec.SKILL: datatypes.Skill,
-    TypeSpec.EFFECT: datatypes.Effect,
-    TypeSpec.FAMILIAR: datatypes.Familiar,
-    TypeSpec.SLOT: datatypes.Slot,
-    TypeSpec.MONSTER: datatypes.Monster,
-    TypeSpec.ELEMENT: datatypes.Element,
-    TypeSpec.COINMASTER: datatypes.Coinmaster,
-    TypeSpec.PHYLUM: datatypes.Phylum,
-    TypeSpec.BOUNTY: datatypes.Bounty,
-    TypeSpec.THRALL: datatypes.Thrall,
-    TypeSpec.SERVANT: datatypes.Servant,
-    TypeSpec.VYKEA: datatypes.Vykea,
-    TypeSpec.PATH: datatypes.Path,
+    km.DataTypes.TypeSpec.BOOLEAN: bool,
+    km.DataTypes.TypeSpec.INT: int,
+    km.DataTypes.TypeSpec.FLOAT: float,
+    km.DataTypes.TypeSpec.STRING: str,
+    km.DataTypes.TypeSpec.BUFFER: str,
+    km.DataTypes.TypeSpec.ITEM: datatypes.Item,
+    km.DataTypes.TypeSpec.LOCATION: datatypes.Location,
+    km.DataTypes.TypeSpec.CLASS: datatypes.Class,
+    km.DataTypes.TypeSpec.STAT: datatypes.Stat,
+    km.DataTypes.TypeSpec.SKILL: datatypes.Skill,
+    km.DataTypes.TypeSpec.EFFECT: datatypes.Effect,
+    km.DataTypes.TypeSpec.FAMILIAR: datatypes.Familiar,
+    km.DataTypes.TypeSpec.SLOT: datatypes.Slot,
+    km.DataTypes.TypeSpec.MONSTER: datatypes.Monster,
+    km.DataTypes.TypeSpec.ELEMENT: datatypes.Element,
+    km.DataTypes.TypeSpec.COINMASTER: datatypes.Coinmaster,
+    km.DataTypes.TypeSpec.PHYLUM: datatypes.Phylum,
+    km.DataTypes.TypeSpec.BOUNTY: datatypes.Bounty,
+    km.DataTypes.TypeSpec.THRALL: datatypes.Thrall,
+    km.DataTypes.TypeSpec.SERVANT: datatypes.Servant,
+    km.DataTypes.TypeSpec.VYKEA: datatypes.Vykea,
+    km.DataTypes.TypeSpec.PATH: datatypes.Path,
 }
 
 
@@ -75,13 +76,18 @@ def to_python(obj):
     jtype = obj.getType().getType()
     jname = obj.getType().getName()
 
-    if jtype in [TypeSpec.VOID, TypeSpec.ANY]:
+    if jtype in [km.DataTypes.TypeSpec.VOID, km.DataTypes.TypeSpec.ANY]:
         return None
     if jtype in TYPE_CONVERSIONS:
         return TYPE_CONVERSIONS[jtype](obj.toJSON())
-    if jtype == TypeSpec.AGGREGATE and isinstance(obj.content, TreeMap):
-        return {to_python(x.key): to_python(x.value) for x in obj.content.entrySet()}
-    if jtype == TypeSpec.AGGREGATE and isinstance(obj.content, list):
+    if jtype == km.DataTypes.TypeSpec.AGGREGATE and isinstance(obj.content, TreeMap):
+        return {
+            to_python(x.getKey()): to_python(x.getValue())
+            for x in obj.content.entrySet()
+        }
+    if jtype == km.DataTypes.TypeSpec.AGGREGATE and isinstance(
+        obj.content, collections.abc.Iterable
+    ):
         return [to_python(x) for x in obj.content]
 
     raise TypeError(f"unsupported type: {jtype!r} ({jname!r})")

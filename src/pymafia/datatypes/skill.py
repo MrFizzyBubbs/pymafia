@@ -60,7 +60,7 @@ class Skill:
         return sorted(ash.to_python(values))
 
     @property
-    def type_(self) -> str:
+    def type(self) -> str:
         return km.SkillDatabase.getSkillTypeName(self.id)
 
     @property
@@ -79,7 +79,10 @@ class Skill:
     def class_(self) -> Class:
         from .class_ import Class
 
-        return Class(km.SkillDatabase.getSkillCategory(self.id) or None)
+        try:
+            return Class(km.SkillDatabase.getSkillCategory(self.id).name)
+        except ValueError:
+            return Class()
 
     @property
     def libram(self) -> bool:

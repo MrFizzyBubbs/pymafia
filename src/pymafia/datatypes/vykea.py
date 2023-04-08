@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from enum import IntEnum
 from typing import TYPE_CHECKING, Any
 
 from pymafia.kolmafia import km
@@ -8,11 +7,6 @@ from pymafia.kolmafia import km
 if TYPE_CHECKING:
     from .element import Element
     from .item import Item
-
-JVYKEACompanionType = getattr(km, "VYKEACompanionData$VYKEACompanionType")
-VykeaCompanionType = IntEnum(
-    "VykeaCompanionType", {x.name(): x.ordinal() for x in JVYKEACompanionType.values()}
-)
 
 
 class Vykea:
@@ -37,24 +31,24 @@ class Vykea:
         return f"{type(self).__name__}({str(self)!r})"
 
     def __hash__(self) -> int:
-        return hash((self.type_, self.rune, self.level))
+        return hash((self.type, self.rune, self.level))
 
     def __eq__(self, other: Any) -> bool:
         if isinstance(other, type(self)):
             return (
-                self.type_,
+                self.type,
                 self.rune,
                 self.level,
-            ) == (other.type_, other.rune, other.level)
+            ) == (other.type, other.rune, other.level)
         return NotImplemented
 
     def __lt__(self, other: Any) -> bool:
         if isinstance(other, type(self)):
             return (
-                self.type_,
+                self.type,
                 self.rune,
                 self.level,
-            ) < (other.type_, other.rune, other.level)
+            ) < (other.type, other.rune, other.level)
         return NotImplemented
 
     def __bool__(self) -> bool:
@@ -72,8 +66,8 @@ class Vykea:
         return self.companion.getName()
 
     @property
-    def type_(self) -> VykeaCompanionType:
-        return VykeaCompanionType(self.companion.getType().ordinal())
+    def type(self) -> Any:
+        return self.companion.getType()
 
     @property
     def rune(self) -> Item:

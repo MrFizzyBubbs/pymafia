@@ -1,8 +1,12 @@
 from html import escape
 
+from jpype import JClass
+
 from pymafia.kolmafia import km
 
-JMafiaState = getattr(km, "KoLConstants$MafiaState")
+ByteArrayOutputStream = JClass("java.io.ByteArrayOutputStream")
+PrintStream = JClass("java.io.PrintStream")
+OutputStream = JClass("java.io.OutputStream")
 
 
 def launch_gui():
@@ -22,7 +26,7 @@ def login(username: str, password: str | None = None) -> bool:
 
 def abort(message: str = ""):
     """Immediately halt KoLmafia."""
-    km.KoLmafia.updateDisplay(JMafiaState.ABORT, message)
+    km.KoLmafia.updateDisplay(km.KoLConstants.MafiaState.ABORT, message)
 
 
 def log(message: str, html: bool = False):
@@ -36,10 +40,7 @@ def log(message: str, html: bool = False):
 
 def execute(command: str) -> str:
     """Execute a command in the KoLmafia CLI and return the output."""
-    ByteArrayOutputStream = km.autoclass("java.io.ByteArrayOutputStream")
-    PrintStream = km.autoclass("java.io.PrintStream")
-
-    ostream = km.cast("java.io.OutputStream", ByteArrayOutputStream())
+    ostream = OutputStream @ ByteArrayOutputStream()
     out = PrintStream(ostream)
     km.RequestLogger.openCustom(out)
     km.KoLmafiaCLI.DEFAULT_SHELL.executeLine(command)

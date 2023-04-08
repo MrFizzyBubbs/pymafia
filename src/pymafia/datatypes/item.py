@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-from enum import Enum, IntEnum
 from functools import total_ordering
 from typing import TYPE_CHECKING, Any
+
+from jpype import JClass
 
 from pymafia.kolmafia import km
 
@@ -10,32 +11,7 @@ if TYPE_CHECKING:
     from .coinmaster import Coinmaster
     from .skill import Skill
 
-
-JSet = km.autoclass("java.util.Set")
-JAttribute = getattr(km, "persistence.ItemDatabase$Attribute")
-JConsumptionType = getattr(km, "KoLConstants$ConsumptionType")
-
-
-CandyType = IntEnum(
-    "CandyType",
-    {
-        x.name(): x.ordinal()
-        for x in getattr(km, "persistence.CandyDatabase$CandyType").values()
-    },
-)
-
-
-class ConsumableQuality(Enum):
-    NONE = ""
-    CRAPPY = "crappy"
-    DECENT = "decent"
-    GOOD = "good"
-    AWESOME = "awesome"
-    EPIC = "EPIC"
-    QUEST = "quest"
-    CHANGING = "???"
-    DRIPPY = "drippy"
-    SUSHI = "sushi"
+EnumSet = JClass("java.util.EnumSet")
 
 
 @total_ordering
@@ -122,9 +98,9 @@ class Item:
         return km.ConsumablesDatabase.getLevelReqByName(self.name) or 0
 
     @property
-    def quality(self) -> ConsumableQuality:
+    def quality(self) -> str:
         """Return the quality of the Item if it is a consumable."""
-        return ConsumableQuality(km.ConsumablesDatabase.getQuality(self.name).getName())
+        return km.ConsumablesDatabase.getQuality(self.name).getName()
 
     @property
     def adventures(self) -> str:
@@ -220,15 +196,18 @@ class Item:
     @property
     def combat(self) -> bool:
         """Return True if the Item is usable in combat, else False. This returns True whether the Item is consumed by being used or not."""
-        mask = km.cast(
-            "java.util.EnumSet", JSet.of(JAttribute.COMBAT, JAttribute.COMBAT_REUSABLE)
+        mask = EnumSet.of(
+            km.ItemDatabase.Attribute.COMBAT,
+            km.ItemDatabase.Attribute.COMBAT_REUSABLE,
         )
         return km.ItemDatabase.getAttribute(self.id, mask)
 
     @property
     def combat_reusable(self) -> bool:
         """Return True if the Item is usable in combat and is not consumed when doing so, else False."""
-        return km.ItemDatabase.getAttribute(self.id, JAttribute.COMBAT_REUSABLE)
+        return km.ItemDatabase.getAttribute(
+            self.id, km.ItemDatabase.Attribute.COMBAT_REUSABLE
+        )
 
     @property
     def usable(self) -> bool:
@@ -240,8 +219,8 @@ class Item:
         """Return True if the Item is usable and is not consumed when doing so, else False."""
         return km.ItemDatabase.getConsumptionType(
             self.id
-        ) == JConsumptionType.USE_INFINITE or km.ItemDatabase.getAttribute(
-            self.id, JAttribute.REUSABLE
+        ) == km.KoLConstants.ConsumptionType.USE_INFINITE or km.ItemDatabase.getAttribute(
+            self.id, km.ItemDatabase.Attribute.REUSABLE
         )
 
     @property
@@ -280,9 +259,9 @@ class Item:
         return km.ItemDatabase.isCandyItem(self.id)
 
     @property
-    def candy_type(self) -> CandyType:
+    def candy_type(self) -> str:
         """Return the candy type of the Item."""
-        return CandyType(km.CandyDatabase.getCandyType(self.id).ordinal())
+        return km.CandyDatabase.getCandyType(self.id).name
 
     @property
     def chocolate(self) -> bool:

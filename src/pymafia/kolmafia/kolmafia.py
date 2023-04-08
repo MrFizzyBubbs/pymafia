@@ -1,28 +1,47 @@
+import json
+import os
 import re
+import urllib.request
 import zipfile
+from typing import Any, Iterable
 
-from pymafia.kolmafia.jvm import JAR_LOCATION, jnius
-from pymafia.kolmafia.proxy import JniusProxy
+import jpype
 
+from . import patch
+
+JENKINS_JOB_URL = "https://ci.kolmafia.us/job/Kolmafia/lastSuccessfulBuild/"
+JAR_LOCATION = "./kolmafia.jar"
 JAVA_PATTERN = "(net\\/sourceforge\\/kolmafia.*\\/([^\\$]*))\\.class"
+
+
+def download_kolmafia(location: str):
+    with urllib.request.urlopen(JENKINS_JOB_URL + "/api/json") as response:
+        data = json.loads(response.read().decode())
+        jar_url = JENKINS_JOB_URL + "artifact/" + data["artifacts"][0]["relativePath"]
+        urllib.request.urlretrieve(jar_url, filename=location)
 
 
 class KoLmafia:
     def __init__(self, location: str):
-        self.autoclass = JniusProxy(jnius.autoclass)
-        self.cast = JniusProxy(jnius.cast)
+        if not os.path.isfile(location):
+            download_kolmafia(location)
 
-        self.classes = {}
+        jpype.startJVM(classpath=location, convertStrings=True)
+        patch.apply()
+
+        self._classes = {}
         with zipfile.ZipFile(location) as archive:
-            for file in archive.filelist:
-                filename = file.orig_filename
+            for filename in archive.namelist():
                 if match := re.search(JAVA_PATTERN, filename):
-                    self.classes[match.group(2)] = match.group(1)
+                    self._classes[match.group(2)] = match.group(1)
 
-    def __getattr__(self, name: str) -> JniusProxy:
-        if name in self.classes:
-            return self.autoclass(self.classes[name])
-        return self.autoclass(f"net.sourceforge.kolmafia.{name}")
+    def __dir__(self) -> Iterable[str]:
+        return list(self._classes.keys())
+
+    def __getattr__(self, name: str) -> Any:
+        if name in self._classes:
+            return jpype.JClass(self._classes[name])
+        return super().__getattribute__(name)
 
 
 km = KoLmafia(JAR_LOCATION)

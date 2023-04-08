@@ -61,12 +61,12 @@ class Bounty:
         return km.BountyDatabase.getPlural(self.name) or ""
 
     @property
-    def type_(self) -> str:
+    def type(self) -> str:
         return km.BountyDatabase.getType(self.name) or ""
 
     @property
     def kol_internal_type(self) -> str | None:
-        match self.type_:
+        match self.type:
             case "easy":
                 return "low"
             case "hard":

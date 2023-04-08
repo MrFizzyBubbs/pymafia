@@ -1,4 +1,4 @@
-from pymafia.kolmafia.kolmafia import km
-from pymafia.kolmafia.proxy import JniusProxy, MafiaError
+from .kolmafia import km
+from .patch import KoLmafiaError
 
-__all__ = ["JniusProxy", "MafiaError", "km"]
+__all__ = ["KoLmafiaError", "km"]

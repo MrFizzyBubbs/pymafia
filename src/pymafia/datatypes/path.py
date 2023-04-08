@@ -5,14 +5,12 @@ from typing import Any
 
 from pymafia.kolmafia import km
 
-JAscensionPath = getattr(km, "AscensionPath$Path")
-
 
 @total_ordering
 class Path:
     id: int = 0
     name: str = "none"
-    ascension_path: Any = JAscensionPath.NONE
+    ascension_path: Any = km.AscensionPath.Path.NONE
 
     def __init__(self, key: int | str | None = None):
         if (isinstance(key, str) and key.casefold() == self.name.casefold()) or key in (
@@ -26,7 +24,7 @@ class Path:
             if isinstance(key, str)
             else km.AscensionPath.idToPath(key)
         )
-        if ascension_path == JAscensionPath.NONE:
+        if ascension_path == km.AscensionPath.Path.NONE:
             raise ValueError(f"{type(self).__name__} {key!r} not found")
 
         self.id = ascension_path.getId()

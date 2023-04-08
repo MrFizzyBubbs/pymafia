@@ -3,12 +3,14 @@ from __future__ import annotations
 from functools import total_ordering
 from typing import TYPE_CHECKING, Any
 
+from jpype import JClass
+
 from pymafia.kolmafia import km
 
 if TYPE_CHECKING:
     from .bounty import Bounty
 
-Integer = km.autoclass("java.lang.Integer")
+Integer = JClass("java.lang.Integer")
 
 
 @total_ordering
