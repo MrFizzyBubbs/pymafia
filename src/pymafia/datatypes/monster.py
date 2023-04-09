@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from functools import total_ordering
+from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
 
 from jpype import JClass
@@ -16,11 +16,10 @@ if TYPE_CHECKING:
 Integer = JClass("java.lang.Integer")
 
 
-@total_ordering
+@dataclass(frozen=True, order=True)
 class Monster:
     id: int = 0
     name: str = "none"
-    monster: Any = None
 
     def __init__(self, key: int | str | None = None):
         if (isinstance(key, str) and key.casefold() == self.name.casefold()) or key in (
@@ -37,9 +36,8 @@ class Monster:
         if monster is None:
             raise ValueError(f"{type(self).__name__} {key!r} not found")
 
-        self.id = monster.getId()
-        self.name = monster.getName()
-        self.monster = monster
+        object.__setattr__(self, "id", monster.getId())
+        object.__setattr__(self, "name", monster.getName())
 
     def __str__(self) -> str:
         ids = km.MonsterDatabase.getMonsterIds(self.name, False)
@@ -47,19 +45,6 @@ class Monster:
 
     def __repr__(self) -> str:
         return f"{type(self).__name__}({str(self)!r})"
-
-    def __hash__(self) -> int:
-        return hash((self.id, self.name))
-
-    def __eq__(self, other: Any) -> bool:
-        if isinstance(other, type(self)):
-            return (self.id, self.name) == (other.id, other.name)
-        return NotImplemented
-
-    def __lt__(self, other: Any) -> bool:
-        if isinstance(other, type(self)):
-            return (self.id, self.name) < (other.id, other.name)
-        return NotImplemented
 
     def __bool__(self) -> bool:
         return (self.id, self.name) != (type(self).id, type(self).name)
@@ -70,6 +55,10 @@ class Monster:
 
         values = km.DataTypes.MONSTER_TYPE.allValues()
         return sorted(ash.to_python(values))
+
+    @property
+    def monster(self) -> Any:
+        return km.MonsterDatabase.findMonsterById(self.id)
 
     @property
     def article(self) -> str:

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from functools import total_ordering
+from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
 
 from pymafia.kolmafia import km
@@ -9,7 +9,7 @@ if TYPE_CHECKING:
     from .class_ import Class
 
 
-@total_ordering
+@dataclass(frozen=True, order=True)
 class Skill:
     id: int = -1
     name: str = "none"
@@ -26,8 +26,8 @@ class Skill:
         if name is None:
             raise ValueError(f"{type(self).__name__} {key!r} not found")
 
-        self.id = id
-        self.name = name
+        object.__setattr__(self, "id", id)
+        object.__setattr__(self, "name", name)
 
     def __str__(self) -> str:
         ids = km.SkillDatabase.getSkillIds(self.name, False)
@@ -35,19 +35,6 @@ class Skill:
 
     def __repr__(self) -> str:
         return f"{type(self).__name__}({str(self)!r})"
-
-    def __hash__(self) -> int:
-        return hash((self.id, self.name))
-
-    def __eq__(self, other: Any) -> bool:
-        if isinstance(other, type(self)):
-            return (self.id, self.name) == (other.id, other.name)
-        return NotImplemented
-
-    def __lt__(self, other: Any) -> bool:
-        if isinstance(other, type(self)):
-            return (self.id, self.name) < (other.id, other.name)
-        return NotImplemented
 
     def __bool__(self) -> bool:
         return (self.id, self.name) != (type(self).id, type(self).name)

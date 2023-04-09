@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from functools import total_ordering
+from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
 
 from jpype import JClass
@@ -13,11 +13,10 @@ if TYPE_CHECKING:
 Integer = JClass("java.lang.Integer")
 
 
-@total_ordering
+@dataclass(frozen=True, order=True)
 class Location:
     id: int = -1
     name: str = "none"
-    kol_adventure: Any = None
 
     def __init__(self, key: int | str | None = None):
         if (isinstance(key, str) and key.casefold() == self.name.casefold()) or key in (
@@ -36,28 +35,14 @@ class Location:
         if kol_adventure is None:
             raise ValueError(f"{type(self).__name__} {key!r} not found")
 
-        self.id = kol_adventure.getSnarfblat()
-        self.name = kol_adventure.getAdventureName()
-        self.kol_adventure = kol_adventure
+        object.__setattr__(self, "id", kol_adventure.getSnarfblat())
+        object.__setattr__(self, "name", kol_adventure.getAdventureName())
 
     def __str__(self) -> str:
         return self.name
 
     def __repr__(self) -> str:
         return f"{type(self).__name__}({str(self)!r})"
-
-    def __hash__(self) -> int:
-        return hash((self.id, self.name))
-
-    def __eq__(self, other: Any) -> bool:
-        if isinstance(other, type(self)):
-            return (self.id, self.name) == (other.id, other.name)
-        return NotImplemented
-
-    def __lt__(self, other: Any) -> bool:
-        if isinstance(other, type(self)):
-            return (self.id, self.name) < (other.id, other.name)
-        return NotImplemented
 
     def __bool__(self) -> bool:
         return (self.id, self.name) != (type(self).id, type(self).name)
@@ -72,6 +57,10 @@ class Location:
     @property
     def url(self) -> str:
         return f"adventure.php?snarfblat={self.id}"
+
+    @property
+    def kol_adventure(self) -> Any:
+        return km.AdventureDatabase.getAdventureByURL(self.url)
 
     @property
     def nocombats(self) -> bool:

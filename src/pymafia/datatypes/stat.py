@@ -1,12 +1,11 @@
 from __future__ import annotations
 
-from functools import total_ordering
-from typing import Any
+from dataclasses import dataclass
 
 from pymafia.kolmafia import km
 
 
-@total_ordering
+@dataclass(frozen=True, order=True)
 class Stat:
     name: str = "none"
 
@@ -19,7 +18,7 @@ class Stat:
         for stat in km.DataTypes.STAT_VALUES:
             name = stat.toString()
             if name.casefold() == key.casefold():
-                self.name = name
+                object.__setattr__(self, "name", name)
                 return
 
         raise ValueError(f"{type(self).__name__} {key!r} not found")
@@ -30,19 +29,6 @@ class Stat:
     def __repr__(self) -> str:
         return f"{type(self).__name__}({str(self)!r})"
 
-    def __hash__(self) -> int:
-        return hash(self.name)
-
-    def __eq__(self, other: Any) -> bool:
-        if isinstance(other, type(self)):
-            return self.name == other.name
-        return NotImplemented
-
-    def __lt__(self, other: Any) -> bool:
-        if isinstance(other, type(self)):
-            return self.name < other.name
-        return NotImplemented
-
     def __bool__(self) -> bool:
         return self.name != type(self).name
 
@@ -51,4 +37,4 @@ class Stat:
         from pymafia import ash
 
         values = km.DataTypes.STAT_TYPE.allValues()
-        return sorted(ash.to_python(values))
+        return ash.to_python(values)

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from functools import total_ordering
+from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
 
 from pymafia.kolmafia import km
@@ -9,11 +9,10 @@ if TYPE_CHECKING:
     from .stat import Stat
 
 
-@total_ordering
+@dataclass(frozen=True, order=True)
 class Class:
     id: int = -1
     name: str = "none"
-    ascension_class: Any = None
 
     def __init__(self, key: int | str | None = None):
         if (isinstance(key, str) and key.casefold() == self.name.casefold()) or key in (
@@ -26,28 +25,14 @@ class Class:
         if ascension_class is None or ascension_class.getId() < 0:
             raise ValueError(f"{type(self).__name__} {key!r} not found")
 
-        self.id = ascension_class.getId()
-        self.name = ascension_class.getName()
-        self.ascension_class = ascension_class
+        object.__setattr__(self, "id", ascension_class.getId())
+        object.__setattr__(self, "name", ascension_class.getName())
 
     def __str__(self) -> str:
         return self.name
 
     def __repr__(self) -> str:
         return f"{type(self).__name__}({str(self)!r})"
-
-    def __hash__(self) -> int:
-        return hash((self.id, self.name))
-
-    def __eq__(self, other: Any) -> bool:
-        if isinstance(other, type(self)):
-            return (self.id, self.name) == (other.id, other.name)
-        return NotImplemented
-
-    def __lt__(self, other: Any) -> bool:
-        if isinstance(other, type(self)):
-            return (self.id, self.name) < (other.id, other.name)
-        return NotImplemented
 
     def __bool__(self) -> bool:
         return (self.id, self.name) != (type(self).id, type(self).name)
@@ -58,6 +43,10 @@ class Class:
 
         values = km.DataTypes.CLASS_TYPE.allValues()
         return sorted(ash.to_python(values))
+
+    @property
+    def ascension_class(self) -> Any:
+        return km.AscensionClass.find(self.id)
 
     @property
     def primestat(self) -> Stat:

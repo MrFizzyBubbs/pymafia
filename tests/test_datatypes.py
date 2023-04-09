@@ -1,4 +1,5 @@
 import inspect
+from dataclasses import fields
 
 import pytest
 
@@ -22,20 +23,8 @@ from pymafia.datatypes import (
     Thrall,
     Vykea,
 )
-from pymafia.kolmafia import km
 
 STANDARD_NONE_KEYS = [None, "none", "NONE"]
-
-
-def fields(obj):
-    if isinstance(obj, (Bounty, Coinmaster, Element, Phylum, Slot, Stat)):
-        return obj.name
-    if isinstance(obj, (Class, Effect, Familiar, Location, Monster, Path, Servant, Skill, Item)):  # fmt: skip
-        return (obj.id, obj.name)
-    if isinstance(obj, Thrall):
-        return (obj.id, obj.type)
-    if isinstance(obj, Vykea):
-        return (obj.type, obj.rune, obj.level)
 
 
 def get_property_names(cls):
@@ -46,18 +35,18 @@ def get_property_names(cls):
 @pytest.mark.parametrize(
     "cls,key,expected",
     [
-        (Bounty, "absence of moss", "absence of moss"),
-        *[(Bounty, key, "none") for key in STANDARD_NONE_KEYS],
+        (Bounty, "bean-shaped rock", ("bean-shaped rock",)),
+        *[(Bounty, key, ("none",)) for key in STANDARD_NONE_KEYS],
         *[(Class, key, (1, "Seal Clubber")) for key in [1, "Seal Clubber"]],
         *[(Class, key, (-1, "none")) for key in [*STANDARD_NONE_KEYS, -1]],
-        (Coinmaster, "Hermit", "Hermit"),
-        *[(Coinmaster, key, "none") for key in STANDARD_NONE_KEYS],
+        (Coinmaster, "Altar of Bones", ("Altar of Bones",)),
+        *[(Coinmaster, key, ("none",)) for key in STANDARD_NONE_KEYS],
         (Effect, 1, (1, "Light!")),
         (Effect, "Light!", (1, "Light!")),
         *[(Effect, key, (1, "Light!")) for key in [1, "Light!"]],
         *[(Effect, key, (-1, "none")) for key in [*STANDARD_NONE_KEYS, -1]],
-        (Element, "cold", "cold"),
-        *[(Element, key, "none") for key in STANDARD_NONE_KEYS],
+        (Element, "cold", ("cold",)),
+        *[(Element, key, ("none",)) for key in STANDARD_NONE_KEYS],
         *[(Familiar, key, (1, "Mosquito")) for key in [1, "Mosquito"]],
         *[(Familiar, key, (-1, "none")) for key in [*STANDARD_NONE_KEYS, -1]],
         *[(Item, key, (1, "seal-clubbing club")) for key in [1, "seal-clubbing club"]],
@@ -71,31 +60,31 @@ def get_property_names(cls):
         *[(Monster, key, (0, "none")) for key in [*STANDARD_NONE_KEYS, 0]],
         *[(Path, key, (1, "Boozetafarian")) for key in [1, "Boozetafarian"]],
         *[(Path, key, (0, "none")) for key in [*STANDARD_NONE_KEYS, 0]],
-        (Phylum, "beast", "beast"),
-        *[(Phylum, key, "none") for key in STANDARD_NONE_KEYS],
-        *[(Servant, key, (1, "Cat")) for key in [1, "Cat"]],
+        (Phylum, "beast", ("beast",)),
+        *[(Phylum, key, ("none",)) for key in STANDARD_NONE_KEYS],
+        *[(Servant, key, (7, "Assassin")) for key in [7, "Assassin"]],
         *[(Servant, key, (0, "none")) for key in [*STANDARD_NONE_KEYS, 0]],
         *[(Skill, key, (1, "Liver of Steel")) for key in [1, "Liver of Steel"]],
         *[(Skill, key, (-1, "none")) for key in [*STANDARD_NONE_KEYS, -1]],
-        (Slot, "acc1", "acc1"),
-        *[(Slot, key, "none") for key in STANDARD_NONE_KEYS],
-        (Stat, "Moxie", "Moxie"),
-        *[(Stat, key, "none") for key in STANDARD_NONE_KEYS],
+        (Slot, "hat", ("hat",)),
+        *[(Slot, key, ("none",)) for key in STANDARD_NONE_KEYS],
+        (Stat, "Muscle", ("Muscle",)),
+        *[(Stat, key, ("none",)) for key in STANDARD_NONE_KEYS],
         *[(Thrall, key, (1, "Vampieroghi")) for key in [1, "Vampieroghi"]],
         *[(Thrall, key, (0, "none")) for key in [*STANDARD_NONE_KEYS, 0]],
         (
             Vykea,
-            "level 1 bookshelf",
-            (km.VYKEACompanionData.VYKEACompanionType.BOOKSHELF, Item(), 1),
+            "level 1 blood bookshelf",
+            ("bookshelf", "blood", 1),
         ),
-        *[
-            (Vykea, key, (km.VYKEACompanionData.VYKEACompanionType.NONE, Item(), 0))
-            for key in STANDARD_NONE_KEYS
-        ],
+        *[(Vykea, key, ("unknown", "", 0)) for key in STANDARD_NONE_KEYS],
     ],
 )
 def test_init(cls, key, expected):
-    assert fields(cls(key)) == expected
+    instance = cls(key)
+    field_names = [field.name for field in fields(instance) if field.compare]
+    field_values = tuple(getattr(instance, name) for name in field_names)
+    assert field_values == expected
 
 
 @pytest.mark.parametrize("cls", MAFIA_DATATYPES)
@@ -112,9 +101,9 @@ def test_init_invalid(cls):
 @pytest.mark.parametrize(
     "cls,expected",
     [
-        (Bounty, "absence of moss"),
+        (Bounty, "bean-shaped rock"),
         (Class, "Seal Clubber"),
-        (Coinmaster, "Hermit"),
+        (Coinmaster, "Altar of Bones"),
         (Effect, "Light!"),
         (Effect, "[800]Chocolate Reign"),
         (Element, "cold"),
@@ -126,13 +115,13 @@ def test_init_invalid(cls):
         (Monster, "[2050]Jerry Bradford"),
         (Path, "Boozetafarian"),
         (Phylum, "beast"),
-        (Servant, "Cat"),
+        (Servant, "Assassin"),
         (Skill, "Liver of Steel"),
         (Skill, "[7094]Static Shock"),
-        (Slot, "acc1"),
-        (Stat, "Moxie"),
+        (Slot, "hat"),
+        (Stat, "Muscle"),
         (Thrall, "Vampieroghi"),
-        (Vykea, "level 1 bookshelf"),
+        (Vykea, "level 1 blood bookshelf"),
     ],
 )
 def test_str(cls, expected):
@@ -162,8 +151,94 @@ def test_all_are_true(cls):
 
 
 @pytest.mark.parametrize(
-    "cls,name",
-    [(cls, name) for cls in MAFIA_DATATYPES for name in get_property_names(cls)],
+    "cls,key,name",
+    [
+        *[
+            (Bounty, key, name)
+            for key in ["bean-shaped rock", None]
+            for name in get_property_names(Bounty)
+        ],
+        *[
+            (Class, key, name)
+            for key in ["Seal Clubber", None]
+            for name in get_property_names(Class)
+        ],
+        *[
+            (Coinmaster, key, name)
+            for key in ["Altar of Bones", None]
+            for name in get_property_names(Coinmaster)
+        ],
+        *[
+            (Effect, key, name)
+            for key in ["Light!", None]
+            for name in get_property_names(Effect)
+        ],
+        *[
+            (Element, key, name)
+            for key in ["cold", None]
+            for name in get_property_names(Element)
+        ],
+        *[
+            (Familiar, key, name)
+            for key in ["Mosquito", None]
+            for name in get_property_names(Familiar)
+        ],
+        *[
+            (Item, key, name)
+            for key in ["seal-clubbing club", None]
+            for name in get_property_names(Item)
+        ],
+        *[
+            (Location, key, name)
+            for key in ["The Spooky Forest", None]
+            for name in get_property_names(Location)
+        ],
+        *[
+            (Monster, key, name)
+            for key in ["spooky vampire", None]
+            for name in get_property_names(Monster)
+        ],
+        *[
+            (Path, key, name)
+            for key in ["Boozetafarian", None]
+            for name in get_property_names(Path)
+        ],
+        *[
+            (Phylum, key, name)
+            for key in ["beast", None]
+            for name in get_property_names(Phylum)
+        ],
+        *[
+            (Servant, key, name)
+            for key in ["Assassin", None]
+            for name in get_property_names(Servant)
+        ],
+        *[
+            (Skill, key, name)
+            for key in ["Liver of Steel", None]
+            for name in get_property_names(Skill)
+        ],
+        *[
+            (Slot, key, name)
+            for key in ["hat", None]
+            for name in get_property_names(Slot)
+        ],
+        *[
+            (Stat, key, name)
+            for key in ["Muscle", None]
+            for name in get_property_names(Stat)
+        ],
+        *[
+            (Thrall, key, name)
+            for key in ["Vampieroghi", None]
+            for name in get_property_names(Thrall)
+        ],
+        *[
+            (Vykea, key, name)
+            for key in ["level 1 blood bookshelf", None]
+            for name in get_property_names(Vykea)
+        ],
+    ],
 )
-def test_property(cls, name):
-    getattr(cls(), name)
+def test_property(cls, key, name):
+    getattr(cls(key), name)

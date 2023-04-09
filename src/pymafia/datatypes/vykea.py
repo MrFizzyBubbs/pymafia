@@ -1,16 +1,20 @@
 from __future__ import annotations
 
+from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any
 
 from pymafia.kolmafia import km
 
 if TYPE_CHECKING:
     from .element import Element
-    from .item import Item
 
 
+@dataclass(frozen=True, order=True)
 class Vykea:
-    companion: Any = km.VYKEACompanionData.NO_COMPANION
+    companion: Any = field(default=km.VYKEACompanionData.NO_COMPANION, compare=False)
+    type: str = companion.default.typeToString()
+    rune: str = companion.default.runeToString()
+    level: int = companion.default.getLevel()
 
     def __init__(self, key: str | None = None):
         if (
@@ -22,34 +26,16 @@ class Vykea:
         if companion is None:
             raise ValueError(f"{type(self).__name__} {key!r} not found")
 
-        self.companion = companion
+        object.__setattr__(self, "companion", companion)
+        object.__setattr__(self, "type", companion.typeToString())
+        object.__setattr__(self, "rune", companion.runeToString())
+        object.__setattr__(self, "level", companion.getLevel())
 
     def __str__(self) -> str:
         return self.companion.toString()
 
     def __repr__(self) -> str:
         return f"{type(self).__name__}({str(self)!r})"
-
-    def __hash__(self) -> int:
-        return hash((self.type, self.rune, self.level))
-
-    def __eq__(self, other: Any) -> bool:
-        if isinstance(other, type(self)):
-            return (
-                self.type,
-                self.rune,
-                self.level,
-            ) == (other.type, other.rune, other.level)
-        return NotImplemented
-
-    def __lt__(self, other: Any) -> bool:
-        if isinstance(other, type(self)):
-            return (
-                self.type,
-                self.rune,
-                self.level,
-            ) < (other.type, other.rune, other.level)
-        return NotImplemented
 
     def __bool__(self) -> bool:
         return self.companion != type(self).companion
@@ -64,20 +50,6 @@ class Vykea:
     @property
     def name(self) -> str:
         return self.companion.getName()
-
-    @property
-    def type(self) -> Any:
-        return self.companion.getType()
-
-    @property
-    def rune(self) -> Item:
-        from .item import Item
-
-        return Item(self.companion.getRune().getItemId())
-
-    @property
-    def level(self) -> int:
-        return self.companion.getLevel()
 
     @property
     def image(self) -> str:
