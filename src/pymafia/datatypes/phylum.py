@@ -33,10 +33,10 @@ class Phylum:
 
     @classmethod
     def all(cls) -> list[Phylum]:
-        from pymafia import ash
+        from pymafia.conversion import from_java
 
         values = km.DataTypes.PHYLUM_TYPE.allValues()
-        return sorted(ash.to_python(values))
+        return sorted(from_java(values))
 
     @property
     def phylum(self) -> Any:

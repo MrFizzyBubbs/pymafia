@@ -1,8 +1,28 @@
-import collections
+from collections import abc
+from typing import Any
 
 from jpype import JClass
 
-from pymafia import datatypes
+from pymafia.datatypes import (
+    MAFIA_DATATYPES,
+    Bounty,
+    Class,
+    Coinmaster,
+    Effect,
+    Element,
+    Familiar,
+    Item,
+    Location,
+    Monster,
+    Path,
+    Phylum,
+    Servant,
+    Skill,
+    Slot,
+    Stat,
+    Thrall,
+    Vykea,
+)
 from pymafia.kolmafia import km
 
 TreeMap = JClass("java.util.TreeMap")
@@ -11,55 +31,55 @@ String = JClass("java.lang.String")
 ByteArrayInputStream = JClass("java.io.ByteArrayInputStream")
 
 TYPE_CONVERSIONS = {
-    km.DataTypes.TypeSpec.BOOLEAN: bool,
-    km.DataTypes.TypeSpec.INT: int,
-    km.DataTypes.TypeSpec.FLOAT: float,
-    km.DataTypes.TypeSpec.STRING: str,
-    km.DataTypes.TypeSpec.BUFFER: str,
-    km.DataTypes.TypeSpec.ITEM: datatypes.Item,
-    km.DataTypes.TypeSpec.LOCATION: datatypes.Location,
-    km.DataTypes.TypeSpec.CLASS: datatypes.Class,
-    km.DataTypes.TypeSpec.STAT: datatypes.Stat,
-    km.DataTypes.TypeSpec.SKILL: datatypes.Skill,
-    km.DataTypes.TypeSpec.EFFECT: datatypes.Effect,
-    km.DataTypes.TypeSpec.FAMILIAR: datatypes.Familiar,
-    km.DataTypes.TypeSpec.SLOT: datatypes.Slot,
-    km.DataTypes.TypeSpec.MONSTER: datatypes.Monster,
-    km.DataTypes.TypeSpec.ELEMENT: datatypes.Element,
-    km.DataTypes.TypeSpec.COINMASTER: datatypes.Coinmaster,
-    km.DataTypes.TypeSpec.PHYLUM: datatypes.Phylum,
-    km.DataTypes.TypeSpec.BOUNTY: datatypes.Bounty,
-    km.DataTypes.TypeSpec.THRALL: datatypes.Thrall,
-    km.DataTypes.TypeSpec.SERVANT: datatypes.Servant,
-    km.DataTypes.TypeSpec.VYKEA: datatypes.Vykea,
-    km.DataTypes.TypeSpec.PATH: datatypes.Path,
+    km.DataTypes.BOOLEAN_TYPE: bool,
+    km.DataTypes.INT_TYPE: int,
+    km.DataTypes.FLOAT_TYPE: float,
+    km.DataTypes.STRING_TYPE: str,
+    km.DataTypes.BUFFER_TYPE: str,
+    km.DataTypes.ITEM_TYPE: Item,
+    km.DataTypes.LOCATION_TYPE: Location,
+    km.DataTypes.CLASS_TYPE: Class,
+    km.DataTypes.STAT_TYPE: Stat,
+    km.DataTypes.SKILL_TYPE: Skill,
+    km.DataTypes.EFFECT_TYPE: Effect,
+    km.DataTypes.FAMILIAR_TYPE: Familiar,
+    km.DataTypes.SLOT_TYPE: Slot,
+    km.DataTypes.MONSTER_TYPE: Monster,
+    km.DataTypes.ELEMENT_TYPE: Element,
+    km.DataTypes.COINMASTER_TYPE: Coinmaster,
+    km.DataTypes.PHYLUM_TYPE: Phylum,
+    km.DataTypes.BOUNTY_TYPE: Bounty,
+    km.DataTypes.THRALL_TYPE: Thrall,
+    km.DataTypes.SERVANT_TYPE: Servant,
+    km.DataTypes.VYKEA_TYPE: Vykea,
+    km.DataTypes.PATH_TYPE: Path,
 }
 
 
-def __getattr__(name):
+def __getattr__(name: str) -> Any:
     return AshFunction(name)
 
 
-def to_java(obj):
-    if obj is None or isinstance(obj, (int, float, str)):
+def to_java(obj: Any) -> Any:
+    if isinstance(obj, (bool, int, float, str)):
         return km.Value(obj)
 
-    if isinstance(obj, tuple(datatypes.MAFIA_DATATYPES)):
+    if isinstance(obj, MAFIA_DATATYPES):
         parser = getattr(km.DataTypes, f"parse{type(obj).__name__}Value")
         return parser(str(obj), False)
 
-    if isinstance(obj, collections.abc.Mapping):
+    if isinstance(obj, abc.Mapping):
         jmap = TreeMap()
         for k, v in obj.items():
             jk = to_java(k)
             jv = to_java(v)
             jmap.put(jk, jv)
-        data_type = jmap.getFirstEntry().getValue().getType()
-        index_type = jmap.getFirstEntry().getKey().getType()
+        data_type = jmap.firstEntry().getValue().getType()
+        index_type = jmap.firstEntry().getKey().getType()
         aggregate_type = km.AggregateType(data_type, index_type)
         return km.MapValue(aggregate_type, jmap)
 
-    if isinstance(obj, collections.abc.Iterable):
+    if isinstance(obj, abc.Iterable):
         jlist = ArrayList()
         for item in obj:
             jitem = to_java(item)
@@ -72,25 +92,25 @@ def to_java(obj):
     raise TypeError(f"unsupported type: {type(obj).__name__!r}")
 
 
-def to_python(obj):
-    jtype = obj.getType().getType()
-    jname = obj.getType().getName()
+def from_java(obj: Any) -> Any:
+    jtype = obj.getType()
 
-    if jtype in [km.DataTypes.TypeSpec.VOID, km.DataTypes.TypeSpec.ANY]:
+    if jtype == km.DataTypes.VOID_TYPE:
         return None
+
     if jtype in TYPE_CONVERSIONS:
         return TYPE_CONVERSIONS[jtype](obj.toJSON())
-    if jtype == km.DataTypes.TypeSpec.AGGREGATE and isinstance(obj.content, TreeMap):
-        return {
-            to_python(x.getKey()): to_python(x.getValue())
-            for x in obj.content.entrySet()
-        }
-    if jtype == km.DataTypes.TypeSpec.AGGREGATE and isinstance(
-        obj.content, collections.abc.Iterable
-    ):
-        return [to_python(x) for x in obj.content]
 
-    raise TypeError(f"unsupported type: {jtype!r} ({jname!r})")
+    if isinstance(jtype, km.AggregateType) and isinstance(obj.content, abc.Mapping):
+        return {
+            from_java(e.getKey()): from_java(e.getValue())
+            for e in obj.content.entrySet()
+        }
+
+    if isinstance(jtype, km.AggregateType) and isinstance(obj.content, abc.Iterable):
+        return [from_java(x) for x in obj.content]
+
+    raise TypeError(f"unsupported type: {jtype.getName()!r}")
 
 
 def ashref(command=""):
@@ -107,7 +127,7 @@ def script(lines, raw=False):
     interpreter = km.AshRuntime()
     interpreter.validate(None, stream)
     value = interpreter.execute("main", None)
-    return value if raw else to_python(value)
+    return value if raw else from_java(value)
 
 
 class AshFunction:
@@ -119,7 +139,7 @@ class AshFunction:
         interpreter = km.AshRuntime()
         jargs = [to_java(arg) for arg in args]
         value = self.func(interpreter, *jargs)
-        return value if raw else to_python(value)
+        return value if raw else from_java(value)
 
     @property
     def signatures(self):

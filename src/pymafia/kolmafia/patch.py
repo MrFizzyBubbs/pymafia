@@ -26,25 +26,29 @@ def apply():
     KoLmafia = jpype.JClass("net.sourceforge.kolmafia.KoLmafia")
 
     def wrapper(wrapped, instance, args, kwargs):
-        args = [
-            jpype.JInt(arg)
-            if isinstance(arg, int) and not isinstance(arg, bool)
-            else arg
-            for arg in args
-        ]
-        result = wrapped(*args, **kwargs)
-
         global PATCH_ENABLED
         try:
             PATCH_ENABLED = False
+
+            args = [
+                jpype.JInt(arg)
+                if isinstance(arg, int) and not isinstance(arg, bool)
+                else arg
+                for arg in args
+            ]
+            result = wrapped(*args, **kwargs)
+
             if not KoLmafia.permitsContinue():
                 KoLmafia.forceContinue()
                 raise KoLmafiaError(KoLmafia.getLastMessage())
+
+            return result
         finally:
             PATCH_ENABLED = True
 
-        return result
-
     wrap_function_wrapper(
         _jpype, "_JMethod.__call__", wrapper, enabled=lambda: PATCH_ENABLED
+    )
+    wrap_function_wrapper(
+        _jpype, "_JClass.__call__", wrapper, enabled=lambda: PATCH_ENABLED
     )

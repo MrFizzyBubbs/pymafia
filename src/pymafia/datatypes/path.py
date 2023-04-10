@@ -40,10 +40,10 @@ class Path:
 
     @classmethod
     def all(cls) -> list[Path]:
-        from pymafia import ash
+        from pymafia.conversion import from_java
 
         values = km.DataTypes.PATH_TYPE.allValues()
-        return sorted(ash.to_python(values))
+        return sorted(from_java(values))
 
     @property
     def ascension_path(self) -> Any:

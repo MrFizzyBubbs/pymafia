@@ -40,10 +40,10 @@ class Servant:
 
     @classmethod
     def all(cls) -> list[Servant]:
-        from pymafia import ash
+        from pymafia.conversion import from_java
 
         values = km.DataTypes.SERVANT_TYPE.allValues()
-        return ash.to_python(values)
+        return from_java(values)
 
     @property
     def data(self) -> Any:

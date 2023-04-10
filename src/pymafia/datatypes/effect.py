@@ -45,10 +45,10 @@ class Effect:
 
     @classmethod
     def all(cls) -> list[Effect]:
-        from pymafia import ash
+        from pymafia.conversion import from_java
 
         values = km.DataTypes.EFFECT_TYPE.allValues()
-        return sorted(ash.to_python(values))
+        return sorted(from_java(values))
 
     @property
     def default(self) -> str:

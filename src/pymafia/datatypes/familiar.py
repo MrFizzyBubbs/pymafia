@@ -40,10 +40,10 @@ class Familiar:
 
     @classmethod
     def all(cls) -> list[Familiar]:
-        from pymafia import ash
+        from pymafia.conversion import from_java
 
         values = km.DataTypes.FAMILIAR_TYPE.allValues()
-        return sorted(ash.to_python(values))
+        return sorted(from_java(values))
 
     @property
     def hatchling(self) -> Item:

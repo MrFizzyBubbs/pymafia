@@ -39,10 +39,10 @@ class Class:
 
     @classmethod
     def all(cls) -> list[Class]:
-        from pymafia import ash
+        from pymafia.conversion import from_java
 
         values = km.DataTypes.CLASS_TYPE.allValues()
-        return sorted(ash.to_python(values))
+        return sorted(from_java(values))
 
     @property
     def ascension_class(self) -> Any:

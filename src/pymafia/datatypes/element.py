@@ -33,10 +33,10 @@ class Element:
 
     @classmethod
     def all(cls) -> list[Element]:
-        from pymafia import ash
+        from pymafia.conversion import from_java
 
         values = km.DataTypes.ELEMENT_TYPE.allValues()
-        return ash.to_python(values)
+        return from_java(values)
 
     @property
     def element(self) -> Any:

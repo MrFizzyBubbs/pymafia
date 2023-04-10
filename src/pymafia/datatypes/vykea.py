@@ -32,7 +32,7 @@ class Vykea:
         object.__setattr__(self, "level", companion.getLevel())
 
     def __str__(self) -> str:
-        return self.companion.toString()
+        return self.companion.toString() if self else "none"
 
     def __repr__(self) -> str:
         return f"{type(self).__name__}({str(self)!r})"
@@ -42,10 +42,10 @@ class Vykea:
 
     @classmethod
     def all(cls) -> list[Vykea]:
-        from pymafia import ash
+        from pymafia.conversion import from_java
 
         values = km.DataTypes.VYKEA_TYPE.allValues()
-        return ash.to_python(values)
+        return from_java(values)
 
     @property
     def name(self) -> str:
