@@ -36,7 +36,7 @@ class Coinmaster:
 
     @classmethod
     def all(cls) -> list[Coinmaster]:
-        from pymafia.conversion import from_java
+        from pymafia.ash import from_java
 
         values = km.DataTypes.COINMASTER_TYPE.allValues()
         return from_java(values)

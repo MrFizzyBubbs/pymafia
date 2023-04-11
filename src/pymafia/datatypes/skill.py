@@ -41,7 +41,7 @@ class Skill:
 
     @classmethod
     def all(cls) -> list[Skill]:
-        from pymafia.conversion import from_java
+        from pymafia.ash import from_java
 
         values = km.DataTypes.SKILL_TYPE.allValues()
         return sorted(from_java(values))

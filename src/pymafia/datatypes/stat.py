@@ -34,7 +34,7 @@ class Stat:
 
     @classmethod
     def all(cls) -> list[Stat]:
-        from pymafia.conversion import from_java
+        from pymafia.ash import from_java
 
         values = km.DataTypes.STAT_TYPE.allValues()
         return from_java(values)

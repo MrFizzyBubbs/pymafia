@@ -38,7 +38,7 @@ class Bounty:
 
     @classmethod
     def all(cls) -> list[Bounty]:
-        from pymafia.conversion import from_java
+        from pymafia.ash import from_java
 
         values = km.DataTypes.BOUNTY_TYPE.allValues()
         return from_java(values)

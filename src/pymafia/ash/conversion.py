@@ -1,5 +1,3 @@
-__all__ = ["to_java", "from_java"]
-
 from collections import abc
 from typing import Any
 
@@ -29,8 +27,6 @@ from pymafia.kolmafia import km
 
 TreeMap = JClass("java.util.TreeMap")
 ArrayList = JClass("java.util.ArrayList")
-String = JClass("java.lang.String")
-ByteArrayInputStream = JClass("java.io.ByteArrayInputStream")
 
 TYPE_CONVERSIONS = {
     km.DataTypes.BOOLEAN_TYPE: bool,
@@ -59,6 +55,7 @@ TYPE_CONVERSIONS = {
 
 
 def to_java(obj: Any) -> Any:
+    """Convert a Python object to a KoLmafia Value or PluralValue."""
     if isinstance(obj, (bool, int, float, str)):
         return km.Value(obj)
 
@@ -91,6 +88,7 @@ def to_java(obj: Any) -> Any:
 
 
 def from_java(obj: Any) -> Any:
+    """Convert a KoLmafia Value or PluralValue to a Python object."""
     jtype = obj.getType()
 
     if jtype == km.DataTypes.VOID_TYPE:

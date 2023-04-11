@@ -40,7 +40,7 @@ class Path:
 
     @classmethod
     def all(cls) -> list[Path]:
-        from pymafia.conversion import from_java
+        from pymafia.ash import from_java
 
         values = km.DataTypes.PATH_TYPE.allValues()
         return sorted(from_java(values))

@@ -43,7 +43,7 @@ class Thrall:
 
     @classmethod
     def all(cls) -> list[Thrall]:
-        from pymafia.conversion import from_java
+        from pymafia.ash import from_java
 
         values = km.DataTypes.THRALL_TYPE.allValues()
         return sorted(from_java(values))
