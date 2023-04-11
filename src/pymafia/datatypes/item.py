@@ -8,8 +8,8 @@ from jpype import JClass
 from pymafia.kolmafia import km
 
 if TYPE_CHECKING:
-    from .coinmaster import Coinmaster
-    from .skill import Skill
+    from pymafia.datatypes.coinmaster import Coinmaster
+    from pymafia.datatypes.skill import Skill
 
 EnumSet = JClass("java.util.EnumSet")
 
@@ -263,7 +263,7 @@ class Item:
     @property
     def seller(self) -> Coinmaster:
         """Return which Coinmaster sells this Item, if any."""
-        from .coinmaster import Coinmaster
+        from pymafia.datatypes.coinmaster import Coinmaster
 
         data = km.CoinmasterRegistry.findSeller(self.id)
         return Coinmaster(data.getMaster() if data is not None else None)
@@ -271,7 +271,7 @@ class Item:
     @property
     def buyer(self) -> Coinmaster:
         """Return which Coinmaster buys this Item, if any."""
-        from .coinmaster import Coinmaster
+        from pymafia.datatypes.coinmaster import Coinmaster
 
         data = km.CoinmasterRegistry.findBuyer(self.id)
         return Coinmaster(data.getMaster() if data is not None else None)
@@ -284,7 +284,7 @@ class Item:
     @property
     def noob_skill(self) -> Skill:
         """Return the noob Skill granted by absorbing this Item."""
-        from .skill import Skill
+        from pymafia.datatypes.skill import Skill
 
         try:
             return Skill(km.ItemDatabase.getNoobSkillId(self.id))

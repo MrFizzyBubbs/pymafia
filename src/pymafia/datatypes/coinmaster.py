@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any
 from pymafia.kolmafia import km
 
 if TYPE_CHECKING:
-    from .item import Item
+    from pymafia.datatypes.item import Item
 
 
 @dataclass(frozen=True, order=True)
@@ -51,7 +51,7 @@ class Coinmaster:
 
     @property
     def item(self) -> Item:
-        from .item import Item
+        from pymafia.datatypes.item import Item
 
         if not self:
             return Item(None)

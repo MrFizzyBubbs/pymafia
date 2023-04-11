@@ -8,7 +8,7 @@ from jpype import JClass
 from pymafia.kolmafia import km
 
 if TYPE_CHECKING:
-    from .bounty import Bounty
+    from pymafia.datatypes.bounty import Bounty
 
 Integer = JClass("java.lang.Integer")
 
@@ -91,7 +91,7 @@ class Location:
 
     @property
     def bounty(self) -> Bounty:
-        from .bounty import Bounty
+        from pymafia.datatypes.bounty import Bounty
 
         if not self:
             return Bounty(None)

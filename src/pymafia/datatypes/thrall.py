@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any
 from pymafia.kolmafia import km
 
 if TYPE_CHECKING:
-    from .skill import Skill
+    from pymafia.datatypes.skill import Skill
 
 
 @dataclass(frozen=True, order=True)
@@ -74,7 +74,7 @@ class Thrall:
 
     @property
     def skill(self) -> Skill:
-        from .skill import Skill
+        from pymafia.datatypes.skill import Skill
 
         return Skill(km.PastaThrallData.dataToSkillId(self.data) if self else None)
 

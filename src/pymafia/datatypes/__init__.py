@@ -18,23 +18,23 @@ __all__ = [
     "Vykea",
 ]
 
-from .bounty import Bounty
-from .class_ import Class
-from .coinmaster import Coinmaster
-from .effect import Effect
-from .element import Element
-from .familiar import Familiar
-from .item import Item
-from .location import Location
-from .monster import Monster
-from .path import Path
-from .phylum import Phylum
-from .servant import Servant
-from .skill import Skill
-from .slot import Slot
-from .stat import Stat
-from .thrall import Thrall
-from .vykea import Vykea
+from pymafia.datatypes.bounty import Bounty
+from pymafia.datatypes.class_ import Class
+from pymafia.datatypes.coinmaster import Coinmaster
+from pymafia.datatypes.effect import Effect
+from pymafia.datatypes.element import Element
+from pymafia.datatypes.familiar import Familiar
+from pymafia.datatypes.item import Item
+from pymafia.datatypes.location import Location
+from pymafia.datatypes.monster import Monster
+from pymafia.datatypes.path import Path
+from pymafia.datatypes.phylum import Phylum
+from pymafia.datatypes.servant import Servant
+from pymafia.datatypes.skill import Skill
+from pymafia.datatypes.slot import Slot
+from pymafia.datatypes.stat import Stat
+from pymafia.datatypes.thrall import Thrall
+from pymafia.datatypes.vykea import Vykea
 
 MAFIA_DATATYPES = (
     Item,

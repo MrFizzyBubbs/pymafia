@@ -7,7 +7,7 @@ from typing import Any, Iterable
 
 import jpype
 
-from . import patch
+from pymafia.kolmafia import patch
 
 JENKINS_JOB_URL = "https://ci.kolmafia.us/job/Kolmafia/lastSuccessfulBuild/"
 JAR_LOCATION = "./kolmafia.jar"

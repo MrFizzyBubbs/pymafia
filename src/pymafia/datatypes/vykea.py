@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any
 from pymafia.kolmafia import km
 
 if TYPE_CHECKING:
-    from .element import Element
+    from pymafia.datatypes.element import Element
 
 
 @dataclass(frozen=True, order=True)
@@ -61,6 +61,6 @@ class Vykea:
 
     @property
     def attack_element(self) -> Element:
-        from .element import Element
+        from pymafia.datatypes.element import Element
 
         return Element(self.companion.getAttackElement().toString())

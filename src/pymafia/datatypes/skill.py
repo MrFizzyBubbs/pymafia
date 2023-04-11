@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any
 from pymafia.kolmafia import km
 
 if TYPE_CHECKING:
-    from .class_ import Class
+    from pymafia.datatypes.class_ import Class
 
 
 @dataclass(frozen=True, order=True)
@@ -64,7 +64,7 @@ class Skill:
 
     @property
     def class_(self) -> Class:
-        from .class_ import Class
+        from pymafia.datatypes.class_ import Class
 
         try:
             return Class(km.SkillDatabase.getSkillCategory(self.id).name)

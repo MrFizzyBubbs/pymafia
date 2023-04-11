@@ -8,9 +8,9 @@ from jpype import JClass
 from pymafia.kolmafia import km
 
 if TYPE_CHECKING:
-    from .effect import Effect
-    from .element import Element
-    from .phylum import Phylum
+    from pymafia.datatypes.effect import Effect
+    from pymafia.datatypes.element import Element
+    from pymafia.datatypes.phylum import Phylum
 
 
 Integer = JClass("java.lang.Integer")
@@ -98,7 +98,7 @@ class Monster:
 
     @property
     def attack_element(self) -> Element:
-        from .element import Element
+        from pymafia.datatypes.element import Element
 
         return (
             Element(self.monster.getAttackElement().toString())
@@ -108,7 +108,7 @@ class Monster:
 
     @property
     def attack_elements(self) -> list[Element]:
-        from .element import Element
+        from pymafia.datatypes.element import Element
 
         if not self:
             return []
@@ -116,7 +116,7 @@ class Monster:
 
     @property
     def defense_element(self) -> Element:
-        from .element import Element
+        from pymafia.datatypes.element import Element
 
         return (
             Element(self.monster.getDefenseElement().toString())
@@ -158,13 +158,13 @@ class Monster:
 
     @property
     def phylum(self) -> Phylum:
-        from .phylum import Phylum
+        from pymafia.datatypes.phylum import Phylum
 
         return Phylum(self.monster.getPhylum().toString()) if self else Phylum(None)
 
     @property
     def poison(self) -> Effect:
-        from .effect import Effect
+        from pymafia.datatypes.effect import Effect
 
         if not self:
             return Effect(None)

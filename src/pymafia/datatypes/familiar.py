@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 from pymafia.kolmafia import km
 
 if TYPE_CHECKING:
-    from .item import Item
+    from pymafia.datatypes.item import Item
 
 
 @dataclass(frozen=True, order=True)
@@ -47,7 +47,7 @@ class Familiar:
 
     @property
     def hatchling(self) -> Item:
-        from .item import Item
+        from pymafia.datatypes.item import Item
 
         try:
             return Item(km.FamiliarDatabase.getFamiliarLarva(self.id))
@@ -89,7 +89,7 @@ class Familiar:
 
     @property
     def drop_item(self) -> Item:
-        from .item import Item
+        from pymafia.datatypes.item import Item
 
         item = km.FamiliarData.dropItem(self.id)
         return Item(item.getItemId() if item is not None else None)

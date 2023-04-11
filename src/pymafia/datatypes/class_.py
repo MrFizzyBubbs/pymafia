@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any
 from pymafia.kolmafia import km
 
 if TYPE_CHECKING:
-    from .stat import Stat
+    from pymafia.datatypes.stat import Stat
 
 
 @dataclass(frozen=True, order=True)
@@ -50,7 +50,7 @@ class Class:
 
     @property
     def primestat(self) -> Stat:
-        from .stat import Stat
+        from pymafia.datatypes.stat import Stat
 
         if not self:
             return Stat(None)
