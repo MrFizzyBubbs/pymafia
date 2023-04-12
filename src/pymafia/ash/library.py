@@ -14,6 +14,9 @@ class LibraryFunction:
         self.name = name
         self.func = getattr(km.RuntimeLibrary, self.name)
 
+    def __repr__(self) -> str:
+        return f"{type(self).__name__}({self.name!r})"
+
     def __call__(self, *args, raw=False) -> Any:
         interpreter = km.AshRuntime()
         jargs = [to_java(arg) for arg in args]
