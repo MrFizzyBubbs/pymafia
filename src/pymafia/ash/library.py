@@ -26,6 +26,14 @@ class LibraryFunction:
         return [f"{f.getType().toString()} {f.getSignature()}" for f in functions]
 
 
+def script(lines: str, raw=False) -> Any:
+    stream = ByteArrayInputStream(String(lines).getBytes())
+    interpreter = km.AshRuntime()
+    interpreter.validate(None, stream)
+    value = interpreter.execute("main", None)
+    return value if raw else from_java(value)
+
+
 def ashref(command="") -> list[str]:
     names = set()
     for func in km.RuntimeLibrary.getFunctions():
@@ -33,11 +41,3 @@ def ashref(command="") -> list[str]:
         if command.casefold() in name.casefold():
             names.add(name)
     return sorted(names)
-
-
-def script(lines: str, raw=False) -> Any:
-    stream = ByteArrayInputStream(String(lines).getBytes())
-    interpreter = km.AshRuntime()
-    interpreter.validate(None, stream)
-    value = interpreter.execute("main", None)
-    return value if raw else from_java(value)
