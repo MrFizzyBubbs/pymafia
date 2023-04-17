@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from enum import Enum
 from typing import TYPE_CHECKING
 
 from pymafia.kolmafia import km
@@ -10,9 +11,23 @@ if TYPE_CHECKING:
     from pymafia.datatypes.monster import Monster
 
 
+class BountyType(Enum):
+    NONE = None
+    EASY = "easy"
+    HARD = "hard"
+    SPECIAL = "special"
+
+
+class KoLInternalBountyType(Enum):
+    NONE = BountyType.NONE
+    LOW = BountyType.EASY
+    HIGH = BountyType.HARD
+    SPECIAL = BountyType.SPECIAL
+
+
 @dataclass(frozen=True, order=True)
 class Bounty:
-    name: str = "none"
+    name: str = km.DataTypes.BOUNTY_INIT.contentString
 
     def __init__(self, key: str | None = None):
         if (
@@ -48,20 +63,12 @@ class Bounty:
         return km.BountyDatabase.getPlural(self.name) or ""
 
     @property
-    def type(self) -> str:
-        return km.BountyDatabase.getType(self.name) or ""
+    def type(self) -> BountyType:
+        return BountyType(km.BountyDatabase.getType(self.name))
 
     @property
-    def kol_internal_type(self) -> str | None:
-        match self.type:
-            case "easy":
-                return "low"
-            case "hard":
-                return "high"
-            case "special":
-                return "special"
-            case _:
-                return None
+    def kol_internal_type(self) -> KoLInternalBountyType:
+        return KoLInternalBountyType(self.type)
 
     @property
     def number(self) -> int:

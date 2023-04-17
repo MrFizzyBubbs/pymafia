@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any
 
 from pymafia.kolmafia import km
@@ -8,8 +8,9 @@ from pymafia.kolmafia import km
 
 @dataclass(frozen=True, order=True)
 class Path:
-    id: int = 0
-    name: str = "none"
+    ascension_path: Any = field(default=km.DataTypes.PATH_INIT.content, compare=False)
+    id: int = km.DataTypes.PATH_INIT.contentLong
+    name: str = km.DataTypes.PATH_INIT.contentString
 
     def __init__(self, key: int | str | None = None):
         if (isinstance(key, str) and key.casefold() == self.name.casefold()) or key in (
@@ -26,6 +27,7 @@ class Path:
         if ascension_path == km.AscensionPath.Path.NONE:
             raise ValueError(f"{type(self).__name__} {key!r} not found")
 
+        object.__setattr__(self, "ascension_path", ascension_path)
         object.__setattr__(self, "id", ascension_path.getId())
         object.__setattr__(self, "name", ascension_path.getName())
 
@@ -44,10 +46,6 @@ class Path:
 
         values = km.DataTypes.PATH_TYPE.allValues()
         return sorted(from_java(values))
-
-    @property
-    def ascension_path(self) -> Any:
-        return km.AscensionPath.idToPath(self.id)
 
     @property
     def avatar(self) -> bool:

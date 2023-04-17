@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any
 
 from pymafia.kolmafia import km
@@ -8,8 +8,9 @@ from pymafia.kolmafia import km
 
 @dataclass(frozen=True, order=True)
 class Servant:
-    id: int = 0
-    name: str = "none"
+    data: Any = field(default=km.DataTypes.SERVANT_INIT.content, compare=False)
+    id: int = km.DataTypes.SERVANT_INIT.contentLong
+    name: str = km.DataTypes.SERVANT_INIT.contentString
 
     def __init__(self, key: int | str | None = None):
         if (isinstance(key, str) and key.casefold() == self.name.casefold()) or key in (
@@ -26,6 +27,7 @@ class Servant:
         if data is None:
             raise ValueError(f"{type(self).__name__} {key!r} not found")
 
+        object.__setattr__(self, "data", data)
         object.__setattr__(self, "id", km.EdServantData.dataToId(data))
         object.__setattr__(self, "name", km.EdServantData.dataToType(data))
 
@@ -46,37 +48,49 @@ class Servant:
         return from_java(values)
 
     @property
-    def data(self) -> Any:
-        return km.EdServantData.idToData(self.id)
-
-    @property
     def servant(self) -> Any:
         return km.EdServantData.findEdServant(self.name)
 
     @property
     def level(self) -> int:
-        return 0 if self.servant is None else self.servant.getLevel()
+        return self.servant.getLevel() if self.servant is not None else 0
 
     @property
     def experience(self) -> int:
-        return 0 if self.servant is None else self.servant.getExperience()
+        return self.servant.getExperience() if self.servant is not None else 0
 
     @property
     def image(self) -> str:
-        return km.EdServantData.dataToImage(self.data) if self else ""
+        return km.EdServantData.dataToImage(self.data) if self.data is not None else ""
 
     @property
     def level1_ability(self) -> str:
-        return km.EdServantData.dataToLevel1Ability(self.data) if self else ""
+        return (
+            km.EdServantData.dataToLevel1Ability(self.data)
+            if self.data is not None
+            else ""
+        )
 
     @property
     def level7_ability(self) -> str:
-        return km.EdServantData.dataToLevel7Ability(self.data) if self else ""
+        return (
+            km.EdServantData.dataToLevel7Ability(self.data)
+            if self.data is not None
+            else ""
+        )
 
     @property
     def level14_ability(self) -> str:
-        return km.EdServantData.dataToLevel14Ability(self.data) if self else ""
+        return (
+            km.EdServantData.dataToLevel14Ability(self.data)
+            if self.data is not None
+            else ""
+        )
 
     @property
     def level21_ability(self) -> str:
-        return km.EdServantData.dataToLevel21Ability(self.data) if self else ""
+        return (
+            km.EdServantData.dataToLevel21Ability(self.data)
+            if self.data is not None
+            else ""
+        )

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any
 
 from pymafia.kolmafia import km
@@ -8,7 +8,8 @@ from pymafia.kolmafia import km
 
 @dataclass(frozen=True, order=True)
 class Element:
-    name: str = "none"
+    element: Any = field(default=km.DataTypes.ELEMENT_INIT.content, compare=False)
+    name: str = km.DataTypes.ELEMENT_INIT.contentString
 
     def __init__(self, key: str | None = None):
         if (
@@ -20,6 +21,7 @@ class Element:
         if element == km.MonsterDatabase.Element.NONE:
             raise ValueError(f"{type(self).__name__} {key!r} not found")
 
+        object.__setattr__(self, "element", element)
         object.__setattr__(self, "name", element.toString())
 
     def __str__(self) -> str:
@@ -37,10 +39,6 @@ class Element:
 
         values = km.DataTypes.ELEMENT_TYPE.allValues()
         return from_java(values)
-
-    @property
-    def element(self) -> Any:
-        return km.MonsterDatabase.stringToElement(self.name)
 
     @property
     def image(self) -> str:

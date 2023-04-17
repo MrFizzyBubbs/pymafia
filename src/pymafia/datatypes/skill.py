@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 from pymafia.kolmafia import km
 
@@ -11,8 +11,8 @@ if TYPE_CHECKING:
 
 @dataclass(frozen=True, order=True)
 class Skill:
-    id: int = -1
-    name: str = "none"
+    id: int = km.DataTypes.SKILL_INIT.contentLong
+    name: str = km.DataTypes.SKILL_INIT.contentString
 
     def __init__(self, key: int | str | None = None):
         if (isinstance(key, str) and key.casefold() == self.name.casefold()) or key in (

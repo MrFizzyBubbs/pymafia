@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any
 
 from pymafia.kolmafia import km
@@ -8,7 +8,8 @@ from pymafia.kolmafia import km
 
 @dataclass(frozen=True, order=True)
 class Phylum:
-    name: str = "none"
+    phylum: Any = field(default=km.DataTypes.PHYLUM_INIT.content, compare=False)
+    name: str = km.DataTypes.PHYLUM_INIT.contentString
 
     def __init__(self, key: str | None = None):
         if (
@@ -20,6 +21,7 @@ class Phylum:
         if phylum == km.MonsterDatabase.Phylum.NONE:
             raise ValueError(f"{type(self).__name__} {key!r} not found")
 
+        object.__setattr__(self, "phylum", phylum)
         object.__setattr__(self, "name", phylum.toString())
 
     def __str__(self) -> str:
@@ -37,10 +39,6 @@ class Phylum:
 
         values = km.DataTypes.PHYLUM_TYPE.allValues()
         return sorted(from_java(values))
-
-    @property
-    def phylum(self) -> Any:
-        return km.MonsterDatabase.Phylum.find(self.name)
 
     @property
     def image(self) -> str:

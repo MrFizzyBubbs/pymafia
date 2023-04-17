@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from enum import Enum
 from typing import TYPE_CHECKING, Any
 
 from pymafia.kolmafia import km
@@ -9,16 +10,34 @@ if TYPE_CHECKING:
     from pymafia.datatypes.element import Element
 
 
+class VykeaCompanionType(Enum):
+    NONE = km.VYKEACompanionData.VYKEACompanionType.NONE
+    BOOKSHELF = km.VYKEACompanionData.VYKEACompanionType.BOOKSHELF
+    DRESSER = km.VYKEACompanionData.VYKEACompanionType.DRESSER
+    CEILING_FAN = km.VYKEACompanionData.VYKEACompanionType.CEILING_FAN
+    COUCH = km.VYKEACompanionData.VYKEACompanionType.COUCH
+    LAMP = km.VYKEACompanionData.VYKEACompanionType.LAMP
+    DISHRACK = km.VYKEACompanionData.VYKEACompanionType.DISHRACK
+
+
+class VykeaRune(Enum):
+    NONE = km.VYKEACompanionData.NO_RUNE
+    FRENZY = km.VYKEACompanionData.FRENZY_RUNE
+    BLOOD = km.VYKEACompanionData.BLOOD_RUNE
+    LIGHTNING = km.VYKEACompanionData.LIGHTNING_RUNE
+
+
 @dataclass(frozen=True, order=True)
 class Vykea:
     companion: Any = field(default=km.VYKEACompanionData.NO_COMPANION, compare=False)
-    type: str = companion.default.typeToString()
-    rune: str = companion.default.runeToString()
+    type: VykeaCompanionType = VykeaCompanionType(companion.default.getType())
+    rune: VykeaRune = VykeaRune(companion.default.getRune())
     level: int = companion.default.getLevel()
 
     def __init__(self, key: str | None = None):
         if (
-            isinstance(key, str) and key.casefold() == "none".casefold()
+            isinstance(key, str)
+            and key.casefold() == km.DataTypes.VYKEA_INIT.contentString.casefold()
         ) or key is None:
             return
 
@@ -27,12 +46,14 @@ class Vykea:
             raise ValueError(f"{type(self).__name__} {key!r} not found")
 
         object.__setattr__(self, "companion", companion)
-        object.__setattr__(self, "type", companion.typeToString())
-        object.__setattr__(self, "rune", companion.runeToString())
+        object.__setattr__(self, "type", VykeaCompanionType(companion.getType()))
+        object.__setattr__(self, "rune", VykeaRune(companion.getRune()))
         object.__setattr__(self, "level", companion.getLevel())
 
     def __str__(self) -> str:
-        return self.companion.toString() if self else "none"
+        return (
+            self.companion.toString() if self else km.DataTypes.VYKEA_INIT.contentString
+        )
 
     def __repr__(self) -> str:
         return f"{type(self).__name__}({str(self)!r})"

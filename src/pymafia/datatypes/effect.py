@@ -15,8 +15,8 @@ class EffectQuality(IntEnum):
 
 @dataclass(frozen=True, order=True)
 class Effect:
-    id: int = -1
-    name: str = "none"
+    id: int = km.DataTypes.EFFECT_INIT.contentLong
+    name: str = km.DataTypes.EFFECT_INIT.contentString
 
     def __init__(self, key: int | str | None = None):
         if (isinstance(key, str) and key.casefold() == self.name.casefold()) or key in (
@@ -65,7 +65,7 @@ class Effect:
     @property
     def attributes(self) -> list[str]:
         attrs = km.EffectDatabase.getEffectAttributes(self.id)
-        return [] if attrs is None else list(attrs)
+        return list(attrs) if attrs is not None else []
 
     @property
     def note(self) -> str:

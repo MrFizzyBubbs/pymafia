@@ -22,6 +22,8 @@ from pymafia.datatypes import (
     Stat,
     Thrall,
     Vykea,
+    VykeaCompanionType,
+    VykeaRune,
 )
 
 STANDARD_NONE_KEYS = [None, "none", "NONE"]
@@ -59,7 +61,7 @@ def get_property_names(cls):
         *[(Monster, key, (1, "spooky vampire")) for key in [1, "spooky vampire"]],
         *[(Monster, key, (0, "none")) for key in [*STANDARD_NONE_KEYS, 0]],
         *[(Path, key, (1, "Boozetafarian")) for key in [1, "Boozetafarian"]],
-        *[(Path, key, (0, "none")) for key in [*STANDARD_NONE_KEYS, 0]],
+        *[(Path, key, (-1, "none")) for key in [*STANDARD_NONE_KEYS, -1]],
         (Phylum, "beast", ("beast",)),
         *[(Phylum, key, ("none",)) for key in STANDARD_NONE_KEYS],
         *[(Servant, key, (7, "Assassin")) for key in [7, "Assassin"]],
@@ -75,9 +77,12 @@ def get_property_names(cls):
         (
             Vykea,
             "level 1 blood bookshelf",
-            ("bookshelf", "blood", 1),
+            (VykeaCompanionType.BOOKSHELF, VykeaRune.BLOOD, 1),
         ),
-        *[(Vykea, key, ("unknown", "", 0)) for key in STANDARD_NONE_KEYS],
+        *[
+            (Vykea, key, (VykeaCompanionType.NONE, VykeaRune.NONE, 0))
+            for key in STANDARD_NONE_KEYS
+        ],
     ],
 )
 def test_init(cls, key, expected):

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any
 
 from pymafia.kolmafia import km
@@ -11,8 +11,9 @@ if TYPE_CHECKING:
 
 @dataclass(frozen=True, order=True)
 class Thrall:
-    id: int = 0
-    type: str = "none"
+    data: Any = field(default=km.DataTypes.THRALL_INIT.content, compare=False)
+    id: int = km.DataTypes.THRALL_INIT.contentLong
+    type: str = km.DataTypes.THRALL_INIT.contentString
 
     def __init__(self, key: int | str | None = None):
         if (isinstance(key, str) and key.casefold() == self.type.casefold()) or key in (
@@ -29,6 +30,7 @@ class Thrall:
         if data is None:
             raise ValueError(f"{type(self).__name__} {key!r} not found")
 
+        object.__setattr__(self, "data", data)
         object.__setattr__(self, "id", km.PastaThrallData.dataToId(data))
         object.__setattr__(self, "type", km.PastaThrallData.dataToType(data))
 
@@ -49,10 +51,6 @@ class Thrall:
         return sorted(from_java(values))
 
     @property
-    def data(self) -> Any:
-        return km.PastaThrallData.idToData(self.id)
-
-    @property
     def thrall(self) -> Any:
         return km.KoLCharacter.findPastaThrall(self.type)
 
@@ -66,17 +64,27 @@ class Thrall:
 
     @property
     def image(self) -> str:
-        return km.PastaThrallData.dataToImage(self.data) if self else ""
+        return (
+            km.PastaThrallData.dataToImage(self.data) if self.data is not None else ""
+        )
 
     @property
     def tinyimage(self) -> str:
-        return km.PastaThrallData.dataToTinyImage(self.data) if self else ""
+        return (
+            km.PastaThrallData.dataToTinyImage(self.data)
+            if self.data is not None
+            else ""
+        )
 
     @property
     def skill(self) -> Skill:
         from pymafia.datatypes.skill import Skill
 
-        return Skill(km.PastaThrallData.dataToSkillId(self.data) if self else None)
+        return Skill(
+            km.PastaThrallData.dataToSkillId(self.data)
+            if self.data is not None
+            else None
+        )
 
     @property
     def current_modifiers(self) -> str:

@@ -7,7 +7,7 @@ from pymafia.kolmafia import km
 
 @dataclass(frozen=True, order=True)
 class Slot:
-    name: str = "none"
+    name: str = km.DataTypes.SLOT_INIT.contentString
 
     def __init__(self, key: str | None = None):
         if (

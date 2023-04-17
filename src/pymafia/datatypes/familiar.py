@@ -11,8 +11,8 @@ if TYPE_CHECKING:
 
 @dataclass(frozen=True, order=True)
 class Familiar:
-    id: int = -1
-    name: str = "none"
+    id: int = km.DataTypes.FAMILIAR_INIT.contentLong
+    name: str = km.DataTypes.FAMILIAR_INIT.contentString
 
     def __init__(self, key: int | str | None = None):
         if (isinstance(key, str) and key.casefold() == self.name.casefold()) or key in (
@@ -92,7 +92,7 @@ class Familiar:
         from pymafia.datatypes.item import Item
 
         item = km.FamiliarData.dropItem(self.id)
-        return Item(item.getItemId() if item is not None else None)
+        return Item(item.getItemId()) if item is not None else Item()
 
     @property
     def drops_today(self) -> int:
@@ -169,59 +169,59 @@ class Familiar:
     @property
     def attributes(self) -> list[str]:
         attrs = km.FamiliarDatabase.getFamiliarAttributes(self.id)
-        return [] if attrs is None else list(attrs)
+        return list(attrs) if attrs is not None else []
 
     @property
     def poke_level(self) -> int:
         fam = km.KoLCharacter.usableFamiliar(self.id)
-        return 0 if fam is None else fam.getPokeLevel()
+        return fam.getPokeLevel() if fam is not None else 0
 
     @property
     def poke_level_2_power(self) -> int:
         data = km.FamiliarDatabase.getPokeDataById(self.id)
-        return 0 if data is None else data.getPower2()
+        return data.getPower2() if data is not None else 0
 
     @property
     def poke_level_2_hp(self) -> int:
         data = km.FamiliarDatabase.getPokeDataById(self.id)
-        return 0 if data is None else data.getHP2()
+        return data.getHP2() if data is not None else 0
 
     @property
     def poke_level_3_power(self) -> int:
         data = km.FamiliarDatabase.getPokeDataById(self.id)
-        return 0 if data is None else data.getPower3()
+        return data.getPower3() if data is not None else 0
 
     @property
     def poke_level_3_hp(self) -> int:
         data = km.FamiliarDatabase.getPokeDataById(self.id)
-        return 0 if data is None else data.getHP3()
+        return data.getHP3() if data is not None else 0
 
     @property
     def poke_level_4_power(self) -> int:
         data = km.FamiliarDatabase.getPokeDataById(self.id)
-        return 0 if data is None else data.getPower4()
+        return data.getPower4() if data is not None else 0
 
     @property
     def poke_level_4_hp(self) -> int:
         data = km.FamiliarDatabase.getPokeDataById(self.id)
-        return 0 if data is None else data.getHP4()
+        return data.getHP4() if data is not None else 0
 
     @property
     def poke_move_1(self) -> str:
         data = km.FamiliarDatabase.getPokeDataById(self.id)
-        return "" if data is None else data.getMove1()
+        return data.getMove1() if data is not None else ""
 
     @property
     def poke_move_2(self) -> str:
         data = km.FamiliarDatabase.getPokeDataById(self.id)
-        return "" if data is None else data.getMove2()
+        return data.getMove2() if data is not None else ""
 
     @property
     def poke_move_3(self) -> str:
         data = km.FamiliarDatabase.getPokeDataById(self.id)
-        return "" if data is None else data.getMove3()
+        return data.getMove3() if data is not None else ""
 
     @property
     def poke_attribute(self) -> str:
         data = km.FamiliarDatabase.getPokeDataById(self.id)
-        return "" if data is None else data.getAttribute()
+        return data.getAttribute() if data is not None else ""

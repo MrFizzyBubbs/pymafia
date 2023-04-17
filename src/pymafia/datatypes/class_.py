@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any
 
 from pymafia.kolmafia import km
@@ -11,8 +11,9 @@ if TYPE_CHECKING:
 
 @dataclass(frozen=True, order=True)
 class Class:
-    id: int = -1
-    name: str = "none"
+    ascension_class: Any = field(default=km.DataTypes.CLASS_INIT.content, compare=False)
+    id: int = km.DataTypes.CLASS_INIT.contentLong
+    name: str = km.DataTypes.CLASS_INIT.contentString
 
     def __init__(self, key: int | str | None = None):
         if (isinstance(key, str) and key.casefold() == self.name.casefold()) or key in (
@@ -25,6 +26,7 @@ class Class:
         if ascension_class is None or ascension_class.getId() < 0:
             raise ValueError(f"{type(self).__name__} {key!r} not found")
 
+        object.__setattr__(self, "ascension_class", ascension_class)
         object.__setattr__(self, "id", ascension_class.getId())
         object.__setattr__(self, "name", ascension_class.getName())
 
@@ -45,15 +47,11 @@ class Class:
         return sorted(from_java(values))
 
     @property
-    def ascension_class(self) -> Any:
-        return km.AscensionClass.find(self.id)
-
-    @property
     def primestat(self) -> Stat:
         from pymafia.datatypes.stat import Stat
 
-        if not self:
-            return Stat(None)
+        if self.ascension_class is None:
+            return Stat()
         prime_index = self.ascension_class.getPrimeStatIndex()
         name = km.AdventureResult.STAT_NAMES[prime_index]
         return Stat(name)

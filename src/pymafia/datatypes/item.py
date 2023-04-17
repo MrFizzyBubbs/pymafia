@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from enum import Enum
 from typing import TYPE_CHECKING
 
 from jpype import JClass
@@ -14,10 +15,17 @@ if TYPE_CHECKING:
 EnumSet = JClass("java.util.EnumSet")
 
 
+class CandyType(Enum):
+    NONE = km.CandyDatabase.CandyType.NONE
+    UNSPADED = km.CandyDatabase.CandyType.UNSPADED
+    SIMPLE = km.CandyDatabase.CandyType.SIMPLE
+    COMPLEX = km.CandyDatabase.CandyType.COMPLEX
+
+
 @dataclass(frozen=True, order=True)
 class Item:
-    id: int = -1
-    name: str = "none"
+    id: int = km.DataTypes.ITEM_INIT.contentLong
+    name: str = km.DataTypes.ITEM_INIT.contentString
 
     def __init__(self, key: int | str | None = None):
         if (isinstance(key, str) and key.casefold() == self.name.casefold()) or key in (
@@ -246,9 +254,9 @@ class Item:
         return km.ItemDatabase.isCandyItem(self.id)
 
     @property
-    def candy_type(self) -> str:
+    def candy_type(self) -> CandyType:
         """Return the candy type of the Item."""
-        return km.CandyDatabase.getCandyType(self.id).name
+        return CandyType(km.CandyDatabase.getCandyType(self.id))
 
     @property
     def chocolate(self) -> bool:
@@ -266,7 +274,7 @@ class Item:
         from pymafia.datatypes.coinmaster import Coinmaster
 
         data = km.CoinmasterRegistry.findSeller(self.id)
-        return Coinmaster(data.getMaster() if data is not None else None)
+        return Coinmaster(data.getMaster()) if data is not None else Coinmaster()
 
     @property
     def buyer(self) -> Coinmaster:
@@ -274,7 +282,7 @@ class Item:
         from pymafia.datatypes.coinmaster import Coinmaster
 
         data = km.CoinmasterRegistry.findBuyer(self.id)
-        return Coinmaster(data.getMaster() if data is not None else None)
+        return Coinmaster(data.getMaster()) if data is not None else Coinmaster()
 
     @property
     def name_length(self) -> int:
@@ -289,4 +297,4 @@ class Item:
         try:
             return Skill(km.ItemDatabase.getNoobSkillId(self.id))
         except ValueError:
-            return Skill(None)
+            return Skill()
