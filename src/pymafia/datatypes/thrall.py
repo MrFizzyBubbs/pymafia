@@ -41,7 +41,7 @@ class Thrall:
         return f"{type(self).__name__}({str(self)!r})"
 
     def __bool__(self) -> bool:
-        return (self.id, self.type) != (type(self).id, type(self).type)
+        return self != type(self)()
 
     @classmethod
     def all(cls) -> list[Thrall]:

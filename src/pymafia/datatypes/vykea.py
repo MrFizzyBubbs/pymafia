@@ -59,7 +59,7 @@ class Vykea:
         return f"{type(self).__name__}({str(self)!r})"
 
     def __bool__(self) -> bool:
-        return self.companion != type(self).companion
+        return self != type(self)()
 
     @classmethod
     def all(cls) -> list[Vykea]:
