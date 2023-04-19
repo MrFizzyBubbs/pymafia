@@ -32,11 +32,11 @@ ignore = [
 
 [tool.ruff.per-file-ignores]
 "__init__.py" = [
-  "F401",  # Module imported but unused 
-  "F403",  # `from module import *` used
+  "F401",  # Unused import
+  "F403",  # Wildcard import
 ]
 "tests/__init__.py" = [
-  "E722",  # Do not use bare `except`
+  "E722",  # Bare except
 ]
 
 [tool.mypy]
