@@ -13,7 +13,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
+          python-version: '3.10'
       - name: Install poetry
         uses: snok/install-poetry@v1
       - name: Install poetry-dynamic-versioning
@@ -21,6 +21,6 @@ jobs:
       - name: Install dependencies
         run: poetry install --no-interaction --no-root
       - name: Publish package
-        run: |
+        run: |-
           poetry config pypi-token.pypi ${{ secrets.PYPI_API_TOKEN }}
           poetry publish --build

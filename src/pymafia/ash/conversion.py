@@ -98,10 +98,7 @@ def from_java(obj: Any) -> Any:
         return TYPE_CONVERSIONS[jtype](obj.toJSON())
 
     if isinstance(jtype, km.AggregateType) and isinstance(obj.content, abc.Mapping):
-        return {
-            from_java(e.getKey()): from_java(e.getValue())
-            for e in obj.content.entrySet()
-        }
+        return {from_java(k): from_java(v) for k, v in obj.content.items()}
 
     if isinstance(jtype, km.AggregateType) and isinstance(obj.content, abc.Iterable):
         return [from_java(x) for x in obj.content]
