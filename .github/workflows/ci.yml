@@ -38,6 +38,6 @@ jobs:
       - name: Install dependencies
         run: poetry install --no-interaction --no-root
       - name: Run mypy
-        run: mypy src
+        run: poetry run mypy src
       - name: Run tests
         run: poetry run pytest .
