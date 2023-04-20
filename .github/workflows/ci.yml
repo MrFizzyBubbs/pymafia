@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: [main]
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -13,18 +13,27 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: "3.10"
+      - name: Run pre-commit
+        uses: pre-commit/action@v3.0.0
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
           distribution: adopt
-          java-version: '17'
+          java-version: "17"
       - name: Install poetry
         uses: snok/install-poetry@v1
       - name: Install dependencies
         run: poetry install --no-interaction --no-root
-      - name: Run pre-commit
-        uses: pre-commit/action@v3.0.0
       - name: Run mypy
         run: poetry run mypy src
       - name: Run tests
