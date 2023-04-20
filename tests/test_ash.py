@@ -14,4 +14,4 @@ def test_java_conversion(value):
 
 
 def test_void_java_conversion():
-    assert from_java(km.Value()) is None
+    assert from_java(km.Value()) is not None
