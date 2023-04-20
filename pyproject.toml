@@ -21,6 +21,7 @@ mypy = "^0.971"
 pytest = "^7.2.2"
 pytest-cov = "^4.0.0"
 pre-commit = "^3.2.2"
+yamlfix = "^1.9.0"
 
 [tool.isort]
 profile = "black"
@@ -42,6 +43,9 @@ ignore = [
 [tool.mypy]
 ignore_missing_imports = true
 
+[tool.yamlfix]
+explicit_start = false
+
 [tool.poetry-dynamic-versioning]
 enable = true
 format = "{base}"
@@ -49,7 +53,7 @@ style = "pep440"
 strict = true
 
 [tool.pytest.ini_options]
-pythonpath = "src/"
+pythonpath = "src"
 
 [build-system]
 requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]
