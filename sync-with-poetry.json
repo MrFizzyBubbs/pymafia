@@ -1,0 +1,14 @@
+{
+  "ruff": {
+    "repo": "https://github.com/charliermarsh/ruff-pre-commit",
+    "rev": "v${rev}"
+  },
+  "isort": {
+    "repo": "https://github.com/pycqa/isort",
+    "rev": "${rev}"
+  },
+  "black": {
+    "repo": "https://github.com/psf/black",
+    "rev": "${rev}"
+  }
+}

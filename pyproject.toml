@@ -14,14 +14,15 @@ wrapt = "^1.15.0"
 
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.15.1"
-black = "^23.3.0"
+ruff = "^0.0.262"
 isort = "^5.10.1"
+black = "^23.3.0"
+yamlfix = "^1.9.0"
 docformatter = "^1.5.0"
 mypy = "^0.971"
 pytest = "^7.2.2"
 pytest-cov = "^4.0.0"
 pre-commit = "^3.2.2"
-yamlfix = "^1.9.0"
 
 [tool.isort]
 profile = "black"
