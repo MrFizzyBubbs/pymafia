@@ -1,7 +1,7 @@
-__all__ = ["LibraryFunction", "from_java", "to_java"]
+__all__ = ["LibraryFunction", "ashref", "script", "from_java", "to_java"]
 
 from pymafia.ash.conversion import from_java, to_java
-from pymafia.ash.library import LibraryFunction
+from pymafia.ash.library import LibraryFunction, ashref, script
 
 
 def __getattr__(name: str) -> LibraryFunction:
