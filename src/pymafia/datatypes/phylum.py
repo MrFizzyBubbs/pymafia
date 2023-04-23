@@ -1,13 +1,37 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any
+from typing import Any, ClassVar
 
 from pymafia.kolmafia import km
 
 
 @dataclass(frozen=True, order=True)
 class Phylum:
+    NONE: ClassVar[Phylum]
+    BEAST: ClassVar[Phylum]
+    BUG: ClassVar[Phylum]
+    CONSTELLATION: ClassVar[Phylum]
+    CONSTRUCT: ClassVar[Phylum]
+    DEMON: ClassVar[Phylum]
+    DUDE: ClassVar[Phylum]
+    ELEMENTAL: ClassVar[Phylum]
+    ELF: ClassVar[Phylum]
+    FISH: ClassVar[Phylum]
+    GOBLIN: ClassVar[Phylum]
+    HIPPY: ClassVar[Phylum]
+    HOBO: ClassVar[Phylum]
+    HORROR: ClassVar[Phylum]
+    HUMANOID: ClassVar[Phylum]
+    MERKIN: ClassVar[Phylum]
+    ORC: ClassVar[Phylum]
+    PENGUIN: ClassVar[Phylum]
+    PIRATE: ClassVar[Phylum]
+    PLANT: ClassVar[Phylum]
+    SLIME: ClassVar[Phylum]
+    UNDEAD: ClassVar[Phylum]
+    WEIRD: ClassVar[Phylum]
+
     phylum: Any = field(default=km.DataTypes.PHYLUM_INIT.content, compare=False)
     name: str = km.DataTypes.PHYLUM_INIT.contentString
 
@@ -45,3 +69,28 @@ class Phylum:
         if self.phylum == km.MonsterDatabase.Phylum.NONE:
             return ""
         return self.phylum.getImage()
+
+
+Phylum.NONE = Phylum()
+Phylum.BEAST = Phylum("beast")
+Phylum.BUG = Phylum("bug")
+Phylum.CONSTELLATION = Phylum("constellation")
+Phylum.CONSTRUCT = Phylum("construct")
+Phylum.DEMON = Phylum("demon")
+Phylum.DUDE = Phylum("dude")
+Phylum.ELEMENTAL = Phylum("elemental")
+Phylum.ELF = Phylum("elf")
+Phylum.FISH = Phylum("fish")
+Phylum.GOBLIN = Phylum("goblin")
+Phylum.HIPPY = Phylum("hippy")
+Phylum.HOBO = Phylum("hobo")
+Phylum.HORROR = Phylum("horror")
+Phylum.HUMANOID = Phylum("humanoid")
+Phylum.MERKIN = Phylum("mer-kin")
+Phylum.ORC = Phylum("orc")
+Phylum.PENGUIN = Phylum("penguin")
+Phylum.PIRATE = Phylum("pirate")
+Phylum.PLANT = Phylum("plant")
+Phylum.SLIME = Phylum("slime")
+Phylum.UNDEAD = Phylum("undead")
+Phylum.WEIRD = Phylum("weird")

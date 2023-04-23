@@ -1,12 +1,18 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import ClassVar
 
 from pymafia.kolmafia import km
 
 
 @dataclass(frozen=True, order=True)
 class Stat:
+    NONE: ClassVar[Stat]
+    MUSCLE: ClassVar[Stat]
+    MYSTICALITY: ClassVar[Stat]
+    MOXIE: ClassVar[Stat]
+
     name: str = km.DataTypes.STAT_INIT.contentString
 
     def __init__(self, key: str | None = None):
@@ -38,3 +44,9 @@ class Stat:
 
         values = km.DataTypes.STAT_TYPE.allValues()
         return from_java(values)
+
+
+Stat.NONE = Stat()
+Stat.MUSCLE = Stat("Muscle")
+Stat.MYSTICALITY = Stat("Mysticality")
+Stat.MOXIE = Stat("Moxie")

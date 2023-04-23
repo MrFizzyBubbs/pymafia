@@ -1,13 +1,24 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any
+from typing import Any, ClassVar
 
 from pymafia.kolmafia import km
 
 
 @dataclass(frozen=True, order=True)
 class Element:
+    NONE: ClassVar[Element]
+    COLD: ClassVar[Element]
+    HOT: ClassVar[Element]
+    SLEAZE: ClassVar[Element]
+    SPOOKY: ClassVar[Element]
+    STENCH: ClassVar[Element]
+    SLIME: ClassVar[Element]
+    SUPERCOLD: ClassVar[Element]
+    BADSPELLING: ClassVar[Element]
+    SHADOW: ClassVar[Element]
+
     element: Any = field(default=km.DataTypes.ELEMENT_INIT.content, compare=False)
     name: str = km.DataTypes.ELEMENT_INIT.contentString
 
@@ -60,3 +71,15 @@ class Element:
         if self.element == km.MonsterDatabase.Element.STENCH:
             return "stench.gif"
         return ""
+
+
+Element.NONE = Element()
+Element.COLD = Element("cold")
+Element.HOT = Element("hot")
+Element.SLEAZE = Element("sleaze")
+Element.SPOOKY = Element("spooky")
+Element.STENCH = Element("stench")
+Element.SLIME = Element("slime")
+Element.SUPERCOLD = Element("supercold")
+Element.BADSPELLING = Element("bad spelling")
+Element.SHADOW = Element("shadow")
