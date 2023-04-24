@@ -8,5 +8,4 @@ from pymafia.iotms import *
 from pymafia.kolmafia import *
 from pymafia.player import *
 from pymafia.preference import *
-from pymafia.utils import *
-from pymafia.wanderer import *
+from pymafia.utils import abort, execute, launch_gui, log, login

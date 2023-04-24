@@ -39,7 +39,7 @@ def in_combat(monster: Monster | None = None) -> bool:
 
 
 def can_visit_url() -> bool:
-    """Return whether the player can safely visit an in-game url."""
+    """Return whether the player can visit an in-game url."""
     return not (
         ash.current_round() > 0
         or ash.in_multi_fight()
