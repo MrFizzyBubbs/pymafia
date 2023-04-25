@@ -9,39 +9,46 @@ import jpype
 
 import pymafia.kolmafia.patch as patch
 
-JENKINS_JOB_URL = "https://ci.kolmafia.us/job/Kolmafia/lastSuccessfulBuild/"
-JAR_LOCATION = "./kolmafia.jar"
+GITHUB_RELEASE_URL = "https://api.github.com/repos/kolmafia/kolmafia/releases/"
+GITHUB_DOWNLOAD_URL = "https://github.com/kolmafia/kolmafia/releases/download/"
 JAVA_PATTERN = "(net\\/sourceforge\\/kolmafia.*\\/([^\\$]*))\\.class"
 
 
-def download_kolmafia(location: str):
-    with urllib.request.urlopen(JENKINS_JOB_URL + "/api/json") as response:
+def latest_revision() -> str:
+    with urllib.request.urlopen(GITHUB_RELEASE_URL + "latest") as response:
         data = json.loads(response.read().decode())
-        jar_url = JENKINS_JOB_URL + "artifact/" + data["artifacts"][0]["relativePath"]
-        urllib.request.urlretrieve(jar_url, filename=location)
+        return data["name"]
+
+
+def download_kolmafia(revision: str, location: str):
+    jar_url = GITHUB_DOWNLOAD_URL + f"r{revision}/KoLmafia-{revision}.jar"
+    urllib.request.urlretrieve(jar_url, filename=location)
 
 
 class KoLmafia:
-    def __init__(self, location: str):
+    def __init__(self, revision: str):
+        revision = latest_revision() if revision == "latest" else revision
+        location = f"KoLmafia-{revision}.jar"
+
         if not os.path.isfile(location):
-            download_kolmafia(location)
+            download_kolmafia(revision, location)
 
         jpype.startJVM(classpath=location, convertStrings=True)
         patch.apply()
 
-        self._classes = {}
+        self.classes = {}
         with zipfile.ZipFile(location) as archive:
             for filename in archive.namelist():
                 if match := re.search(JAVA_PATTERN, filename):
-                    self._classes[match.group(2)] = match.group(1)
+                    self.classes[match.group(2)] = match.group(1)
 
     def __dir__(self) -> Iterable[str]:
-        return list(self._classes.keys())
+        return sorted(list(self.classes.keys()))
 
     def __getattr__(self, name: str) -> Any:
-        if name in self._classes:
-            return jpype.JClass(self._classes[name])
+        if name in self.classes:
+            return jpype.JClass(self.classes[name])
         return super().__getattribute__(name)
 
 
-km = KoLmafia(JAR_LOCATION)
+km = KoLmafia(os.environ.get("KOLMAFIA_REVISION", "27335"))

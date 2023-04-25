@@ -16,7 +16,7 @@ relay/
 scripts/
 sessions/
 settings/
-kolmafia.jar
+*.jar
 
 # Distribution / packaging
 dist/
