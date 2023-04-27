@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, ClassVar
 
 from jpype import JClass
 
@@ -15,6 +15,8 @@ Integer = JClass("java.lang.Integer")
 
 @dataclass(frozen=True, order=True)
 class Location:
+    NONE: ClassVar[Location]
+
     kol_adventure: Any = field(
         default=km.DataTypes.LOCATION_INIT.content, compare=False
     )
@@ -175,3 +177,6 @@ class Location:
         if self.kol_adventure is None or not km.KoLCharacter.inFirecore():
             return 0
         return km.WildfireCampRequest.getFireLevel(self.kol_adventure)
+
+
+Location.NONE = Location()

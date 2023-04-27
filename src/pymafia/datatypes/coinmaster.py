@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, ClassVar
 
 from pymafia.kolmafia import km
 
@@ -11,6 +11,8 @@ if TYPE_CHECKING:
 
 @dataclass(frozen=True, order=True)
 class Coinmaster:
+    NONE: ClassVar[Coinmaster]
+
     coinmaster: Any = field(default=km.DataTypes.COINMASTER_INIT.content, compare=False)
     name: str = km.DataTypes.COINMASTER_INIT.contentString
 
@@ -79,3 +81,6 @@ class Coinmaster:
     @property
     def nickname(self) -> str:
         return self.coinmaster.getNickname() if self.coinmaster is not None else ""
+
+
+Coinmaster.NONE = Coinmaster()

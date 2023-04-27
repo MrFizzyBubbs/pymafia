@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, ClassVar
 
 from pymafia.kolmafia import km
 
@@ -27,6 +27,8 @@ class KoLInternalBountyType(Enum):
 
 @dataclass(frozen=True, order=True)
 class Bounty:
+    NONE: ClassVar[Bounty]
+
     name: str = km.DataTypes.BOUNTY_INIT.contentString
 
     def __init__(self, key: str | None = None):
@@ -89,3 +91,6 @@ class Bounty:
         from pymafia.datatypes.location import Location
 
         return Location(km.BountyDatabase.getLocation(self.name))
+
+
+Bounty.NONE = Bounty()

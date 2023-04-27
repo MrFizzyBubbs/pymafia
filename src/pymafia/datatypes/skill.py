@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, ClassVar
 
 from pymafia.kolmafia import km
 
@@ -11,6 +11,8 @@ if TYPE_CHECKING:
 
 @dataclass(frozen=True, order=True)
 class Skill:
+    NONE: ClassVar[Skill]
+
     id: int = km.DataTypes.SKILL_INIT.contentLong
     name: str = km.DataTypes.SKILL_INIT.contentString
 
@@ -114,3 +116,6 @@ class Skill:
     @property
     def timescast(self) -> int:
         return km.SkillDatabase.getCasts(self.id)
+
+
+Skill.NONE = Skill()

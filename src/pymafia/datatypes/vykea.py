@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, ClassVar
 
 from pymafia.kolmafia import km
 
@@ -29,6 +29,8 @@ class VykeaRune(Enum):
 
 @dataclass(frozen=True, order=True)
 class Vykea:
+    NONE: ClassVar[Vykea]
+
     companion: Any = field(default=km.VYKEACompanionData.NO_COMPANION, compare=False)
     type: VykeaCompanionType = VykeaCompanionType(companion.default.getType())
     rune: VykeaRune = VykeaRune(companion.default.getRune())
@@ -85,3 +87,6 @@ class Vykea:
         from pymafia.datatypes.element import Element
 
         return Element(self.companion.getAttackElement().toString())
+
+
+Vykea.NONE = Vykea()

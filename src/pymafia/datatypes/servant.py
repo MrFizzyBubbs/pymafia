@@ -1,13 +1,15 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any
+from typing import Any, ClassVar
 
 from pymafia.kolmafia import km
 
 
 @dataclass(frozen=True, order=True)
 class Servant:
+    NONE: ClassVar[Servant]
+
     data: Any = field(default=km.DataTypes.SERVANT_INIT.content, compare=False)
     id: int = km.DataTypes.SERVANT_INIT.contentLong
     name: str = km.DataTypes.SERVANT_INIT.contentString
@@ -94,3 +96,6 @@ class Servant:
             if self.data is not None
             else ""
         )
+
+
+Servant.NONE = Servant()

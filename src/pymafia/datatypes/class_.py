@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, ClassVar
 
 from pymafia.kolmafia import km
 
@@ -11,6 +11,8 @@ if TYPE_CHECKING:
 
 @dataclass(frozen=True, order=True)
 class Class:
+    NONE: ClassVar[Class]
+
     ascension_class: Any = field(default=km.DataTypes.CLASS_INIT.content, compare=False)
     id: int = km.DataTypes.CLASS_INIT.contentLong
     name: str = km.DataTypes.CLASS_INIT.contentString
@@ -55,3 +57,6 @@ class Class:
         prime_index = self.ascension_class.getPrimeStatIndex()
         name = km.AdventureResult.STAT_NAMES[prime_index]
         return Stat(name)
+
+
+Class.NONE = Class()

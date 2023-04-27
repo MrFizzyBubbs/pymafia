@@ -1,13 +1,15 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any
+from typing import Any, ClassVar
 
 from pymafia.kolmafia import km
 
 
 @dataclass(frozen=True, order=True)
 class Path:
+    NONE: ClassVar[Path]
+
     ascension_path: Any = field(default=km.DataTypes.PATH_INIT.content, compare=False)
     id: int = km.DataTypes.PATH_INIT.contentLong
     name: str = km.DataTypes.PATH_INIT.contentString
@@ -62,3 +64,6 @@ class Path:
     @property
     def familiars(self) -> bool:
         return self.ascension_path.canUseFamiliars()
+
+
+Path.NONE = Path()

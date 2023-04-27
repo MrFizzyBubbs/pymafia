@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, ClassVar
 
 from pymafia.kolmafia import km
 
@@ -11,6 +11,8 @@ if TYPE_CHECKING:
 
 @dataclass(frozen=True, order=True)
 class Familiar:
+    NONE: ClassVar[Familiar]
+
     id: int = km.DataTypes.FAMILIAR_INIT.contentLong
     name: str = km.DataTypes.FAMILIAR_INIT.contentString
 
@@ -225,3 +227,6 @@ class Familiar:
     def poke_attribute(self) -> str:
         data = km.FamiliarDatabase.getPokeDataById(self.id)
         return data.getAttribute() if data is not None else ""
+
+
+Familiar.NONE = Familiar()

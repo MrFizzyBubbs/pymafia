@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, ClassVar
 
 from jpype import JClass
 
@@ -24,6 +24,8 @@ class CandyType(Enum):
 
 @dataclass(frozen=True, order=True)
 class Item:
+    NONE: ClassVar[Item]
+
     id: int = km.DataTypes.ITEM_INIT.contentLong
     name: str = km.DataTypes.ITEM_INIT.contentString
 
@@ -298,3 +300,6 @@ class Item:
             return Skill(km.ItemDatabase.getNoobSkillId(self.id))
         except ValueError:
             return Skill()
+
+
+Item.NONE = Item()

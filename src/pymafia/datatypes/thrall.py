@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, ClassVar
 
 from pymafia.kolmafia import km
 
@@ -11,6 +11,8 @@ if TYPE_CHECKING:
 
 @dataclass(frozen=True, order=True)
 class Thrall:
+    NONE: ClassVar[Thrall]
+
     data: Any = field(default=km.DataTypes.THRALL_INIT.content, compare=False)
     id: int = km.DataTypes.THRALL_INIT.contentLong
     type: str = km.DataTypes.THRALL_INIT.contentString
@@ -89,3 +91,6 @@ class Thrall:
     @property
     def current_modifiers(self) -> str:
         return self.thrall.getCurrentModifiers() if self.thrall else ""
+
+
+Thrall.NONE = Thrall()

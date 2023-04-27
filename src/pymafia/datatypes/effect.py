@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import IntEnum
+from typing import ClassVar
 
 from pymafia.kolmafia import km
 
@@ -15,6 +16,8 @@ class EffectQuality(IntEnum):
 
 @dataclass(frozen=True, order=True)
 class Effect:
+    NONE: ClassVar[Effect]
+
     id: int = km.DataTypes.EFFECT_INIT.contentLong
     name: str = km.DataTypes.EFFECT_INIT.contentString
 
@@ -86,3 +89,6 @@ class Effect:
     @property
     def song(self) -> bool:
         return km.EffectDatabase.isSong(self.id)
+
+
+Effect.NONE = Effect()

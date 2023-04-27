@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, ClassVar
 
 from jpype import JClass
 
@@ -18,6 +18,8 @@ Integer = JClass("java.lang.Integer")
 
 @dataclass(frozen=True, order=True)
 class Monster:
+    NONE: ClassVar[Monster]
+
     monster: Any = field(default=km.DataTypes.MONSTER_INIT.content, compare=False)
     id: int = km.DataTypes.MONSTER_INIT.contentLong
     name: str = km.DataTypes.MONSTER_INIT.contentString
@@ -215,3 +217,6 @@ class Monster:
     @property
     def attributes(self) -> str:
         return self.monster.getAttributes() if self.monster is not None else ""
+
+
+Monster.NONE = Monster()
