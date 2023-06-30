@@ -12,6 +12,27 @@ if TYPE_CHECKING:
 @dataclass(frozen=True, order=True)
 class Class:
     NONE: ClassVar[Class]
+    SEAL_CLUBBER: ClassVar[Class]
+    TURTLE_TAMER: ClassVar[Class]
+    PASTAMANCER: ClassVar[Class]
+    SAUCEROR: ClassVar[Class]
+    DISCO_BANDIT: ClassVar[Class]
+    ACCORDION_THIEF: ClassVar[Class]
+    AVATAR_OF_BORIS: ClassVar[Class]
+    ZOMBIE_MASTER: ClassVar[Class]
+    AVATAR_OF_JARLSBERG: ClassVar[Class]
+    AVATAR_OF_SNEAKY_PETE: ClassVar[Class]
+    ED_THE_UNDYING: ClassVar[Class]
+    COW_PUNCHER: ClassVar[Class]
+    BEANSLINGER: ClassVar[Class]
+    SNAKE_OILER: ClassVar[Class]
+    GELATINOUS_NOOB: ClassVar[Class]
+    VAMPYRE: ClassVar[Class]
+    PLUMBER: ClassVar[Class]
+    GREY_GOO: ClassVar[Class]
+    PIG_SKINNER: ClassVar[Class]
+    CHEESE_WIZARD: ClassVar[Class]
+    JAZZ_AGENT: ClassVar[Class]
 
     ascension_class: Any = field(default=km.DataTypes.CLASS_INIT.content, compare=False)
     id: int = km.DataTypes.CLASS_INIT.contentLong
@@ -60,3 +81,24 @@ class Class:
 
 
 Class.NONE = Class()
+Class.SEAL_CLUBBER = Class("Seal Clubber")
+Class.TURTLE_TAMER = Class("Turtle Tamer")
+Class.PASTAMANCER = Class("Pastamancer")
+Class.SAUCEROR = Class("Sauceror")
+Class.DISCO_BANDIT = Class("Disco Bandit")
+Class.ACCORDION_THIEF = Class("Accordion Thief")
+Class.AVATAR_OF_BORIS = Class("Avatar of Boris")
+Class.ZOMBIE_MASTER = Class("Zombie Master")
+Class.AVATAR_OF_JARLSBERG = Class("Avatar of Jarlsberg")
+Class.AVATAR_OF_SNEAKY_PETE = Class("Avatar of Sneaky Pete")
+Class.ED_THE_UNDYING = Class("Ed the Undying")
+Class.COW_PUNCHER = Class("Cow Puncher")
+Class.BEANSLINGER = Class("Beanslinger")
+Class.SNAKE_OILER = Class("Snake Oiler")
+Class.GELATINOUS_NOOB = Class("Gelatinous Noob")
+Class.VAMPYRE = Class("Vampyre")
+Class.PLUMBER = Class("Plumber")
+Class.GREY_GOO = Class("Grey Goo")
+Class.PIG_SKINNER = Class("Pig Skinner")
+Class.CHEESE_WIZARD = Class("Cheese Wizard")
+Class.JAZZ_AGENT = Class("Jazz Agent")

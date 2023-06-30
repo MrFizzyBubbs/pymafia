@@ -8,6 +8,7 @@ from pymafia.kolmafia import km
 
 @dataclass(frozen=True, order=True)
 class Servant:
+    CAT: ClassVar[Servant]
     NONE: ClassVar[Servant]
 
     data: Any = field(default=km.DataTypes.SERVANT_INIT.content, compare=False)
@@ -98,4 +99,5 @@ class Servant:
         )
 
 
-Servant.NONE = Servant()
+Servant.CAT = Servant("Cat")
+Servant.NONE = Servant("none")

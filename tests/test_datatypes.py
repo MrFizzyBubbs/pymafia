@@ -33,6 +33,11 @@ def get_property_names(cls):
     members = inspect.getmembers(cls, lambda x: isinstance(x, property))
     return [name for (name, _) in members]
 
+@pytest.mark.parametrize("cls")
+def test_all_instances_enumerated(cls):
+    for instance in cls.all():
+        enumeration_name = 
+        assert getattr(cls, "") == instance
 
 @pytest.mark.parametrize(
     "cls,key,expected",

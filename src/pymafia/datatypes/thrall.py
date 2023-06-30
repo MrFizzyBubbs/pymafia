@@ -12,6 +12,14 @@ if TYPE_CHECKING:
 @dataclass(frozen=True, order=True)
 class Thrall:
     NONE: ClassVar[Thrall]
+    VAMPIEROGHI: ClassVar[Thrall]
+    VERMINCELLI: ClassVar[Thrall]
+    ANGEL_HAIR_WISP: ClassVar[Thrall]
+    ELBOW_MACARONI: ClassVar[Thrall]
+    PENNE_DREADFUL: ClassVar[Thrall]
+    LASAGMBIE: ClassVar[Thrall]
+    SPICE_GHOST: ClassVar[Thrall]
+    SPAGHETTI_ELEMENTAL: ClassVar[Thrall]
 
     data: Any = field(default=km.DataTypes.THRALL_INIT.content, compare=False)
     id: int = km.DataTypes.THRALL_INIT.contentLong
@@ -94,3 +102,11 @@ class Thrall:
 
 
 Thrall.NONE = Thrall()
+Thrall.VAMPIEROGHI = Thrall('Vampieroghi')
+Thrall.VERMINCELLI = Thrall('Vermincelli')
+Thrall.ANGEL_HAIR_WISP = Thrall('Angel Hair Wisp')
+Thrall.ELBOW_MACARONI = Thrall('Elbow Macaroni')
+Thrall.PENNE_DREADFUL = Thrall('Penne Dreadful')
+Thrall.LASAGMBIE = Thrall('Lasagmbie')
+Thrall.SPICE_GHOST = Thrall('Spice Ghost')
+Thrall.SPAGHETTI_ELEMENTAL = Thrall('Spaghetti Elemental')
