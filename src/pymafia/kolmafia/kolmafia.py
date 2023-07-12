@@ -1,4 +1,3 @@
-import json
 import os
 import re
 import urllib.request
@@ -8,26 +7,19 @@ from typing import Any, Iterable
 import jpype
 
 import pymafia.kolmafia.patch as patch
+import pymafia_config
 
-GITHUB_RELEASE_URL = "https://api.github.com/repos/kolmafia/kolmafia/releases/"
 GITHUB_DOWNLOAD_URL = "https://github.com/kolmafia/kolmafia/releases/download/"
 JAVA_PATTERN = "(net\\/sourceforge\\/kolmafia.*\\/([^\\$]*))\\.class"
 
 
-def latest_revision() -> str:
-    with urllib.request.urlopen(GITHUB_RELEASE_URL + "latest") as response:
-        data = json.loads(response.read().decode())
-        return data["name"]
-
-
-def download_kolmafia(revision: str, location: str):
+def download_kolmafia(revision: int, location: str):
     jar_url = GITHUB_DOWNLOAD_URL + f"r{revision}/KoLmafia-{revision}.jar"
     urllib.request.urlretrieve(jar_url, filename=location)
 
 
 class KoLmafia:
-    def __init__(self, revision: str):
-        revision = latest_revision() if revision == "latest" else revision
+    def __init__(self, revision: int):
         location = f"KoLmafia-{revision}.jar"
 
         if not os.path.isfile(location):
@@ -51,4 +43,4 @@ class KoLmafia:
         return super().__getattribute__(name)
 
 
-km = KoLmafia(os.environ.get("KOLMAFIA_REVISION", "27467"))
+km = KoLmafia(pymafia_config.revision)
