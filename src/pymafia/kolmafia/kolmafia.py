@@ -51,4 +51,4 @@ class KoLmafia:
         return super().__getattribute__(name)
 
 
-km = KoLmafia(os.environ.get("KOLMAFIA_REVISION", "27335"))
+km = KoLmafia(os.environ.get("KOLMAFIA_REVISION", "27467"))

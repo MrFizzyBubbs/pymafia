@@ -13,6 +13,7 @@ from pymafia.datatypes import (
     Familiar,
     Item,
     Location,
+    Modifier,
     Monster,
     Path,
     Phylum,
@@ -51,6 +52,7 @@ TYPE_CONVERSIONS = {
     km.DataTypes.SERVANT_TYPE: Servant,
     km.DataTypes.VYKEA_TYPE: Vykea,
     km.DataTypes.PATH_TYPE: Path,
+    km.DataTypes.MODIFIER_TYPE: Modifier,
 }
 
 
