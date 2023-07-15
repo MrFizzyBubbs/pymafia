@@ -2,7 +2,7 @@ import _jpype
 import jpype
 import wrapt
 
-PATCH_ENABLED = True
+enabled = True
 
 
 class KoLmafiaError(Exception):
@@ -26,9 +26,9 @@ def apply():
     KoLmafia = jpype.JClass("net.sourceforge.kolmafia.KoLmafia")
 
     def wrapper(wrapped, instance, args, kwargs):
-        global PATCH_ENABLED
+        global enabled
         try:
-            PATCH_ENABLED = False
+            enabled = False
 
             args = [
                 jpype.JInt(arg)
@@ -44,11 +44,7 @@ def apply():
 
             return result
         finally:
-            PATCH_ENABLED = True
+            enabled = True
 
-    wrap_function_wrapper(
-        _jpype, "_JMethod.__call__", wrapper, enabled=lambda: PATCH_ENABLED
-    )
-    wrap_function_wrapper(
-        _jpype, "_JClass.__call__", wrapper, enabled=lambda: PATCH_ENABLED
-    )
+    wrap_function_wrapper(_jpype, "_JMethod.__call__", wrapper, enabled=lambda: enabled)
+    wrap_function_wrapper(_jpype, "_JClass.__call__", wrapper, enabled=lambda: enabled)
