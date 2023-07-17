@@ -4,19 +4,9 @@ __pycache__/
 *$py.class
 
 # Prototyping
+/kolmafia/
 test.ipynb
 .ipynb_checkpoints
-
-# KoLmafia
-ccs/
-chats/
-data/
-images/
-relay/
-scripts/
-sessions/
-settings/
-*.jar
 
 # Distribution / packaging
 dist/

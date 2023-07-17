@@ -12,7 +12,9 @@ pip install pymafia
 *pymafia* uses [JPype](https://github.com/kivy/pyjnius) to reflect KoLmafia's Java environment, so you will need to install a Java Development Kit (JDK) on your operating system — KoLmafia's developers recommend [Adoptium v17](https://adoptium.net/index.html). For information on troubleshooting your Java installation, see [JPype's troubleshooting guide](https://jpype.readthedocs.io/en/latest/install.html#if-it-fails).
 
 ## Usage
-To get started, simply import *pymafia* or any of its components. Doing so will download a KoLmafia jar file (if it is not present in the current working directory) and start a Java Virtual Machine (JVM) with the jar file included in the JVM's classpath. This process can take over a minute depending on your internet connection. You can change the revision of KoLmafia to use by setting the revision in the `pymafia_config` module prior to importing *pymafia*.
+To get started, simply import *pymafia* or any of its components. Doing so will download a KoLmafia jar file (if it is not present in the current working directory) and start a Java Virtual Machine (JVM) with the jar file included in the JVM's classpath. This process can take over a minute depending on your internet connection. 
+
+You can choose the revision of KoLmafia to use or location to run it from by setting these properties in the `pymafia_config` module prior to importing *pymafia*. The revision defaults to the last known working revision at the time of release and the location defaults to a folder named "kolmafia" in the current working directory.
 
 ```python
 >>> import pymafia_config
@@ -20,9 +22,11 @@ To get started, simply import *pymafia* or any of its components. Doing so will 
 >>> pymafia_config.set_revision(27467)
 
 >>> pymafia_config.set_revision("latest")
+
+>>> pymafia_config.set_location(r"C:\Users\Documents\kolmafia\")
 ```
 
-Once you have set your desired revision, you will most likely want to launch the KoLmafia GUI and login to your character. Both of these actions can be performed using the `utils` module.
+Once you have configured *pymafia*, you will most likely want to launch the KoLmafia GUI and login to your character. Both of these actions can be performed using the `utils` module.
 
 ```python
 >>> from pymafia.utils import launch_gui, login
