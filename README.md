@@ -4,44 +4,122 @@
 
 ## Installation
 *pymafia* is available at the [Python Package Index (PyPI)](https://pypi.org/project/pymafia/):
+
 ```
 pip install pymafia
 ```
-*pymafia* uses [JPype](https://github.com/kivy/pyjnius) to reflect KoLmafia's Java environment, so you will need to install a Java Development Kit (JDK) on your operating system — KoLmafia's developers recommend [Adoptium v17](https://adoptium.net/index.html). For more information on troubleshooting your Java installation, see [JPype's troubleshooting guide](https://jpype.readthedocs.io/en/latest/install.html#if-it-fails).
 
-## Quickstart
+*pymafia* uses [JPype](https://github.com/kivy/pyjnius) to reflect KoLmafia's Java environment, so you will need to install a Java Development Kit (JDK) on your operating system — KoLmafia's developers recommend [Adoptium v17](https://adoptium.net/index.html). For information on troubleshooting your Java installation, see [JPype's troubleshooting guide](https://jpype.readthedocs.io/en/latest/install.html#if-it-fails).
+
+## Usage
+To get started, simply import *pymafia* or any of its components. Doing so will download a KoLmafia jar file (if it is not present in the current working directory) and start a Java Virtual Machine (JVM) with the jar file included in the JVM's classpath. This process can take over a minute depending on your internet connection. You can change the revision of KoLmafia to use by setting the revision in the `pymafia_config` module prior to importing *pymafia*.
 
 ```python
->>> from pymafia import *
+>>> import pymafia_config
+
+>>> pymafia_config.set_revision(27467)
+
+>>> pymafia_config.set_revision("latest")
+```
+
+Once you have set your desired revision, you will most likely want to launch the KoLmafia GUI and login to your character. Both of these actions can be performed using the `utils` module.
+
+```python
+>>> from pymafia.utils import launch_gui, login
+
+>>> launch_gui()
 
 >>> login("devster6")
->>> ash.my_name()
-"devster6"
+```
 
->>> Effect("Synthesis: Greed").quality
-<EffectQuality.GOOD: 0>
+Note that almost all *pymafia* objects are available at the top level, although this is subject to change.
 
->>> ash.display_amount(Item("big rock"))
-6540
+```python
+>>> from pymafia import launch_gui
+```
 
->>> ash.appearance_rates(Location("Barf Mountain"))
-{Monster('none'): 0.0,
- Monster('angry tourist'): 33.333333333333336,
- Monster('horrible tourist family'): 33.333333333333336,
- Monster('garbage tourist'): 33.333333333333336}
+### Accessing KoLmafia
+The reflected KoLmafia jar file can be accessed through a `KoLmafia` wrapper class instance called `km`. Most, if not all, of KoLmafia's Java classes are available as attributes on `km`.
 
->>> get_property("sourceTerminalEducate1")
-'digitize.edu'
+```python
+>>> from pymafia.kolmafia import km
 
->>> get_property("_sourceTerminalDigitizeMonster", Monster)
-Monster('Knob Goblin Embezzler')
+>>> km.AdventureResult
+<java class 'net.sourceforge.kolmafia.AdventureResult'>
+```
 
->>> boxing_daycare.have()
+The Java classes behave similar to how they do in Java with the exception of returning Python objects when possible. For more information on the type conversions, see [JPype's type matching guide](https://jpype.readthedocs.io/en/latest/userguide.html#type-matching).
+
+```
+>>> km.AdventureResult.tallyItem("big rock")
+<java object 'net.sourceforge.kolmafia.AdventureResult'>
+
+>>> km.AdventureResult.tallyItem("big rock").isBountyItem()
+False
+```
+
+### ASH and Special Datatypes
+All of KoLmafia's runtime library functions can be accessed through the `ash` submodule, which returns a `LibraryFunction` instance. 
+
+```python
+>>> from pymafia import ash
+
+>>> ash.gameday_to_string
+LibraryFunction("gameday_to_string")
+```
+
+The `LibraryFunction` is a thin wrapper around the desired Java method that will automatically convert the inputs and outputs of the wrapped method to and from Java objects, respectively. This conversion means that the functions accept and return Python objects, including KoLmafia's [special datatypes](https://wiki.kolmafia.us/index.php/Data_Types#Special_Datatypes), which have been implemented in the `datatypes` sub-package.
+
+```python
+>>> from pymafia.datatypes import Location
+
+>>> ash.gameday_to_string()
+"Dougtember 3"
+
+>>> ash.to_item("big rock")
+Item("big rock")
+
+>>> ash.appearance_rates(Location("Noob Cave"))
+{Monster("none"): 0.0, Monster("crate"): 100.0}
+```
+
+As demonstrated above, the datatypes can be instantiated directly from their name, id, or string representation where applicable. Each datatype has a set of properties that mirror those available from their [KoLmafia proxy record](https://wiki.kolmafia.us/index.php/Proxy_Records) equivalent.
+
+```python
+>>> from pymafia.datatypes import Familiar, Item
+
+>>> Item("big rock").tradeable
 True
 
->>> witchess.fights_left()
-5
+>>> Familiar("God Lobster").hatchling
+Item("God Lobster Egg")
 ```
+
+Each datatype also has an `all()` class method that returns every non-none instance of that type.
+
+```python
+>>> from pymafia.datatypes import Stat
+
+>>> Stat.all()
+[Stat("Muscle"), Stat("Mysticality"), Stat("Moxie")]
+```
+
+Many datatypes contain predefined class instances as class variables for convenient reference. Notably, all datatypes define a `NONE` class variable.
+
+```python
+>>> Coinmaster.NONE
+Coinmaster('none')
+
+>>> Slot.HAT
+Slot('hat')
+```
+
+## Contributing
+To contribute to *pymafia*, you will need to set up a development environment using the following steps:
+1. Install [poetry](https://python-poetry.org/)
+2. Clone this repository
+3. Run `poetry install` inside the cloned repository
+
 
 ## Acknowledgements
 

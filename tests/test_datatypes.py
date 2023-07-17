@@ -13,6 +13,7 @@ from pymafia.datatypes import (
     Familiar,
     Item,
     Location,
+    Modifier,
     Monster,
     Path,
     Phylum,
@@ -90,6 +91,8 @@ def get_property_names(cls):
             (Vykea, key, (VykeaCompanionType.NONE, VykeaRune.NONE, 0))
             for key in STANDARD_NONE_KEYS
         ],
+        *[(Modifier, key, ("none",)) for key in STANDARD_NONE_KEYS],
+        (Modifier, "Absorb Adventures", ("Absorb Adventures",)),
     ],
 )
 def test_init(cls, key, expected):
@@ -134,6 +137,7 @@ def test_init_invalid(cls):
         (Stat, "Muscle"),
         (Thrall, "Vampieroghi"),
         (Vykea, "level 1 blood bookshelf"),
+        (Modifier, "Absorb Adventures"),
     ],
 )
 def test_str(cls, expected):
@@ -249,6 +253,11 @@ def test_all_are_true(cls):
             (Vykea, key, name)
             for key in ["level 1 blood bookshelf", None]
             for name in get_property_names(Vykea)
+        ],
+        *[
+            (Modifier, key, name)
+            for key in ["Absorb Adventures", None]
+            for name in get_property_names(Modifier)
         ],
     ],
 )
