@@ -56,7 +56,7 @@ class Item:
 
     @classmethod
     def all(cls) -> list[Item]:
-        from pymafia.ash import from_java
+        from pymafia.ash.conversion import from_java
 
         values = km.DataTypes.ITEM_TYPE.allValues()
         return sorted(from_java(values))

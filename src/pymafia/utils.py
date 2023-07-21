@@ -1,12 +1,18 @@
+__all__ = ["launch_gui", "login", "abort", "log", "execute", "script"]
+
 from html import escape
+from typing import Any
 
 from jpype import JClass
 
+from pymafia.ash.conversion import from_java
 from pymafia.kolmafia import km
 
 ByteArrayOutputStream = JClass("java.io.ByteArrayOutputStream")
 PrintStream = JClass("java.io.PrintStream")
 OutputStream = JClass("java.io.OutputStream")
+String = JClass("java.lang.String")
+ByteArrayInputStream = JClass("java.io.ByteArrayInputStream")
 
 
 def launch_gui():
@@ -45,3 +51,12 @@ def execute(command: str) -> str:
     km.RequestLogger.openCustom(out)
     km.KoLmafiaCLI.DEFAULT_SHELL.executeLine(command)
     return ostream.toString()
+
+
+def script(lines: str, convert=True) -> Any:
+    """Execute an ash script and return the result, optionally converting it."""
+    stream = ByteArrayInputStream(String(lines).getBytes())
+    interpreter = km.AshRuntime()
+    interpreter.validate(None, stream)
+    value = interpreter.execute("main", None)
+    return from_java(value) if convert else value

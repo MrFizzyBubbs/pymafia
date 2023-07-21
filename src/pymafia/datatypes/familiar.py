@@ -42,7 +42,7 @@ class Familiar:
 
     @classmethod
     def all(cls) -> list[Familiar]:
-        from pymafia.ash import from_java
+        from pymafia.ash.conversion import from_java
 
         values = km.DataTypes.FAMILIAR_TYPE.allValues()
         return sorted(from_java(values))

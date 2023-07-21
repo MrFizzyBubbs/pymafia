@@ -1,6 +1,6 @@
 import pytest
 
-from pymafia.ash import from_java, to_java
+from pymafia.ash.conversion import from_java, to_java
 from pymafia.datatypes import MAFIA_DATATYPES
 from pymafia.kolmafia import km
 

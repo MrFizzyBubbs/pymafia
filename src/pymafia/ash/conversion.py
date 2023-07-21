@@ -28,43 +28,45 @@ from pymafia.kolmafia import km
 
 TreeMap = JClass("java.util.TreeMap")
 ArrayList = JClass("java.util.ArrayList")
+Matcher = JClass("java.util.regex.Matcher")
 
-TYPE_CONVERSIONS = {
-    km.DataTypes.BOOLEAN_TYPE: bool,
-    km.DataTypes.INT_TYPE: int,
-    km.DataTypes.FLOAT_TYPE: float,
-    km.DataTypes.STRING_TYPE: str,
-    km.DataTypes.BUFFER_TYPE: str,
-    km.DataTypes.ITEM_TYPE: Item,
-    km.DataTypes.LOCATION_TYPE: Location,
-    km.DataTypes.CLASS_TYPE: Class,
-    km.DataTypes.STAT_TYPE: Stat,
-    km.DataTypes.SKILL_TYPE: Skill,
-    km.DataTypes.EFFECT_TYPE: Effect,
-    km.DataTypes.FAMILIAR_TYPE: Familiar,
-    km.DataTypes.SLOT_TYPE: Slot,
-    km.DataTypes.MONSTER_TYPE: Monster,
-    km.DataTypes.ELEMENT_TYPE: Element,
-    km.DataTypes.COINMASTER_TYPE: Coinmaster,
-    km.DataTypes.PHYLUM_TYPE: Phylum,
-    km.DataTypes.BOUNTY_TYPE: Bounty,
-    km.DataTypes.THRALL_TYPE: Thrall,
-    km.DataTypes.SERVANT_TYPE: Servant,
-    km.DataTypes.VYKEA_TYPE: Vykea,
-    km.DataTypes.PATH_TYPE: Path,
-    km.DataTypes.MODIFIER_TYPE: Modifier,
+TYPESPEC_CONVERSIONS = {
+    km.DataTypes.TypeSpec.BOOLEAN: bool,
+    km.DataTypes.TypeSpec.INT: int,
+    km.DataTypes.TypeSpec.FLOAT: float,
+    km.DataTypes.TypeSpec.STRING: str,
+    km.DataTypes.TypeSpec.STRICT_STRING: str,
+    km.DataTypes.TypeSpec.BUFFER: str,
+    km.DataTypes.TypeSpec.ITEM: Item,
+    km.DataTypes.TypeSpec.LOCATION: Location,
+    km.DataTypes.TypeSpec.CLASS: Class,
+    km.DataTypes.TypeSpec.STAT: Stat,
+    km.DataTypes.TypeSpec.SKILL: Skill,
+    km.DataTypes.TypeSpec.EFFECT: Effect,
+    km.DataTypes.TypeSpec.FAMILIAR: Familiar,
+    km.DataTypes.TypeSpec.SLOT: Slot,
+    km.DataTypes.TypeSpec.MONSTER: Monster,
+    km.DataTypes.TypeSpec.ELEMENT: Element,
+    km.DataTypes.TypeSpec.COINMASTER: Coinmaster,
+    km.DataTypes.TypeSpec.PHYLUM: Phylum,
+    km.DataTypes.TypeSpec.BOUNTY: Bounty,
+    km.DataTypes.TypeSpec.THRALL: Thrall,
+    km.DataTypes.TypeSpec.SERVANT: Servant,
+    km.DataTypes.TypeSpec.VYKEA: Vykea,
+    km.DataTypes.TypeSpec.PATH: Path,
+    km.DataTypes.TypeSpec.MODIFIER: Modifier,
 }
 
 
 def to_java(obj: Any) -> Any:
-    """Convert a Python object to a KoLmafia Value or PluralValue."""
+    """Convert to a Java KoLmafia Value."""
     if isinstance(obj, (bool, int, float, str)):
         return km.Value(obj)
-
     if isinstance(obj, MAFIA_DATATYPES):
         parser = getattr(km.DataTypes, f"parse{type(obj).__name__}Value")
         return parser(str(obj), False)
-
+    if isinstance(obj, Matcher):
+        return km.Value(km.DataTypes.MATCHER_TYPE, obj.pattern(), obj)
     if isinstance(obj, abc.Mapping):
         jmap = TreeMap()
         for k, v in obj.items():
@@ -75,7 +77,6 @@ def to_java(obj: Any) -> Any:
         index_type = jmap.firstEntry().getKey().getType()
         aggregate_type = km.AggregateType(data_type, index_type)
         return km.MapValue(aggregate_type, jmap)
-
     if isinstance(obj, abc.Iterable):
         jlist = ArrayList()
         for item in obj:
@@ -85,24 +86,27 @@ def to_java(obj: Any) -> Any:
         size = jlist.size()
         aggregate_type = km.AggregateType(data_type, size)
         return km.ArrayValue(aggregate_type, jlist)
-
-    raise TypeError(f"unsupported type: {type(obj).__name__!r}")
+    raise TypeError(f"unsupported type {type(obj).__name__!r}")
 
 
 def from_java(obj: Any) -> Any:
-    """Convert a KoLmafia Value or PluralValue to a Python object."""
+    """Convert from a Java KoLmafia Value."""
     jtype = obj.getType()
+    jtypespec = jtype.getType()
 
-    if jtype == km.DataTypes.VOID_TYPE:
+    if jtypespec == km.DataTypes.TypeSpec.VOID:
         return None
-
-    if jtype in TYPE_CONVERSIONS:
-        return TYPE_CONVERSIONS[jtype](obj.toJSON())
-
-    if isinstance(jtype, km.AggregateType) and isinstance(obj.content, abc.Mapping):
-        return {from_java(k): from_java(v) for k, v in obj.content.items()}
-
-    if isinstance(jtype, km.AggregateType) and isinstance(obj.content, abc.Iterable):
-        return [from_java(x) for x in obj.content]
-
-    raise TypeError(f"unsupported type: {jtype.getName()!r}")
+    if jtypespec in TYPESPEC_CONVERSIONS:
+        return TYPESPEC_CONVERSIONS[jtypespec](obj.toJSON())
+    if jtypespec == km.DataTypes.TypeSpec.MATCHER:
+        return obj.rawValue()
+    if jtypespec == km.DataTypes.TypeSpec.AGGREGATE:
+        if isinstance(obj.content, abc.Mapping):
+            return {from_java(k): from_java(v) for k, v in obj.content.items()}
+        if isinstance(obj.content, abc.Iterable):
+            return [from_java(x) for x in obj.content]
+    if jtypespec == km.DataTypes.TypeSpec.RECORD:
+        return {from_java(k): from_java(v) for k, v in zip(obj.keys(), obj.content)}
+    raise TypeError(
+        f"unsupported type {jtype.getName()!r} (TypeSpec.{jtypespec.toString()})"
+    )

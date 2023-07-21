@@ -44,7 +44,7 @@ class Servant:
 
     @classmethod
     def all(cls) -> list[Servant]:
-        from pymafia.ash import from_java
+        from pymafia.ash.conversion import from_java
 
         values = km.DataTypes.SERVANT_TYPE.allValues()
         return from_java(values)

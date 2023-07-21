@@ -43,7 +43,7 @@ class Class:
 
     @classmethod
     def all(cls) -> list[Class]:
-        from pymafia.ash import from_java
+        from pymafia.ash.conversion import from_java
 
         values = km.DataTypes.CLASS_TYPE.allValues()
         return sorted(from_java(values))
