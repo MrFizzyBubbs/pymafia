@@ -558,7 +558,6 @@ __all__ = [
 
 from typing import Any, overload
 
-from pymafia.ash.conversion import Matcher
 from pymafia.ash.function import LibraryFunction
 from pymafia.datatypes import (
     Bounty,
@@ -581,6 +580,8 @@ from pymafia.datatypes import (
     Vykea,
 )
 
+Matcher = Any
+
 
 @overload
 def abort() -> None:
@@ -596,13 +597,8 @@ def abort(*args):
     return LibraryFunction("abort")(*args)
 
 
-@overload
 def absorbed_monsters() -> dict[Monster, bool]:
-    ...
-
-
-def absorbed_monsters(*args):
-    return LibraryFunction("absorbed_monsters")(*args)
+    return LibraryFunction("absorbed_monsters")()
 
 
 @overload
@@ -638,13 +634,8 @@ def adv1(*args):
     return LibraryFunction("adv1")(*args)
 
 
-@overload
 def adv_cost(arg1: Skill) -> int:
-    ...
-
-
-def adv_cost(*args):
-    return LibraryFunction("adv_cost")(*args)
+    return LibraryFunction("adv_cost")(arg1)
 
 
 @overload
@@ -671,22 +662,12 @@ def adventure(*args):
     return LibraryFunction("adventure")(*args)
 
 
-@overload
 def all_monsters_with_id() -> dict[Monster, bool]:
-    ...
+    return LibraryFunction("all_monsters_with_id")()
 
 
-def all_monsters_with_id(*args):
-    return LibraryFunction("all_monsters_with_id")(*args)
-
-
-@overload
 def all_normal_outfits() -> dict[int, str]:
-    ...
-
-
-def all_normal_outfits(*args):
-    return LibraryFunction("all_normal_outfits")(*args)
+    return LibraryFunction("all_normal_outfits")()
 
 
 @overload
@@ -703,40 +684,20 @@ def appearance_rates(*args):
     return LibraryFunction("appearance_rates")(*args)
 
 
-@overload
 def append(arg1: str, arg2: str) -> str:
-    ...
+    return LibraryFunction("append")(arg1, arg2)
 
 
-def append(*args):
-    return LibraryFunction("append")(*args)
-
-
-@overload
 def append_replacement(arg1: Matcher, arg2: str, arg3: str) -> str:
-    ...
+    return LibraryFunction("append_replacement")(arg1, arg2, arg3)
 
 
-def append_replacement(*args):
-    return LibraryFunction("append_replacement")(*args)
-
-
-@overload
 def append_tail(arg1: Matcher, arg2: str) -> str:
-    ...
+    return LibraryFunction("append_tail")(arg1, arg2)
 
 
-def append_tail(*args):
-    return LibraryFunction("append_tail")(*args)
-
-
-@overload
 def attack() -> str:
-    ...
-
-
-def attack(*args):
-    return LibraryFunction("attack")(*args)
+    return LibraryFunction("attack")()
 
 
 @overload
@@ -753,22 +714,12 @@ def autosell(*args):
     return LibraryFunction("autosell")(*args)
 
 
-@overload
 def autosell_price(arg1: Item) -> int:
-    ...
+    return LibraryFunction("autosell_price")(arg1)
 
 
-def autosell_price(*args):
-    return LibraryFunction("autosell_price")(*args)
-
-
-@overload
 def available_amount(arg1: Item) -> int:
-    ...
-
-
-def available_amount(*args):
-    return LibraryFunction("available_amount")(*args)
+    return LibraryFunction("available_amount")(arg1)
 
 
 @overload
@@ -785,22 +736,12 @@ def available_choice_options(*args):
     return LibraryFunction("available_choice_options")(*args)
 
 
-@overload
 def available_choice_select_inputs(arg1: int) -> dict[str, dict[str, str]]:
-    ...
+    return LibraryFunction("available_choice_select_inputs")(arg1)
 
 
-def available_choice_select_inputs(*args):
-    return LibraryFunction("available_choice_select_inputs")(*args)
-
-
-@overload
 def available_choice_text_inputs(arg1: int) -> dict[str, str]:
-    ...
-
-
-def available_choice_text_inputs(*args):
-    return LibraryFunction("available_choice_text_inputs")(*args)
+    return LibraryFunction("available_choice_text_inputs")(arg1)
 
 
 @overload
@@ -827,40 +768,20 @@ def available_pocket(*args):
     return LibraryFunction("available_pocket")(*args)
 
 
-@overload
 def batch_close() -> bool:
-    ...
+    return LibraryFunction("batch_close")()
 
 
-def batch_close(*args):
-    return LibraryFunction("batch_close")(*args)
-
-
-@overload
 def batch_open() -> None:
-    ...
+    return LibraryFunction("batch_open")()
 
 
-def batch_open(*args):
-    return LibraryFunction("batch_open")(*args)
-
-
-@overload
 def bjornify_familiar(arg1: Familiar) -> bool:
-    ...
+    return LibraryFunction("bjornify_familiar")(arg1)
 
 
-def bjornify_familiar(*args):
-    return LibraryFunction("bjornify_familiar")(*args)
-
-
-@overload
 def black_market_available() -> bool:
-    ...
-
-
-def black_market_available(*args):
-    return LibraryFunction("black_market_available")(*args)
+    return LibraryFunction("black_market_available")()
 
 
 @overload
@@ -907,22 +828,12 @@ def boolean_modifier(*args):
     return LibraryFunction("boolean_modifier")(*args)
 
 
-@overload
 def buffed_hit_stat() -> int:
-    ...
+    return LibraryFunction("buffed_hit_stat")()
 
 
-def buffed_hit_stat(*args):
-    return LibraryFunction("buffed_hit_stat")(*args)
-
-
-@overload
 def buffer_to_file(arg1: str, arg2: str) -> bool:
-    ...
-
-
-def buffer_to_file(*args):
-    return LibraryFunction("buffer_to_file")(*args)
+    return LibraryFunction("buffer_to_file")(arg1, arg2)
 
 
 @overload
@@ -959,13 +870,8 @@ def buy(*args):
     return LibraryFunction("buy")(*args)
 
 
-@overload
 def buy_price(arg1: Coinmaster, arg2: Item) -> int:
-    ...
-
-
-def buy_price(*args):
-    return LibraryFunction("buy_price")(*args)
+    return LibraryFunction("buy_price")(arg1, arg2)
 
 
 @overload
@@ -997,40 +903,20 @@ def buy_using_storage(*args):
     return LibraryFunction("buy_using_storage")(*args)
 
 
-@overload
 def buys_item(arg1: Coinmaster, arg2: Item) -> bool:
-    ...
+    return LibraryFunction("buys_item")(arg1, arg2)
 
 
-def buys_item(*args):
-    return LibraryFunction("buys_item")(*args)
-
-
-@overload
 def can_adventure(arg1: Location) -> bool:
-    ...
+    return LibraryFunction("can_adventure")(arg1)
 
 
-def can_adventure(*args):
-    return LibraryFunction("can_adventure")(*args)
-
-
-@overload
 def can_drink() -> bool:
-    ...
+    return LibraryFunction("can_drink")()
 
 
-def can_drink(*args):
-    return LibraryFunction("can_drink")(*args)
-
-
-@overload
 def can_eat() -> bool:
-    ...
-
-
-def can_eat(*args):
-    return LibraryFunction("can_eat")(*args)
+    return LibraryFunction("can_eat")()
 
 
 @overload
@@ -1052,40 +938,20 @@ def can_equip(*args):
     return LibraryFunction("can_equip")(*args)
 
 
-@overload
 def can_faxbot(arg1: Monster) -> bool:
-    ...
+    return LibraryFunction("can_faxbot")(arg1)
 
 
-def can_faxbot(*args):
-    return LibraryFunction("can_faxbot")(*args)
-
-
-@overload
 def can_interact() -> bool:
-    ...
+    return LibraryFunction("can_interact")()
 
 
-def can_interact(*args):
-    return LibraryFunction("can_interact")(*args)
-
-
-@overload
 def can_still_steal() -> bool:
-    ...
+    return LibraryFunction("can_still_steal")()
 
 
-def can_still_steal(*args):
-    return LibraryFunction("can_still_steal")(*args)
-
-
-@overload
 def canadia_available() -> bool:
-    ...
-
-
-def canadia_available(*args):
-    return LibraryFunction("canadia_available")(*args)
+    return LibraryFunction("canadia_available")()
 
 
 @overload
@@ -1102,31 +968,16 @@ def candy_for_tier(*args):
     return LibraryFunction("candy_for_tier")(*args)
 
 
-@overload
 def ceil(arg1: float) -> int:
-    ...
+    return LibraryFunction("ceil")(arg1)
 
 
-def ceil(*args):
-    return LibraryFunction("ceil")(*args)
-
-
-@overload
 def change_mcd(arg1: int) -> bool:
-    ...
+    return LibraryFunction("change_mcd")(arg1)
 
 
-def change_mcd(*args):
-    return LibraryFunction("change_mcd")(*args)
-
-
-@overload
 def char_at(arg1: str, arg2: int) -> str:
-    ...
-
-
-def char_at(*args):
-    return LibraryFunction("char_at")(*args)
+    return LibraryFunction("char_at")(arg1, arg2)
 
 
 @overload
@@ -1143,31 +994,16 @@ def chat_clan(*args):
     return LibraryFunction("chat_clan")(*args)
 
 
-@overload
 def chat_macro(arg1: str) -> None:
-    ...
+    return LibraryFunction("chat_macro")(arg1)
 
 
-def chat_macro(*args):
-    return LibraryFunction("chat_macro")(*args)
-
-
-@overload
 def chat_notify(arg1: str, arg2: str) -> None:
-    ...
+    return LibraryFunction("chat_notify")(arg1, arg2)
 
 
-def chat_notify(*args):
-    return LibraryFunction("chat_notify")(*args)
-
-
-@overload
 def chat_private(arg1: str, arg2: str) -> None:
-    ...
-
-
-def chat_private(*args):
-    return LibraryFunction("chat_private")(*args)
+    return LibraryFunction("chat_private")(arg1, arg2)
 
 
 @overload
@@ -1189,13 +1025,8 @@ def chew(*args):
     return LibraryFunction("chew")(*args)
 
 
-@overload
 def choice_follows_fight() -> bool:
-    ...
-
-
-def choice_follows_fight(*args):
-    return LibraryFunction("choice_follows_fight")(*args)
+    return LibraryFunction("choice_follows_fight")()
 
 
 @overload
@@ -1222,85 +1053,40 @@ def class_modifier(*args):
     return LibraryFunction("class_modifier")(*args)
 
 
-@overload
 def clear(arg1: dict[Any, Any]) -> None:
-    ...
+    return LibraryFunction("clear")(arg1)
 
 
-def clear(*args):
-    return LibraryFunction("clear")(*args)
-
-
-@overload
 def clear_booze_helper() -> None:
-    ...
+    return LibraryFunction("clear_booze_helper")()
 
 
-def clear_booze_helper(*args):
-    return LibraryFunction("clear_booze_helper")(*args)
-
-
-@overload
 def clear_food_helper() -> None:
-    ...
+    return LibraryFunction("clear_food_helper")()
 
 
-def clear_food_helper(*args):
-    return LibraryFunction("clear_food_helper")(*args)
-
-
-@overload
 def cli_execute(arg1: str) -> bool:
-    ...
+    return LibraryFunction("cli_execute")(arg1)
 
 
-def cli_execute(*args):
-    return LibraryFunction("cli_execute")(*args)
-
-
-@overload
 def cli_execute_output(arg1: str) -> str:
-    ...
+    return LibraryFunction("cli_execute_output")(arg1)
 
 
-def cli_execute_output(*args):
-    return LibraryFunction("cli_execute_output")(*args)
-
-
-@overload
 def closet_amount(arg1: Item) -> int:
-    ...
+    return LibraryFunction("closet_amount")(arg1)
 
 
-def closet_amount(*args):
-    return LibraryFunction("closet_amount")(*args)
-
-
-@overload
 def combat_mana_cost_modifier() -> int:
-    ...
+    return LibraryFunction("combat_mana_cost_modifier")()
 
 
-def combat_mana_cost_modifier(*args):
-    return LibraryFunction("combat_mana_cost_modifier")(*args)
-
-
-@overload
 def combat_rate_modifier() -> float:
-    ...
+    return LibraryFunction("combat_rate_modifier")()
 
 
-def combat_rate_modifier(*args):
-    return LibraryFunction("combat_rate_modifier")(*args)
-
-
-@overload
 def combat_skill_available(arg1: Skill) -> bool:
-    ...
-
-
-def combat_skill_available(*args):
-    return LibraryFunction("combat_skill_available")(*args)
+    return LibraryFunction("combat_skill_available")(arg1)
 
 
 @overload
@@ -1317,58 +1103,28 @@ def concoction_price(*args):
     return LibraryFunction("concoction_price")(*args)
 
 
-@overload
 def contains_text(arg1: str, arg2: str) -> bool:
-    ...
+    return LibraryFunction("contains_text")(arg1, arg2)
 
 
-def contains_text(*args):
-    return LibraryFunction("contains_text")(*args)
-
-
-@overload
 def council() -> None:
-    ...
+    return LibraryFunction("council")()
 
 
-def council(*args):
-    return LibraryFunction("council")(*args)
-
-
-@overload
 def count(arg1: dict[Any, Any]) -> int:
-    ...
+    return LibraryFunction("count")(arg1)
 
 
-def count(*args):
-    return LibraryFunction("count")(*args)
-
-
-@overload
 def craft(arg1: str, arg2: int, arg3: Item, arg4: Item) -> int:
-    ...
+    return LibraryFunction("craft")(arg1, arg2, arg3, arg4)
 
 
-def craft(*args):
-    return LibraryFunction("craft")(*args)
-
-
-@overload
 def craft_type(arg1: Item) -> str:
-    ...
+    return LibraryFunction("craft_type")(arg1)
 
 
-def craft_type(*args):
-    return LibraryFunction("craft_type")(*args)
-
-
-@overload
 def creatable_amount(arg1: Item) -> int:
-    ...
-
-
-def creatable_amount(*args):
-    return LibraryFunction("creatable_amount")(*args)
+    return LibraryFunction("creatable_amount")(arg1)
 
 
 @overload
@@ -1409,175 +1165,80 @@ def create(*args):
     return LibraryFunction("create")(*args)
 
 
-@overload
 def create_matcher(arg1: str, arg2: str) -> Matcher:
-    ...
+    return LibraryFunction("create_matcher")(arg1, arg2)
 
 
-def create_matcher(*args):
-    return LibraryFunction("create_matcher")(*args)
-
-
-@overload
 def current_hit_stat() -> Stat:
-    ...
+    return LibraryFunction("current_hit_stat")()
 
 
-def current_hit_stat(*args):
-    return LibraryFunction("current_hit_stat")(*args)
-
-
-@overload
 def current_mcd() -> int:
-    ...
+    return LibraryFunction("current_mcd")()
 
 
-def current_mcd(*args):
-    return LibraryFunction("current_mcd")(*args)
-
-
-@overload
 def current_pvp_stances() -> dict[str, int]:
-    ...
+    return LibraryFunction("current_pvp_stances")()
 
 
-def current_pvp_stances(*args):
-    return LibraryFunction("current_pvp_stances")(*args)
-
-
-@overload
 def current_rad_sickness() -> int:
-    ...
+    return LibraryFunction("current_rad_sickness")()
 
 
-def current_rad_sickness(*args):
-    return LibraryFunction("current_rad_sickness")(*args)
-
-
-@overload
 def current_round() -> int:
-    ...
+    return LibraryFunction("current_round")()
 
 
-def current_round(*args):
-    return LibraryFunction("current_round")(*args)
-
-
-@overload
 def dad_sea_monkee_weakness(arg1: int) -> Element:
-    ...
+    return LibraryFunction("dad_sea_monkee_weakness")(arg1)
 
 
-def dad_sea_monkee_weakness(*args):
-    return LibraryFunction("dad_sea_monkee_weakness")(*args)
-
-
-@overload
 def daily_special() -> Item:
-    ...
+    return LibraryFunction("daily_special")()
 
 
-def daily_special(*args):
-    return LibraryFunction("daily_special")(*args)
-
-
-@overload
 def damage_absorption_percent() -> float:
-    ...
+    return LibraryFunction("damage_absorption_percent")()
 
 
-def damage_absorption_percent(*args):
-    return LibraryFunction("damage_absorption_percent")(*args)
-
-
-@overload
 def damage_reduction() -> int:
-    ...
+    return LibraryFunction("damage_reduction")()
 
 
-def damage_reduction(*args):
-    return LibraryFunction("damage_reduction")(*args)
-
-
-@overload
 def date_to_timestamp(arg1: str, arg2: str) -> int:
-    ...
+    return LibraryFunction("date_to_timestamp")(arg1, arg2)
 
 
-def date_to_timestamp(*args):
-    return LibraryFunction("date_to_timestamp")(*args)
-
-
-@overload
 def daycount() -> int:
-    ...
+    return LibraryFunction("daycount")()
 
 
-def daycount(*args):
-    return LibraryFunction("daycount")(*args)
-
-
-@overload
 def debugprint(arg1: str) -> None:
-    ...
+    return LibraryFunction("debugprint")(arg1)
 
 
-def debugprint(*args):
-    return LibraryFunction("debugprint")(*args)
-
-
-@overload
 def delete(arg1: str, arg2: int, arg3: int) -> str:
-    ...
+    return LibraryFunction("delete")(arg1, arg2, arg3)
 
 
-def delete(*args):
-    return LibraryFunction("delete")(*args)
-
-
-@overload
 def desc_to_effect(arg1: str) -> Effect:
-    ...
+    return LibraryFunction("desc_to_effect")(arg1)
 
 
-def desc_to_effect(*args):
-    return LibraryFunction("desc_to_effect")(*args)
-
-
-@overload
 def desc_to_item(arg1: str) -> Item:
-    ...
+    return LibraryFunction("desc_to_item")(arg1)
 
 
-def desc_to_item(*args):
-    return LibraryFunction("desc_to_item")(*args)
-
-
-@overload
 def disable(arg1: str) -> None:
-    ...
+    return LibraryFunction("disable")(arg1)
 
 
-def disable(*args):
-    return LibraryFunction("disable")(*args)
-
-
-@overload
 def dispensary_available() -> bool:
-    ...
+    return LibraryFunction("dispensary_available")()
 
 
-def dispensary_available(*args):
-    return LibraryFunction("dispensary_available")(*args)
-
-
-@overload
 def display_amount(arg1: Item) -> int:
-    ...
-
-
-def display_amount(*args):
-    return LibraryFunction("display_amount")(*args)
+    return LibraryFunction("display_amount")(arg1)
 
 
 @overload
@@ -1694,13 +1355,8 @@ def effect_modifier(*args):
     return LibraryFunction("effect_modifier")(*args)
 
 
-@overload
 def effect_pockets() -> dict[int, bool]:
-    ...
-
-
-def effect_pockets(*args):
-    return LibraryFunction("effect_pockets")(*args)
+    return LibraryFunction("effect_pockets")()
 
 
 @overload
@@ -1736,22 +1392,12 @@ def elemental_resistance(*args):
     return LibraryFunction("elemental_resistance")(*args)
 
 
-@overload
 def empty_closet() -> bool:
-    ...
+    return LibraryFunction("empty_closet")()
 
 
-def empty_closet(*args):
-    return LibraryFunction("empty_closet")(*args)
-
-
-@overload
 def enable(arg1: str) -> None:
-    ...
-
-
-def enable(*args):
-    return LibraryFunction("enable")(*args)
+    return LibraryFunction("enable")(arg1)
 
 
 @overload
@@ -1768,40 +1414,20 @@ def end(*args):
     return LibraryFunction("end")(*args)
 
 
-@overload
 def ends_with(arg1: str, arg2: str) -> bool:
-    ...
+    return LibraryFunction("ends_with")(arg1, arg2)
 
 
-def ends_with(*args):
-    return LibraryFunction("ends_with")(*args)
-
-
-@overload
 def enthrone_familiar(arg1: Familiar) -> bool:
-    ...
+    return LibraryFunction("enthrone_familiar")(arg1)
 
 
-def enthrone_familiar(*args):
-    return LibraryFunction("enthrone_familiar")(*args)
-
-
-@overload
 def entity_decode(arg1: str) -> str:
-    ...
+    return LibraryFunction("entity_decode")(arg1)
 
 
-def entity_decode(*args):
-    return LibraryFunction("entity_decode")(*args)
-
-
-@overload
 def entity_encode(arg1: str) -> str:
-    ...
-
-
-def entity_encode(*args):
-    return LibraryFunction("entity_encode")(*args)
+    return LibraryFunction("entity_encode")(arg1)
 
 
 @overload
@@ -1833,13 +1459,8 @@ def equip(*args):
     return LibraryFunction("equip")(*args)
 
 
-@overload
 def equip_all_familiars() -> bool:
-    ...
-
-
-def equip_all_familiars(*args):
-    return LibraryFunction("equip_all_familiars")(*args)
+    return LibraryFunction("equip_all_familiars")()
 
 
 @overload
@@ -1856,13 +1477,8 @@ def equipped_amount(*args):
     return LibraryFunction("equipped_amount")(*args)
 
 
-@overload
 def equipped_item(arg1: Slot) -> Item:
-    ...
-
-
-def equipped_item(*args):
-    return LibraryFunction("equipped_item")(*args)
+    return LibraryFunction("equipped_item")(arg1)
 
 
 @overload
@@ -1879,31 +1495,16 @@ def eudora(*args):
     return LibraryFunction("eudora")(*args)
 
 
-@overload
 def eudora_item() -> Item:
-    ...
+    return LibraryFunction("eudora_item")()
 
 
-def eudora_item(*args):
-    return LibraryFunction("eudora_item")(*args)
-
-
-@overload
 def every_card_name(arg1: str) -> str:
-    ...
+    return LibraryFunction("every_card_name")(arg1)
 
 
-def every_card_name(*args):
-    return LibraryFunction("every_card_name")(*args)
-
-
-@overload
 def expected_cold_medicine_cabinet() -> dict[str, Item]:
-    ...
-
-
-def expected_cold_medicine_cabinet(*args):
-    return LibraryFunction("expected_cold_medicine_cabinet")(*args)
+    return LibraryFunction("expected_cold_medicine_cabinet")()
 
 
 @overload
@@ -1920,76 +1521,36 @@ def expected_damage(*args):
     return LibraryFunction("expected_damage")(*args)
 
 
-@overload
 def experience_bonus() -> float:
-    ...
+    return LibraryFunction("experience_bonus")()
 
 
-def experience_bonus(*args):
-    return LibraryFunction("experience_bonus")(*args)
-
-
-@overload
 def expression_eval(arg1: str) -> float:
-    ...
+    return LibraryFunction("expression_eval")(arg1)
 
 
-def expression_eval(*args):
-    return LibraryFunction("expression_eval")(*args)
-
-
-@overload
 def extract_items(arg1: str) -> dict[Item, int]:
-    ...
+    return LibraryFunction("extract_items")(arg1)
 
 
-def extract_items(*args):
-    return LibraryFunction("extract_items")(*args)
-
-
-@overload
 def extract_meat(arg1: str) -> int:
-    ...
+    return LibraryFunction("extract_meat")(arg1)
 
 
-def extract_meat(*args):
-    return LibraryFunction("extract_meat")(*args)
-
-
-@overload
 def familiar_equipment(arg1: Familiar) -> Item:
-    ...
+    return LibraryFunction("familiar_equipment")(arg1)
 
 
-def familiar_equipment(*args):
-    return LibraryFunction("familiar_equipment")(*args)
-
-
-@overload
 def familiar_equipped_equipment(arg1: Familiar) -> Item:
-    ...
+    return LibraryFunction("familiar_equipped_equipment")(arg1)
 
 
-def familiar_equipped_equipment(*args):
-    return LibraryFunction("familiar_equipped_equipment")(*args)
-
-
-@overload
 def familiar_weight(arg1: Familiar) -> int:
-    ...
+    return LibraryFunction("familiar_weight")(arg1)
 
 
-def familiar_weight(*args):
-    return LibraryFunction("familiar_weight")(*args)
-
-
-@overload
 def favorite_familiars() -> dict[Familiar, bool]:
-    ...
-
-
-def favorite_familiars(*args):
-    return LibraryFunction("favorite_familiars")(*args)
+    return LibraryFunction("favorite_familiars")()
 
 
 @overload
@@ -2006,31 +1567,16 @@ def faxbot(*args):
     return LibraryFunction("faxbot")(*args)
 
 
-@overload
 def fight_follows_choice() -> bool:
-    ...
+    return LibraryFunction("fight_follows_choice")()
 
 
-def fight_follows_choice(*args):
-    return LibraryFunction("fight_follows_choice")(*args)
-
-
-@overload
 def file_to_array(arg1: str) -> dict[int, str]:
-    ...
+    return LibraryFunction("file_to_array")(arg1)
 
 
-def file_to_array(*args):
-    return LibraryFunction("file_to_array")(*args)
-
-
-@overload
 def file_to_buffer(arg1: str) -> str:
-    ...
-
-
-def file_to_buffer(*args):
-    return LibraryFunction("file_to_buffer")(*args)
+    return LibraryFunction("file_to_buffer")(arg1)
 
 
 @overload
@@ -2047,355 +1593,160 @@ def file_to_map(*args):
     return LibraryFunction("file_to_map")(*args)
 
 
-@overload
 def find(arg1: Matcher) -> bool:
-    ...
+    return LibraryFunction("find")(arg1)
 
 
-def find(*args):
-    return LibraryFunction("find")(*args)
-
-
-@overload
 def floor(arg1: float) -> int:
-    ...
+    return LibraryFunction("floor")(arg1)
 
 
-def floor(*args):
-    return LibraryFunction("floor")(*args)
-
-
-@overload
 def florist_available() -> bool:
-    ...
+    return LibraryFunction("florist_available")()
 
 
-def florist_available(*args):
-    return LibraryFunction("florist_available")(*args)
-
-
-@overload
 def flush_monster_manuel_cache() -> bool:
-    ...
+    return LibraryFunction("flush_monster_manuel_cache")()
 
 
-def flush_monster_manuel_cache(*args):
-    return LibraryFunction("flush_monster_manuel_cache")(*args)
-
-
-@overload
 def form_field(arg1: str) -> str:
-    ...
+    return LibraryFunction("form_field")(arg1)
 
 
-def form_field(*args):
-    return LibraryFunction("form_field")(*args)
-
-
-@overload
 def form_fields() -> dict[str, str]:
-    ...
+    return LibraryFunction("form_fields")()
 
 
-def form_fields(*args):
-    return LibraryFunction("form_fields")(*args)
-
-
-@overload
 def format_date_time(arg1: str, arg2: str, arg3: str) -> str:
-    ...
+    return LibraryFunction("format_date_time")(arg1, arg2, arg3)
 
 
-def format_date_time(*args):
-    return LibraryFunction("format_date_time")(*args)
-
-
-@overload
 def friars_available() -> bool:
-    ...
+    return LibraryFunction("friars_available")()
 
 
-def friars_available(*args):
-    return LibraryFunction("friars_available")(*args)
-
-
-@overload
 def fuel_cost(arg1: Skill) -> int:
-    ...
+    return LibraryFunction("fuel_cost")(arg1)
 
 
-def fuel_cost(*args):
-    return LibraryFunction("fuel_cost")(*args)
-
-
-@overload
 def fullness_limit() -> int:
-    ...
+    return LibraryFunction("fullness_limit")()
 
 
-def fullness_limit(*args):
-    return LibraryFunction("fullness_limit")(*args)
-
-
-@overload
 def gameday_to_int() -> int:
-    ...
+    return LibraryFunction("gameday_to_int")()
 
 
-def gameday_to_int(*args):
-    return LibraryFunction("gameday_to_int")(*args)
-
-
-@overload
 def gameday_to_string() -> str:
-    ...
+    return LibraryFunction("gameday_to_string")()
 
 
-def gameday_to_string(*args):
-    return LibraryFunction("gameday_to_string")(*args)
-
-
-@overload
 def gametime_to_int() -> int:
-    ...
+    return LibraryFunction("gametime_to_int")()
 
 
-def gametime_to_int(*args):
-    return LibraryFunction("gametime_to_int")(*args)
-
-
-@overload
 def get_all_properties(arg1: str, arg2: bool) -> dict[str, bool]:
-    ...
+    return LibraryFunction("get_all_properties")(arg1, arg2)
 
 
-def get_all_properties(*args):
-    return LibraryFunction("get_all_properties")(*args)
-
-
-@overload
 def get_auto_attack() -> int:
-    ...
+    return LibraryFunction("get_auto_attack")()
 
 
-def get_auto_attack(*args):
-    return LibraryFunction("get_auto_attack")(*args)
-
-
-@overload
 def get_autumnaton_locations() -> dict[int, Location]:
-    ...
+    return LibraryFunction("get_autumnaton_locations")()
 
 
-def get_autumnaton_locations(*args):
-    return LibraryFunction("get_autumnaton_locations")(*args)
-
-
-@overload
 def get_campground() -> dict[Item, int]:
-    ...
+    return LibraryFunction("get_campground")()
 
 
-def get_campground(*args):
-    return LibraryFunction("get_campground")(*args)
-
-
-@overload
 def get_ccs_action(arg1: int) -> str:
-    ...
+    return LibraryFunction("get_ccs_action")(arg1)
 
 
-def get_ccs_action(*args):
-    return LibraryFunction("get_ccs_action")(*args)
-
-
-@overload
 def get_chateau() -> dict[Item, int]:
-    ...
+    return LibraryFunction("get_chateau")()
 
 
-def get_chateau(*args):
-    return LibraryFunction("get_chateau")(*args)
-
-
-@overload
 def get_clan_id() -> int:
-    ...
+    return LibraryFunction("get_clan_id")()
 
 
-def get_clan_id(*args):
-    return LibraryFunction("get_clan_id")(*args)
-
-
-@overload
 def get_clan_lounge() -> dict[Item, int]:
-    ...
+    return LibraryFunction("get_clan_lounge")()
 
 
-def get_clan_lounge(*args):
-    return LibraryFunction("get_clan_lounge")(*args)
-
-
-@overload
 def get_clan_name() -> str:
-    ...
+    return LibraryFunction("get_clan_name")()
 
 
-def get_clan_name(*args):
-    return LibraryFunction("get_clan_name")(*args)
-
-
-@overload
 def get_clan_rumpus() -> dict[str, int]:
-    ...
+    return LibraryFunction("get_clan_rumpus")()
 
 
-def get_clan_rumpus(*args):
-    return LibraryFunction("get_clan_rumpus")(*args)
-
-
-@overload
 def get_closet() -> dict[Item, int]:
-    ...
+    return LibraryFunction("get_closet")()
 
 
-def get_closet(*args):
-    return LibraryFunction("get_closet")(*args)
-
-
-@overload
 def get_counter(arg1: str) -> int:
-    ...
+    return LibraryFunction("get_counter")(arg1)
 
 
-def get_counter(*args):
-    return LibraryFunction("get_counter")(*args)
-
-
-@overload
 def get_counters(arg1: str, arg2: int, arg3: int) -> str:
-    ...
+    return LibraryFunction("get_counters")(arg1, arg2, arg3)
 
 
-def get_counters(*args):
-    return LibraryFunction("get_counters")(*args)
-
-
-@overload
 def get_custom_outfits() -> dict[int, str]:
-    ...
+    return LibraryFunction("get_custom_outfits")()
 
 
-def get_custom_outfits(*args):
-    return LibraryFunction("get_custom_outfits")(*args)
-
-
-@overload
 def get_display() -> dict[Item, int]:
-    ...
+    return LibraryFunction("get_display")()
 
 
-def get_display(*args):
-    return LibraryFunction("get_display")(*args)
-
-
-@overload
 def get_dwelling() -> Item:
-    ...
+    return LibraryFunction("get_dwelling")()
 
 
-def get_dwelling(*args):
-    return LibraryFunction("get_dwelling")(*args)
-
-
-@overload
 def get_fishing_locations() -> dict[str, Location]:
-    ...
+    return LibraryFunction("get_fishing_locations")()
 
 
-def get_fishing_locations(*args):
-    return LibraryFunction("get_fishing_locations")(*args)
-
-
-@overload
 def get_florist_plants() -> dict[Location, dict[int, str]]:
-    ...
+    return LibraryFunction("get_florist_plants")()
 
 
-def get_florist_plants(*args):
-    return LibraryFunction("get_florist_plants")(*args)
-
-
-@overload
 def get_free_pulls() -> dict[Item, int]:
-    ...
+    return LibraryFunction("get_free_pulls")()
 
 
-def get_free_pulls(*args):
-    return LibraryFunction("get_free_pulls")(*args)
-
-
-@overload
 def get_fuel() -> int:
-    ...
+    return LibraryFunction("get_fuel")()
 
 
-def get_fuel(*args):
-    return LibraryFunction("get_fuel")(*args)
-
-
-@overload
 def get_goals() -> dict[int, str]:
-    ...
+    return LibraryFunction("get_goals")()
 
 
-def get_goals(*args):
-    return LibraryFunction("get_goals")(*args)
-
-
-@overload
 def get_ignore_zone_warnings() -> bool:
-    ...
+    return LibraryFunction("get_ignore_zone_warnings")()
 
 
-def get_ignore_zone_warnings(*args):
-    return LibraryFunction("get_ignore_zone_warnings")(*args)
-
-
-@overload
 def get_ingredients(arg1: Item) -> dict[Item, int]:
-    ...
+    return LibraryFunction("get_ingredients")(arg1)
 
 
-def get_ingredients(*args):
-    return LibraryFunction("get_ingredients")(*args)
-
-
-@overload
 def get_inventory() -> dict[Item, int]:
-    ...
+    return LibraryFunction("get_inventory")()
 
 
-def get_inventory(*args):
-    return LibraryFunction("get_inventory")(*args)
-
-
-@overload
 def get_location_monsters(arg1: Location) -> dict[Monster, bool]:
-    ...
+    return LibraryFunction("get_location_monsters")(arg1)
 
 
-def get_location_monsters(*args):
-    return LibraryFunction("get_location_monsters")(*args)
-
-
-@overload
 def get_locket_monsters() -> dict[Monster, bool]:
-    ...
-
-
-def get_locket_monsters(*args):
-    return LibraryFunction("get_locket_monsters")(*args)
+    return LibraryFunction("get_locket_monsters")()
 
 
 @overload
@@ -2412,94 +1763,44 @@ def get_monster_mapping(*args):
     return LibraryFunction("get_monster_mapping")(*args)
 
 
-@overload
 def get_monsters(arg1: Location) -> dict[int, Monster]:
-    ...
+    return LibraryFunction("get_monsters")(arg1)
 
 
-def get_monsters(*args):
-    return LibraryFunction("get_monsters")(*args)
-
-
-@overload
 def get_moods() -> dict[int, str]:
-    ...
+    return LibraryFunction("get_moods")()
 
 
-def get_moods(*args):
-    return LibraryFunction("get_moods")(*args)
-
-
-@overload
 def get_outfits() -> dict[int, str]:
-    ...
+    return LibraryFunction("get_outfits")()
 
 
-def get_outfits(*args):
-    return LibraryFunction("get_outfits")(*args)
-
-
-@overload
 def get_path() -> str:
-    ...
+    return LibraryFunction("get_path")()
 
 
-def get_path(*args):
-    return LibraryFunction("get_path")(*args)
-
-
-@overload
 def get_path_full() -> str:
-    ...
+    return LibraryFunction("get_path_full")()
 
 
-def get_path_full(*args):
-    return LibraryFunction("get_path_full")(*args)
-
-
-@overload
 def get_path_variables() -> str:
-    ...
+    return LibraryFunction("get_path_variables")()
 
 
-def get_path_variables(*args):
-    return LibraryFunction("get_path_variables")(*args)
-
-
-@overload
 def get_permed_skills() -> dict[Skill, bool]:
-    ...
+    return LibraryFunction("get_permed_skills")()
 
 
-def get_permed_skills(*args):
-    return LibraryFunction("get_permed_skills")(*args)
-
-
-@overload
 def get_player_id(arg1: str) -> str:
-    ...
+    return LibraryFunction("get_player_id")(arg1)
 
 
-def get_player_id(*args):
-    return LibraryFunction("get_player_id")(*args)
-
-
-@overload
 def get_player_name(arg1: int) -> str:
-    ...
+    return LibraryFunction("get_player_name")(arg1)
 
 
-def get_player_name(*args):
-    return LibraryFunction("get_player_name")(*args)
-
-
-@overload
 def get_power(arg1: Item) -> int:
-    ...
-
-
-def get_power(*args):
-    return LibraryFunction("get_power")(*args)
+    return LibraryFunction("get_power")(arg1)
 
 
 @overload
@@ -2516,148 +1817,68 @@ def get_property(*args):
     return LibraryFunction("get_property")(*args)
 
 
-@overload
 def get_related(arg1: Item, arg2: str) -> dict[Item, int]:
-    ...
+    return LibraryFunction("get_related")(arg1, arg2)
 
 
-def get_related(*args):
-    return LibraryFunction("get_related")(*args)
-
-
-@overload
 def get_revision() -> int:
-    ...
+    return LibraryFunction("get_revision")()
 
 
-def get_revision(*args):
-    return LibraryFunction("get_revision")(*args)
-
-
-@overload
 def get_shop() -> dict[Item, int]:
-    ...
+    return LibraryFunction("get_shop")()
 
 
-def get_shop(*args):
-    return LibraryFunction("get_shop")(*args)
-
-
-@overload
 def get_shop_log() -> dict[int, str]:
-    ...
+    return LibraryFunction("get_shop_log")()
 
 
-def get_shop_log(*args):
-    return LibraryFunction("get_shop_log")(*args)
-
-
-@overload
 def get_stack_trace() -> dict[int, dict[str, Any]]:
-    ...
+    return LibraryFunction("get_stack_trace")()
 
 
-def get_stack_trace(*args):
-    return LibraryFunction("get_stack_trace")(*args)
-
-
-@overload
 def get_stash() -> dict[Item, int]:
-    ...
+    return LibraryFunction("get_stash")()
 
 
-def get_stash(*args):
-    return LibraryFunction("get_stash")(*args)
-
-
-@overload
 def get_storage() -> dict[Item, int]:
-    ...
+    return LibraryFunction("get_storage")()
 
 
-def get_storage(*args):
-    return LibraryFunction("get_storage")(*args)
-
-
-@overload
 def get_version() -> str:
-    ...
+    return LibraryFunction("get_version")()
 
 
-def get_version(*args):
-    return LibraryFunction("get_version")(*args)
-
-
-@overload
 def get_workshed() -> Item:
-    ...
+    return LibraryFunction("get_workshed")()
 
 
-def get_workshed(*args):
-    return LibraryFunction("get_workshed")(*args)
-
-
-@overload
 def get_zap_wand() -> Item:
-    ...
+    return LibraryFunction("get_zap_wand")()
 
 
-def get_zap_wand(*args):
-    return LibraryFunction("get_zap_wand")(*args)
-
-
-@overload
 def git_at_head(arg1: str) -> bool:
-    ...
+    return LibraryFunction("git_at_head")(arg1)
 
 
-def git_at_head(*args):
-    return LibraryFunction("git_at_head")(*args)
-
-
-@overload
 def git_exists(arg1: str) -> bool:
-    ...
+    return LibraryFunction("git_exists")(arg1)
 
 
-def git_exists(*args):
-    return LibraryFunction("git_exists")(*args)
-
-
-@overload
 def git_info(arg1: str) -> dict[str, Any]:
-    ...
+    return LibraryFunction("git_info")(arg1)
 
 
-def git_info(*args):
-    return LibraryFunction("git_info")(*args)
-
-
-@overload
 def git_list() -> dict[int, str]:
-    ...
+    return LibraryFunction("git_list")()
 
 
-def git_list(*args):
-    return LibraryFunction("git_list")(*args)
-
-
-@overload
 def gnomads_available() -> bool:
-    ...
+    return LibraryFunction("gnomads_available")()
 
 
-def gnomads_available(*args):
-    return LibraryFunction("gnomads_available")(*args)
-
-
-@overload
 def goal_exists(arg1: str) -> bool:
-    ...
-
-
-def goal_exists(*args):
-    return LibraryFunction("goal_exists")(*args)
+    return LibraryFunction("goal_exists")(arg1)
 
 
 @overload
@@ -2679,166 +1900,76 @@ def group(*args):
     return LibraryFunction("group")(*args)
 
 
-@overload
 def group_count(arg1: Matcher) -> int:
-    ...
+    return LibraryFunction("group_count")(arg1)
 
 
-def group_count(*args):
-    return LibraryFunction("group_count")(*args)
-
-
-@overload
 def group_names(arg1: Matcher) -> dict[str, bool]:
-    ...
+    return LibraryFunction("group_names")(arg1)
 
 
-def group_names(*args):
-    return LibraryFunction("group_names")(*args)
-
-
-@overload
 def group_string(arg1: str, arg2: str) -> dict[int, dict[int, str]]:
-    ...
+    return LibraryFunction("group_string")(arg1, arg2)
 
 
-def group_string(*args):
-    return LibraryFunction("group_string")(*args)
-
-
-@overload
 def guild_available() -> bool:
-    ...
+    return LibraryFunction("guild_available")()
 
 
-def guild_available(*args):
-    return LibraryFunction("guild_available")(*args)
-
-
-@overload
 def guild_store_available() -> bool:
-    ...
+    return LibraryFunction("guild_store_available")()
 
 
-def guild_store_available(*args):
-    return LibraryFunction("guild_store_available")(*args)
-
-
-@overload
 def handling_choice() -> bool:
-    ...
+    return LibraryFunction("handling_choice")()
 
 
-def handling_choice(*args):
-    return LibraryFunction("handling_choice")(*args)
-
-
-@overload
 def have_bartender() -> bool:
-    ...
+    return LibraryFunction("have_bartender")()
 
 
-def have_bartender(*args):
-    return LibraryFunction("have_bartender")(*args)
-
-
-@overload
 def have_chef() -> bool:
-    ...
+    return LibraryFunction("have_chef")()
 
 
-def have_chef(*args):
-    return LibraryFunction("have_chef")(*args)
-
-
-@overload
 def have_display() -> bool:
-    ...
+    return LibraryFunction("have_display")()
 
 
-def have_display(*args):
-    return LibraryFunction("have_display")(*args)
-
-
-@overload
 def have_effect(arg1: Effect) -> int:
-    ...
+    return LibraryFunction("have_effect")(arg1)
 
 
-def have_effect(*args):
-    return LibraryFunction("have_effect")(*args)
-
-
-@overload
 def have_equipped(arg1: Item) -> bool:
-    ...
+    return LibraryFunction("have_equipped")(arg1)
 
 
-def have_equipped(*args):
-    return LibraryFunction("have_equipped")(*args)
-
-
-@overload
 def have_familiar(arg1: Familiar) -> bool:
-    ...
+    return LibraryFunction("have_familiar")(arg1)
 
 
-def have_familiar(*args):
-    return LibraryFunction("have_familiar")(*args)
-
-
-@overload
 def have_mushroom_plot() -> bool:
-    ...
+    return LibraryFunction("have_mushroom_plot")()
 
 
-def have_mushroom_plot(*args):
-    return LibraryFunction("have_mushroom_plot")(*args)
-
-
-@overload
 def have_outfit(arg1: str) -> bool:
-    ...
+    return LibraryFunction("have_outfit")(arg1)
 
 
-def have_outfit(*args):
-    return LibraryFunction("have_outfit")(*args)
-
-
-@overload
 def have_servant(arg1: Servant) -> bool:
-    ...
+    return LibraryFunction("have_servant")(arg1)
 
 
-def have_servant(*args):
-    return LibraryFunction("have_servant")(*args)
-
-
-@overload
 def have_shop() -> bool:
-    ...
+    return LibraryFunction("have_shop")()
 
 
-def have_shop(*args):
-    return LibraryFunction("have_shop")(*args)
-
-
-@overload
 def have_skill(arg1: Skill) -> bool:
-    ...
+    return LibraryFunction("have_skill")(arg1)
 
 
-def have_skill(*args):
-    return LibraryFunction("have_skill")(*args)
-
-
-@overload
 def hedge_maze(arg1: str) -> bool:
-    ...
-
-
-def hedge_maze(*args):
-    return LibraryFunction("hedge_maze")(*args)
+    return LibraryFunction("hedge_maze")(arg1)
 
 
 @overload
@@ -2855,13 +1986,8 @@ def heist(*args):
     return LibraryFunction("heist")(*args)
 
 
-@overload
 def heist_targets() -> dict[Monster, dict[int, Item]]:
-    ...
-
-
-def heist_targets(*args):
-    return LibraryFunction("heist_targets")(*args)
+    return LibraryFunction("heist_targets")()
 
 
 @overload
@@ -2878,157 +2004,72 @@ def hermit(*args):
     return LibraryFunction("hermit")(*args)
 
 
-@overload
 def hidden_temple_unlocked() -> bool:
-    ...
+    return LibraryFunction("hidden_temple_unlocked")()
 
 
-def hidden_temple_unlocked(*args):
-    return LibraryFunction("hidden_temple_unlocked")(*args)
-
-
-@overload
 def hippy_stone_broken() -> bool:
-    ...
+    return LibraryFunction("hippy_stone_broken")()
 
 
-def hippy_stone_broken(*args):
-    return LibraryFunction("hippy_stone_broken")(*args)
-
-
-@overload
 def hippy_store_available() -> bool:
-    ...
+    return LibraryFunction("hippy_store_available")()
 
 
-def hippy_store_available(*args):
-    return LibraryFunction("hippy_store_available")(*args)
-
-
-@overload
 def historical_age(arg1: Item) -> float:
-    ...
+    return LibraryFunction("historical_age")(arg1)
 
 
-def historical_age(*args):
-    return LibraryFunction("historical_age")(*args)
-
-
-@overload
 def historical_price(arg1: Item) -> int:
-    ...
+    return LibraryFunction("historical_price")(arg1)
 
 
-def historical_price(*args):
-    return LibraryFunction("historical_price")(*args)
-
-
-@overload
 def holiday() -> str:
-    ...
+    return LibraryFunction("holiday")()
 
 
-def holiday(*args):
-    return LibraryFunction("holiday")(*args)
-
-
-@overload
 def hp_cost(arg1: Skill) -> int:
-    ...
+    return LibraryFunction("hp_cost")(arg1)
 
 
-def hp_cost(*args):
-    return LibraryFunction("hp_cost")(*args)
-
-
-@overload
 def image_to_monster(arg1: str) -> Monster:
-    ...
+    return LibraryFunction("image_to_monster")(arg1)
 
 
-def image_to_monster(*args):
-    return LibraryFunction("image_to_monster")(*args)
-
-
-@overload
 def in_bad_moon() -> bool:
-    ...
+    return LibraryFunction("in_bad_moon")()
 
 
-def in_bad_moon(*args):
-    return LibraryFunction("in_bad_moon")(*args)
-
-
-@overload
 def in_casual() -> bool:
-    ...
+    return LibraryFunction("in_casual")()
 
 
-def in_casual(*args):
-    return LibraryFunction("in_casual")(*args)
-
-
-@overload
 def in_hardcore() -> bool:
-    ...
+    return LibraryFunction("in_hardcore")()
 
 
-def in_hardcore(*args):
-    return LibraryFunction("in_hardcore")(*args)
-
-
-@overload
 def in_moxie_sign() -> bool:
-    ...
+    return LibraryFunction("in_moxie_sign")()
 
 
-def in_moxie_sign(*args):
-    return LibraryFunction("in_moxie_sign")(*args)
-
-
-@overload
 def in_multi_fight() -> bool:
-    ...
+    return LibraryFunction("in_multi_fight")()
 
 
-def in_multi_fight(*args):
-    return LibraryFunction("in_multi_fight")(*args)
-
-
-@overload
 def in_muscle_sign() -> bool:
-    ...
+    return LibraryFunction("in_muscle_sign")()
 
 
-def in_muscle_sign(*args):
-    return LibraryFunction("in_muscle_sign")(*args)
-
-
-@overload
 def in_mysticality_sign() -> bool:
-    ...
+    return LibraryFunction("in_mysticality_sign")()
 
 
-def in_mysticality_sign(*args):
-    return LibraryFunction("in_mysticality_sign")(*args)
-
-
-@overload
 def in_terrarium(arg1: Familiar) -> bool:
-    ...
+    return LibraryFunction("in_terrarium")(arg1)
 
 
-def in_terrarium(*args):
-    return LibraryFunction("in_terrarium")(*args)
-
-
-@overload
 def inaccessible_reason(arg1: Coinmaster) -> str:
-    ...
-
-
-def inaccessible_reason(*args):
-    return LibraryFunction("inaccessible_reason")(*args)
+    return LibraryFunction("inaccessible_reason")(arg1)
 
 
 @overload
@@ -3045,157 +2086,72 @@ def index_of(*args):
     return LibraryFunction("index_of")(*args)
 
 
-@overload
 def inebriety_limit() -> int:
-    ...
+    return LibraryFunction("inebriety_limit")()
 
 
-def inebriety_limit(*args):
-    return LibraryFunction("inebriety_limit")(*args)
-
-
-@overload
 def initiative_modifier() -> float:
-    ...
+    return LibraryFunction("initiative_modifier")()
 
 
-def initiative_modifier(*args):
-    return LibraryFunction("initiative_modifier")(*args)
-
-
-@overload
 def insert(arg1: str, arg2: int, arg3: str) -> str:
-    ...
+    return LibraryFunction("insert")(arg1, arg2, arg3)
 
 
-def insert(*args):
-    return LibraryFunction("insert")(*args)
-
-
-@overload
 def is_accessible(arg1: Coinmaster) -> bool:
-    ...
+    return LibraryFunction("is_accessible")(arg1)
 
 
-def is_accessible(*args):
-    return LibraryFunction("is_accessible")(*args)
-
-
-@overload
 def is_banished(arg1: Monster) -> bool:
-    ...
+    return LibraryFunction("is_banished")(arg1)
 
 
-def is_banished(*args):
-    return LibraryFunction("is_banished")(*args)
-
-
-@overload
 def is_coinmaster_item(arg1: Item) -> bool:
-    ...
+    return LibraryFunction("is_coinmaster_item")(arg1)
 
 
-def is_coinmaster_item(*args):
-    return LibraryFunction("is_coinmaster_item")(*args)
-
-
-@overload
 def is_dark_mode() -> bool:
-    ...
+    return LibraryFunction("is_dark_mode")()
 
 
-def is_dark_mode(*args):
-    return LibraryFunction("is_dark_mode")(*args)
-
-
-@overload
 def is_discardable(arg1: Item) -> bool:
-    ...
+    return LibraryFunction("is_discardable")(arg1)
 
 
-def is_discardable(*args):
-    return LibraryFunction("is_discardable")(*args)
-
-
-@overload
 def is_displayable(arg1: Item) -> bool:
-    ...
+    return LibraryFunction("is_displayable")(arg1)
 
 
-def is_displayable(*args):
-    return LibraryFunction("is_displayable")(*args)
-
-
-@overload
 def is_familiar_equipment_locked() -> bool:
-    ...
+    return LibraryFunction("is_familiar_equipment_locked")()
 
 
-def is_familiar_equipment_locked(*args):
-    return LibraryFunction("is_familiar_equipment_locked")(*args)
-
-
-@overload
 def is_giftable(arg1: Item) -> bool:
-    ...
+    return LibraryFunction("is_giftable")(arg1)
 
 
-def is_giftable(*args):
-    return LibraryFunction("is_giftable")(*args)
-
-
-@overload
 def is_goal(arg1: Item) -> bool:
-    ...
+    return LibraryFunction("is_goal")(arg1)
 
 
-def is_goal(*args):
-    return LibraryFunction("is_goal")(*args)
-
-
-@overload
 def is_headless() -> bool:
-    ...
+    return LibraryFunction("is_headless")()
 
 
-def is_headless(*args):
-    return LibraryFunction("is_headless")(*args)
-
-
-@overload
 def is_integer(arg1: str) -> bool:
-    ...
+    return LibraryFunction("is_integer")(arg1)
 
 
-def is_integer(*args):
-    return LibraryFunction("is_integer")(*args)
-
-
-@overload
 def is_npc_item(arg1: Item) -> bool:
-    ...
+    return LibraryFunction("is_npc_item")(arg1)
 
 
-def is_npc_item(*args):
-    return LibraryFunction("is_npc_item")(*args)
-
-
-@overload
 def is_online(arg1: str) -> bool:
-    ...
+    return LibraryFunction("is_online")(arg1)
 
 
-def is_online(*args):
-    return LibraryFunction("is_online")(*args)
-
-
-@overload
 def is_tradeable(arg1: Item) -> bool:
-    ...
-
-
-def is_tradeable(*args):
-    return LibraryFunction("is_tradeable")(*args)
+    return LibraryFunction("is_tradeable")(arg1)
 
 
 @overload
@@ -3246,31 +2202,16 @@ def is_unrestricted(*args):
     return LibraryFunction("is_unrestricted")(*args)
 
 
-@overload
 def is_wearing_outfit(arg1: str) -> bool:
-    ...
+    return LibraryFunction("is_wearing_outfit")(arg1)
 
 
-def is_wearing_outfit(*args):
-    return LibraryFunction("is_wearing_outfit")(*args)
-
-
-@overload
 def item_amount(arg1: Item) -> int:
-    ...
+    return LibraryFunction("item_amount")(arg1)
 
 
-def item_amount(*args):
-    return LibraryFunction("item_amount")(*args)
-
-
-@overload
 def item_drop_modifier() -> float:
-    ...
-
-
-def item_drop_modifier(*args):
-    return LibraryFunction("item_drop_modifier")(*args)
+    return LibraryFunction("item_drop_modifier")()
 
 
 @overload
@@ -3301,22 +2242,12 @@ def item_drops_array(*args):
     return LibraryFunction("item_drops_array")(*args)
 
 
-@overload
 def item_pockets() -> dict[int, bool]:
-    ...
+    return LibraryFunction("item_pockets")()
 
 
-def item_pockets(*args):
-    return LibraryFunction("item_pockets")(*args)
-
-
-@overload
 def item_type(arg1: Item) -> str:
-    ...
-
-
-def item_type(*args):
-    return LibraryFunction("item_type")(*args)
+    return LibraryFunction("item_type")(arg1)
 
 
 @overload
@@ -3333,13 +2264,8 @@ def join_strings(*args):
     return LibraryFunction("join_strings")(*args)
 
 
-@overload
 def joke_pockets() -> dict[int, bool]:
-    ...
-
-
-def joke_pockets(*args):
-    return LibraryFunction("joke_pockets")(*args)
+    return LibraryFunction("joke_pockets")()
 
 
 @overload
@@ -3381,31 +2307,16 @@ def jump_chance(*args):
     return LibraryFunction("jump_chance")(*args)
 
 
-@overload
 def knoll_available() -> bool:
-    ...
+    return LibraryFunction("knoll_available")()
 
 
-def knoll_available(*args):
-    return LibraryFunction("knoll_available")(*args)
-
-
-@overload
 def last_choice() -> int:
-    ...
+    return LibraryFunction("last_choice")()
 
 
-def last_choice(*args):
-    return LibraryFunction("last_choice")(*args)
-
-
-@overload
 def last_decision() -> int:
-    ...
-
-
-def last_decision(*args):
-    return LibraryFunction("last_decision")(*args)
+    return LibraryFunction("last_decision")()
 
 
 @overload
@@ -3422,85 +2333,40 @@ def last_index_of(*args):
     return LibraryFunction("last_index_of")(*args)
 
 
-@overload
 def last_item_message() -> str:
-    ...
+    return LibraryFunction("last_item_message")()
 
 
-def last_item_message(*args):
-    return LibraryFunction("last_item_message")(*args)
-
-
-@overload
 def last_monster() -> Monster:
-    ...
+    return LibraryFunction("last_monster")()
 
 
-def last_monster(*args):
-    return LibraryFunction("last_monster")(*args)
-
-
-@overload
 def last_skill_message() -> str:
-    ...
+    return LibraryFunction("last_skill_message")()
 
 
-def last_skill_message(*args):
-    return LibraryFunction("last_skill_message")(*args)
-
-
-@overload
 def leetify(arg1: str) -> str:
-    ...
+    return LibraryFunction("leetify")(arg1)
 
 
-def leetify(*args):
-    return LibraryFunction("leetify")(*args)
-
-
-@overload
 def length(arg1: str) -> int:
-    ...
+    return LibraryFunction("length")(arg1)
 
 
-def length(*args):
-    return LibraryFunction("length")(*args)
-
-
-@overload
 def lightning_cost(arg1: Skill) -> int:
-    ...
+    return LibraryFunction("lightning_cost")(arg1)
 
 
-def lightning_cost(*args):
-    return LibraryFunction("lightning_cost")(*args)
-
-
-@overload
 def limit_mode() -> str:
-    ...
+    return LibraryFunction("limit_mode")()
 
 
-def limit_mode(*args):
-    return LibraryFunction("limit_mode")(*args)
-
-
-@overload
 def load_html(arg1: str) -> str:
-    ...
+    return LibraryFunction("load_html")(arg1)
 
 
-def load_html(*args):
-    return LibraryFunction("load_html")(*args)
-
-
-@overload
 def lock_familiar_equipment(arg1: bool) -> None:
-    ...
-
-
-def lock_familiar_equipment(*args):
-    return LibraryFunction("lock_familiar_equipment")(*args)
+    return LibraryFunction("lock_familiar_equipment")(arg1)
 
 
 @overload
@@ -3517,22 +2383,12 @@ def log_n(*args):
     return LibraryFunction("log_n")(*args)
 
 
-@overload
 def logprint(arg1: str) -> None:
-    ...
+    return LibraryFunction("logprint")(arg1)
 
 
-def logprint(*args):
-    return LibraryFunction("logprint")(*args)
-
-
-@overload
 def make_url(arg1: str, arg2: bool, arg3: bool) -> str:
-    ...
-
-
-def make_url(*args):
-    return LibraryFunction("make_url")(*args)
+    return LibraryFunction("make_url")(arg1, arg2, arg3)
 
 
 @overload
@@ -3568,13 +2424,8 @@ def mall_prices(*args):
     return LibraryFunction("mall_prices")(*args)
 
 
-@overload
 def mana_cost_modifier() -> int:
-    ...
-
-
-def mana_cost_modifier(*args):
-    return LibraryFunction("mana_cost_modifier")(*args)
+    return LibraryFunction("mana_cost_modifier")()
 
 
 @overload
@@ -3640,22 +2491,12 @@ def meat_drop(*args):
     return LibraryFunction("meat_drop")(*args)
 
 
-@overload
 def meat_drop_modifier() -> float:
-    ...
+    return LibraryFunction("meat_drop_modifier")()
 
 
-def meat_drop_modifier(*args):
-    return LibraryFunction("meat_drop_modifier")(*args)
-
-
-@overload
 def meat_pockets() -> dict[int, int]:
-    ...
-
-
-def meat_pockets(*args):
-    return LibraryFunction("meat_pockets")(*args)
+    return LibraryFunction("meat_pockets")()
 
 
 @overload
@@ -3672,40 +2513,20 @@ def min(*args):
     return LibraryFunction("min")(*args)
 
 
-@overload
 def minstrel_instrument() -> Item:
-    ...
+    return LibraryFunction("minstrel_instrument")()
 
 
-def minstrel_instrument(*args):
-    return LibraryFunction("minstrel_instrument")(*args)
-
-
-@overload
 def minstrel_level() -> int:
-    ...
+    return LibraryFunction("minstrel_level")()
 
 
-def minstrel_level(*args):
-    return LibraryFunction("minstrel_level")(*args)
-
-
-@overload
 def minstrel_quest() -> bool:
-    ...
+    return LibraryFunction("minstrel_quest")()
 
 
-def minstrel_quest(*args):
-    return LibraryFunction("minstrel_quest")(*args)
-
-
-@overload
 def modifier_eval(arg1: str) -> float:
-    ...
-
-
-def modifier_eval(*args):
-    return LibraryFunction("modifier_eval")(*args)
+    return LibraryFunction("modifier_eval")(arg1)
 
 
 @overload
@@ -3769,22 +2590,12 @@ def monster_element(*args):
     return LibraryFunction("monster_element")(*args)
 
 
-@overload
 def monster_eval(arg1: str) -> float:
-    ...
+    return LibraryFunction("monster_eval")(arg1)
 
 
-def monster_eval(*args):
-    return LibraryFunction("monster_eval")(*args)
-
-
-@overload
 def monster_factoids_available(arg1: Monster, arg2: bool) -> int:
-    ...
-
-
-def monster_factoids_available(*args):
-    return LibraryFunction("monster_factoids_available")(*args)
+    return LibraryFunction("monster_factoids_available")(arg1, arg2)
 
 
 @overload
@@ -3815,22 +2626,12 @@ def monster_initiative(*args):
     return LibraryFunction("monster_initiative")(*args)
 
 
-@overload
 def monster_level_adjustment() -> int:
-    ...
+    return LibraryFunction("monster_level_adjustment")()
 
 
-def monster_level_adjustment(*args):
-    return LibraryFunction("monster_level_adjustment")(*args)
-
-
-@overload
 def monster_manuel_text(arg1: Monster) -> str:
-    ...
-
-
-def monster_manuel_text(*args):
-    return LibraryFunction("monster_manuel_text")(*args)
+    return LibraryFunction("monster_manuel_text")(arg1)
 
 
 @overload
@@ -3861,454 +2662,204 @@ def monster_phylum(*args):
     return LibraryFunction("monster_phylum")(*args)
 
 
-@overload
 def monster_pockets() -> dict[int, bool]:
-    ...
+    return LibraryFunction("monster_pockets")()
 
 
-def monster_pockets(*args):
-    return LibraryFunction("monster_pockets")(*args)
-
-
-@overload
 def mood_execute(arg1: int) -> None:
-    ...
+    return LibraryFunction("mood_execute")(arg1)
 
 
-def mood_execute(*args):
-    return LibraryFunction("mood_execute")(*args)
-
-
-@overload
 def mood_list() -> dict[int, str]:
-    ...
+    return LibraryFunction("mood_list")()
 
 
-def mood_list(*args):
-    return LibraryFunction("mood_list")(*args)
-
-
-@overload
 def moon_light() -> int:
-    ...
+    return LibraryFunction("moon_light")()
 
 
-def moon_light(*args):
-    return LibraryFunction("moon_light")(*args)
-
-
-@overload
 def moon_phase() -> int:
-    ...
+    return LibraryFunction("moon_phase")()
 
 
-def moon_phase(*args):
-    return LibraryFunction("moon_phase")(*args)
-
-
-@overload
 def mp_cost(arg1: Skill) -> int:
-    ...
+    return LibraryFunction("mp_cost")(arg1)
 
 
-def mp_cost(*args):
-    return LibraryFunction("mp_cost")(*args)
-
-
-@overload
 def my_absorbs() -> int:
-    ...
+    return LibraryFunction("my_absorbs")()
 
 
-def my_absorbs(*args):
-    return LibraryFunction("my_absorbs")(*args)
-
-
-@overload
 def my_adventures() -> int:
-    ...
+    return LibraryFunction("my_adventures")()
 
 
-def my_adventures(*args):
-    return LibraryFunction("my_adventures")(*args)
-
-
-@overload
 def my_ascensions() -> int:
-    ...
+    return LibraryFunction("my_ascensions")()
 
 
-def my_ascensions(*args):
-    return LibraryFunction("my_ascensions")(*args)
-
-
-@overload
 def my_audience() -> int:
-    ...
+    return LibraryFunction("my_audience")()
 
 
-def my_audience(*args):
-    return LibraryFunction("my_audience")(*args)
-
-
-@overload
 def my_basestat(arg1: Stat) -> int:
-    ...
+    return LibraryFunction("my_basestat")(arg1)
 
 
-def my_basestat(*args):
-    return LibraryFunction("my_basestat")(*args)
-
-
-@overload
 def my_bjorned_familiar() -> Familiar:
-    ...
+    return LibraryFunction("my_bjorned_familiar")()
 
 
-def my_bjorned_familiar(*args):
-    return LibraryFunction("my_bjorned_familiar")(*args)
-
-
-@overload
 def my_buffedstat(arg1: Stat) -> int:
-    ...
+    return LibraryFunction("my_buffedstat")(arg1)
 
 
-def my_buffedstat(*args):
-    return LibraryFunction("my_buffedstat")(*args)
-
-
-@overload
 def my_class() -> Class:
-    ...
+    return LibraryFunction("my_class")()
 
 
-def my_class(*args):
-    return LibraryFunction("my_class")(*args)
-
-
-@overload
 def my_closet_meat() -> int:
-    ...
+    return LibraryFunction("my_closet_meat")()
 
 
-def my_closet_meat(*args):
-    return LibraryFunction("my_closet_meat")(*args)
-
-
-@overload
 def my_companion() -> str:
-    ...
+    return LibraryFunction("my_companion")()
 
 
-def my_companion(*args):
-    return LibraryFunction("my_companion")(*args)
-
-
-@overload
 def my_daycount() -> int:
-    ...
+    return LibraryFunction("my_daycount")()
 
 
-def my_daycount(*args):
-    return LibraryFunction("my_daycount")(*args)
-
-
-@overload
 def my_discomomentum() -> int:
-    ...
+    return LibraryFunction("my_discomomentum")()
 
 
-def my_discomomentum(*args):
-    return LibraryFunction("my_discomomentum")(*args)
-
-
-@overload
 def my_effective_familiar() -> Familiar:
-    ...
+    return LibraryFunction("my_effective_familiar")()
 
 
-def my_effective_familiar(*args):
-    return LibraryFunction("my_effective_familiar")(*args)
-
-
-@overload
 def my_effects() -> dict[Effect, int]:
-    ...
+    return LibraryFunction("my_effects")()
 
 
-def my_effects(*args):
-    return LibraryFunction("my_effects")(*args)
-
-
-@overload
 def my_enthroned_familiar() -> Familiar:
-    ...
+    return LibraryFunction("my_enthroned_familiar")()
 
 
-def my_enthroned_familiar(*args):
-    return LibraryFunction("my_enthroned_familiar")(*args)
-
-
-@overload
 def my_familiar() -> Familiar:
-    ...
+    return LibraryFunction("my_familiar")()
 
 
-def my_familiar(*args):
-    return LibraryFunction("my_familiar")(*args)
-
-
-@overload
 def my_fullness() -> int:
-    ...
+    return LibraryFunction("my_fullness")()
 
 
-def my_fullness(*args):
-    return LibraryFunction("my_fullness")(*args)
-
-
-@overload
 def my_fury() -> int:
-    ...
+    return LibraryFunction("my_fury")()
 
 
-def my_fury(*args):
-    return LibraryFunction("my_fury")(*args)
-
-
-@overload
 def my_garden_type() -> str:
-    ...
+    return LibraryFunction("my_garden_type")()
 
 
-def my_garden_type(*args):
-    return LibraryFunction("my_garden_type")(*args)
-
-
-@overload
 def my_hash() -> str:
-    ...
+    return LibraryFunction("my_hash")()
 
 
-def my_hash(*args):
-    return LibraryFunction("my_hash")(*args)
-
-
-@overload
 def my_hp() -> int:
-    ...
+    return LibraryFunction("my_hp")()
 
 
-def my_hp(*args):
-    return LibraryFunction("my_hp")(*args)
-
-
-@overload
 def my_id() -> str:
-    ...
+    return LibraryFunction("my_id")()
 
 
-def my_id(*args):
-    return LibraryFunction("my_id")(*args)
-
-
-@overload
 def my_inebriety() -> int:
-    ...
+    return LibraryFunction("my_inebriety")()
 
 
-def my_inebriety(*args):
-    return LibraryFunction("my_inebriety")(*args)
-
-
-@overload
 def my_level() -> int:
-    ...
+    return LibraryFunction("my_level")()
 
 
-def my_level(*args):
-    return LibraryFunction("my_level")(*args)
-
-
-@overload
 def my_lightning() -> int:
-    ...
+    return LibraryFunction("my_lightning")()
 
 
-def my_lightning(*args):
-    return LibraryFunction("my_lightning")(*args)
-
-
-@overload
 def my_location() -> Location:
-    ...
+    return LibraryFunction("my_location")()
 
 
-def my_location(*args):
-    return LibraryFunction("my_location")(*args)
-
-
-@overload
 def my_mask() -> str:
-    ...
+    return LibraryFunction("my_mask")()
 
 
-def my_mask(*args):
-    return LibraryFunction("my_mask")(*args)
-
-
-@overload
 def my_maxfury() -> int:
-    ...
+    return LibraryFunction("my_maxfury")()
 
 
-def my_maxfury(*args):
-    return LibraryFunction("my_maxfury")(*args)
-
-
-@overload
 def my_maxhp() -> int:
-    ...
+    return LibraryFunction("my_maxhp")()
 
 
-def my_maxhp(*args):
-    return LibraryFunction("my_maxhp")(*args)
-
-
-@overload
 def my_maxmp() -> int:
-    ...
+    return LibraryFunction("my_maxmp")()
 
 
-def my_maxmp(*args):
-    return LibraryFunction("my_maxmp")(*args)
-
-
-@overload
 def my_maxpp() -> int:
-    ...
+    return LibraryFunction("my_maxpp")()
 
 
-def my_maxpp(*args):
-    return LibraryFunction("my_maxpp")(*args)
-
-
-@overload
 def my_meat() -> int:
-    ...
+    return LibraryFunction("my_meat")()
 
 
-def my_meat(*args):
-    return LibraryFunction("my_meat")(*args)
-
-
-@overload
 def my_mp() -> int:
-    ...
+    return LibraryFunction("my_mp")()
 
 
-def my_mp(*args):
-    return LibraryFunction("my_mp")(*args)
-
-
-@overload
 def my_name() -> str:
-    ...
+    return LibraryFunction("my_name")()
 
 
-def my_name(*args):
-    return LibraryFunction("my_name")(*args)
-
-
-@overload
 def my_path() -> Path:
-    ...
+    return LibraryFunction("my_path")()
 
 
-def my_path(*args):
-    return LibraryFunction("my_path")(*args)
-
-
-@overload
 def my_path_id() -> int:
-    ...
+    return LibraryFunction("my_path_id")()
 
 
-def my_path_id(*args):
-    return LibraryFunction("my_path_id")(*args)
-
-
-@overload
 def my_poke_fam(arg1: int) -> Familiar:
-    ...
+    return LibraryFunction("my_poke_fam")(arg1)
 
 
-def my_poke_fam(*args):
-    return LibraryFunction("my_poke_fam")(*args)
-
-
-@overload
 def my_pp() -> int:
-    ...
+    return LibraryFunction("my_pp")()
 
 
-def my_pp(*args):
-    return LibraryFunction("my_pp")(*args)
-
-
-@overload
 def my_primestat() -> Stat:
-    ...
+    return LibraryFunction("my_primestat")()
 
 
-def my_primestat(*args):
-    return LibraryFunction("my_primestat")(*args)
-
-
-@overload
 def my_rain() -> int:
-    ...
+    return LibraryFunction("my_rain")()
 
 
-def my_rain(*args):
-    return LibraryFunction("my_rain")(*args)
-
-
-@overload
 def my_robot_energy() -> int:
-    ...
+    return LibraryFunction("my_robot_energy")()
 
 
-def my_robot_energy(*args):
-    return LibraryFunction("my_robot_energy")(*args)
-
-
-@overload
 def my_robot_scraps() -> int:
-    ...
+    return LibraryFunction("my_robot_scraps")()
 
 
-def my_robot_scraps(*args):
-    return LibraryFunction("my_robot_scraps")(*args)
-
-
-@overload
 def my_servant() -> Servant:
-    ...
+    return LibraryFunction("my_servant")()
 
 
-def my_servant(*args):
-    return LibraryFunction("my_servant")(*args)
-
-
-@overload
 def my_session_adv() -> int:
-    ...
-
-
-def my_session_adv(*args):
-    return LibraryFunction("my_session_adv")(*args)
+    return LibraryFunction("my_session_adv")()
 
 
 @overload
@@ -4325,139 +2876,64 @@ def my_session_items(*args):
     return LibraryFunction("my_session_items")(*args)
 
 
-@overload
 def my_session_meat() -> int:
-    ...
+    return LibraryFunction("my_session_meat")()
 
 
-def my_session_meat(*args):
-    return LibraryFunction("my_session_meat")(*args)
-
-
-@overload
 def my_session_results() -> dict[str, int]:
-    ...
+    return LibraryFunction("my_session_results")()
 
 
-def my_session_results(*args):
-    return LibraryFunction("my_session_results")(*args)
-
-
-@overload
 def my_sign() -> str:
-    ...
+    return LibraryFunction("my_sign")()
 
 
-def my_sign(*args):
-    return LibraryFunction("my_sign")(*args)
-
-
-@overload
 def my_soulsauce() -> int:
-    ...
+    return LibraryFunction("my_soulsauce")()
 
 
-def my_soulsauce(*args):
-    return LibraryFunction("my_soulsauce")(*args)
-
-
-@overload
 def my_spleen_use() -> int:
-    ...
+    return LibraryFunction("my_spleen_use")()
 
 
-def my_spleen_use(*args):
-    return LibraryFunction("my_spleen_use")(*args)
-
-
-@overload
 def my_storage_meat() -> int:
-    ...
+    return LibraryFunction("my_storage_meat")()
 
 
-def my_storage_meat(*args):
-    return LibraryFunction("my_storage_meat")(*args)
-
-
-@overload
 def my_thrall() -> Thrall:
-    ...
+    return LibraryFunction("my_thrall")()
 
 
-def my_thrall(*args):
-    return LibraryFunction("my_thrall")(*args)
-
-
-@overload
 def my_thunder() -> int:
-    ...
+    return LibraryFunction("my_thunder")()
 
 
-def my_thunder(*args):
-    return LibraryFunction("my_thunder")(*args)
-
-
-@overload
 def my_turncount() -> int:
-    ...
+    return LibraryFunction("my_turncount")()
 
 
-def my_turncount(*args):
-    return LibraryFunction("my_turncount")(*args)
-
-
-@overload
 def my_vykea_companion() -> Vykea:
-    ...
+    return LibraryFunction("my_vykea_companion")()
 
 
-def my_vykea_companion(*args):
-    return LibraryFunction("my_vykea_companion")(*args)
-
-
-@overload
 def my_wildfire_water() -> int:
-    ...
+    return LibraryFunction("my_wildfire_water")()
 
 
-def my_wildfire_water(*args):
-    return LibraryFunction("my_wildfire_water")(*args)
-
-
-@overload
 def now_to_int() -> int:
-    ...
+    return LibraryFunction("now_to_int")()
 
 
-def now_to_int(*args):
-    return LibraryFunction("now_to_int")(*args)
-
-
-@overload
 def now_to_string(arg1: str) -> str:
-    ...
+    return LibraryFunction("now_to_string")(arg1)
 
 
-def now_to_string(*args):
-    return LibraryFunction("now_to_string")(*args)
-
-
-@overload
 def npc_price(arg1: Item) -> int:
-    ...
+    return LibraryFunction("npc_price")(arg1)
 
 
-def npc_price(*args):
-    return LibraryFunction("npc_price")(*args)
-
-
-@overload
 def numberology_prize(arg1: int) -> str:
-    ...
-
-
-def numberology_prize(*args):
-    return LibraryFunction("numberology_prize")(*args)
+    return LibraryFunction("numberology_prize")(arg1)
 
 
 @overload
@@ -4529,40 +3005,20 @@ def numeric_modifier(*args):
     return LibraryFunction("numeric_modifier")(*args)
 
 
-@overload
 def outfit(arg1: str) -> bool:
-    ...
+    return LibraryFunction("outfit")(arg1)
 
 
-def outfit(*args):
-    return LibraryFunction("outfit")(*args)
-
-
-@overload
 def outfit_pieces(arg1: str) -> dict[int, Item]:
-    ...
+    return LibraryFunction("outfit_pieces")(arg1)
 
 
-def outfit_pieces(*args):
-    return LibraryFunction("outfit_pieces")(*args)
-
-
-@overload
 def outfit_tattoo(arg1: str) -> str:
-    ...
+    return LibraryFunction("outfit_tattoo")(arg1)
 
 
-def outfit_tattoo(*args):
-    return LibraryFunction("outfit_tattoo")(*args)
-
-
-@overload
 def outfit_treats(arg1: str) -> dict[Item, float]:
-    ...
-
-
-def outfit_treats(*args):
-    return LibraryFunction("outfit_treats")(*args)
+    return LibraryFunction("outfit_treats")(arg1)
 
 
 @overload
@@ -4584,22 +3040,12 @@ def overdrink(*args):
     return LibraryFunction("overdrink")(*args)
 
 
-@overload
 def path_id_to_name(arg1: int) -> str:
-    ...
+    return LibraryFunction("path_id_to_name")(arg1)
 
 
-def path_id_to_name(*args):
-    return LibraryFunction("path_id_to_name")(*args)
-
-
-@overload
 def path_name_to_id(arg1: str) -> int:
-    ...
-
-
-def path_name_to_id(*args):
-    return LibraryFunction("path_name_to_id")(*args)
+    return LibraryFunction("path_name_to_id")(arg1)
 
 
 @overload
@@ -4631,22 +3077,12 @@ def pick_pocket(*args):
     return LibraryFunction("pick_pocket")(*args)
 
 
-@overload
 def picked_pockets() -> dict[int, bool]:
-    ...
+    return LibraryFunction("picked_pockets")()
 
 
-def picked_pockets(*args):
-    return LibraryFunction("picked_pockets")(*args)
-
-
-@overload
 def picked_scraps() -> dict[int, bool]:
-    ...
-
-
-def picked_scraps(*args):
-    return LibraryFunction("picked_scraps")(*args)
+    return LibraryFunction("picked_scraps")()
 
 
 @overload
@@ -4668,85 +3104,40 @@ def ping(*args):
     return LibraryFunction("ping")(*args)
 
 
-@overload
 def pocket_effects(arg1: int) -> dict[Effect, int]:
-    ...
+    return LibraryFunction("pocket_effects")(arg1)
 
 
-def pocket_effects(*args):
-    return LibraryFunction("pocket_effects")(*args)
-
-
-@overload
 def pocket_items(arg1: int) -> dict[Item, int]:
-    ...
+    return LibraryFunction("pocket_items")(arg1)
 
 
-def pocket_items(*args):
-    return LibraryFunction("pocket_items")(*args)
-
-
-@overload
 def pocket_joke(arg1: int) -> str:
-    ...
+    return LibraryFunction("pocket_joke")(arg1)
 
 
-def pocket_joke(*args):
-    return LibraryFunction("pocket_joke")(*args)
-
-
-@overload
 def pocket_meat(arg1: int) -> dict[int, str]:
-    ...
+    return LibraryFunction("pocket_meat")(arg1)
 
 
-def pocket_meat(*args):
-    return LibraryFunction("pocket_meat")(*args)
-
-
-@overload
 def pocket_monster(arg1: int) -> Monster:
-    ...
+    return LibraryFunction("pocket_monster")(arg1)
 
 
-def pocket_monster(*args):
-    return LibraryFunction("pocket_monster")(*args)
-
-
-@overload
 def pocket_poem(arg1: int) -> dict[int, str]:
-    ...
+    return LibraryFunction("pocket_poem")(arg1)
 
 
-def pocket_poem(*args):
-    return LibraryFunction("pocket_poem")(*args)
-
-
-@overload
 def pocket_scrap(arg1: int) -> dict[int, str]:
-    ...
+    return LibraryFunction("pocket_scrap")(arg1)
 
 
-def pocket_scrap(*args):
-    return LibraryFunction("pocket_scrap")(*args)
-
-
-@overload
 def pocket_stats(arg1: int) -> dict[Stat, int]:
-    ...
+    return LibraryFunction("pocket_stats")(arg1)
 
 
-def pocket_stats(*args):
-    return LibraryFunction("pocket_stats")(*args)
-
-
-@overload
 def poem_pockets() -> dict[int, int]:
-    ...
-
-
-def poem_pockets(*args):
-    return LibraryFunction("poem_pockets")(*args)
+    return LibraryFunction("poem_pockets")()
 
 
 @overload
@@ -4773,22 +3164,12 @@ def potential_pockets(*args):
     return LibraryFunction("potential_pockets")(*args)
 
 
-@overload
 def pre_validate_adventure(arg1: Location) -> bool:
-    ...
+    return LibraryFunction("pre_validate_adventure")(arg1)
 
 
-def pre_validate_adventure(*args):
-    return LibraryFunction("pre_validate_adventure")(*args)
-
-
-@overload
 def prepare_for_adventure(arg1: Location) -> bool:
-    ...
-
-
-def prepare_for_adventure(*args):
-    return LibraryFunction("prepare_for_adventure")(*args)
+    return LibraryFunction("prepare_for_adventure")(arg1)
 
 
 @overload
@@ -4824,13 +3205,8 @@ def print_html(*args):
     return LibraryFunction("print_html")(*args)
 
 
-@overload
 def property_default_value(arg1: str) -> str:
-    ...
-
-
-def property_default_value(*args):
-    return LibraryFunction("property_default_value")(*args)
+    return LibraryFunction("property_default_value")(arg1)
 
 
 @overload
@@ -4847,22 +3223,12 @@ def property_exists(*args):
     return LibraryFunction("property_exists")(*args)
 
 
-@overload
 def property_has_default(arg1: str) -> bool:
-    ...
+    return LibraryFunction("property_has_default")(arg1)
 
 
-def property_has_default(*args):
-    return LibraryFunction("property_has_default")(*args)
-
-
-@overload
 def pulls_remaining() -> int:
-    ...
-
-
-def pulls_remaining(*args):
-    return LibraryFunction("pulls_remaining")(*args)
+    return LibraryFunction("pulls_remaining")()
 
 
 @overload
@@ -4945,85 +3311,40 @@ def put_stash(*args):
     return LibraryFunction("put_stash")(*args)
 
 
-@overload
 def pvp_attacks_left() -> int:
-    ...
+    return LibraryFunction("pvp_attacks_left")()
 
 
-def pvp_attacks_left(*args):
-    return LibraryFunction("pvp_attacks_left")(*args)
-
-
-@overload
 def rain_cost(arg1: Skill) -> int:
-    ...
+    return LibraryFunction("rain_cost")(arg1)
 
 
-def rain_cost(*args):
-    return LibraryFunction("rain_cost")(*args)
-
-
-@overload
 def random(arg1: int) -> int:
-    ...
+    return LibraryFunction("random")(arg1)
 
 
-def random(*args):
-    return LibraryFunction("random")(*args)
-
-
-@overload
 def raw_damage_absorption() -> int:
-    ...
+    return LibraryFunction("raw_damage_absorption")()
 
 
-def raw_damage_absorption(*args):
-    return LibraryFunction("raw_damage_absorption")(*args)
-
-
-@overload
 def read_ccs(arg1: str) -> str:
-    ...
+    return LibraryFunction("read_ccs")(arg1)
 
 
-def read_ccs(*args):
-    return LibraryFunction("read_ccs")(*args)
-
-
-@overload
 def receive_fax() -> None:
-    ...
+    return LibraryFunction("receive_fax")()
 
 
-def receive_fax(*args):
-    return LibraryFunction("receive_fax")(*args)
-
-
-@overload
 def refresh_shop() -> bool:
-    ...
+    return LibraryFunction("refresh_shop")()
 
 
-def refresh_shop(*args):
-    return LibraryFunction("refresh_shop")(*args)
-
-
-@overload
 def refresh_stash() -> bool:
-    ...
+    return LibraryFunction("refresh_stash")()
 
 
-def refresh_stash(*args):
-    return LibraryFunction("refresh_stash")(*args)
-
-
-@overload
 def refresh_status() -> bool:
-    ...
-
-
-def refresh_status(*args):
-    return LibraryFunction("refresh_status")(*args)
+    return LibraryFunction("refresh_status")()
 
 
 @overload
@@ -5054,40 +3375,20 @@ def remove_property(*args):
     return LibraryFunction("remove_property")(*args)
 
 
-@overload
 def rename_property(arg1: str, arg2: str) -> bool:
-    ...
+    return LibraryFunction("rename_property")(arg1, arg2)
 
 
-def rename_property(*args):
-    return LibraryFunction("rename_property")(*args)
-
-
-@overload
 def replace(arg1: str, arg2: int, arg3: int, arg4: str) -> str:
-    ...
+    return LibraryFunction("replace")(arg1, arg2, arg3, arg4)
 
 
-def replace(*args):
-    return LibraryFunction("replace")(*args)
-
-
-@overload
 def replace_all(arg1: Matcher, arg2: str) -> str:
-    ...
+    return LibraryFunction("replace_all")(arg1, arg2)
 
 
-def replace_all(*args):
-    return LibraryFunction("replace_all")(*args)
-
-
-@overload
 def replace_first(arg1: Matcher, arg2: str) -> str:
-    ...
-
-
-def replace_first(*args):
-    return LibraryFunction("replace_first")(*args)
+    return LibraryFunction("replace_first")(arg1, arg2)
 
 
 @overload
@@ -5132,31 +3433,16 @@ def reset(*args):
     return LibraryFunction("reset")(*args)
 
 
-@overload
 def restoration_pockets() -> dict[int, bool]:
-    ...
+    return LibraryFunction("restoration_pockets")()
 
 
-def restoration_pockets(*args):
-    return LibraryFunction("restoration_pockets")(*args)
-
-
-@overload
 def restore_hp(arg1: int) -> bool:
-    ...
+    return LibraryFunction("restore_hp")(arg1)
 
 
-def restore_hp(*args):
-    return LibraryFunction("restore_hp")(*args)
-
-
-@overload
 def restore_mp(arg1: int) -> bool:
-    ...
-
-
-def restore_mp(*args):
-    return LibraryFunction("restore_mp")(*args)
+    return LibraryFunction("restore_mp")(arg1)
 
 
 @overload
@@ -5221,22 +3507,12 @@ def reverse_numberology(*args):
     return LibraryFunction("reverse_numberology")(*args)
 
 
-@overload
 def rollover() -> int:
-    ...
+    return LibraryFunction("rollover")()
 
 
-def rollover(*args):
-    return LibraryFunction("rollover")(*args)
-
-
-@overload
 def round(arg1: float) -> int:
-    ...
-
-
-def round(*args):
-    return LibraryFunction("round")(*args)
+    return LibraryFunction("round")(arg1)
 
 
 @overload
@@ -5277,76 +3553,36 @@ def run_combat(*args):
     return LibraryFunction("run_combat")(*args)
 
 
-@overload
 def run_turn() -> str:
-    ...
+    return LibraryFunction("run_turn")()
 
 
-def run_turn(*args):
-    return LibraryFunction("run_turn")(*args)
-
-
-@overload
 def runaway() -> str:
-    ...
+    return LibraryFunction("runaway")()
 
 
-def runaway(*args):
-    return LibraryFunction("runaway")(*args)
-
-
-@overload
 def sausage_goblin_chance() -> float:
-    ...
+    return LibraryFunction("sausage_goblin_chance")()
 
 
-def sausage_goblin_chance(*args):
-    return LibraryFunction("sausage_goblin_chance")(*args)
-
-
-@overload
 def scrap_pockets() -> dict[int, int]:
-    ...
+    return LibraryFunction("scrap_pockets")()
 
 
-def scrap_pockets(*args):
-    return LibraryFunction("scrap_pockets")(*args)
-
-
-@overload
 def sell(arg1: Coinmaster, arg2: int, arg3: Item) -> bool:
-    ...
+    return LibraryFunction("sell")(arg1, arg2, arg3)
 
 
-def sell(*args):
-    return LibraryFunction("sell")(*args)
-
-
-@overload
 def sell_price(arg1: Coinmaster, arg2: Item) -> int:
-    ...
+    return LibraryFunction("sell_price")(arg1, arg2)
 
 
-def sell_price(*args):
-    return LibraryFunction("sell_price")(*args)
-
-
-@overload
 def sells_item(arg1: Coinmaster, arg2: Item) -> bool:
-    ...
+    return LibraryFunction("sells_item")(arg1, arg2)
 
 
-def sells_item(*args):
-    return LibraryFunction("sells_item")(*args)
-
-
-@overload
 def send_fax() -> None:
-    ...
-
-
-def send_fax(*args):
-    return LibraryFunction("send_fax")(*args)
+    return LibraryFunction("send_fax")()
 
 
 @overload
@@ -5382,67 +3618,32 @@ def set_auto_attack(*args):
     return LibraryFunction("set_auto_attack")(*args)
 
 
-@overload
 def set_ccs(arg1: str) -> bool:
-    ...
+    return LibraryFunction("set_ccs")(arg1)
 
 
-def set_ccs(*args):
-    return LibraryFunction("set_ccs")(*args)
-
-
-@overload
 def set_length(arg1: str, arg2: int) -> None:
-    ...
+    return LibraryFunction("set_length")(arg1, arg2)
 
 
-def set_length(*args):
-    return LibraryFunction("set_length")(*args)
-
-
-@overload
 def set_location(arg1: Location) -> None:
-    ...
+    return LibraryFunction("set_location")(arg1)
 
 
-def set_location(*args):
-    return LibraryFunction("set_location")(*args)
-
-
-@overload
 def set_property(arg1: str, arg2: str) -> None:
-    ...
+    return LibraryFunction("set_property")(arg1, arg2)
 
 
-def set_property(*args):
-    return LibraryFunction("set_property")(*args)
-
-
-@overload
 def shop_amount(arg1: Item) -> int:
-    ...
+    return LibraryFunction("shop_amount")(arg1)
 
 
-def shop_amount(*args):
-    return LibraryFunction("shop_amount")(*args)
-
-
-@overload
 def shop_limit(arg1: Item) -> int:
-    ...
+    return LibraryFunction("shop_limit")(arg1)
 
 
-def shop_limit(*args):
-    return LibraryFunction("shop_limit")(*args)
-
-
-@overload
 def shop_price(arg1: Item) -> int:
-    ...
-
-
-def shop_price(*args):
-    return LibraryFunction("shop_price")(*args)
+    return LibraryFunction("shop_price")(arg1)
 
 
 @overload
@@ -5469,40 +3670,20 @@ def skill_modifier(*args):
     return LibraryFunction("skill_modifier")(*args)
 
 
-@overload
 def slash_count(arg1: Item) -> int:
-    ...
+    return LibraryFunction("slash_count")(arg1)
 
 
-def slash_count(*args):
-    return LibraryFunction("slash_count")(*args)
-
-
-@overload
 def soulsauce_cost(arg1: Skill) -> int:
-    ...
+    return LibraryFunction("soulsauce_cost")(arg1)
 
 
-def soulsauce_cost(*args):
-    return LibraryFunction("soulsauce_cost")(*args)
-
-
-@overload
 def spleen_limit() -> int:
-    ...
+    return LibraryFunction("spleen_limit")()
 
 
-def spleen_limit(*args):
-    return LibraryFunction("spleen_limit")(*args)
-
-
-@overload
 def split_modifiers(arg1: str) -> dict[Modifier, str]:
-    ...
-
-
-def split_modifiers(*args):
-    return LibraryFunction("split_modifiers")(*args)
+    return LibraryFunction("split_modifiers")(arg1)
 
 
 @overload
@@ -5519,13 +3700,8 @@ def split_string(*args):
     return LibraryFunction("split_string")(*args)
 
 
-@overload
 def square_root(arg1: float) -> float:
-    ...
-
-
-def square_root(*args):
-    return LibraryFunction("square_root")(*args)
+    return LibraryFunction("square_root")(arg1)
 
 
 @overload
@@ -5542,40 +3718,20 @@ def start(*args):
     return LibraryFunction("start")(*args)
 
 
-@overload
 def starts_with(arg1: str, arg2: str) -> bool:
-    ...
+    return LibraryFunction("starts_with")(arg1, arg2)
 
 
-def starts_with(*args):
-    return LibraryFunction("starts_with")(*args)
-
-
-@overload
 def stash_amount(arg1: Item) -> int:
-    ...
+    return LibraryFunction("stash_amount")(arg1)
 
 
-def stash_amount(*args):
-    return LibraryFunction("stash_amount")(*args)
-
-
-@overload
 def stat_bonus_today() -> Stat:
-    ...
+    return LibraryFunction("stat_bonus_today")()
 
 
-def stat_bonus_today(*args):
-    return LibraryFunction("stat_bonus_today")(*args)
-
-
-@overload
 def stat_bonus_tomorrow() -> Stat:
-    ...
-
-
-def stat_bonus_tomorrow(*args):
-    return LibraryFunction("stat_bonus_tomorrow")(*args)
+    return LibraryFunction("stat_bonus_tomorrow")()
 
 
 @overload
@@ -5592,49 +3748,24 @@ def stat_modifier(*args):
     return LibraryFunction("stat_modifier")(*args)
 
 
-@overload
 def stats_pockets() -> dict[int, bool]:
-    ...
+    return LibraryFunction("stats_pockets")()
 
 
-def stats_pockets(*args):
-    return LibraryFunction("stats_pockets")(*args)
-
-
-@overload
 def steal() -> str:
-    ...
+    return LibraryFunction("steal")()
 
 
-def steal(*args):
-    return LibraryFunction("steal")(*args)
-
-
-@overload
 def stills_available() -> int:
-    ...
+    return LibraryFunction("stills_available")()
 
 
-def stills_available(*args):
-    return LibraryFunction("stills_available")(*args)
-
-
-@overload
 def stop_counter(arg1: str) -> None:
-    ...
+    return LibraryFunction("stop_counter")(arg1)
 
 
-def stop_counter(*args):
-    return LibraryFunction("stop_counter")(*args)
-
-
-@overload
 def storage_amount(arg1: Item) -> int:
-    ...
-
-
-def storage_amount(*args):
-    return LibraryFunction("storage_amount")(*args)
+    return LibraryFunction("storage_amount")(arg1)
 
 
 @overload
@@ -5681,13 +3812,8 @@ def string_modifier(*args):
     return LibraryFunction("string_modifier")(*args)
 
 
-@overload
 def stun_skill() -> Skill:
-    ...
-
-
-def stun_skill(*args):
-    return LibraryFunction("stun_skill")(*args)
+    return LibraryFunction("stun_skill")()
 
 
 @overload
@@ -5704,40 +3830,20 @@ def substring(*args):
     return LibraryFunction("substring")(*args)
 
 
-@overload
 def svn_at_head(arg1: str) -> bool:
-    ...
+    return LibraryFunction("svn_at_head")(arg1)
 
 
-def svn_at_head(*args):
-    return LibraryFunction("svn_at_head")(*args)
-
-
-@overload
 def svn_exists(arg1: str) -> bool:
-    ...
+    return LibraryFunction("svn_exists")(arg1)
 
 
-def svn_exists(*args):
-    return LibraryFunction("svn_exists")(*args)
-
-
-@overload
 def svn_info(arg1: str) -> dict[str, Any]:
-    ...
+    return LibraryFunction("svn_info")(arg1)
 
 
-def svn_info(*args):
-    return LibraryFunction("svn_info")(*args)
-
-
-@overload
 def svn_list() -> dict[int, str]:
-    ...
-
-
-def svn_list(*args):
-    return LibraryFunction("svn_list")(*args)
+    return LibraryFunction("svn_list")()
 
 
 @overload
@@ -5802,13 +3908,8 @@ def sweet_synthesis_pairing(*args):
     return LibraryFunction("sweet_synthesis_pairing")(*args)
 
 
-@overload
 def sweet_synthesis_result(arg1: Item, arg2: Item) -> Effect:
-    ...
-
-
-def sweet_synthesis_result(*args):
-    return LibraryFunction("sweet_synthesis_result")(*args)
+    return LibraryFunction("sweet_synthesis_result")(arg1, arg2)
 
 
 @overload
@@ -5905,49 +4006,24 @@ def tavern(*args):
     return LibraryFunction("tavern")(*args)
 
 
-@overload
 def throw_item(arg1: Item) -> str:
-    ...
+    return LibraryFunction("throw_item")(arg1)
 
 
-def throw_item(*args):
-    return LibraryFunction("throw_item")(*args)
-
-
-@overload
 def throw_items(arg1: Item, arg2: Item) -> str:
-    ...
+    return LibraryFunction("throw_items")(arg1, arg2)
 
 
-def throw_items(*args):
-    return LibraryFunction("throw_items")(*args)
-
-
-@overload
 def thunder_cost(arg1: Skill) -> int:
-    ...
+    return LibraryFunction("thunder_cost")(arg1)
 
 
-def thunder_cost(*args):
-    return LibraryFunction("thunder_cost")(*args)
-
-
-@overload
 def time_to_string() -> str:
-    ...
+    return LibraryFunction("time_to_string")()
 
 
-def time_to_string(*args):
-    return LibraryFunction("time_to_string")(*args)
-
-
-@overload
 def timestamp_to_date(arg1: int, arg2: str) -> str:
-    ...
-
-
-def timestamp_to_date(*args):
-    return LibraryFunction("timestamp_to_date")(*args)
+    return LibraryFunction("timestamp_to_date")(arg1, arg2)
 
 
 @overload
@@ -5969,13 +4045,8 @@ def to_boolean(*args):
     return LibraryFunction("to_boolean")(*args)
 
 
-@overload
 def to_bounty(arg1: str) -> Bounty:
-    ...
-
-
-def to_bounty(*args):
-    return LibraryFunction("to_bounty")(*args)
+    return LibraryFunction("to_bounty")(arg1)
 
 
 @overload
@@ -5992,13 +4063,8 @@ def to_class(*args):
     return LibraryFunction("to_class")(*args)
 
 
-@overload
 def to_coinmaster(arg1: str) -> Coinmaster:
-    ...
-
-
-def to_coinmaster(*args):
-    return LibraryFunction("to_coinmaster")(*args)
+    return LibraryFunction("to_coinmaster")(arg1)
 
 
 @overload
@@ -6020,13 +4086,8 @@ def to_effect(*args):
     return LibraryFunction("to_effect")(*args)
 
 
-@overload
 def to_element(arg1: str) -> Element:
-    ...
-
-
-def to_element(*args):
-    return LibraryFunction("to_element")(*args)
+    return LibraryFunction("to_element")(arg1)
 
 
 @overload
@@ -6165,13 +4226,8 @@ def to_item(*args):
     return LibraryFunction("to_item")(*args)
 
 
-@overload
 def to_json(arg1: Any) -> str:
-    ...
-
-
-def to_json(*args):
-    return LibraryFunction("to_json")(*args)
+    return LibraryFunction("to_json")(arg1)
 
 
 @overload
@@ -6188,13 +4244,8 @@ def to_location(*args):
     return LibraryFunction("to_location")(*args)
 
 
-@overload
 def to_lower_case(arg1: str) -> str:
-    ...
-
-
-def to_lower_case(*args):
-    return LibraryFunction("to_lower_case")(*args)
+    return LibraryFunction("to_lower_case")(arg1)
 
 
 @overload
@@ -6225,22 +4276,12 @@ def to_path(*args):
     return LibraryFunction("to_path")(*args)
 
 
-@overload
 def to_phylum(arg1: str) -> Phylum:
-    ...
+    return LibraryFunction("to_phylum")(arg1)
 
 
-def to_phylum(*args):
-    return LibraryFunction("to_phylum")(*args)
-
-
-@overload
 def to_plural(arg1: Item) -> str:
-    ...
-
-
-def to_plural(*args):
-    return LibraryFunction("to_plural")(*args)
+    return LibraryFunction("to_plural")(arg1)
 
 
 @overload
@@ -6295,13 +4336,8 @@ def to_slot(*args):
     return LibraryFunction("to_slot")(*args)
 
 
-@overload
 def to_stat(arg1: str) -> Stat:
-    ...
-
-
-def to_stat(*args):
-    return LibraryFunction("to_stat")(*args)
+    return LibraryFunction("to_stat")(arg1)
 
 
 @overload
@@ -6337,31 +4373,16 @@ def to_thrall(*args):
     return LibraryFunction("to_thrall")(*args)
 
 
-@overload
 def to_upper_case(arg1: str) -> str:
-    ...
+    return LibraryFunction("to_upper_case")(arg1)
 
 
-def to_upper_case(*args):
-    return LibraryFunction("to_upper_case")(*args)
-
-
-@overload
 def to_url(arg1: Location) -> str:
-    ...
+    return LibraryFunction("to_url")(arg1)
 
 
-def to_url(*args):
-    return LibraryFunction("to_url")(*args)
-
-
-@overload
 def to_vykea(arg1: str) -> Vykea:
-    ...
-
-
-def to_vykea(*args):
-    return LibraryFunction("to_vykea")(*args)
+    return LibraryFunction("to_vykea")(arg1)
 
 
 @overload
@@ -6393,121 +4414,56 @@ def to_wiki_url(*args):
     return LibraryFunction("to_wiki_url")(*args)
 
 
-@overload
 def today_to_string() -> str:
-    ...
+    return LibraryFunction("today_to_string")()
 
 
-def today_to_string(*args):
-    return LibraryFunction("today_to_string")(*args)
-
-
-@overload
 def total_free_rests() -> int:
-    ...
+    return LibraryFunction("total_free_rests")()
 
 
-def total_free_rests(*args):
-    return LibraryFunction("total_free_rests")(*args)
-
-
-@overload
 def total_turns_played() -> int:
-    ...
+    return LibraryFunction("total_turns_played")()
 
 
-def total_turns_played(*args):
-    return LibraryFunction("total_turns_played")(*args)
-
-
-@overload
 def tower_door() -> bool:
-    ...
+    return LibraryFunction("tower_door")()
 
 
-def tower_door(*args):
-    return LibraryFunction("tower_door")(*args)
-
-
-@overload
 def traceprint(arg1: str) -> None:
-    ...
+    return LibraryFunction("traceprint")(arg1)
 
 
-def traceprint(*args):
-    return LibraryFunction("traceprint")(*args)
-
-
-@overload
 def truncate(arg1: float) -> int:
-    ...
+    return LibraryFunction("truncate")(arg1)
 
 
-def truncate(*args):
-    return LibraryFunction("truncate")(*args)
-
-
-@overload
 def turns_per_cast(arg1: Skill) -> int:
-    ...
+    return LibraryFunction("turns_per_cast")(arg1)
 
 
-def turns_per_cast(*args):
-    return LibraryFunction("turns_per_cast")(*args)
-
-
-@overload
 def turns_played() -> int:
-    ...
+    return LibraryFunction("turns_played")()
 
 
-def turns_played(*args):
-    return LibraryFunction("turns_played")(*args)
-
-
-@overload
 def twiddle() -> str:
-    ...
+    return LibraryFunction("twiddle")()
 
 
-def twiddle(*args):
-    return LibraryFunction("twiddle")(*args)
-
-
-@overload
 def unusual_construct_disc() -> Item:
-    ...
+    return LibraryFunction("unusual_construct_disc")()
 
 
-def unusual_construct_disc(*args):
-    return LibraryFunction("unusual_construct_disc")(*args)
-
-
-@overload
 def update_candy_prices() -> None:
-    ...
+    return LibraryFunction("update_candy_prices")()
 
 
-def update_candy_prices(*args):
-    return LibraryFunction("update_candy_prices")(*args)
-
-
-@overload
 def url_decode(arg1: str) -> str:
-    ...
+    return LibraryFunction("url_decode")(arg1)
 
 
-def url_decode(*args):
-    return LibraryFunction("url_decode")(*args)
-
-
-@overload
 def url_encode(arg1: str) -> str:
-    ...
-
-
-def url_encode(*args):
-    return LibraryFunction("url_encode")(*args)
+    return LibraryFunction("url_encode")(arg1)
 
 
 @overload
@@ -6529,22 +4485,12 @@ def use(*args):
     return LibraryFunction("use")(*args)
 
 
-@overload
 def use_familiar(arg1: Familiar) -> bool:
-    ...
+    return LibraryFunction("use_familiar")(arg1)
 
 
-def use_familiar(*args):
-    return LibraryFunction("use_familiar")(*args)
-
-
-@overload
 def use_servant(arg1: Servant) -> bool:
-    ...
-
-
-def use_servant(*args):
-    return LibraryFunction("use_servant")(*args)
+    return LibraryFunction("use_servant")(arg1)
 
 
 @overload
@@ -6623,13 +4569,8 @@ def user_prompt(*args):
     return LibraryFunction("user_prompt")(*args)
 
 
-@overload
 def visit(arg1: Coinmaster) -> bool:
-    ...
-
-
-def visit(*args):
-    return LibraryFunction("visit")(*args)
+    return LibraryFunction("visit")(arg1)
 
 
 @overload
@@ -6670,136 +4611,61 @@ def voting_booth_initiatives(*args):
     return LibraryFunction("voting_booth_initiatives")(*args)
 
 
-@overload
 def wait(arg1: int) -> None:
-    ...
+    return LibraryFunction("wait")(arg1)
 
 
-def wait(*args):
-    return LibraryFunction("wait")(*args)
-
-
-@overload
 def waitq(arg1: int) -> None:
-    ...
+    return LibraryFunction("waitq")(arg1)
 
 
-def waitq(*args):
-    return LibraryFunction("waitq")(*args)
-
-
-@overload
 def weapon_hands(arg1: Item) -> int:
-    ...
+    return LibraryFunction("weapon_hands")(arg1)
 
 
-def weapon_hands(*args):
-    return LibraryFunction("weapon_hands")(*args)
-
-
-@overload
 def weapon_type(arg1: Item) -> Stat:
-    ...
+    return LibraryFunction("weapon_type")(arg1)
 
 
-def weapon_type(*args):
-    return LibraryFunction("weapon_type")(*args)
-
-
-@overload
 def weight_adjustment() -> int:
-    ...
+    return LibraryFunction("weight_adjustment")()
 
 
-def weight_adjustment(*args):
-    return LibraryFunction("weight_adjustment")(*args)
-
-
-@overload
 def well_stocked(arg1: str, arg2: int, arg3: int) -> bool:
-    ...
+    return LibraryFunction("well_stocked")(arg1, arg2, arg3)
 
 
-def well_stocked(*args):
-    return LibraryFunction("well_stocked")(*args)
-
-
-@overload
 def white_citadel_available() -> bool:
-    ...
+    return LibraryFunction("white_citadel_available")()
 
 
-def white_citadel_available(*args):
-    return LibraryFunction("white_citadel_available")(*args)
-
-
-@overload
 def who_clan() -> dict[str, bool]:
-    ...
+    return LibraryFunction("who_clan")()
 
 
-def who_clan(*args):
-    return LibraryFunction("who_clan")(*args)
-
-
-@overload
 def will_usually_dodge() -> bool:
-    ...
+    return LibraryFunction("will_usually_dodge")()
 
 
-def will_usually_dodge(*args):
-    return LibraryFunction("will_usually_dodge")(*args)
-
-
-@overload
 def will_usually_miss() -> bool:
-    ...
+    return LibraryFunction("will_usually_miss")()
 
 
-def will_usually_miss(*args):
-    return LibraryFunction("will_usually_miss")(*args)
-
-
-@overload
 def write(arg1: str) -> None:
-    ...
+    return LibraryFunction("write")(arg1)
 
 
-def write(*args):
-    return LibraryFunction("write")(*args)
-
-
-@overload
 def write_ccs(arg1: str, arg2: str) -> bool:
-    ...
+    return LibraryFunction("write_ccs")(arg1, arg2)
 
 
-def write_ccs(*args):
-    return LibraryFunction("write_ccs")(*args)
-
-
-@overload
 def writeln(arg1: str) -> None:
-    ...
+    return LibraryFunction("writeln")(arg1)
 
 
-def writeln(*args):
-    return LibraryFunction("writeln")(*args)
-
-
-@overload
 def xpath(arg1: str, arg2: str) -> dict[int, str]:
-    ...
+    return LibraryFunction("xpath")(arg1, arg2)
 
 
-def xpath(*args):
-    return LibraryFunction("xpath")(*args)
-
-
-@overload
 def zap(arg1: Item) -> Item:
-    ...
-
-
-def zap(*args):
-    return LibraryFunction("zap")(*args)
+    return LibraryFunction("zap")(arg1)

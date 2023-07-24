@@ -56,4 +56,4 @@ def fight_all(
     set_property("choiceAdventure1226", int(effect))
     set_property("choiceAdventure1227", 1)  # Fight LOV Equivocator
     set_property("choiceAdventure1228", int(item))
-    return ash.adv1(LOCATION, -1, macro)
+    return ash.adv1(LOCATION, -1, str(macro))

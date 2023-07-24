@@ -46,6 +46,6 @@ def fight(reward: Reward, macro: Macro = Macro()) -> bool:
 
     ash.use_familiar(FAMILIAR)
     ash.visit_url("main.php?fightgodlobster=1")
-    ash.run_combat(macro)
+    ash.run_combat(str(macro))
     ash.run_choice(int(reward))
     return True

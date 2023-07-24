@@ -1,10 +1,12 @@
 OUTPUT_PATH = "./src/pymafia/ash/library.py"
 open(OUTPUT_PATH, "w").close()
 
+from typing import Any  # noqa: E402
+
 from pymafia import ash, datatypes, km  # noqa: E402
 
 
-def annotate(jtype: km.Type) -> str:
+def annotate(jtype: Any) -> str:
     """Return the annotation for a type."""
     typespec = jtype.getType()
     if typespec == km.DataTypes.TypeSpec.ANY:
@@ -26,15 +28,6 @@ def annotate(jtype: km.Type) -> str:
     raise ValueError(jtype.toString())
 
 
-def define_overload(function: km.RuntimeLibrary) -> str:
-    """Return the overload definition for a function."""
-    arg_names = function.getParameterNames()
-    arg_types = [annotate(vr.getType()) for vr in function.getVariableReferences()]
-    signature = ", ".join(": ".join(x) for x in zip(arg_names, arg_types))
-    return_type = annotate(function.getType())
-    return f"\n@overload\ndef {function.name}({signature}) -> {return_type}:\n\t...\n"
-
-
 def get_function_names() -> list[str]:
     """Return the RuntimeLibrary function names sorted alphabetically."""
     return sorted({func.getName() for func in km.RuntimeLibrary.getFunctions()})
@@ -45,10 +38,34 @@ def define_all_functions() -> str:
     lines = []
     for name in get_function_names():
         functions = km.RuntimeLibrary.getFunctions().findFunctions(name)[::-1]
-        lines.extend(define_overload(func) for func in functions)
-        lines.append(
-            f'\ndef {name}(*args):\n\treturn LibraryFunction("{name}")(*args)\n'
-        )
+        if len(functions) == 1:
+            # Implementation
+            function = functions[0]
+            arg_names = function.getParameterNames()
+            arg_types = [
+                annotate(vr.getType()) for vr in function.getVariableReferences()
+            ]
+            signature = ", ".join(": ".join(x) for x in zip(arg_names, arg_types))
+            return_type = annotate(function.getType())
+            lines.append(
+                f'\ndef {name}({signature}) -> {return_type}:\n\treturn LibraryFunction("{name}")({", ".join(arg_names)})\n'
+            )
+        else:
+            # Overloads
+            for function in functions:
+                arg_names = function.getParameterNames()
+                arg_types = [
+                    annotate(vr.getType()) for vr in function.getVariableReferences()
+                ]
+                signature = ", ".join(": ".join(x) for x in zip(arg_names, arg_types))
+                return_type = annotate(function.getType())
+                lines.append(
+                    f"\n@overload\ndef {function.name}({signature}) -> {return_type}:\n\t...\n"
+                )
+            # Implementation
+            lines.append(
+                f'\ndef {name}(*args):\n\treturn LibraryFunction("{name}")(*args)\n'
+            )
     return "\n".join(lines)
 
 
@@ -58,9 +75,10 @@ __all__ = [{", ".join(repr(name) for name in get_function_names())}]
 
 from typing import Any, overload
 
-from pymafia.ash.conversion import Matcher
 from pymafia.ash.function import LibraryFunction
 from pymafia.datatypes import {", ".join(sorted([cls.__name__ for cls in datatypes.MAFIA_DATATYPES]))}
+
+Matcher = Any
 
 """
     body = define_all_functions()

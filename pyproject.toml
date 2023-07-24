@@ -44,6 +44,9 @@ ignore = [
 [tool.mypy]
 ignore_missing_imports = true
 
+[tool.mypy-pymafia.ash.library.py]
+disable_error_code = "misc"  # Disable "Overloaded function signature 2 will never be matched: signature 1's parameter type(s) are the same or broader"
+
 [tool.yamlfix]
 explicit_start = false
 

@@ -49,5 +49,5 @@ def fight(piece: Piece, macro: Macro = Macro()) -> bool:
     )
     if not player.in_combat(piece.value):
         return False
-    ash.run_combat(macro)
+    ash.run_combat(str(macro))
     return True

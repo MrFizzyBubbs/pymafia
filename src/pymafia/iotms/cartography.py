@@ -36,7 +36,7 @@ def map_monster(location: Location, monster: Monster, macro: Macro = Macro()) ->
         ash.visit_url(location.url)
         if player.in_choice(1435):
             ash.run_choice(1, False, f"heyscriptswhatsupwinkwink={monster.id}")
-            ash.run_combat(macro)
+            ash.run_combat(str(macro))
             return True
         else:
             ash.run_choice(-1, False)
