@@ -1,5 +1,6 @@
 __all__ = [
-    "SPECIAL_DATATYPES" "Bounty",
+    "SPECIAL_DATATYPES",
+    "Bounty",
     "BountyType",
     "KoLInternalBountyType",
     "Class",
