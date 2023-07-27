@@ -63,22 +63,19 @@ False
 ```
 
 ### ASH and Special Datatypes
-All of KoLmafia's runtime library functions can be accessed through the `ash` submodule, which returns a `LibraryFunction` instance. 
+KoLmafia's runtime library functions can be accessed through the `ash` submodule, which will automatically handle conversion of the inputs and output for the underlying Java function.
 
 ```python
 >>> from pymafia import ash
 
->>> ash.gameday_to_string
-LibraryFunction("gameday_to_string")
+>>> ash.gameday_to_string()
+"Dougtember 3"
 ```
 
-The `LibraryFunction` is a thin wrapper around the desired Java method that will automatically convert the inputs and outputs of the wrapped method to and from Java objects, respectively. This conversion means that the functions accept and return Python objects, including KoLmafia's [special datatypes](https://wiki.kolmafia.us/index.php/Data_Types#Special_Datatypes), which have been implemented in the `datatypes` sub-package.
+This conversion means that the functions accept and return Python objects, including KoLmafia's [special datatypes](https://wiki.kolmafia.us/index.php/Data_Types#Special_Datatypes), which have been implemented in the `datatypes` sub-package.
 
 ```python
 >>> from pymafia.datatypes import Location
-
->>> ash.gameday_to_string()
-"Dougtember 3"
 
 >>> ash.to_item("big rock")
 Item("big rock")
