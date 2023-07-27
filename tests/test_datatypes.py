@@ -4,7 +4,7 @@ from dataclasses import fields
 import pytest
 
 from pymafia.datatypes import (
-    MAFIA_DATATYPES,
+    SPECIAL_DATATYPES,
     Bounty,
     Class,
     Coinmaster,
@@ -95,12 +95,12 @@ def test_init(cls, key, expected):
     assert field_values == expected
 
 
-@pytest.mark.parametrize("cls", MAFIA_DATATYPES)
+@pytest.mark.parametrize("cls", SPECIAL_DATATYPES)
 def test_init_default(cls):
     assert inspect.signature(cls).parameters["key"].default is None
 
 
-@pytest.mark.parametrize("cls", MAFIA_DATATYPES)
+@pytest.mark.parametrize("cls", SPECIAL_DATATYPES)
 def test_init_invalid(cls):
     with pytest.raises(ValueError):
         cls("")
@@ -137,24 +137,24 @@ def test_str(cls, expected):
     assert str(cls(expected)) == expected
 
 
-@pytest.mark.parametrize("cls", MAFIA_DATATYPES)
+@pytest.mark.parametrize("cls", SPECIAL_DATATYPES)
 def test_bool(cls):
     assert not bool(cls(None))
 
 
-@pytest.mark.parametrize("cls", MAFIA_DATATYPES)
+@pytest.mark.parametrize("cls", SPECIAL_DATATYPES)
 def test_all_are_unique(cls):
     all_values = cls.all()
     assert len(set(all_values)) == len(all_values)
 
 
-@pytest.mark.parametrize("cls", MAFIA_DATATYPES)
+@pytest.mark.parametrize("cls", SPECIAL_DATATYPES)
 def test_all_are_serializable(cls):
     all_values = cls.all()
     assert all_values == [cls(str(x)) for x in all_values]
 
 
-@pytest.mark.parametrize("cls", MAFIA_DATATYPES)
+@pytest.mark.parametrize("cls", SPECIAL_DATATYPES)
 def test_all_are_true(cls):
     assert all(cls.all())
 

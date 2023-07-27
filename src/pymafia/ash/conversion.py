@@ -4,7 +4,7 @@ from typing import Any
 from jpype import JClass
 
 from pymafia.datatypes import (
-    MAFIA_DATATYPES,
+    SPECIAL_DATATYPES,
     Bounty,
     Class,
     Coinmaster,
@@ -62,7 +62,7 @@ def to_java(obj: Any) -> Any:
     """Convert to a Java KoLmafia Value."""
     if isinstance(obj, (bool, int, float, str)):
         return km.Value(obj)
-    if isinstance(obj, MAFIA_DATATYPES):
+    if isinstance(obj, SPECIAL_DATATYPES):
         parser = getattr(km.DataTypes, f"parse{type(obj).__name__}Value")
         return parser(str(obj), False)
     if isinstance(obj, Matcher):

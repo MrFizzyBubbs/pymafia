@@ -76,7 +76,7 @@ __all__ = [{", ".join(repr(name) for name in get_function_names())}]
 from typing import Any, overload
 
 from pymafia.ash.function import LibraryFunction
-from pymafia.datatypes import {", ".join(sorted([cls.__name__ for cls in datatypes.MAFIA_DATATYPES]))}
+from pymafia.datatypes import {", ".join(sorted([cls.__name__ for cls in datatypes.SPECIAL_DATATYPES]))}
 
 Matcher = Any
 

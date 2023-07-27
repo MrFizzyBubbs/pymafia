@@ -1,5 +1,5 @@
 __all__ = [
-    "Bounty",
+    "SPECIAL_DATATYPES" "Bounty",
     "BountyType",
     "KoLInternalBountyType",
     "Class",
@@ -44,7 +44,7 @@ from pymafia.datatypes.stat import Stat
 from pymafia.datatypes.thrall import Thrall
 from pymafia.datatypes.vykea import Vykea, VykeaCompanionType, VykeaRune
 
-MAFIA_DATATYPES = (
+SPECIAL_DATATYPES = (
     Item,
     Location,
     Class,
