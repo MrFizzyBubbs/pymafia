@@ -28,7 +28,7 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
-          distribution: adopt
+          distribution: temurin
           java-version: "17"
       - name: Install poetry
         uses: snok/install-poetry@v1
