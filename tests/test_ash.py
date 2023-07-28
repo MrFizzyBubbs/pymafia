@@ -1,8 +1,7 @@
 import jpype
 import pytest
 
-from pymafia.ash.conversion import from_java, to_java
-from pymafia.ash.library import git_info
+from pymafia.ash import from_java, git_info, to_java
 from pymafia.datatypes import SPECIAL_DATATYPES, Matcher
 from pymafia.kolmafia import km
 

@@ -45,7 +45,7 @@ class Modifier:
 
     @classmethod
     def all(cls) -> list[Modifier]:
-        from pymafia.ash.conversion import from_java
+        from pymafia.ash import from_java
 
         values = km.DataTypes.MODIFIER_TYPE.allValues()
         return from_java(values)

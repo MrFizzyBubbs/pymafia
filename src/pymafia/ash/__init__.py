@@ -1,4 +1,5 @@
 from pymafia.ash import library
+from pymafia.ash.conversion import from_java, to_java
 from pymafia.ash.function import LibraryFunction
 from pymafia.ash.library import *
 

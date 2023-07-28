@@ -46,7 +46,7 @@ class Element:
 
     @classmethod
     def all(cls) -> list[Element]:
-        from pymafia.ash.conversion import from_java
+        from pymafia.ash import from_java
 
         values = km.DataTypes.ELEMENT_TYPE.allValues()
         return from_java(values)

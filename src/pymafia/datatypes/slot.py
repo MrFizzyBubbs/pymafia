@@ -60,7 +60,7 @@ class Slot:
 
     @classmethod
     def all(cls) -> list[Slot]:
-        from pymafia.ash.conversion import from_java
+        from pymafia.ash import from_java
 
         values = km.DataTypes.SLOT_TYPE.allValues()
         return from_java(values)

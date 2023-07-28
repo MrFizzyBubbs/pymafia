@@ -5,7 +5,7 @@ from typing import Any
 
 from jpype import JClass
 
-from pymafia.ash.conversion import from_java
+from pymafia.ash import from_java
 from pymafia.kolmafia import km
 
 JByteArrayOutputStream = JClass("java.io.ByteArrayOutputStream")

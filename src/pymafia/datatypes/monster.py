@@ -55,7 +55,7 @@ class Monster:
 
     @classmethod
     def all(cls) -> list[Monster]:
-        from pymafia.ash.conversion import from_java
+        from pymafia.ash import from_java
 
         values = km.DataTypes.MONSTER_TYPE.allValues()
         return sorted(from_java(values))

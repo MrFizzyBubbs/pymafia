@@ -65,7 +65,7 @@ class Vykea:
 
     @classmethod
     def all(cls) -> list[Vykea]:
-        from pymafia.ash.conversion import from_java
+        from pymafia.ash import from_java
 
         values = km.DataTypes.VYKEA_TYPE.allValues()
         return from_java(values)

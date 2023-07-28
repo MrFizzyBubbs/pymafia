@@ -55,7 +55,7 @@ class Location:
 
     @classmethod
     def all(cls) -> list[Location]:
-        from pymafia.ash.conversion import from_java
+        from pymafia.ash import from_java
 
         values = km.DataTypes.LOCATION_TYPE.allValues()
         return sorted(from_java(values))
