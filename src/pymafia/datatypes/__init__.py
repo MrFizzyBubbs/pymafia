@@ -12,6 +12,7 @@ __all__ = [
     "Item",
     "CandyType",
     "Location",
+    "Matcher",
     "Modifier",
     "Monster",
     "Path",
@@ -34,6 +35,7 @@ from pymafia.datatypes.element import Element
 from pymafia.datatypes.familiar import Familiar
 from pymafia.datatypes.item import CandyType, Item
 from pymafia.datatypes.location import Location
+from pymafia.datatypes.matcher import Matcher
 from pymafia.datatypes.modifier import Modifier
 from pymafia.datatypes.monster import Monster
 from pymafia.datatypes.path import Path

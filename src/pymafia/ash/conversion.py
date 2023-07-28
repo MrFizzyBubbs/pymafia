@@ -13,6 +13,7 @@ from pymafia.datatypes import (
     Familiar,
     Item,
     Location,
+    Matcher,
     Modifier,
     Monster,
     Path,
@@ -65,8 +66,10 @@ def to_java(obj: Any) -> Any:
     if isinstance(obj, SPECIAL_DATATYPES):
         parser = getattr(km.DataTypes, f"parse{type(obj).__name__}Value")
         return parser(str(obj), False)
-    if isinstance(obj, JMatcher):
-        return km.Value(km.DataTypes.MATCHER_TYPE, obj.pattern(), obj)
+    if isinstance(obj, Matcher):
+        return km.Value(
+            km.DataTypes.MATCHER_TYPE, obj.pattern().toString(), obj.__wrapped__
+        )
     if isinstance(obj, abc.Mapping):
         jmap = JTreeMap()
         for k, v in obj.items():
@@ -99,7 +102,7 @@ def from_java(obj: Any) -> Any:
     if jtypespec in TYPESPEC_CONVERSIONS:
         return TYPESPEC_CONVERSIONS[jtypespec](obj.toJSON())
     if jtypespec == km.DataTypes.TypeSpec.MATCHER:
-        return obj.rawValue()
+        return Matcher(obj.rawValue())
     if jtypespec == km.DataTypes.TypeSpec.AGGREGATE:
         if isinstance(obj.content, abc.Mapping):
             return {from_java(k): from_java(v) for k, v in obj.content.items()}

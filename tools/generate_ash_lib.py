@@ -1,9 +1,8 @@
+from typing import Any
+
+from pymafia import ash, datatypes, km
+
 OUTPUT_PATH = "./src/pymafia/ash/library.py"
-open(OUTPUT_PATH, "w").close()
-
-from typing import Any  # noqa: E402
-
-from pymafia import ash, datatypes, km  # noqa: E402
 
 
 def annotate(jtype: Any) -> str:
@@ -76,9 +75,7 @@ __all__ = [{", ".join(repr(name) for name in get_function_names())}]
 from typing import Any, overload
 
 from pymafia.ash.function import LibraryFunction
-from pymafia.datatypes import {", ".join(sorted([cls.__name__ for cls in datatypes.SPECIAL_DATATYPES]))}
-
-Matcher = Any
+from pymafia.datatypes import {", ".join(sorted([cls.__name__ for cls in datatypes.SPECIAL_DATATYPES]))}, Matcher
 
 """
     body = define_all_functions()

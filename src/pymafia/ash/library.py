@@ -568,6 +568,7 @@ from pymafia.datatypes import (
     Familiar,
     Item,
     Location,
+    Matcher,
     Modifier,
     Monster,
     Path,
@@ -579,8 +580,6 @@ from pymafia.datatypes import (
     Thrall,
     Vykea,
 )
-
-Matcher = Any
 
 
 @overload
