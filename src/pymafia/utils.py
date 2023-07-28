@@ -8,11 +8,11 @@ from jpype import JClass
 from pymafia.ash.conversion import from_java
 from pymafia.kolmafia import km
 
-ByteArrayOutputStream = JClass("java.io.ByteArrayOutputStream")
-PrintStream = JClass("java.io.PrintStream")
-OutputStream = JClass("java.io.OutputStream")
-String = JClass("java.lang.String")
-ByteArrayInputStream = JClass("java.io.ByteArrayInputStream")
+JByteArrayOutputStream = JClass("java.io.ByteArrayOutputStream")
+JPrintStream = JClass("java.io.PrintStream")
+JOutputStream = JClass("java.io.OutputStream")
+JString = JClass("java.lang.String")
+JByteArrayInputStream = JClass("java.io.ByteArrayInputStream")
 
 
 def launch_gui():
@@ -46,8 +46,8 @@ def log(message: str, html: bool = False):
 
 def execute(command: str) -> str:
     """Execute a command in the KoLmafia CLI and return the output."""
-    ostream = OutputStream @ ByteArrayOutputStream()
-    out = PrintStream(ostream)
+    ostream = JOutputStream @ JByteArrayOutputStream()
+    out = JPrintStream(ostream)
     km.RequestLogger.openCustom(out)
     km.KoLmafiaCLI.DEFAULT_SHELL.executeLine(command)
     return ostream.toString()
@@ -55,7 +55,7 @@ def execute(command: str) -> str:
 
 def script(lines: str, convert=True) -> Any:
     """Execute an ash script and return the result, optionally converting it."""
-    stream = ByteArrayInputStream(String(lines).getBytes())
+    stream = JByteArrayInputStream(JString(lines).getBytes())
     interpreter = km.AshRuntime()
     interpreter.validate(None, stream)
     value = interpreter.execute("main", None)

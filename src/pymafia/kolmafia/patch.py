@@ -23,7 +23,7 @@ def apply():
     * Automatically cast method arguments of type int to java.lang.Integer
     * Raise an exception if mafia is in a non-continue state after method invocation
     """
-    KoLmafia = jpype.JClass("net.sourceforge.kolmafia.KoLmafia")
+    JKoLmafia = jpype.JClass("net.sourceforge.kolmafia.KoLmafia")
 
     def wrapper(wrapped, instance, args, kwargs):
         global enabled
@@ -38,9 +38,9 @@ def apply():
             ]
             result = wrapped(*args, **kwargs)
 
-            if not KoLmafia.permitsContinue():
-                KoLmafia.forceContinue()
-                raise KoLmafiaError(KoLmafia.getLastMessage())
+            if not JKoLmafia.permitsContinue():
+                JKoLmafia.forceContinue()
+                raise KoLmafiaError(JKoLmafia.getLastMessage())
 
             return result
         finally:

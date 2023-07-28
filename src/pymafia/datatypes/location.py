@@ -10,7 +10,7 @@ from pymafia.kolmafia import km
 if TYPE_CHECKING:
     from pymafia.datatypes.bounty import Bounty
 
-Integer = JClass("java.lang.Integer")
+JInteger = JClass("java.lang.Integer")
 
 
 @dataclass(frozen=True, order=True)
@@ -158,9 +158,9 @@ class Location:
     @property
     def poison(self) -> int:
         if self.kol_adventure is None:
-            return Integer.MAX_VALUE
+            return JInteger.MAX_VALUE
         area = self.kol_adventure.getAreaSummary()
-        return area.poison() if area is not None else Integer.MAX_VALUE
+        return area.poison() if area is not None else JInteger.MAX_VALUE
 
     @property
     def water_level(self) -> int:

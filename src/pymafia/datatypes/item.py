@@ -12,7 +12,7 @@ if TYPE_CHECKING:
     from pymafia.datatypes.coinmaster import Coinmaster
     from pymafia.datatypes.skill import Skill
 
-EnumSet = JClass("java.util.EnumSet")
+JEnumSet = JClass("java.util.EnumSet")
 
 
 class CandyType(Enum):
@@ -193,7 +193,7 @@ class Item:
     @property
     def combat(self) -> bool:
         """Return True if the Item is usable in combat, else False. This returns True whether the Item is consumed by being used or not."""
-        mask = EnumSet.of(
+        mask = JEnumSet.of(
             km.ItemDatabase.Attribute.COMBAT,
             km.ItemDatabase.Attribute.COMBAT_REUSABLE,
         )

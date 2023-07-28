@@ -13,7 +13,7 @@ if TYPE_CHECKING:
     from pymafia.datatypes.phylum import Phylum
 
 
-Integer = JClass("java.lang.Integer")
+JInteger = JClass("java.lang.Integer")
 
 
 @dataclass(frozen=True, order=True)
@@ -173,7 +173,7 @@ class Monster:
         if self.monster is None:
             return Effect()
         poison_level = self.monster.getPoison()
-        if poison_level == Integer.MAX_VALUE:
+        if poison_level == JInteger.MAX_VALUE:
             return Effect()
         poison_name = km.EffectDatabase.getEffectName(
             km.EffectDatabase.POISON_ID[poison_level]

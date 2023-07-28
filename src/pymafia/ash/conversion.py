@@ -26,9 +26,9 @@ from pymafia.datatypes import (
 )
 from pymafia.kolmafia import km
 
-TreeMap = JClass("java.util.TreeMap")
-ArrayList = JClass("java.util.ArrayList")
-Matcher = JClass("java.util.regex.Matcher")
+JTreeMap = JClass("java.util.TreeMap")
+JArrayList = JClass("java.util.ArrayList")
+JMatcher = JClass("java.util.regex.Matcher")
 
 TYPESPEC_CONVERSIONS = {
     km.DataTypes.TypeSpec.BOOLEAN: bool,
@@ -65,10 +65,10 @@ def to_java(obj: Any) -> Any:
     if isinstance(obj, SPECIAL_DATATYPES):
         parser = getattr(km.DataTypes, f"parse{type(obj).__name__}Value")
         return parser(str(obj), False)
-    if isinstance(obj, Matcher):
+    if isinstance(obj, JMatcher):
         return km.Value(km.DataTypes.MATCHER_TYPE, obj.pattern(), obj)
     if isinstance(obj, abc.Mapping):
-        jmap = TreeMap()
+        jmap = JTreeMap()
         for k, v in obj.items():
             jk = to_java(k)
             jv = to_java(v)
@@ -78,7 +78,7 @@ def to_java(obj: Any) -> Any:
         aggregate_type = km.AggregateType(data_type, index_type)
         return km.MapValue(aggregate_type, jmap)
     if isinstance(obj, abc.Iterable):
-        jlist = ArrayList()
+        jlist = JArrayList()
         for item in obj:
             jitem = to_java(item)
             jlist.add(jitem)
