@@ -16,7 +16,7 @@ jobs:
       - name: Install dependencies
         run: poetry install --no-interaction --no-root
       - name: Generate Functions
-        run: poetry run python scripts/generate_ash_lib.py
+        run: poetry run python scripts/generate_ash_library.py
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
         with:
