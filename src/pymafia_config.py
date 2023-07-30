@@ -3,13 +3,14 @@ __all__ = ["set_revision", "set_location"]
 import json
 import os
 import urllib.request
+from typing import Literal
 
 import jpype
 
 GITHUB_RELEASE_URL = "https://api.github.com/repos/kolmafia/kolmafia/releases/"
-MINIMUM_REVISION = 27467
+RECOMMENDED_REVISION = 27467
 
-revision = MINIMUM_REVISION
+revision = RECOMMENDED_REVISION
 location = os.path.join(os.getcwd(), "kolmafia")
 
 
@@ -26,15 +27,12 @@ def check_jvm_running() -> None:
         raise RuntimeError("JVM is already running, can't change config")
 
 
-def set_revision(rev: int | str):
+def set_revision(rev: int | str | Literal["latest"]):
     """Set the revision of KoLmafia."""
     check_jvm_running()
 
-    global MINIMUM_REVISION, revision
-    rev = latest_revision() if rev == "latest" else int(rev)
-    if rev < MINIMUM_REVISION:
-        raise ValueError(f"revision {rev!r} must be {MINIMUM_REVISION!r} or higher")
-    revision = rev
+    global revision
+    revision = latest_revision() if rev == "latest" else int(rev)
 
 
 def set_location(loc: str):
