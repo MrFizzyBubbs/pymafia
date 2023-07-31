@@ -2,13 +2,14 @@ __all__ = ["set_revision", "set_location"]
 
 import json
 import os
+import pathlib
 import urllib.request
 from typing import Literal
 
 import jpype
 
 GITHUB_RELEASE_URL = "https://api.github.com/repos/kolmafia/kolmafia/releases/"
-RECOMMENDED_REVISION = 27467
+RECOMMENDED_REVISION = int(pathlib.Path(".kolmafia-revision").read_text())
 
 revision = RECOMMENDED_REVISION
 location = os.path.join(os.getcwd(), "kolmafia")
