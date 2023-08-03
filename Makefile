@@ -7,11 +7,13 @@ install:
 
 .PHONY: format
 format:
-	pre-commit run --all-files
+	poetry run ruff . --fix
+	poetry run isort .
+	poetry run black .
 
 .PHONY: lint
 lint:
-	poetry run ruff . --no-fix
+	poetry run ruff .
 	poetry run isort . --check
 	poetry run black . --check
 	poetry run mypy src	
