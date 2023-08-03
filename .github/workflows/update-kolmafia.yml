@@ -1,35 +1,51 @@
 name: Update KoLmafia
 on:
-  workflow_dispatch
+  workflow_dispatch:
+    inputs:
+      revision:
+        description: "KoLmafia revision"
+        default: "latest"
+        type: string
 jobs:
   update:
     runs-on: ubuntu-latest
     steps:
+      - name: Determine revision number
+        run: |
+          echo "revision_number=$(( 
+            ${{ github.event.inputs.revision }} == "latest" 
+            ? $(curl https://api.github.com/repos/kolmafia/kolmafia/releases/latest -s | jq .name -r) 
+            : ${{ github.event.inputs.revision }}))
+          " >> $GITHUB_ENV
       - name: Checkout repository
         uses: actions/checkout@v3
+      - name: Set up Poetry
+        uses: ./.github/actions/setup-poetry
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: "3.10"
+          cache: "poetry"
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
           java-version-file: .java-version
           distribution: temurin
-      - name: Install poetry
-        uses: snok/install-poetry@v1
       - name: Install dependencies
-        run: poetry install --no-interaction
-        # TODO Update jar file and minimum version
-      - name: Generate ash library
-        run: poetry run python scripts/generate_ash_library.py
-      - name: Run pre-commit
-        uses: pre-commit/action@v3.0.0
+        run: poetry install
+      - name: Update .kolmafia-revision
+        run: echo "${{ env.revision_number }}" > .kolmafia-revision
+      - name: Update library.py
+        run: poetry run python scripts/generate_library.py
+      - name: Format
+        run: make format
         continue-on-error: true
-      - name: Rerun pre-commit
-        uses: pre-commit/action@v3.0.0
+      - name: Lint
+        run: make lint
+      - name: Test
+        run: make test
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
         with:
           default_author: github_actions
-          message: 'Update KoLmafia from r2700 to r27953'
+          message: "Update KoLmafia to r${{ env.revision_number }}"
