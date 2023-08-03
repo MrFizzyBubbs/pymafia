@@ -1,0 +1,15 @@
+# See https://www.peterbe.com/plog/install-python-poetry-github-actions-faster
+name: "Set Up Poetry"
+description: "Set up Poetry from cache or installation"
+runs:
+  using: "composite"
+  steps:
+    - name: Load cached Poetry installation
+      id: cached-poetry
+      uses: actions/cache@v3
+      with:
+        path: ~/.local
+        key: dotlocal-${{ runner.os }}-${{ hashFiles('.github/actions/setup-poetry/action.yml') }}
+    - name: Install Poetry
+      if: steps.cached-poetry.outputs.cache-hit != 'true'
+      uses: snok/install-poetry@v1
