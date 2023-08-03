@@ -121,8 +121,9 @@ There are modules and subpackages available within pymafia that have not been de
 ## Contributing
 To contribute to pymafia, you will need to set up a development environment using the following steps:
 1. Install [poetry](https://python-poetry.org/)
-2. Clone this repository
-3. Run `poetry install` inside the cloned repository
+2. *Optional: Install [GnuWin32 Make](https://gnuwin32.sourceforge.net/packages/make.htm) if on Windows OS*
+3. Clone this repository
+4. Run `poetry install` or `make install` inside the cloned repository
 
 
 ## Acknowledgements
