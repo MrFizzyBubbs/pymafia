@@ -1,9 +1,9 @@
 # pymafia
 
-pymafia is a Python module and bridge for reflecting KoLmafia's Java environment. It aims to provide an easy-to-use environment for scripting [Kingdom of Loathing](https://www.kingdomofloathing.com/) (KoL) in Python by reflecting and wrapping the community-developed [KoLmafia](https://github.com/kolmafia/kolmafia) desktop tool. While [other languages](https://loathing-associates-scripting-society.github.io/KoL-Scripting-Resources/) for scripting KoL exist, they can be less approachable to non-developers. 
+pymafia is a Python package and bridge for reflecting KoLmafia's Java environment. It aims to provide an easy-to-use environment for scripting [Kingdom of Loathing](https://www.kingdomofloathing.com/) (KoL) in Python by reflecting and wrapping the community-developed [KoLmafia](https://github.com/kolmafia/kolmafia) desktop tool. While [other languages](https://loathing-associates-scripting-society.github.io/KoL-Scripting-Resources/) for scripting KoL exist, they can be less approachable to non-developers. 
 
 ## Installation
-pymafia is available on the [Python Package Index (PyPI)](https://pypi.org/project/pymafia/):
+You can install pymafia from the [Python Package Index (PyPI)](https://pypi.org/project/pymafia/) using the following command:
 
 ```
 pip install pymafia
@@ -63,7 +63,7 @@ False
 ```
 
 ### ASH and Special Datatypes
-KoLmafia's runtime library functions can be accessed through the `ash` submodule, which will automatically handle conversion of the inputs and output for the underlying Java function.
+KoLmafia's runtime library functions are available through the `ash` sub-package, which will automatically handle conversion of the inputs and output for the underlying Java function.
 
 ```python
 >>> from pymafia import ash
@@ -96,7 +96,7 @@ True
 Item('God Lobster Egg')
 ```
 
-Datatypes also has an `all()` class method that returns every non-none instance of that type.
+Datatypes also have an `all()` class method that returns every non-none instance of that type.
 
 ```python
 >>> from pymafia.datatypes import Stat
@@ -105,7 +105,7 @@ Datatypes also has an `all()` class method that returns every non-none instance 
 [Stat('Muscle'), Stat('Mysticality'), Stat('Moxie')]
 ```
 
-Many datatypes contain predefined class instances as class variables for convenient reference. Notably, all datatypes define a `NONE` class variable.
+Several datatypes define class instances as class variables for convenient reference. Notably, all datatypes define a `NONE` class variable.
 
 ```python
 >>> Coinmaster.NONE
