@@ -1,5 +1,10 @@
 name: Publish to Test PyPI
-on: workflow_dispatch
+on: 
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Package version"
+        type: string
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -17,7 +22,7 @@ jobs:
       - name: Install poetry-dynamic-versioning
         run: poetry self add 'poetry-dynamic-versioning[plugin]'
       - name: Install dependencies
-        run: poetry install --no-interaction --no-root
+        run: poetry install --no-root
       - name: Publish package
         run: |-
           poetry config repositories.testpypi https://test.pypi.org/legacy/
