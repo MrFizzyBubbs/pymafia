@@ -214,10 +214,10 @@ class Item:
     @property
     def reusable(self) -> bool:
         """Return True if the Item is usable and is not consumed when doing so, else False."""
-        return km.ItemDatabase.getConsumptionType(
-            self.id
-        ) == km.KoLConstants.ConsumptionType.USE_INFINITE or km.ItemDatabase.getAttribute(
-            self.id, km.ItemDatabase.Attribute.REUSABLE
+        return (
+            km.ItemDatabase.getConsumptionType(self.id)
+            == km.KoLConstants.ConsumptionType.USE_INFINITE
+            or km.ItemDatabase.getAttribute(self.id, km.ItemDatabase.Attribute.REUSABLE)
         )
 
     @property

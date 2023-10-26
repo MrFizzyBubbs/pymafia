@@ -19,7 +19,6 @@ wrapt = "^1.15.0"
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.15.1"
 ruff = "^0.1.2"
-black = "^23.3.0"
 yamlfix = "^1.9.0"
 docformatter = "^1.5.0"
 mypy = "^0.971"
@@ -30,9 +29,6 @@ pre-commit = "^3.2.2"
 [tool.ruff]
 src = ["src"]
 extend-select = ["I"]
-ignore = [
-  "E501", # Line too long, handled by black
-]
 
 [tool.ruff.per-file-ignores]
 "__init__.py" = [

@@ -8,12 +8,12 @@ install:
 .PHONY: format
 format:
 	poetry run ruff check . --fix
-	poetry run black .
+	poetry run ruff format .
 
 .PHONY: lint
 lint:
 	poetry run ruff check .
-	poetry run black . --check
+	poetry run ruff format . --check
 	poetry run mypy src	
 
 .PHONY: test
