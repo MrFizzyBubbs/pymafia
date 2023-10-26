@@ -34,7 +34,7 @@ jobs:
       - name: Install dependencies
         run: poetry install
       - name: Update .kolmafia-revision
-        run: echo "${{ env.revision_number }}" > .kolmafia-revision
+        run: echo -n "${{ env.revision_number }}" > .kolmafia-revision
       - name: Update library.py
         run: poetry run python scripts/generate_library.py
       - name: Format
