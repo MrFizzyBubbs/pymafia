@@ -18,7 +18,7 @@ wrapt = "^1.15.0"
 
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.15.1"
-ruff = "^0.0.262"
+ruff = "^0.1.2"
 isort = "^5.10.1"
 black = "^23.3.0"
 yamlfix = "^1.9.0"

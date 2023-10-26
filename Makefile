@@ -13,7 +13,7 @@ format:
 
 .PHONY: lint
 lint:
-	poetry run ruff .
+	poetry run ruff check .
 	poetry run isort . --check
 	poetry run black . --check
 	poetry run mypy src	
