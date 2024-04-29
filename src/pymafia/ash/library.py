@@ -79,6 +79,8 @@ __all__ = [
     "daily_special",
     "damage_absorption_percent",
     "damage_reduction",
+    "dart_parts_to_skills",
+    "dart_skills_to_parts",
     "date_to_timestamp",
     "daycount",
     "debugprint",
@@ -202,6 +204,7 @@ __all__ = [
     "guild_available",
     "guild_store_available",
     "handling_choice",
+    "has_queued_commands",
     "have_bartender",
     "have_chef",
     "have_display",
@@ -239,6 +242,7 @@ __all__ = [
     "initiative_modifier",
     "insert",
     "is_accessible",
+    "is_adventuring",
     "is_banished",
     "is_coinmaster_item",
     "is_dark_mode",
@@ -251,6 +255,8 @@ __all__ = [
     "is_integer",
     "is_npc_item",
     "is_online",
+    "is_removable",
+    "is_shruggable",
     "is_tradeable",
     "is_trendy",
     "is_unrestricted",
@@ -529,6 +535,9 @@ __all__ = [
     "total_turns_played",
     "tower_door",
     "traceprint",
+    "track_copy_count",
+    "track_ignore_queue",
+    "tracked_by",
     "truncate",
     "turns_per_cast",
     "turns_played",
@@ -563,7 +572,6 @@ __all__ = [
     "xpath",
     "zap",
 ]
-
 
 from typing import Any, overload
 
@@ -950,8 +958,18 @@ def can_equip(*args):
     return LibraryFunction("can_equip")(*args)
 
 
+@overload
+def can_faxbot(arg1: Monster, arg2: str) -> bool:
+    ...
+
+
+@overload
 def can_faxbot(arg1: Monster) -> bool:
-    return LibraryFunction("can_faxbot")(arg1)
+    ...
+
+
+def can_faxbot(*args):
+    return LibraryFunction("can_faxbot")(*args)
 
 
 def can_interact() -> bool:
@@ -1215,6 +1233,14 @@ def damage_absorption_percent() -> float:
 
 def damage_reduction() -> int:
     return LibraryFunction("damage_reduction")()
+
+
+def dart_parts_to_skills() -> dict[str, Skill]:
+    return LibraryFunction("dart_parts_to_skills")()
+
+
+def dart_skills_to_parts() -> dict[Skill, str]:
+    return LibraryFunction("dart_skills_to_parts")()
 
 
 def date_to_timestamp(arg1: str, arg2: str) -> int:
@@ -1964,6 +1990,10 @@ def handling_choice() -> bool:
     return LibraryFunction("handling_choice")()
 
 
+def has_queued_commands() -> bool:
+    return LibraryFunction("has_queued_commands")()
+
+
 def have_bartender() -> bool:
     return LibraryFunction("have_bartender")()
 
@@ -2142,6 +2172,10 @@ def is_accessible(arg1: Coinmaster) -> bool:
     return LibraryFunction("is_accessible")(arg1)
 
 
+def is_adventuring() -> bool:
+    return LibraryFunction("is_adventuring")()
+
+
 def is_banished(arg1: Monster) -> bool:
     return LibraryFunction("is_banished")(arg1)
 
@@ -2188,6 +2222,14 @@ def is_npc_item(arg1: Item) -> bool:
 
 def is_online(arg1: str) -> bool:
     return LibraryFunction("is_online")(arg1)
+
+
+def is_removable(arg1: Effect) -> bool:
+    return LibraryFunction("is_removable")(arg1)
+
+
+def is_shruggable(arg1: Effect) -> bool:
+    return LibraryFunction("is_shruggable")(arg1)
 
 
 def is_tradeable(arg1: Item) -> bool:
@@ -4532,6 +4574,18 @@ def tower_door() -> bool:
 
 def traceprint(arg1: str) -> None:
     return LibraryFunction("traceprint")(arg1)
+
+
+def track_copy_count(arg1: Monster) -> int:
+    return LibraryFunction("track_copy_count")(arg1)
+
+
+def track_ignore_queue(arg1: Monster) -> bool:
+    return LibraryFunction("track_ignore_queue")(arg1)
+
+
+def tracked_by(arg1: Monster) -> dict[int, str]:
+    return LibraryFunction("tracked_by")(arg1)
 
 
 def truncate(arg1: float) -> int:
