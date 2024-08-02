@@ -75,6 +75,7 @@ __all__ = [
     "current_pvp_stances",
     "current_rad_sickness",
     "current_round",
+    "curse",
     "dad_sea_monkee_weakness",
     "daily_special",
     "damage_absorption_percent",
@@ -605,7 +606,7 @@ def abort() -> None:
 
 
 @overload
-def abort(arg1: str) -> None:
+def abort(string: str) -> None:
     ...
 
 
@@ -618,12 +619,12 @@ def absorbed_monsters() -> dict[Monster, bool]:
 
 
 @overload
-def add_item_condition(arg1: Item, arg2: int) -> None:
+def add_item_condition(item: Item, count: int) -> None:
     ...
 
 
 @overload
-def add_item_condition(arg1: int, arg2: Item) -> None:
+def add_item_condition(count: int, item: Item) -> None:
     ...
 
 
@@ -632,17 +633,19 @@ def add_item_condition(*args):
 
 
 @overload
-def adv1(arg1: Location) -> bool:
+def adv1(locationValue: Location) -> bool:
     ...
 
 
 @overload
-def adv1(arg1: Location, arg2: int) -> bool:
+def adv1(locationValue: Location, adventuresUsedValue: int) -> bool:
     ...
 
 
 @overload
-def adv1(arg1: Location, arg2: int, arg3: str) -> bool:
+def adv1(
+    locationValue: Location, adventuresUsedValue: int, filterFunction: str
+) -> bool:
     ...
 
 
@@ -650,27 +653,27 @@ def adv1(*args):
     return LibraryFunction("adv1")(*args)
 
 
-def adv_cost(arg1: Skill) -> int:
-    return LibraryFunction("adv_cost")(arg1)
+def adv_cost(skill: Skill) -> int:
+    return LibraryFunction("adv_cost")(skill)
 
 
 @overload
-def adventure(arg1: int, arg2: Location, arg3: str) -> bool:
+def adventure(count: int, location: Location, filterFunction: str) -> bool:
     ...
 
 
 @overload
-def adventure(arg1: int, arg2: Location) -> bool:
+def adventure(count: int, location: Location) -> bool:
     ...
 
 
 @overload
-def adventure(arg1: Location, arg2: int, arg3: str) -> bool:
+def adventure(location: Location, count: int, filterFunction: str) -> bool:
     ...
 
 
 @overload
-def adventure(arg1: Location, arg2: int) -> bool:
+def adventure(location: Location, count: int) -> bool:
     ...
 
 
@@ -687,12 +690,12 @@ def all_normal_outfits() -> dict[int, str]:
 
 
 @overload
-def appearance_rates(arg1: Location, arg2: bool) -> dict[Monster, float]:
+def appearance_rates(location: Location, includeQueue: bool) -> dict[Monster, float]:
     ...
 
 
 @overload
-def appearance_rates(arg1: Location) -> dict[Monster, float]:
+def appearance_rates(location: Location) -> dict[Monster, float]:
     ...
 
 
@@ -700,16 +703,16 @@ def appearance_rates(*args):
     return LibraryFunction("appearance_rates")(*args)
 
 
-def append(arg1: str, arg2: str) -> str:
-    return LibraryFunction("append")(arg1, arg2)
+def append(buffer: str, s: str) -> str:
+    return LibraryFunction("append")(buffer, s)
 
 
-def append_replacement(arg1: Matcher, arg2: str, arg3: str) -> str:
-    return LibraryFunction("append_replacement")(arg1, arg2, arg3)
+def append_replacement(matcher: Matcher, buffer: str, replacement: str) -> str:
+    return LibraryFunction("append_replacement")(matcher, buffer, replacement)
 
 
-def append_tail(arg1: Matcher, arg2: str) -> str:
-    return LibraryFunction("append_tail")(arg1, arg2)
+def append_tail(matcher: Matcher, buffer: str) -> str:
+    return LibraryFunction("append_tail")(matcher, buffer)
 
 
 def attack() -> str:
@@ -717,12 +720,12 @@ def attack() -> str:
 
 
 @overload
-def autosell(arg1: int, arg2: Item) -> bool:
+def autosell(count: int, item: Item) -> bool:
     ...
 
 
 @overload
-def autosell(arg1: Item, arg2: int) -> bool:
+def autosell(item: Item, count: int) -> bool:
     ...
 
 
@@ -730,16 +733,16 @@ def autosell(*args):
     return LibraryFunction("autosell")(*args)
 
 
-def autosell_price(arg1: Item) -> int:
-    return LibraryFunction("autosell_price")(arg1)
+def autosell_price(item: Item) -> int:
+    return LibraryFunction("autosell_price")(item)
 
 
-def available_amount(arg1: Item) -> int:
-    return LibraryFunction("available_amount")(arg1)
+def available_amount(item: Item) -> int:
+    return LibraryFunction("available_amount")(item)
 
 
 @overload
-def available_choice_options(arg1: bool) -> dict[int, str]:
+def available_choice_options(spoilers: bool) -> dict[int, str]:
     ...
 
 
@@ -752,31 +755,31 @@ def available_choice_options(*args):
     return LibraryFunction("available_choice_options")(*args)
 
 
-def available_choice_select_inputs(arg1: int) -> dict[str, dict[str, str]]:
-    return LibraryFunction("available_choice_select_inputs")(arg1)
+def available_choice_select_inputs(decision: int) -> dict[str, dict[str, str]]:
+    return LibraryFunction("available_choice_select_inputs")(decision)
 
 
-def available_choice_text_inputs(arg1: int) -> dict[str, str]:
-    return LibraryFunction("available_choice_text_inputs")(arg1)
+def available_choice_text_inputs(decision: int) -> dict[str, str]:
+    return LibraryFunction("available_choice_text_inputs")(decision)
 
 
 @overload
-def available_pocket(arg1: Stat) -> int:
+def available_pocket(stat: Stat) -> int:
     ...
 
 
 @overload
-def available_pocket(arg1: Item) -> int:
+def available_pocket(item: Item) -> int:
     ...
 
 
 @overload
-def available_pocket(arg1: Effect) -> int:
+def available_pocket(effect: Effect) -> int:
     ...
 
 
 @overload
-def available_pocket(arg1: Monster) -> int:
+def available_pocket(monster: Monster) -> int:
     ...
 
 
@@ -784,8 +787,8 @@ def available_pocket(*args):
     return LibraryFunction("available_pocket")(*args)
 
 
-def banished_by(arg1: Monster) -> dict[int, str]:
-    return LibraryFunction("banished_by")(arg1)
+def banished_by(monster: Monster) -> dict[int, str]:
+    return LibraryFunction("banished_by")(monster)
 
 
 def batch_close() -> bool:
@@ -796,8 +799,8 @@ def batch_open() -> None:
     return LibraryFunction("batch_open")()
 
 
-def bjornify_familiar(arg1: Familiar) -> bool:
-    return LibraryFunction("bjornify_familiar")(arg1)
+def bjornify_familiar(familiar: Familiar) -> bool:
+    return LibraryFunction("bjornify_familiar")(familiar)
 
 
 def black_market_available() -> bool:
@@ -805,42 +808,42 @@ def black_market_available() -> bool:
 
 
 @overload
-def boolean_modifier(arg1: Effect, arg2: Modifier) -> bool:
+def boolean_modifier(effect: Effect, modifier: Modifier) -> bool:
     ...
 
 
 @overload
-def boolean_modifier(arg1: Effect, arg2: str) -> bool:
+def boolean_modifier(effect: Effect, modifier: str) -> bool:
     ...
 
 
 @overload
-def boolean_modifier(arg1: Item, arg2: Modifier) -> bool:
+def boolean_modifier(item: Item, modifier: Modifier) -> bool:
     ...
 
 
 @overload
-def boolean_modifier(arg1: Item, arg2: str) -> bool:
+def boolean_modifier(item: Item, modifier: str) -> bool:
     ...
 
 
 @overload
-def boolean_modifier(arg1: str, arg2: Modifier) -> bool:
+def boolean_modifier(type: str, modifier: Modifier) -> bool:
     ...
 
 
 @overload
-def boolean_modifier(arg1: str, arg2: str) -> bool:
+def boolean_modifier(type: str, modifier: str) -> bool:
     ...
 
 
 @overload
-def boolean_modifier(arg1: Modifier) -> bool:
+def boolean_modifier(modifier: Modifier) -> bool:
     ...
 
 
 @overload
-def boolean_modifier(arg1: str) -> bool:
+def boolean_modifier(modifier: str) -> bool:
     ...
 
 
@@ -852,37 +855,37 @@ def buffed_hit_stat() -> int:
     return LibraryFunction("buffed_hit_stat")()
 
 
-def buffer_to_file(arg1: str, arg2: str) -> bool:
-    return LibraryFunction("buffer_to_file")(arg1, arg2)
+def buffer_to_file(buffer: str, filename: str) -> bool:
+    return LibraryFunction("buffer_to_file")(buffer, filename)
 
 
 @overload
-def buy(arg1: Coinmaster, arg2: int, arg3: Item) -> bool:
+def buy(coinmaster: Coinmaster, quantity: int, item: Item) -> bool:
     ...
 
 
 @overload
-def buy(arg1: int, arg2: Item, arg3: int) -> int:
+def buy(quantity: int, item: Item, price: int) -> int:
     ...
 
 
 @overload
-def buy(arg1: int, arg2: Item) -> bool:
+def buy(quantity: int, item: Item) -> bool:
     ...
 
 
 @overload
-def buy(arg1: Item, arg2: int, arg3: int) -> int:
+def buy(item: Item, quantity: int, price: int) -> int:
     ...
 
 
 @overload
-def buy(arg1: Item, arg2: int) -> bool:
+def buy(item: Item, quantity: int) -> bool:
     ...
 
 
 @overload
-def buy(arg1: Item) -> bool:
+def buy(item: Item) -> bool:
     ...
 
 
@@ -890,32 +893,32 @@ def buy(*args):
     return LibraryFunction("buy")(*args)
 
 
-def buy_price(arg1: Coinmaster, arg2: Item) -> int:
-    return LibraryFunction("buy_price")(arg1, arg2)
+def buy_price(master: Coinmaster, item: Item) -> int:
+    return LibraryFunction("buy_price")(master, item)
 
 
 @overload
-def buy_using_storage(arg1: int, arg2: Item, arg3: int) -> int:
+def buy_using_storage(quantity: int, item: Item, price: int) -> int:
     ...
 
 
 @overload
-def buy_using_storage(arg1: int, arg2: Item) -> bool:
+def buy_using_storage(quantity: int, item: Item) -> bool:
     ...
 
 
 @overload
-def buy_using_storage(arg1: Item, arg2: int, arg3: int) -> int:
+def buy_using_storage(item: Item, quantity: int, price: int) -> int:
     ...
 
 
 @overload
-def buy_using_storage(arg1: Item, arg2: int) -> bool:
+def buy_using_storage(item: Item, quantity: int) -> bool:
     ...
 
 
 @overload
-def buy_using_storage(arg1: Item) -> bool:
+def buy_using_storage(item: Item) -> bool:
     ...
 
 
@@ -923,12 +926,12 @@ def buy_using_storage(*args):
     return LibraryFunction("buy_using_storage")(*args)
 
 
-def buys_item(arg1: Coinmaster, arg2: Item) -> bool:
-    return LibraryFunction("buys_item")(arg1, arg2)
+def buys_item(master: Coinmaster, item: Item) -> bool:
+    return LibraryFunction("buys_item")(master, item)
 
 
-def can_adventure(arg1: Location) -> bool:
-    return LibraryFunction("can_adventure")(arg1)
+def can_adventure(location: Location) -> bool:
+    return LibraryFunction("can_adventure")(location)
 
 
 def can_drink() -> bool:
@@ -940,17 +943,17 @@ def can_eat() -> bool:
 
 
 @overload
-def can_equip(arg1: Familiar, arg2: Item) -> bool:
+def can_equip(familiar: Familiar, item: Item) -> bool:
     ...
 
 
 @overload
-def can_equip(arg1: Familiar) -> bool:
+def can_equip(familiar: Familiar) -> bool:
     ...
 
 
 @overload
-def can_equip(arg1: Item) -> bool:
+def can_equip(equipment: Item) -> bool:
     ...
 
 
@@ -959,12 +962,12 @@ def can_equip(*args):
 
 
 @overload
-def can_faxbot(arg1: Monster, arg2: str) -> bool:
+def can_faxbot(monster: Monster, faxbot: str) -> bool:
     ...
 
 
 @overload
-def can_faxbot(arg1: Monster) -> bool:
+def can_faxbot(monster: Monster) -> bool:
     ...
 
 
@@ -985,12 +988,12 @@ def canadia_available() -> bool:
 
 
 @overload
-def candy_for_tier(arg1: int, arg2: int) -> dict[int, Item]:
+def candy_for_tier(tier: int, flags: int) -> dict[int, Item]:
     ...
 
 
 @overload
-def candy_for_tier(arg1: int) -> dict[int, Item]:
+def candy_for_tier(tier: int) -> dict[int, Item]:
     ...
 
 
@@ -998,25 +1001,25 @@ def candy_for_tier(*args):
     return LibraryFunction("candy_for_tier")(*args)
 
 
-def ceil(arg1: float) -> int:
-    return LibraryFunction("ceil")(arg1)
+def ceil(val: float) -> int:
+    return LibraryFunction("ceil")(val)
 
 
-def change_mcd(arg1: int) -> bool:
-    return LibraryFunction("change_mcd")(arg1)
+def change_mcd(level: int) -> bool:
+    return LibraryFunction("change_mcd")(level)
 
 
-def char_at(arg1: str, arg2: int) -> str:
-    return LibraryFunction("char_at")(arg1, arg2)
+def char_at(source: str, index: int) -> str:
+    return LibraryFunction("char_at")(source, index)
 
 
 @overload
-def chat_clan(arg1: str, arg2: str) -> None:
+def chat_clan(messageValue: str, recipientValue: str) -> None:
     ...
 
 
 @overload
-def chat_clan(arg1: str) -> None:
+def chat_clan(messageValue: str) -> None:
     ...
 
 
@@ -1024,30 +1027,30 @@ def chat_clan(*args):
     return LibraryFunction("chat_clan")(*args)
 
 
-def chat_macro(arg1: str) -> None:
-    return LibraryFunction("chat_macro")(arg1)
+def chat_macro(macroValue: str) -> None:
+    return LibraryFunction("chat_macro")(macroValue)
 
 
-def chat_notify(arg1: str, arg2: str) -> None:
-    return LibraryFunction("chat_notify")(arg1, arg2)
+def chat_notify(messageValue: str, colorValue: str) -> None:
+    return LibraryFunction("chat_notify")(messageValue, colorValue)
 
 
-def chat_private(arg1: str, arg2: str) -> None:
-    return LibraryFunction("chat_private")(arg1, arg2)
+def chat_private(recipientValue: str, messageValue: str) -> None:
+    return LibraryFunction("chat_private")(recipientValue, messageValue)
 
 
 @overload
-def chew(arg1: int, arg2: Item) -> bool:
+def chew(count: int, item: Item) -> bool:
     ...
 
 
 @overload
-def chew(arg1: Item, arg2: int) -> bool:
+def chew(item: Item, count: int) -> bool:
     ...
 
 
 @overload
-def chew(arg1: Item) -> bool:
+def chew(item: Item) -> bool:
     ...
 
 
@@ -1060,22 +1063,22 @@ def choice_follows_fight() -> bool:
 
 
 @overload
-def class_modifier(arg1: Item, arg2: Modifier) -> Class:
+def class_modifier(item: Item, modifier: Modifier) -> Class:
     ...
 
 
 @overload
-def class_modifier(arg1: Item, arg2: str) -> Class:
+def class_modifier(item: Item, modifier: str) -> Class:
     ...
 
 
 @overload
-def class_modifier(arg1: str, arg2: Modifier) -> Class:
+def class_modifier(type: str, modifier: Modifier) -> Class:
     ...
 
 
 @overload
-def class_modifier(arg1: str, arg2: str) -> Class:
+def class_modifier(type: str, modifier: str) -> Class:
     ...
 
 
@@ -1083,8 +1086,8 @@ def class_modifier(*args):
     return LibraryFunction("class_modifier")(*args)
 
 
-def clear(arg1: dict[Any, Any]) -> None:
-    return LibraryFunction("clear")(arg1)
+def clear(agg: dict[Any, Any]) -> None:
+    return LibraryFunction("clear")(agg)
 
 
 def clear_booze_helper() -> None:
@@ -1095,16 +1098,16 @@ def clear_food_helper() -> None:
     return LibraryFunction("clear_food_helper")()
 
 
-def cli_execute(arg1: str) -> bool:
-    return LibraryFunction("cli_execute")(arg1)
+def cli_execute(string: str) -> bool:
+    return LibraryFunction("cli_execute")(string)
 
 
-def cli_execute_output(arg1: str) -> str:
-    return LibraryFunction("cli_execute_output")(arg1)
+def cli_execute_output(string: str) -> str:
+    return LibraryFunction("cli_execute_output")(string)
 
 
-def closet_amount(arg1: Item) -> int:
-    return LibraryFunction("closet_amount")(arg1)
+def closet_amount(item: Item) -> int:
+    return LibraryFunction("closet_amount")(item)
 
 
 def combat_mana_cost_modifier() -> int:
@@ -1115,17 +1118,17 @@ def combat_rate_modifier() -> float:
     return LibraryFunction("combat_rate_modifier")()
 
 
-def combat_skill_available(arg1: Skill) -> bool:
-    return LibraryFunction("combat_skill_available")(arg1)
+def combat_skill_available(skill: Skill) -> bool:
+    return LibraryFunction("combat_skill_available")(skill)
 
 
 @overload
-def concoction_price(arg1: Vykea) -> int:
+def concoction_price(value: Vykea) -> int:
     ...
 
 
 @overload
-def concoction_price(arg1: Item) -> int:
+def concoction_price(value: Item) -> int:
     ...
 
 
@@ -1133,42 +1136,42 @@ def concoction_price(*args):
     return LibraryFunction("concoction_price")(*args)
 
 
-def contains_text(arg1: str, arg2: str) -> bool:
-    return LibraryFunction("contains_text")(arg1, arg2)
+def contains_text(source: str, search: str) -> bool:
+    return LibraryFunction("contains_text")(source, search)
 
 
 def council() -> None:
     return LibraryFunction("council")()
 
 
-def count(arg1: dict[Any, Any]) -> int:
-    return LibraryFunction("count")(arg1)
+def count(agg: dict[Any, Any]) -> int:
+    return LibraryFunction("count")(agg)
 
 
-def craft(arg1: str, arg2: int, arg3: Item, arg4: Item) -> int:
-    return LibraryFunction("craft")(arg1, arg2, arg3, arg4)
+def craft(modeValue: str, countValue: int, item1: Item, item2: Item) -> int:
+    return LibraryFunction("craft")(modeValue, countValue, item1, item2)
 
 
-def craft_type(arg1: Item) -> str:
-    return LibraryFunction("craft_type")(arg1)
+def craft_type(item: Item) -> str:
+    return LibraryFunction("craft_type")(item)
 
 
-def creatable_amount(arg1: Item) -> int:
-    return LibraryFunction("creatable_amount")(arg1)
+def creatable_amount(item: Item) -> int:
+    return LibraryFunction("creatable_amount")(item)
 
 
 @overload
-def creatable_turns(arg1: Item, arg2: int, arg3: bool) -> int:
+def creatable_turns(itemId: Item, count: int, freeCrafting: bool) -> int:
     ...
 
 
 @overload
-def creatable_turns(arg1: Item, arg2: int) -> int:
+def creatable_turns(itemId: Item, count: int) -> int:
     ...
 
 
 @overload
-def creatable_turns(arg1: Item) -> int:
+def creatable_turns(itemId: Item) -> int:
     ...
 
 
@@ -1177,17 +1180,17 @@ def creatable_turns(*args):
 
 
 @overload
-def create(arg1: int, arg2: Item) -> bool:
+def create(count: int, item: Item) -> bool:
     ...
 
 
 @overload
-def create(arg1: Item, arg2: int) -> bool:
+def create(item: Item, count: int) -> bool:
     ...
 
 
 @overload
-def create(arg1: Item) -> bool:
+def create(item: Item) -> bool:
     ...
 
 
@@ -1195,8 +1198,8 @@ def create(*args):
     return LibraryFunction("create")(*args)
 
 
-def create_matcher(arg1: str, arg2: str) -> Matcher:
-    return LibraryFunction("create_matcher")(arg1, arg2)
+def create_matcher(patternValue: str, stringValue: str) -> Matcher:
+    return LibraryFunction("create_matcher")(patternValue, stringValue)
 
 
 def current_hit_stat() -> Stat:
@@ -1219,8 +1222,27 @@ def current_round() -> int:
     return LibraryFunction("current_round")()
 
 
-def dad_sea_monkee_weakness(arg1: int) -> Element:
-    return LibraryFunction("dad_sea_monkee_weakness")(arg1)
+@overload
+def curse(quantity: int, itemId: Item, target: str, message: str) -> bool:
+    ...
+
+
+@overload
+def curse(itemId: Item, target: str, message: str) -> bool:
+    ...
+
+
+@overload
+def curse(itemId: Item, target: str) -> bool:
+    ...
+
+
+def curse(*args):
+    return LibraryFunction("curse")(*args)
+
+
+def dad_sea_monkee_weakness(round: int) -> Element:
+    return LibraryFunction("dad_sea_monkee_weakness")(round)
 
 
 def daily_special() -> Item:
@@ -1243,54 +1265,54 @@ def dart_skills_to_parts() -> dict[Skill, str]:
     return LibraryFunction("dart_skills_to_parts")()
 
 
-def date_to_timestamp(arg1: str, arg2: str) -> int:
-    return LibraryFunction("date_to_timestamp")(arg1, arg2)
+def date_to_timestamp(inFormat: str, dateTimeString: str) -> int:
+    return LibraryFunction("date_to_timestamp")(inFormat, dateTimeString)
 
 
 def daycount() -> int:
     return LibraryFunction("daycount")()
 
 
-def debugprint(arg1: str) -> None:
-    return LibraryFunction("debugprint")(arg1)
+def debugprint(string: str) -> None:
+    return LibraryFunction("debugprint")(string)
 
 
-def delete(arg1: str, arg2: int, arg3: int) -> str:
-    return LibraryFunction("delete")(arg1, arg2, arg3)
+def delete(buffer: str, start: int, finish: int) -> str:
+    return LibraryFunction("delete")(buffer, start, finish)
 
 
-def desc_to_effect(arg1: str) -> Effect:
-    return LibraryFunction("desc_to_effect")(arg1)
+def desc_to_effect(value: str) -> Effect:
+    return LibraryFunction("desc_to_effect")(value)
 
 
-def desc_to_item(arg1: str) -> Item:
-    return LibraryFunction("desc_to_item")(arg1)
+def desc_to_item(value: str) -> Item:
+    return LibraryFunction("desc_to_item")(value)
 
 
-def disable(arg1: str) -> None:
-    return LibraryFunction("disable")(arg1)
+def disable(name: str) -> None:
+    return LibraryFunction("disable")(name)
 
 
 def dispensary_available() -> bool:
     return LibraryFunction("dispensary_available")()
 
 
-def display_amount(arg1: Item) -> int:
-    return LibraryFunction("display_amount")(arg1)
+def display_amount(item: Item) -> int:
+    return LibraryFunction("display_amount")(item)
 
 
 @overload
-def drink(arg1: int, arg2: Item) -> bool:
+def drink(count: int, item: Item) -> bool:
     ...
 
 
 @overload
-def drink(arg1: Item, arg2: int) -> bool:
+def drink(item: Item, count: int) -> bool:
     ...
 
 
 @overload
-def drink(arg1: Item) -> bool:
+def drink(item: Item) -> bool:
     ...
 
 
@@ -1299,17 +1321,17 @@ def drink(*args):
 
 
 @overload
-def drinksilent(arg1: int, arg2: Item) -> bool:
+def drinksilent(count: int, item: Item) -> bool:
     ...
 
 
 @overload
-def drinksilent(arg1: Item, arg2: int) -> bool:
+def drinksilent(item: Item, count: int) -> bool:
     ...
 
 
 @overload
-def drinksilent(arg1: Item) -> bool:
+def drinksilent(item: Item) -> bool:
     ...
 
 
@@ -1318,12 +1340,12 @@ def drinksilent(*args):
 
 
 @overload
-def dump(arg1: Any, arg2: str) -> None:
+def dump(arg: Any, color: str) -> None:
     ...
 
 
 @overload
-def dump(arg1: Any) -> None:
+def dump(arg: Any) -> None:
     ...
 
 
@@ -1332,17 +1354,17 @@ def dump(*args):
 
 
 @overload
-def eat(arg1: int, arg2: Item) -> bool:
+def eat(count: int, item: Item) -> bool:
     ...
 
 
 @overload
-def eat(arg1: Item, arg2: int) -> bool:
+def eat(item: Item, count: int) -> bool:
     ...
 
 
 @overload
-def eat(arg1: Item) -> bool:
+def eat(item: Item) -> bool:
     ...
 
 
@@ -1351,17 +1373,17 @@ def eat(*args):
 
 
 @overload
-def eatsilent(arg1: int, arg2: Item) -> bool:
+def eatsilent(count: int, item: Item) -> bool:
     ...
 
 
 @overload
-def eatsilent(arg1: Item, arg2: int) -> bool:
+def eatsilent(item: Item, count: int) -> bool:
     ...
 
 
 @overload
-def eatsilent(arg1: Item) -> bool:
+def eatsilent(item: Item) -> bool:
     ...
 
 
@@ -1370,12 +1392,12 @@ def eatsilent(*args):
 
 
 @overload
-def effect_fact(arg1: Monster) -> Effect:
+def effect_fact(monster: Monster) -> Effect:
     ...
 
 
 @overload
-def effect_fact(arg1: Class, arg2: Path, arg3: Monster) -> Effect:
+def effect_fact(cls: Class, path: Path, monster: Monster) -> Effect:
     ...
 
 
@@ -1384,22 +1406,22 @@ def effect_fact(*args):
 
 
 @overload
-def effect_modifier(arg1: Item, arg2: Modifier) -> Effect:
+def effect_modifier(item: Item, modifier: Modifier) -> Effect:
     ...
 
 
 @overload
-def effect_modifier(arg1: Item, arg2: str) -> Effect:
+def effect_modifier(item: Item, modifier: str) -> Effect:
     ...
 
 
 @overload
-def effect_modifier(arg1: str, arg2: Modifier) -> Effect:
+def effect_modifier(type: str, modifier: Modifier) -> Effect:
     ...
 
 
 @overload
-def effect_modifier(arg1: str, arg2: str) -> Effect:
+def effect_modifier(type: str, modifier: str) -> Effect:
     ...
 
 
@@ -1412,12 +1434,12 @@ def effect_pockets() -> dict[int, bool]:
 
 
 @overload
-def eight_bit_points(arg1: Location, arg2: str, arg3: float) -> int:
+def eight_bit_points(locationValue: Location, colorValue: str, modValue: float) -> int:
     ...
 
 
 @overload
-def eight_bit_points(arg1: Location) -> int:
+def eight_bit_points(locationValue: Location) -> int:
     ...
 
 
@@ -1426,7 +1448,7 @@ def eight_bit_points(*args):
 
 
 @overload
-def elemental_resistance(arg1: Monster) -> float:
+def elemental_resistance(monster: Monster) -> float:
     ...
 
 
@@ -1436,7 +1458,7 @@ def elemental_resistance() -> float:
 
 
 @overload
-def elemental_resistance(arg1: Element) -> float:
+def elemental_resistance(element: Element) -> float:
     ...
 
 
@@ -1448,17 +1470,17 @@ def empty_closet() -> bool:
     return LibraryFunction("empty_closet")()
 
 
-def enable(arg1: str) -> None:
-    return LibraryFunction("enable")(arg1)
+def enable(name: str) -> None:
+    return LibraryFunction("enable")(name)
 
 
 @overload
-def end(arg1: Matcher, arg2: int) -> int:
+def end(matcher: Matcher, group: int) -> int:
     ...
 
 
 @overload
-def end(arg1: Matcher) -> int:
+def end(matcher: Matcher) -> int:
     ...
 
 
@@ -1466,44 +1488,44 @@ def end(*args):
     return LibraryFunction("end")(*args)
 
 
-def ends_with(arg1: str, arg2: str) -> bool:
-    return LibraryFunction("ends_with")(arg1, arg2)
+def ends_with(source: str, suffix: str) -> bool:
+    return LibraryFunction("ends_with")(source, suffix)
 
 
-def enthrone_familiar(arg1: Familiar) -> bool:
-    return LibraryFunction("enthrone_familiar")(arg1)
+def enthrone_familiar(familiar: Familiar) -> bool:
+    return LibraryFunction("enthrone_familiar")(familiar)
 
 
-def entity_decode(arg1: str) -> str:
-    return LibraryFunction("entity_decode")(arg1)
+def entity_decode(string: str) -> str:
+    return LibraryFunction("entity_decode")(string)
 
 
-def entity_encode(arg1: str) -> str:
-    return LibraryFunction("entity_encode")(arg1)
+def entity_encode(string: str) -> str:
+    return LibraryFunction("entity_encode")(string)
 
 
 @overload
-def equip(arg1: Familiar, arg2: Item) -> bool:
+def equip(familiar: Familiar, item: Item) -> bool:
     ...
 
 
 @overload
-def equip(arg1: Item, arg2: Familiar) -> bool:
+def equip(item: Item, familiar: Familiar) -> bool:
     ...
 
 
 @overload
-def equip(arg1: Slot, arg2: Item) -> bool:
+def equip(slot: Slot, item: Item) -> bool:
     ...
 
 
 @overload
-def equip(arg1: Item, arg2: Slot) -> bool:
+def equip(item: Item, slot: Slot) -> bool:
     ...
 
 
 @overload
-def equip(arg1: Item) -> bool:
+def equip(item: Item) -> bool:
     ...
 
 
@@ -1516,12 +1538,12 @@ def equip_all_familiars() -> bool:
 
 
 @overload
-def equipped_amount(arg1: Item, arg2: bool) -> int:
+def equipped_amount(item: Item, includeAllFamiliars: bool) -> int:
     ...
 
 
 @overload
-def equipped_amount(arg1: Item) -> int:
+def equipped_amount(item: Item) -> int:
     ...
 
 
@@ -1529,12 +1551,12 @@ def equipped_amount(*args):
     return LibraryFunction("equipped_amount")(*args)
 
 
-def equipped_item(arg1: Slot) -> Item:
-    return LibraryFunction("equipped_item")(arg1)
+def equipped_item(slot: Slot) -> Item:
+    return LibraryFunction("equipped_item")(slot)
 
 
 @overload
-def eudora(arg1: str) -> bool:
+def eudora(newEudora: str) -> bool:
     ...
 
 
@@ -1551,8 +1573,8 @@ def eudora_item() -> Item:
     return LibraryFunction("eudora_item")()
 
 
-def every_card_name(arg1: str) -> str:
-    return LibraryFunction("every_card_name")(arg1)
+def every_card_name(name: str) -> str:
+    return LibraryFunction("every_card_name")(name)
 
 
 def expected_cold_medicine_cabinet() -> dict[str, Item]:
@@ -1560,7 +1582,7 @@ def expected_cold_medicine_cabinet() -> dict[str, Item]:
 
 
 @overload
-def expected_damage(arg1: Monster) -> int:
+def expected_damage(monster: Monster) -> int:
     ...
 
 
@@ -1577,25 +1599,25 @@ def experience_bonus() -> float:
     return LibraryFunction("experience_bonus")()
 
 
-def expression_eval(arg1: str) -> float:
-    return LibraryFunction("expression_eval")(arg1)
+def expression_eval(expr: str) -> float:
+    return LibraryFunction("expression_eval")(expr)
 
 
-def extract_items(arg1: str) -> dict[Item, int]:
-    return LibraryFunction("extract_items")(arg1)
+def extract_items(string: str) -> dict[Item, int]:
+    return LibraryFunction("extract_items")(string)
 
 
-def extract_meat(arg1: str) -> int:
-    return LibraryFunction("extract_meat")(arg1)
+def extract_meat(string: str) -> int:
+    return LibraryFunction("extract_meat")(string)
 
 
 @overload
-def fact_type(arg1: Monster) -> str:
+def fact_type(monster: Monster) -> str:
     ...
 
 
 @overload
-def fact_type(arg1: Class, arg2: Path, arg3: Monster) -> str:
+def fact_type(cls: Class, path: Path, monster: Monster) -> str:
     ...
 
 
@@ -1603,16 +1625,16 @@ def fact_type(*args):
     return LibraryFunction("fact_type")(*args)
 
 
-def familiar_equipment(arg1: Familiar) -> Item:
-    return LibraryFunction("familiar_equipment")(arg1)
+def familiar_equipment(familiar: Familiar) -> Item:
+    return LibraryFunction("familiar_equipment")(familiar)
 
 
-def familiar_equipped_equipment(arg1: Familiar) -> Item:
-    return LibraryFunction("familiar_equipped_equipment")(arg1)
+def familiar_equipped_equipment(familiar: Familiar) -> Item:
+    return LibraryFunction("familiar_equipped_equipment")(familiar)
 
 
-def familiar_weight(arg1: Familiar) -> int:
-    return LibraryFunction("familiar_weight")(arg1)
+def familiar_weight(familiar: Familiar) -> int:
+    return LibraryFunction("familiar_weight")(familiar)
 
 
 def favorite_familiars() -> dict[Familiar, bool]:
@@ -1620,12 +1642,12 @@ def favorite_familiars() -> dict[Familiar, bool]:
 
 
 @overload
-def faxbot(arg1: Monster, arg2: str) -> bool:
+def faxbot(monsterName: Monster, botName: str) -> bool:
     ...
 
 
 @overload
-def faxbot(arg1: Monster) -> bool:
+def faxbot(monsterName: Monster) -> bool:
     ...
 
 
@@ -1637,21 +1659,21 @@ def fight_follows_choice() -> bool:
     return LibraryFunction("fight_follows_choice")()
 
 
-def file_to_array(arg1: str) -> dict[int, str]:
-    return LibraryFunction("file_to_array")(arg1)
+def file_to_array(filename: str) -> dict[int, str]:
+    return LibraryFunction("file_to_array")(filename)
 
 
-def file_to_buffer(arg1: str) -> str:
-    return LibraryFunction("file_to_buffer")(arg1)
+def file_to_buffer(filename: str) -> str:
+    return LibraryFunction("file_to_buffer")(filename)
 
 
 @overload
-def file_to_map(arg1: str, arg2: dict[Any, Any], arg3: bool) -> bool:
+def file_to_map(filename: str, result: dict[Any, Any], compact: bool) -> bool:
     ...
 
 
 @overload
-def file_to_map(arg1: str, arg2: dict[Any, Any]) -> bool:
+def file_to_map(filename: str, result: dict[Any, Any]) -> bool:
     ...
 
 
@@ -1659,12 +1681,12 @@ def file_to_map(*args):
     return LibraryFunction("file_to_map")(*args)
 
 
-def find(arg1: Matcher) -> bool:
-    return LibraryFunction("find")(arg1)
+def find(matcher: Matcher) -> bool:
+    return LibraryFunction("find")(matcher)
 
 
-def floor(arg1: float) -> int:
-    return LibraryFunction("floor")(arg1)
+def floor(val: float) -> int:
+    return LibraryFunction("floor")(val)
 
 
 def florist_available() -> bool:
@@ -1675,24 +1697,24 @@ def flush_monster_manuel_cache() -> bool:
     return LibraryFunction("flush_monster_manuel_cache")()
 
 
-def form_field(arg1: str) -> str:
-    return LibraryFunction("form_field")(arg1)
+def form_field(key: str) -> str:
+    return LibraryFunction("form_field")(key)
 
 
 def form_fields() -> dict[str, str]:
     return LibraryFunction("form_fields")()
 
 
-def format_date_time(arg1: str, arg2: str, arg3: str) -> str:
-    return LibraryFunction("format_date_time")(arg1, arg2, arg3)
+def format_date_time(inFormat: str, dateTimeString: str, outFormat: str) -> str:
+    return LibraryFunction("format_date_time")(inFormat, dateTimeString, outFormat)
 
 
 def friars_available() -> bool:
     return LibraryFunction("friars_available")()
 
 
-def fuel_cost(arg1: Skill) -> int:
-    return LibraryFunction("fuel_cost")(arg1)
+def fuel_cost(skill: Skill) -> int:
+    return LibraryFunction("fuel_cost")(skill)
 
 
 def fullness_limit() -> int:
@@ -1711,8 +1733,8 @@ def gametime_to_int() -> int:
     return LibraryFunction("gametime_to_int")()
 
 
-def get_all_properties(arg1: str, arg2: bool) -> dict[str, bool]:
-    return LibraryFunction("get_all_properties")(arg1, arg2)
+def get_all_properties(filterValue: str, globalValue: bool) -> dict[str, bool]:
+    return LibraryFunction("get_all_properties")(filterValue, globalValue)
 
 
 def get_auto_attack() -> int:
@@ -1727,8 +1749,8 @@ def get_campground() -> dict[Item, int]:
     return LibraryFunction("get_campground")()
 
 
-def get_ccs_action(arg1: int) -> str:
-    return LibraryFunction("get_ccs_action")(arg1)
+def get_ccs_action(index: int) -> str:
+    return LibraryFunction("get_ccs_action")(index)
 
 
 def get_chateau() -> dict[Item, int]:
@@ -1755,12 +1777,12 @@ def get_closet() -> dict[Item, int]:
     return LibraryFunction("get_closet")()
 
 
-def get_counter(arg1: str) -> int:
-    return LibraryFunction("get_counter")(arg1)
+def get_counter(label: str) -> int:
+    return LibraryFunction("get_counter")(label)
 
 
-def get_counters(arg1: str, arg2: int, arg3: int) -> str:
-    return LibraryFunction("get_counters")(arg1, arg2, arg3)
+def get_counters(label: str, min: int, max: int) -> str:
+    return LibraryFunction("get_counters")(label, min, max)
 
 
 def get_custom_outfits() -> dict[int, str]:
@@ -1799,16 +1821,16 @@ def get_ignore_zone_warnings() -> bool:
     return LibraryFunction("get_ignore_zone_warnings")()
 
 
-def get_ingredients(arg1: Item) -> dict[Item, int]:
-    return LibraryFunction("get_ingredients")(arg1)
+def get_ingredients(item: Item) -> dict[Item, int]:
+    return LibraryFunction("get_ingredients")(item)
 
 
 def get_inventory() -> dict[Item, int]:
     return LibraryFunction("get_inventory")()
 
 
-def get_location_monsters(arg1: Location) -> dict[Monster, bool]:
-    return LibraryFunction("get_location_monsters")(arg1)
+def get_location_monsters(location: Location) -> dict[Monster, bool]:
+    return LibraryFunction("get_location_monsters")(location)
 
 
 def get_locket_monsters() -> dict[Monster, bool]:
@@ -1816,7 +1838,7 @@ def get_locket_monsters() -> dict[Monster, bool]:
 
 
 @overload
-def get_monster_mapping(arg1: str) -> dict[Monster, Monster]:
+def get_monster_mapping(path: str) -> dict[Monster, Monster]:
     ...
 
 
@@ -1829,8 +1851,8 @@ def get_monster_mapping(*args):
     return LibraryFunction("get_monster_mapping")(*args)
 
 
-def get_monsters(arg1: Location) -> dict[int, Monster]:
-    return LibraryFunction("get_monsters")(arg1)
+def get_monsters(location: Location) -> dict[int, Monster]:
+    return LibraryFunction("get_monsters")(location)
 
 
 def get_moods() -> dict[int, str]:
@@ -1857,25 +1879,25 @@ def get_permed_skills() -> dict[Skill, bool]:
     return LibraryFunction("get_permed_skills")()
 
 
-def get_player_id(arg1: str) -> str:
-    return LibraryFunction("get_player_id")(arg1)
+def get_player_id(playerNameValue: str) -> str:
+    return LibraryFunction("get_player_id")(playerNameValue)
 
 
-def get_player_name(arg1: int) -> str:
-    return LibraryFunction("get_player_name")(arg1)
+def get_player_name(playerIdValue: int) -> str:
+    return LibraryFunction("get_player_name")(playerIdValue)
 
 
-def get_power(arg1: Item) -> int:
-    return LibraryFunction("get_power")(arg1)
+def get_power(item: Item) -> int:
+    return LibraryFunction("get_power")(item)
 
 
 @overload
-def get_property(arg1: str, arg2: bool) -> str:
+def get_property(name: str, globalValue: bool) -> str:
     ...
 
 
 @overload
-def get_property(arg1: str) -> str:
+def get_property(name: str) -> str:
     ...
 
 
@@ -1883,8 +1905,8 @@ def get_property(*args):
     return LibraryFunction("get_property")(*args)
 
 
-def get_related(arg1: Item, arg2: str) -> dict[Item, int]:
-    return LibraryFunction("get_related")(arg1, arg2)
+def get_related(item: Item, type: str) -> dict[Item, int]:
+    return LibraryFunction("get_related")(item, type)
 
 
 def get_revision() -> int:
@@ -1923,16 +1945,16 @@ def get_zap_wand() -> Item:
     return LibraryFunction("get_zap_wand")()
 
 
-def git_at_head(arg1: str) -> bool:
-    return LibraryFunction("git_at_head")(arg1)
+def git_at_head(project: str) -> bool:
+    return LibraryFunction("git_at_head")(project)
 
 
-def git_exists(arg1: str) -> bool:
-    return LibraryFunction("git_exists")(arg1)
+def git_exists(project: str) -> bool:
+    return LibraryFunction("git_exists")(project)
 
 
-def git_info(arg1: str) -> dict[str, Any]:
-    return LibraryFunction("git_info")(arg1)
+def git_info(script: str) -> dict[str, Any]:
+    return LibraryFunction("git_info")(script)
 
 
 def git_list() -> dict[int, str]:
@@ -1943,22 +1965,22 @@ def gnomads_available() -> bool:
     return LibraryFunction("gnomads_available")()
 
 
-def goal_exists(arg1: str) -> bool:
-    return LibraryFunction("goal_exists")(arg1)
+def goal_exists(check: str) -> bool:
+    return LibraryFunction("goal_exists")(check)
 
 
 @overload
-def group(arg1: Matcher, arg2: str) -> str:
+def group(matcher: Matcher, group: str) -> str:
     ...
 
 
 @overload
-def group(arg1: Matcher, arg2: int) -> str:
+def group(matcher: Matcher, group: int) -> str:
     ...
 
 
 @overload
-def group(arg1: Matcher) -> str:
+def group(matcher: Matcher) -> str:
     ...
 
 
@@ -1966,16 +1988,16 @@ def group(*args):
     return LibraryFunction("group")(*args)
 
 
-def group_count(arg1: Matcher) -> int:
-    return LibraryFunction("group_count")(arg1)
+def group_count(matcher: Matcher) -> int:
+    return LibraryFunction("group_count")(matcher)
 
 
-def group_names(arg1: Matcher) -> dict[str, bool]:
-    return LibraryFunction("group_names")(arg1)
+def group_names(matcher: Matcher) -> dict[str, bool]:
+    return LibraryFunction("group_names")(matcher)
 
 
-def group_string(arg1: str, arg2: str) -> dict[int, dict[int, str]]:
-    return LibraryFunction("group_string")(arg1, arg2)
+def group_string(string: str, regex: str) -> dict[int, dict[int, str]]:
+    return LibraryFunction("group_string")(string, regex)
 
 
 def guild_available() -> bool:
@@ -2006,49 +2028,49 @@ def have_display() -> bool:
     return LibraryFunction("have_display")()
 
 
-def have_effect(arg1: Effect) -> int:
-    return LibraryFunction("have_effect")(arg1)
+def have_effect(effect: Effect) -> int:
+    return LibraryFunction("have_effect")(effect)
 
 
-def have_equipped(arg1: Item) -> bool:
-    return LibraryFunction("have_equipped")(arg1)
+def have_equipped(item: Item) -> bool:
+    return LibraryFunction("have_equipped")(item)
 
 
-def have_familiar(arg1: Familiar) -> bool:
-    return LibraryFunction("have_familiar")(arg1)
+def have_familiar(familiar: Familiar) -> bool:
+    return LibraryFunction("have_familiar")(familiar)
 
 
 def have_mushroom_plot() -> bool:
     return LibraryFunction("have_mushroom_plot")()
 
 
-def have_outfit(arg1: str) -> bool:
-    return LibraryFunction("have_outfit")(arg1)
+def have_outfit(outfit: str) -> bool:
+    return LibraryFunction("have_outfit")(outfit)
 
 
-def have_servant(arg1: Servant) -> bool:
-    return LibraryFunction("have_servant")(arg1)
+def have_servant(servant: Servant) -> bool:
+    return LibraryFunction("have_servant")(servant)
 
 
 def have_shop() -> bool:
     return LibraryFunction("have_shop")()
 
 
-def have_skill(arg1: Skill) -> bool:
-    return LibraryFunction("have_skill")(arg1)
+def have_skill(skill: Skill) -> bool:
+    return LibraryFunction("have_skill")(skill)
 
 
-def hedge_maze(arg1: str) -> bool:
-    return LibraryFunction("hedge_maze")(arg1)
+def hedge_maze(goal: str) -> bool:
+    return LibraryFunction("hedge_maze")(goal)
 
 
 @overload
-def heist(arg1: int, arg2: Item) -> bool:
+def heist(num: int, item: Item) -> bool:
     ...
 
 
 @overload
-def heist(arg1: Item) -> bool:
+def heist(item: Item) -> bool:
     ...
 
 
@@ -2061,12 +2083,12 @@ def heist_targets() -> dict[Monster, dict[int, Item]]:
 
 
 @overload
-def hermit(arg1: int, arg2: Item) -> bool:
+def hermit(count: int, item: Item) -> bool:
     ...
 
 
 @overload
-def hermit(arg1: Item, arg2: int) -> bool:
+def hermit(item: Item, count: int) -> bool:
     ...
 
 
@@ -2086,24 +2108,24 @@ def hippy_store_available() -> bool:
     return LibraryFunction("hippy_store_available")()
 
 
-def historical_age(arg1: Item) -> float:
-    return LibraryFunction("historical_age")(arg1)
+def historical_age(item: Item) -> float:
+    return LibraryFunction("historical_age")(item)
 
 
-def historical_price(arg1: Item) -> int:
-    return LibraryFunction("historical_price")(arg1)
+def historical_price(item: Item) -> int:
+    return LibraryFunction("historical_price")(item)
 
 
 def holiday() -> str:
     return LibraryFunction("holiday")()
 
 
-def hp_cost(arg1: Skill) -> int:
-    return LibraryFunction("hp_cost")(arg1)
+def hp_cost(skill: Skill) -> int:
+    return LibraryFunction("hp_cost")(skill)
 
 
-def image_to_monster(arg1: str) -> Monster:
-    return LibraryFunction("image_to_monster")(arg1)
+def image_to_monster(value: str) -> Monster:
+    return LibraryFunction("image_to_monster")(value)
 
 
 def in_bad_moon() -> bool:
@@ -2134,21 +2156,21 @@ def in_mysticality_sign() -> bool:
     return LibraryFunction("in_mysticality_sign")()
 
 
-def in_terrarium(arg1: Familiar) -> bool:
-    return LibraryFunction("in_terrarium")(arg1)
+def in_terrarium(familiar: Familiar) -> bool:
+    return LibraryFunction("in_terrarium")(familiar)
 
 
-def inaccessible_reason(arg1: Coinmaster) -> str:
-    return LibraryFunction("inaccessible_reason")(arg1)
+def inaccessible_reason(master: Coinmaster) -> str:
+    return LibraryFunction("inaccessible_reason")(master)
 
 
 @overload
-def index_of(arg1: str, arg2: str, arg3: int) -> int:
+def index_of(source: str, search: str, start: int) -> int:
     ...
 
 
 @overload
-def index_of(arg1: str, arg2: str) -> int:
+def index_of(source: str, search: str) -> int:
     ...
 
 
@@ -2164,95 +2186,95 @@ def initiative_modifier() -> float:
     return LibraryFunction("initiative_modifier")()
 
 
-def insert(arg1: str, arg2: int, arg3: str) -> str:
-    return LibraryFunction("insert")(arg1, arg2, arg3)
+def insert(buffer: str, index: int, s: str) -> str:
+    return LibraryFunction("insert")(buffer, index, s)
 
 
-def is_accessible(arg1: Coinmaster) -> bool:
-    return LibraryFunction("is_accessible")(arg1)
+def is_accessible(master: Coinmaster) -> bool:
+    return LibraryFunction("is_accessible")(master)
 
 
 def is_adventuring() -> bool:
     return LibraryFunction("is_adventuring")()
 
 
-def is_banished(arg1: Monster) -> bool:
-    return LibraryFunction("is_banished")(arg1)
+def is_banished(monster: Monster) -> bool:
+    return LibraryFunction("is_banished")(monster)
 
 
-def is_coinmaster_item(arg1: Item) -> bool:
-    return LibraryFunction("is_coinmaster_item")(arg1)
+def is_coinmaster_item(item: Item) -> bool:
+    return LibraryFunction("is_coinmaster_item")(item)
 
 
 def is_dark_mode() -> bool:
     return LibraryFunction("is_dark_mode")()
 
 
-def is_discardable(arg1: Item) -> bool:
-    return LibraryFunction("is_discardable")(arg1)
+def is_discardable(item: Item) -> bool:
+    return LibraryFunction("is_discardable")(item)
 
 
-def is_displayable(arg1: Item) -> bool:
-    return LibraryFunction("is_displayable")(arg1)
+def is_displayable(item: Item) -> bool:
+    return LibraryFunction("is_displayable")(item)
 
 
 def is_familiar_equipment_locked() -> bool:
     return LibraryFunction("is_familiar_equipment_locked")()
 
 
-def is_giftable(arg1: Item) -> bool:
-    return LibraryFunction("is_giftable")(arg1)
+def is_giftable(item: Item) -> bool:
+    return LibraryFunction("is_giftable")(item)
 
 
-def is_goal(arg1: Item) -> bool:
-    return LibraryFunction("is_goal")(arg1)
+def is_goal(item: Item) -> bool:
+    return LibraryFunction("is_goal")(item)
 
 
 def is_headless() -> bool:
     return LibraryFunction("is_headless")()
 
 
-def is_integer(arg1: str) -> bool:
-    return LibraryFunction("is_integer")(arg1)
+def is_integer(string: str) -> bool:
+    return LibraryFunction("is_integer")(string)
 
 
-def is_npc_item(arg1: Item) -> bool:
-    return LibraryFunction("is_npc_item")(arg1)
+def is_npc_item(item: Item) -> bool:
+    return LibraryFunction("is_npc_item")(item)
 
 
-def is_online(arg1: str) -> bool:
-    return LibraryFunction("is_online")(arg1)
+def is_online(name: str) -> bool:
+    return LibraryFunction("is_online")(name)
 
 
-def is_removable(arg1: Effect) -> bool:
-    return LibraryFunction("is_removable")(arg1)
+def is_removable(effect: Effect) -> bool:
+    return LibraryFunction("is_removable")(effect)
 
 
-def is_shruggable(arg1: Effect) -> bool:
-    return LibraryFunction("is_shruggable")(arg1)
+def is_shruggable(effect: Effect) -> bool:
+    return LibraryFunction("is_shruggable")(effect)
 
 
-def is_tradeable(arg1: Item) -> bool:
-    return LibraryFunction("is_tradeable")(arg1)
+def is_tradeable(item: Item) -> bool:
+    return LibraryFunction("is_tradeable")(item)
 
 
 @overload
-def is_trendy(arg1: str) -> bool:
+def is_trendy(thing: str) -> bool:
     ...
 
 
 @overload
-def is_trendy(arg1: Familiar) -> bool:
+def is_trendy(thing: Familiar) -> bool:
     ...
 
 
 @overload
-def is_trendy(arg1: Skill) -> bool:
+def is_trendy(thing: Skill) -> bool:
     ...
 
 
 @overload
-def is_trendy(arg1: Item) -> bool:
+def is_trendy(thing: Item) -> bool:
     ...
 
 
@@ -2261,22 +2283,22 @@ def is_trendy(*args):
 
 
 @overload
-def is_unrestricted(arg1: str) -> bool:
+def is_unrestricted(thing: str) -> bool:
     ...
 
 
 @overload
-def is_unrestricted(arg1: Familiar) -> bool:
+def is_unrestricted(thing: Familiar) -> bool:
     ...
 
 
 @overload
-def is_unrestricted(arg1: Skill) -> bool:
+def is_unrestricted(thing: Skill) -> bool:
     ...
 
 
 @overload
-def is_unrestricted(arg1: Item) -> bool:
+def is_unrestricted(thing: Item) -> bool:
     ...
 
 
@@ -2284,12 +2306,12 @@ def is_unrestricted(*args):
     return LibraryFunction("is_unrestricted")(*args)
 
 
-def is_wearing_outfit(arg1: str) -> bool:
-    return LibraryFunction("is_wearing_outfit")(arg1)
+def is_wearing_outfit(outfit: str) -> bool:
+    return LibraryFunction("is_wearing_outfit")(outfit)
 
 
-def item_amount(arg1: Item) -> int:
-    return LibraryFunction("item_amount")(arg1)
+def item_amount(item: Item) -> int:
+    return LibraryFunction("item_amount")(item)
 
 
 def item_drop_modifier() -> float:
@@ -2297,7 +2319,7 @@ def item_drop_modifier() -> float:
 
 
 @overload
-def item_drops(arg1: Monster) -> dict[Item, float]:
+def item_drops(monster: Monster) -> dict[Item, float]:
     ...
 
 
@@ -2311,7 +2333,7 @@ def item_drops(*args):
 
 
 @overload
-def item_drops_array(arg1: Monster) -> dict[int, dict[str, Any]]:
+def item_drops_array(monster: Monster) -> dict[int, dict[str, Any]]:
     ...
 
 
@@ -2325,12 +2347,12 @@ def item_drops_array(*args):
 
 
 @overload
-def item_fact(arg1: Monster) -> Item:
+def item_fact(monster: Monster) -> Item:
     ...
 
 
 @overload
-def item_fact(arg1: Class, arg2: Path, arg3: Monster) -> Item:
+def item_fact(cls: Class, path: Path, monster: Monster) -> Item:
     ...
 
 
@@ -2342,17 +2364,17 @@ def item_pockets() -> dict[int, bool]:
     return LibraryFunction("item_pockets")()
 
 
-def item_type(arg1: Item) -> str:
-    return LibraryFunction("item_type")(arg1)
+def item_type(item: Item) -> str:
+    return LibraryFunction("item_type")(item)
 
 
 @overload
-def join_strings(arg1: dict[int, str], arg2: str) -> str:
+def join_strings(strings: dict[int, str], joiner: str) -> str:
     ...
 
 
 @overload
-def join_strings(arg1: dict[int, str]) -> str:
+def join_strings(strings: dict[int, str]) -> str:
     ...
 
 
@@ -2365,32 +2387,32 @@ def joke_pockets() -> dict[int, bool]:
 
 
 @overload
-def jump_chance(arg1: Location, arg2: int, arg3: int) -> int:
+def jump_chance(location: Location, init: int, ml: int) -> int:
     ...
 
 
 @overload
-def jump_chance(arg1: Location, arg2: int) -> int:
+def jump_chance(location: Location, init: int) -> int:
     ...
 
 
 @overload
-def jump_chance(arg1: Location) -> int:
+def jump_chance(location: Location) -> int:
     ...
 
 
 @overload
-def jump_chance(arg1: Monster, arg2: int, arg3: int) -> int:
+def jump_chance(monster: Monster, init: int, ml: int) -> int:
     ...
 
 
 @overload
-def jump_chance(arg1: Monster, arg2: int) -> int:
+def jump_chance(monster: Monster, init: int) -> int:
     ...
 
 
 @overload
-def jump_chance(arg1: Monster) -> int:
+def jump_chance(monster: Monster) -> int:
     ...
 
 
@@ -2416,12 +2438,12 @@ def last_decision() -> int:
 
 
 @overload
-def last_index_of(arg1: str, arg2: str, arg3: int) -> int:
+def last_index_of(source: str, search: str, start: int) -> int:
     ...
 
 
 @overload
-def last_index_of(arg1: str, arg2: str) -> int:
+def last_index_of(source: str, search: str) -> int:
     ...
 
 
@@ -2441,37 +2463,37 @@ def last_skill_message() -> str:
     return LibraryFunction("last_skill_message")()
 
 
-def leetify(arg1: str) -> str:
-    return LibraryFunction("leetify")(arg1)
+def leetify(string: str) -> str:
+    return LibraryFunction("leetify")(string)
 
 
-def length(arg1: str) -> int:
-    return LibraryFunction("length")(arg1)
+def length(string: str) -> int:
+    return LibraryFunction("length")(string)
 
 
-def lightning_cost(arg1: Skill) -> int:
-    return LibraryFunction("lightning_cost")(arg1)
+def lightning_cost(skill: Skill) -> int:
+    return LibraryFunction("lightning_cost")(skill)
 
 
 def limit_mode() -> str:
     return LibraryFunction("limit_mode")()
 
 
-def load_html(arg1: str) -> str:
-    return LibraryFunction("load_html")(arg1)
+def load_html(string: str) -> str:
+    return LibraryFunction("load_html")(string)
 
 
-def lock_familiar_equipment(arg1: bool) -> None:
-    return LibraryFunction("lock_familiar_equipment")(arg1)
+def lock_familiar_equipment(lock: bool) -> None:
+    return LibraryFunction("lock_familiar_equipment")(lock)
 
 
 @overload
-def log_n(arg1: float, arg2: float) -> float:
+def log_n(val: float, base: float) -> float:
     ...
 
 
 @overload
-def log_n(arg1: float) -> float:
+def log_n(val: float) -> float:
     ...
 
 
@@ -2479,21 +2501,21 @@ def log_n(*args):
     return LibraryFunction("log_n")(*args)
 
 
-def logprint(arg1: str) -> None:
-    return LibraryFunction("logprint")(arg1)
+def logprint(string: str) -> None:
+    return LibraryFunction("logprint")(string)
 
 
-def make_url(arg1: str, arg2: bool, arg3: bool) -> str:
-    return LibraryFunction("make_url")(arg1, arg2, arg3)
+def make_url(string: str, usePostMethod: bool, encoded: bool) -> str:
+    return LibraryFunction("make_url")(string, usePostMethod, encoded)
 
 
 @overload
-def mall_price(arg1: Item, arg2: float) -> int:
+def mall_price(item: Item, maxAge: float) -> int:
     ...
 
 
 @overload
-def mall_price(arg1: Item) -> int:
+def mall_price(item: Item) -> int:
     ...
 
 
@@ -2502,17 +2524,17 @@ def mall_price(*args):
 
 
 @overload
-def mall_prices(arg1: str, arg2: str) -> int:
+def mall_prices(category: str, tiers: str) -> int:
     ...
 
 
 @overload
-def mall_prices(arg1: str) -> int:
+def mall_prices(category: str) -> int:
     ...
 
 
 @overload
-def mall_prices(arg1: dict[int, bool]) -> int:
+def mall_prices(items: dict[int, bool]) -> int:
     ...
 
 
@@ -2525,12 +2547,12 @@ def mana_cost_modifier() -> int:
 
 
 @overload
-def map_to_file(arg1: dict[Any, Any], arg2: str, arg3: bool) -> bool:
+def map_to_file(map: dict[Any, Any], filename: str, compact: bool) -> bool:
     ...
 
 
 @overload
-def map_to_file(arg1: dict[Any, Any], arg2: str) -> bool:
+def map_to_file(map: dict[Any, Any], filename: str) -> bool:
     ...
 
 
@@ -2539,12 +2561,12 @@ def map_to_file(*args):
 
 
 @overload
-def max(arg1: int, arg2: dict[int, int]) -> int:
+def max(val: int, otherVal: dict[int, int]) -> int:
     ...
 
 
 @overload
-def max(arg1: float, arg2: dict[int, float]) -> float:
+def max(val: float, otherVal: dict[int, float]) -> float:
     ...
 
 
@@ -2554,18 +2576,27 @@ def max(*args):
 
 @overload
 def maximize(
-    arg1: str, arg2: int, arg3: int, arg4: bool, arg5: bool
+    maximizerStringValue: str,
+    maxPriceValue: int,
+    priceLevelValue: int,
+    isSpeculateOnlyValue: bool,
+    showEquipment: bool,
 ) -> dict[int, dict[str, Any]]:
     ...
 
 
 @overload
-def maximize(arg1: str, arg2: int, arg3: int, arg4: bool) -> bool:
+def maximize(
+    maximizerStringValue: str,
+    maxPriceValue: int,
+    priceLevelValue: int,
+    isSpeculateOnlyValue: bool,
+) -> bool:
     ...
 
 
 @overload
-def maximize(arg1: str, arg2: bool) -> bool:
+def maximize(maximizerStringValue: str, isSpeculateOnlyValue: bool) -> bool:
     ...
 
 
@@ -2574,7 +2605,7 @@ def maximize(*args):
 
 
 @overload
-def meat_drop(arg1: Monster) -> int:
+def meat_drop(monster: Monster) -> int:
     ...
 
 
@@ -2596,12 +2627,12 @@ def meat_pockets() -> dict[int, int]:
 
 
 @overload
-def min(arg1: int, arg2: dict[int, int]) -> int:
+def min(val: int, otherVal: dict[int, int]) -> int:
     ...
 
 
 @overload
-def min(arg1: float, arg2: dict[int, float]) -> float:
+def min(val: float, otherVal: dict[int, float]) -> float:
     ...
 
 
@@ -2621,22 +2652,22 @@ def minstrel_quest() -> bool:
     return LibraryFunction("minstrel_quest")()
 
 
-def modifier_eval(arg1: str) -> float:
-    return LibraryFunction("modifier_eval")(arg1)
+def modifier_eval(expr: str) -> float:
+    return LibraryFunction("modifier_eval")(expr)
 
 
 @overload
-def monkey_paw(arg1: str) -> bool:
+def monkey_paw(wish: str) -> bool:
     ...
 
 
 @overload
-def monkey_paw(arg1: Effect) -> bool:
+def monkey_paw(effect: Effect) -> bool:
     ...
 
 
 @overload
-def monkey_paw(arg1: Item) -> bool:
+def monkey_paw(item: Item) -> bool:
     ...
 
 
@@ -2645,7 +2676,7 @@ def monkey_paw(*args):
 
 
 @overload
-def monster_attack(arg1: Monster) -> int:
+def monster_attack(monster: Monster) -> int:
     ...
 
 
@@ -2659,7 +2690,7 @@ def monster_attack(*args):
 
 
 @overload
-def monster_defense(arg1: Monster) -> int:
+def monster_defense(monster: Monster) -> int:
     ...
 
 
@@ -2673,7 +2704,7 @@ def monster_defense(*args):
 
 
 @overload
-def monster_element(arg1: Monster) -> Element:
+def monster_element(monster: Monster) -> Element:
     ...
 
 
@@ -2686,16 +2717,16 @@ def monster_element(*args):
     return LibraryFunction("monster_element")(*args)
 
 
-def monster_eval(arg1: str) -> float:
-    return LibraryFunction("monster_eval")(arg1)
+def monster_eval(expr: str) -> float:
+    return LibraryFunction("monster_eval")(expr)
 
 
-def monster_factoids_available(arg1: Monster, arg2: bool) -> int:
-    return LibraryFunction("monster_factoids_available")(arg1, arg2)
+def monster_factoids_available(monster: Monster, cachedOnly: bool) -> int:
+    return LibraryFunction("monster_factoids_available")(monster, cachedOnly)
 
 
 @overload
-def monster_hp(arg1: Monster) -> int:
+def monster_hp(monster: Monster) -> int:
     ...
 
 
@@ -2709,7 +2740,7 @@ def monster_hp(*args):
 
 
 @overload
-def monster_initiative(arg1: Monster) -> int:
+def monster_initiative(monster: Monster) -> int:
     ...
 
 
@@ -2726,17 +2757,17 @@ def monster_level_adjustment() -> int:
     return LibraryFunction("monster_level_adjustment")()
 
 
-def monster_manuel_text(arg1: Monster) -> str:
-    return LibraryFunction("monster_manuel_text")(arg1)
+def monster_manuel_text(monster: Monster) -> str:
+    return LibraryFunction("monster_manuel_text")(monster)
 
 
 @overload
-def monster_modifier(arg1: Effect, arg2: Modifier) -> Monster:
+def monster_modifier(effect: Effect, modifier: Modifier) -> Monster:
     ...
 
 
 @overload
-def monster_modifier(arg1: Effect, arg2: str) -> Monster:
+def monster_modifier(effect: Effect, modifier: str) -> Monster:
     ...
 
 
@@ -2745,7 +2776,7 @@ def monster_modifier(*args):
 
 
 @overload
-def monster_phylum(arg1: Monster) -> Phylum:
+def monster_phylum(monster: Monster) -> Phylum:
     ...
 
 
@@ -2762,8 +2793,8 @@ def monster_pockets() -> dict[int, bool]:
     return LibraryFunction("monster_pockets")()
 
 
-def mood_execute(arg1: int) -> None:
-    return LibraryFunction("mood_execute")(arg1)
+def mood_execute(multiplicity: int) -> None:
+    return LibraryFunction("mood_execute")(multiplicity)
 
 
 def mood_list() -> dict[int, str]:
@@ -2778,8 +2809,8 @@ def moon_phase() -> int:
     return LibraryFunction("moon_phase")()
 
 
-def mp_cost(arg1: Skill) -> int:
-    return LibraryFunction("mp_cost")(arg1)
+def mp_cost(skill: Skill) -> int:
+    return LibraryFunction("mp_cost")(skill)
 
 
 def my_absorbs() -> int:
@@ -2798,16 +2829,16 @@ def my_audience() -> int:
     return LibraryFunction("my_audience")()
 
 
-def my_basestat(arg1: Stat) -> int:
-    return LibraryFunction("my_basestat")(arg1)
+def my_basestat(stat: Stat) -> int:
+    return LibraryFunction("my_basestat")(stat)
 
 
 def my_bjorned_familiar() -> Familiar:
     return LibraryFunction("my_bjorned_familiar")()
 
 
-def my_buffedstat(arg1: Stat) -> int:
-    return LibraryFunction("my_buffedstat")(arg1)
+def my_buffedstat(stat: Stat) -> int:
+    return LibraryFunction("my_buffedstat")(stat)
 
 
 def my_class() -> Class:
@@ -2926,8 +2957,8 @@ def my_path_id() -> int:
     return LibraryFunction("my_path_id")()
 
 
-def my_poke_fam(arg1: int) -> Familiar:
-    return LibraryFunction("my_poke_fam")(arg1)
+def my_poke_fam(slot: int) -> Familiar:
+    return LibraryFunction("my_poke_fam")(slot)
 
 
 def my_pp() -> int:
@@ -2959,7 +2990,7 @@ def my_session_adv() -> int:
 
 
 @overload
-def my_session_items(arg1: Item) -> int:
+def my_session_items(item: Item) -> int:
     ...
 
 
@@ -3024,25 +3055,25 @@ def now_to_int() -> int:
     return LibraryFunction("now_to_int")()
 
 
-def now_to_string(arg1: str) -> str:
-    return LibraryFunction("now_to_string")(arg1)
+def now_to_string(dateFormatValue: str) -> str:
+    return LibraryFunction("now_to_string")(dateFormatValue)
 
 
-def npc_price(arg1: Item) -> int:
-    return LibraryFunction("npc_price")(arg1)
+def npc_price(item: Item) -> int:
+    return LibraryFunction("npc_price")(item)
 
 
-def numberology_prize(arg1: int) -> str:
-    return LibraryFunction("numberology_prize")(arg1)
+def numberology_prize(num: int) -> str:
+    return LibraryFunction("numberology_prize")(num)
 
 
 @overload
-def numeric_fact(arg1: Monster) -> int:
+def numeric_fact(monster: Monster) -> int:
     ...
 
 
 @overload
-def numeric_fact(arg1: Class, arg2: Path, arg3: Monster) -> int:
+def numeric_fact(cls: Class, path: Path, monster: Monster) -> int:
     ...
 
 
@@ -3051,67 +3082,69 @@ def numeric_fact(*args):
 
 
 @overload
-def numeric_modifier(arg1: Thrall, arg2: Modifier) -> float:
+def numeric_modifier(thrall: Thrall, modifier: Modifier) -> float:
     ...
 
 
 @overload
-def numeric_modifier(arg1: Thrall, arg2: str) -> float:
+def numeric_modifier(thrall: Thrall, modifier: str) -> float:
     ...
 
 
 @overload
-def numeric_modifier(arg1: Familiar, arg2: str, arg3: int, arg4: Item) -> float:
+def numeric_modifier(
+    familiar: Familiar, modifier: str, weight: int, item: Item
+) -> float:
     ...
 
 
 @overload
-def numeric_modifier(arg1: Skill, arg2: Modifier) -> float:
+def numeric_modifier(skill: Skill, modifier: Modifier) -> float:
     ...
 
 
 @overload
-def numeric_modifier(arg1: Skill, arg2: str) -> float:
+def numeric_modifier(skill: Skill, modifier: str) -> float:
     ...
 
 
 @overload
-def numeric_modifier(arg1: Effect, arg2: Modifier) -> float:
+def numeric_modifier(effect: Effect, modifier: Modifier) -> float:
     ...
 
 
 @overload
-def numeric_modifier(arg1: Effect, arg2: str) -> float:
+def numeric_modifier(effect: Effect, modifier: str) -> float:
     ...
 
 
 @overload
-def numeric_modifier(arg1: Item, arg2: Modifier) -> float:
+def numeric_modifier(item: Item, modifier: Modifier) -> float:
     ...
 
 
 @overload
-def numeric_modifier(arg1: Item, arg2: str) -> float:
+def numeric_modifier(item: Item, modifier: str) -> float:
     ...
 
 
 @overload
-def numeric_modifier(arg1: str, arg2: Modifier) -> float:
+def numeric_modifier(type: str, modifier: Modifier) -> float:
     ...
 
 
 @overload
-def numeric_modifier(arg1: str, arg2: str) -> float:
+def numeric_modifier(type: str, modifier: str) -> float:
     ...
 
 
 @overload
-def numeric_modifier(arg1: Modifier) -> float:
+def numeric_modifier(modifier: Modifier) -> float:
     ...
 
 
 @overload
-def numeric_modifier(arg1: str) -> float:
+def numeric_modifier(modifier: str) -> float:
     ...
 
 
@@ -3119,34 +3152,34 @@ def numeric_modifier(*args):
     return LibraryFunction("numeric_modifier")(*args)
 
 
-def outfit(arg1: str) -> bool:
-    return LibraryFunction("outfit")(arg1)
+def outfit(outfit: str) -> bool:
+    return LibraryFunction("outfit")(outfit)
 
 
-def outfit_pieces(arg1: str) -> dict[int, Item]:
-    return LibraryFunction("outfit_pieces")(arg1)
+def outfit_pieces(outfit: str) -> dict[int, Item]:
+    return LibraryFunction("outfit_pieces")(outfit)
 
 
-def outfit_tattoo(arg1: str) -> str:
-    return LibraryFunction("outfit_tattoo")(arg1)
+def outfit_tattoo(outfit: str) -> str:
+    return LibraryFunction("outfit_tattoo")(outfit)
 
 
-def outfit_treats(arg1: str) -> dict[Item, float]:
-    return LibraryFunction("outfit_treats")(arg1)
+def outfit_treats(outfit: str) -> dict[Item, float]:
+    return LibraryFunction("outfit_treats")(outfit)
 
 
 @overload
-def overdrink(arg1: int, arg2: Item) -> bool:
+def overdrink(count: int, item: Item) -> bool:
     ...
 
 
 @overload
-def overdrink(arg1: Item, arg2: int) -> bool:
+def overdrink(item: Item, count: int) -> bool:
     ...
 
 
 @overload
-def overdrink(arg1: Item) -> bool:
+def overdrink(item: Item) -> bool:
     ...
 
 
@@ -3154,36 +3187,36 @@ def overdrink(*args):
     return LibraryFunction("overdrink")(*args)
 
 
-def path_id_to_name(arg1: int) -> str:
-    return LibraryFunction("path_id_to_name")(arg1)
+def path_id_to_name(value: int) -> str:
+    return LibraryFunction("path_id_to_name")(value)
 
 
-def path_name_to_id(arg1: str) -> int:
-    return LibraryFunction("path_name_to_id")(arg1)
+def path_name_to_id(value: str) -> int:
+    return LibraryFunction("path_name_to_id")(value)
 
 
 @overload
-def pick_pocket(arg1: int) -> bool:
+def pick_pocket(pocketNumber: int) -> bool:
     ...
 
 
 @overload
-def pick_pocket(arg1: Stat) -> dict[Stat, int]:
+def pick_pocket(stat: Stat) -> dict[Stat, int]:
     ...
 
 
 @overload
-def pick_pocket(arg1: Item) -> dict[Item, int]:
+def pick_pocket(item: Item) -> dict[Item, int]:
     ...
 
 
 @overload
-def pick_pocket(arg1: Effect) -> dict[Effect, int]:
+def pick_pocket(effect: Effect) -> dict[Effect, int]:
     ...
 
 
 @overload
-def pick_pocket(arg1: Monster) -> bool:
+def pick_pocket(monster: Monster) -> bool:
     ...
 
 
@@ -3200,12 +3233,12 @@ def picked_scraps() -> dict[int, bool]:
 
 
 @overload
-def ping(arg1: str) -> dict[str, Any]:
+def ping(pingTest: str) -> dict[str, Any]:
     ...
 
 
 @overload
-def ping(arg1: int, arg2: str) -> dict[str, Any]:
+def ping(count: int, page: str) -> dict[str, Any]:
     ...
 
 
@@ -3218,36 +3251,36 @@ def ping(*args):
     return LibraryFunction("ping")(*args)
 
 
-def pocket_effects(arg1: int) -> dict[Effect, int]:
-    return LibraryFunction("pocket_effects")(arg1)
+def pocket_effects(pocket: int) -> dict[Effect, int]:
+    return LibraryFunction("pocket_effects")(pocket)
 
 
-def pocket_items(arg1: int) -> dict[Item, int]:
-    return LibraryFunction("pocket_items")(arg1)
+def pocket_items(pocket: int) -> dict[Item, int]:
+    return LibraryFunction("pocket_items")(pocket)
 
 
-def pocket_joke(arg1: int) -> str:
-    return LibraryFunction("pocket_joke")(arg1)
+def pocket_joke(pocket: int) -> str:
+    return LibraryFunction("pocket_joke")(pocket)
 
 
-def pocket_meat(arg1: int) -> dict[int, str]:
-    return LibraryFunction("pocket_meat")(arg1)
+def pocket_meat(pocket: int) -> dict[int, str]:
+    return LibraryFunction("pocket_meat")(pocket)
 
 
-def pocket_monster(arg1: int) -> Monster:
-    return LibraryFunction("pocket_monster")(arg1)
+def pocket_monster(pocket: int) -> Monster:
+    return LibraryFunction("pocket_monster")(pocket)
 
 
-def pocket_poem(arg1: int) -> dict[int, str]:
-    return LibraryFunction("pocket_poem")(arg1)
+def pocket_poem(pocket: int) -> dict[int, str]:
+    return LibraryFunction("pocket_poem")(pocket)
 
 
-def pocket_scrap(arg1: int) -> dict[int, str]:
-    return LibraryFunction("pocket_scrap")(arg1)
+def pocket_scrap(pocket: int) -> dict[int, str]:
+    return LibraryFunction("pocket_scrap")(pocket)
 
 
-def pocket_stats(arg1: int) -> dict[Stat, int]:
-    return LibraryFunction("pocket_stats")(arg1)
+def pocket_stats(pocket: int) -> dict[Stat, int]:
+    return LibraryFunction("pocket_stats")(pocket)
 
 
 def poem_pockets() -> dict[int, int]:
@@ -3255,22 +3288,22 @@ def poem_pockets() -> dict[int, int]:
 
 
 @overload
-def potential_pockets(arg1: Stat) -> dict[int, int]:
+def potential_pockets(stat: Stat) -> dict[int, int]:
     ...
 
 
 @overload
-def potential_pockets(arg1: Item) -> dict[int, int]:
+def potential_pockets(item: Item) -> dict[int, int]:
     ...
 
 
 @overload
-def potential_pockets(arg1: Effect) -> dict[int, int]:
+def potential_pockets(effect: Effect) -> dict[int, int]:
     ...
 
 
 @overload
-def potential_pockets(arg1: Monster) -> dict[int, int]:
+def potential_pockets(monster: Monster) -> dict[int, int]:
     ...
 
 
@@ -3278,21 +3311,21 @@ def potential_pockets(*args):
     return LibraryFunction("potential_pockets")(*args)
 
 
-def pre_validate_adventure(arg1: Location) -> bool:
-    return LibraryFunction("pre_validate_adventure")(arg1)
+def pre_validate_adventure(location: Location) -> bool:
+    return LibraryFunction("pre_validate_adventure")(location)
 
 
-def prepare_for_adventure(arg1: Location) -> bool:
-    return LibraryFunction("prepare_for_adventure")(arg1)
+def prepare_for_adventure(location: Location) -> bool:
+    return LibraryFunction("prepare_for_adventure")(location)
 
 
 @overload
-def print(arg1: str, arg2: str) -> None:
+def print(string: str, color: str) -> None:
     ...
 
 
 @overload
-def print(arg1: str) -> None:
+def print(string: str) -> None:
     ...
 
 
@@ -3306,12 +3339,12 @@ def print(*args):
 
 
 @overload
-def print_html(arg1: str) -> None:
+def print_html(string: str) -> None:
     ...
 
 
 @overload
-def print_html(arg1: str, arg2: bool) -> None:
+def print_html(string: str, logToSession: bool) -> None:
     ...
 
 
@@ -3319,17 +3352,17 @@ def print_html(*args):
     return LibraryFunction("print_html")(*args)
 
 
-def property_default_value(arg1: str) -> str:
-    return LibraryFunction("property_default_value")(arg1)
+def property_default_value(nameValue: str) -> str:
+    return LibraryFunction("property_default_value")(nameValue)
 
 
 @overload
-def property_exists(arg1: str, arg2: bool) -> bool:
+def property_exists(nameValue: str, globalValue: bool) -> bool:
     ...
 
 
 @overload
-def property_exists(arg1: str) -> bool:
+def property_exists(nameValue: str) -> bool:
     ...
 
 
@@ -3337,8 +3370,8 @@ def property_exists(*args):
     return LibraryFunction("property_exists")(*args)
 
 
-def property_has_default(arg1: str) -> bool:
-    return LibraryFunction("property_has_default")(arg1)
+def property_has_default(nameValue: str) -> bool:
+    return LibraryFunction("property_has_default")(nameValue)
 
 
 def pulls_remaining() -> int:
@@ -3346,22 +3379,22 @@ def pulls_remaining() -> int:
 
 
 @overload
-def put_closet(arg1: int, arg2: Item) -> bool:
+def put_closet(count: int, item: Item) -> bool:
     ...
 
 
 @overload
-def put_closet(arg1: Item, arg2: int) -> bool:
+def put_closet(item: Item, count: int) -> bool:
     ...
 
 
 @overload
-def put_closet(arg1: Item) -> bool:
+def put_closet(item: Item) -> bool:
     ...
 
 
 @overload
-def put_closet(arg1: int) -> bool:
+def put_closet(meat: int) -> bool:
     ...
 
 
@@ -3370,12 +3403,12 @@ def put_closet(*args):
 
 
 @overload
-def put_display(arg1: Item, arg2: int) -> bool:
+def put_display(item: Item, count: int) -> bool:
     ...
 
 
 @overload
-def put_display(arg1: int, arg2: Item) -> bool:
+def put_display(count: int, item: Item) -> bool:
     ...
 
 
@@ -3384,12 +3417,12 @@ def put_display(*args):
 
 
 @overload
-def put_shop(arg1: int, arg2: int, arg3: int, arg4: Item) -> bool:
+def put_shop(priceValue: int, limitValue: int, qtyValue: int, itemValue: Item) -> bool:
     ...
 
 
 @overload
-def put_shop(arg1: int, arg2: int, arg3: Item) -> bool:
+def put_shop(priceValue: int, limitValue: int, itemValue: Item) -> bool:
     ...
 
 
@@ -3398,12 +3431,14 @@ def put_shop(*args):
 
 
 @overload
-def put_shop_using_storage(arg1: int, arg2: int, arg3: int, arg4: Item) -> bool:
+def put_shop_using_storage(
+    priceValue: int, limitValue: int, qtyValue: int, itemValue: Item
+) -> bool:
     ...
 
 
 @overload
-def put_shop_using_storage(arg1: int, arg2: int, arg3: Item) -> bool:
+def put_shop_using_storage(priceValue: int, limitValue: int, itemValue: Item) -> bool:
     ...
 
 
@@ -3412,12 +3447,12 @@ def put_shop_using_storage(*args):
 
 
 @overload
-def put_stash(arg1: int, arg2: Item) -> bool:
+def put_stash(count: int, item: Item) -> bool:
     ...
 
 
 @overload
-def put_stash(arg1: Item, arg2: int) -> bool:
+def put_stash(item: Item, count: int) -> bool:
     ...
 
 
@@ -3429,20 +3464,20 @@ def pvp_attacks_left() -> int:
     return LibraryFunction("pvp_attacks_left")()
 
 
-def rain_cost(arg1: Skill) -> int:
-    return LibraryFunction("rain_cost")(arg1)
+def rain_cost(skill: Skill) -> int:
+    return LibraryFunction("rain_cost")(skill)
 
 
-def random(arg1: int) -> int:
-    return LibraryFunction("random")(arg1)
+def random(range: int) -> int:
+    return LibraryFunction("random")(range)
 
 
 def raw_damage_absorption() -> int:
     return LibraryFunction("raw_damage_absorption")()
 
 
-def read_ccs(arg1: str) -> str:
-    return LibraryFunction("read_ccs")(arg1)
+def read_ccs(name: str) -> str:
+    return LibraryFunction("read_ccs")(name)
 
 
 def receive_fax() -> None:
@@ -3462,12 +3497,12 @@ def refresh_status() -> bool:
 
 
 @overload
-def remove_item_condition(arg1: Item, arg2: int) -> None:
+def remove_item_condition(item: Item, count: int) -> None:
     ...
 
 
 @overload
-def remove_item_condition(arg1: int, arg2: Item) -> None:
+def remove_item_condition(count: int, item: Item) -> None:
     ...
 
 
@@ -3476,12 +3511,12 @@ def remove_item_condition(*args):
 
 
 @overload
-def remove_property(arg1: str, arg2: bool) -> str:
+def remove_property(nameValue: str, globalValue: bool) -> str:
     ...
 
 
 @overload
-def remove_property(arg1: str) -> str:
+def remove_property(nameValue: str) -> str:
     ...
 
 
@@ -3489,29 +3524,29 @@ def remove_property(*args):
     return LibraryFunction("remove_property")(*args)
 
 
-def rename_property(arg1: str, arg2: str) -> bool:
-    return LibraryFunction("rename_property")(arg1, arg2)
+def rename_property(oldNameValue: str, newNameValue: str) -> bool:
+    return LibraryFunction("rename_property")(oldNameValue, newNameValue)
 
 
-def replace(arg1: str, arg2: int, arg3: int, arg4: str) -> str:
-    return LibraryFunction("replace")(arg1, arg2, arg3, arg4)
+def replace(buffer: str, start: int, finish: int, s: str) -> str:
+    return LibraryFunction("replace")(buffer, start, finish, s)
 
 
-def replace_all(arg1: Matcher, arg2: str) -> str:
-    return LibraryFunction("replace_all")(arg1, arg2)
+def replace_all(matcher: Matcher, replacement: str) -> str:
+    return LibraryFunction("replace_all")(matcher, replacement)
 
 
-def replace_first(arg1: Matcher, arg2: str) -> str:
-    return LibraryFunction("replace_first")(arg1, arg2)
+def replace_first(matcher: Matcher, replacement: str) -> str:
+    return LibraryFunction("replace_first")(matcher, replacement)
 
 
 @overload
-def replace_string(arg1: str, arg2: str, arg3: str) -> str:
+def replace_string(source: str, searchValue: str, replaceValue: str) -> str:
     ...
 
 
 @overload
-def replace_string(arg1: str, arg2: str, arg3: str) -> str:
+def replace_string(source: str, searchValue: str, replaceValue: str) -> str:
     ...
 
 
@@ -3520,12 +3555,12 @@ def replace_string(*args):
 
 
 @overload
-def reprice_shop(arg1: int, arg2: int, arg3: Item) -> bool:
+def reprice_shop(priceValue: int, limitValue: int, itemValue: Item) -> bool:
     ...
 
 
 @overload
-def reprice_shop(arg1: int, arg2: Item) -> bool:
+def reprice_shop(priceValue: int, itemValue: Item) -> bool:
     ...
 
 
@@ -3534,12 +3569,12 @@ def reprice_shop(*args):
 
 
 @overload
-def reset(arg1: Matcher, arg2: str) -> Matcher:
+def reset(matcher: Matcher, input: str) -> Matcher:
     ...
 
 
 @overload
-def reset(arg1: Matcher) -> Matcher:
+def reset(matcher: Matcher) -> Matcher:
     ...
 
 
@@ -3551,26 +3586,26 @@ def restoration_pockets() -> dict[int, bool]:
     return LibraryFunction("restoration_pockets")()
 
 
-def restore_hp(arg1: int) -> bool:
-    return LibraryFunction("restore_hp")(arg1)
+def restore_hp(amount: int) -> bool:
+    return LibraryFunction("restore_hp")(amount)
 
 
-def restore_mp(arg1: int) -> bool:
-    return LibraryFunction("restore_mp")(arg1)
+def restore_mp(amount: int) -> bool:
+    return LibraryFunction("restore_mp")(amount)
 
 
 @overload
-def retrieve_item(arg1: int, arg2: Item) -> bool:
+def retrieve_item(count: int, item: Item) -> bool:
     ...
 
 
 @overload
-def retrieve_item(arg1: Item, arg2: int) -> bool:
+def retrieve_item(item: Item, count: int) -> bool:
     ...
 
 
 @overload
-def retrieve_item(arg1: Item) -> bool:
+def retrieve_item(item: Item) -> bool:
     ...
 
 
@@ -3579,27 +3614,27 @@ def retrieve_item(*args):
 
 
 @overload
-def retrieve_price(arg1: int, arg2: Item, arg3: bool) -> int:
+def retrieve_price(count: int, item: Item, exact: bool) -> int:
     ...
 
 
 @overload
-def retrieve_price(arg1: Item, arg2: int, arg3: bool) -> int:
+def retrieve_price(item: Item, count: int, exact: bool) -> int:
     ...
 
 
 @overload
-def retrieve_price(arg1: int, arg2: Item) -> int:
+def retrieve_price(count: int, item: Item) -> int:
     ...
 
 
 @overload
-def retrieve_price(arg1: Item, arg2: int) -> int:
+def retrieve_price(item: Item, count: int) -> int:
     ...
 
 
 @overload
-def retrieve_price(arg1: Item) -> int:
+def retrieve_price(item: Item) -> int:
     ...
 
 
@@ -3608,7 +3643,7 @@ def retrieve_price(*args):
 
 
 @overload
-def reverse_numberology(arg1: int, arg2: int) -> dict[int, int]:
+def reverse_numberology(advDelta: int, spleenDelta: int) -> dict[int, int]:
     ...
 
 
@@ -3625,27 +3660,27 @@ def rollover() -> int:
     return LibraryFunction("rollover")()
 
 
-def round(arg1: float) -> int:
-    return LibraryFunction("round")(arg1)
+def round(val: float) -> int:
+    return LibraryFunction("round")(val)
 
 
 @overload
-def run_choice(arg1: int, arg2: bool, arg3: str) -> str:
+def run_choice(decision: int, custom: bool, more: str) -> str:
     ...
 
 
 @overload
-def run_choice(arg1: int, arg2: bool) -> str:
+def run_choice(decision: int, extra: bool) -> str:
     ...
 
 
 @overload
-def run_choice(arg1: int, arg2: str) -> str:
+def run_choice(decision: int, extra: str) -> str:
     ...
 
 
 @overload
-def run_choice(arg1: int) -> str:
+def run_choice(decision: int) -> str:
     ...
 
 
@@ -3654,7 +3689,7 @@ def run_choice(*args):
 
 
 @overload
-def run_combat(arg1: str) -> str:
+def run_combat(filterFunction: str) -> str:
     ...
 
 
@@ -3683,16 +3718,16 @@ def scrap_pockets() -> dict[int, int]:
     return LibraryFunction("scrap_pockets")()
 
 
-def sell(arg1: Coinmaster, arg2: int, arg3: Item) -> bool:
-    return LibraryFunction("sell")(arg1, arg2, arg3)
+def sell(master: Coinmaster, countValue: int, itemValue: Item) -> bool:
+    return LibraryFunction("sell")(master, countValue, itemValue)
 
 
-def sell_price(arg1: Coinmaster, arg2: Item) -> int:
-    return LibraryFunction("sell_price")(arg1, arg2)
+def sell_price(master: Coinmaster, item: Item) -> int:
+    return LibraryFunction("sell_price")(master, item)
 
 
-def sells_item(arg1: Coinmaster, arg2: Item) -> bool:
-    return LibraryFunction("sells_item")(arg1, arg2)
+def sells_item(master: Coinmaster, item: Item) -> bool:
+    return LibraryFunction("sells_item")(master, item)
 
 
 def send_fax() -> None:
@@ -3700,17 +3735,17 @@ def send_fax() -> None:
 
 
 @overload
-def session_logs(arg1: str, arg2: str, arg3: int) -> dict[int, str]:
+def session_logs(playerName: str, baseDate: str, count: int) -> dict[int, str]:
     ...
 
 
 @overload
-def session_logs(arg1: str, arg2: int) -> dict[int, str]:
+def session_logs(player: str, dayCount: int) -> dict[int, str]:
     ...
 
 
 @overload
-def session_logs(arg1: int) -> dict[int, str]:
+def session_logs(dayCount: int) -> dict[int, str]:
     ...
 
 
@@ -3719,12 +3754,12 @@ def session_logs(*args):
 
 
 @overload
-def set_auto_attack(arg1: str) -> None:
+def set_auto_attack(attackValue: str) -> None:
     ...
 
 
 @overload
-def set_auto_attack(arg1: int) -> None:
+def set_auto_attack(attackValue: int) -> None:
     ...
 
 
@@ -3732,51 +3767,51 @@ def set_auto_attack(*args):
     return LibraryFunction("set_auto_attack")(*args)
 
 
-def set_ccs(arg1: str) -> bool:
-    return LibraryFunction("set_ccs")(arg1)
+def set_ccs(name: str) -> bool:
+    return LibraryFunction("set_ccs")(name)
 
 
-def set_length(arg1: str, arg2: int) -> None:
-    return LibraryFunction("set_length")(arg1, arg2)
+def set_length(buffer: str, i: int) -> None:
+    return LibraryFunction("set_length")(buffer, i)
 
 
-def set_location(arg1: Location) -> None:
-    return LibraryFunction("set_location")(arg1)
+def set_location(location: Location) -> None:
+    return LibraryFunction("set_location")(location)
 
 
-def set_property(arg1: str, arg2: str) -> None:
-    return LibraryFunction("set_property")(arg1, arg2)
+def set_property(nameValue: str, value: str) -> None:
+    return LibraryFunction("set_property")(nameValue, value)
 
 
-def shop_amount(arg1: Item) -> int:
-    return LibraryFunction("shop_amount")(arg1)
+def shop_amount(item: Item) -> int:
+    return LibraryFunction("shop_amount")(item)
 
 
-def shop_limit(arg1: Item) -> int:
-    return LibraryFunction("shop_limit")(arg1)
+def shop_limit(item: Item) -> int:
+    return LibraryFunction("shop_limit")(item)
 
 
-def shop_price(arg1: Item) -> int:
-    return LibraryFunction("shop_price")(arg1)
+def shop_price(item: Item) -> int:
+    return LibraryFunction("shop_price")(item)
 
 
 @overload
-def skill_modifier(arg1: Item, arg2: Modifier) -> Skill:
+def skill_modifier(item: Item, modifier: Modifier) -> Skill:
     ...
 
 
 @overload
-def skill_modifier(arg1: Item, arg2: str) -> Skill:
+def skill_modifier(item: Item, modifier: str) -> Skill:
     ...
 
 
 @overload
-def skill_modifier(arg1: str, arg2: Modifier) -> Skill:
+def skill_modifier(type: str, modifier: Modifier) -> Skill:
     ...
 
 
 @overload
-def skill_modifier(arg1: str, arg2: str) -> Skill:
+def skill_modifier(type: str, modifier: str) -> Skill:
     ...
 
 
@@ -3784,29 +3819,29 @@ def skill_modifier(*args):
     return LibraryFunction("skill_modifier")(*args)
 
 
-def slash_count(arg1: Item) -> int:
-    return LibraryFunction("slash_count")(arg1)
+def slash_count(item: Item) -> int:
+    return LibraryFunction("slash_count")(item)
 
 
-def soulsauce_cost(arg1: Skill) -> int:
-    return LibraryFunction("soulsauce_cost")(arg1)
+def soulsauce_cost(skill: Skill) -> int:
+    return LibraryFunction("soulsauce_cost")(skill)
 
 
 def spleen_limit() -> int:
     return LibraryFunction("spleen_limit")()
 
 
-def split_modifiers(arg1: str) -> dict[Modifier, str]:
-    return LibraryFunction("split_modifiers")(arg1)
+def split_modifiers(modifiers: str) -> dict[Modifier, str]:
+    return LibraryFunction("split_modifiers")(modifiers)
 
 
 @overload
-def split_string(arg1: str, arg2: str) -> dict[int, str]:
+def split_string(string: str, regex: str) -> dict[int, str]:
     ...
 
 
 @overload
-def split_string(arg1: str) -> dict[int, str]:
+def split_string(string: str) -> dict[int, str]:
     ...
 
 
@@ -3814,17 +3849,17 @@ def split_string(*args):
     return LibraryFunction("split_string")(*args)
 
 
-def square_root(arg1: float) -> float:
-    return LibraryFunction("square_root")(arg1)
+def square_root(val: float) -> float:
+    return LibraryFunction("square_root")(val)
 
 
 @overload
-def start(arg1: Matcher, arg2: int) -> int:
+def start(matcher: Matcher, group: int) -> int:
     ...
 
 
 @overload
-def start(arg1: Matcher) -> int:
+def start(matcher: Matcher) -> int:
     ...
 
 
@@ -3832,12 +3867,12 @@ def start(*args):
     return LibraryFunction("start")(*args)
 
 
-def starts_with(arg1: str, arg2: str) -> bool:
-    return LibraryFunction("starts_with")(arg1, arg2)
+def starts_with(source: str, prefix: str) -> bool:
+    return LibraryFunction("starts_with")(source, prefix)
 
 
-def stash_amount(arg1: Item) -> int:
-    return LibraryFunction("stash_amount")(arg1)
+def stash_amount(item: Item) -> int:
+    return LibraryFunction("stash_amount")(item)
 
 
 def stat_bonus_today() -> Stat:
@@ -3849,12 +3884,12 @@ def stat_bonus_tomorrow() -> Stat:
 
 
 @overload
-def stat_modifier(arg1: Effect, arg2: Modifier) -> Stat:
+def stat_modifier(effect: Effect, modifier: Modifier) -> Stat:
     ...
 
 
 @overload
-def stat_modifier(arg1: Effect, arg2: str) -> Stat:
+def stat_modifier(effect: Effect, modifier: str) -> Stat:
     ...
 
 
@@ -3874,21 +3909,21 @@ def stills_available() -> int:
     return LibraryFunction("stills_available")()
 
 
-def stop_counter(arg1: str) -> None:
-    return LibraryFunction("stop_counter")(arg1)
+def stop_counter(label: str) -> None:
+    return LibraryFunction("stop_counter")(label)
 
 
-def storage_amount(arg1: Item) -> int:
-    return LibraryFunction("storage_amount")(arg1)
+def storage_amount(item: Item) -> int:
+    return LibraryFunction("storage_amount")(item)
 
 
 @overload
-def string_fact(arg1: Monster) -> str:
+def string_fact(monster: Monster) -> str:
     ...
 
 
 @overload
-def string_fact(arg1: Class, arg2: Path, arg3: Monster) -> str:
+def string_fact(cls: Class, path: Path, monster: Monster) -> str:
     ...
 
 
@@ -3897,42 +3932,42 @@ def string_fact(*args):
 
 
 @overload
-def string_modifier(arg1: Effect, arg2: Modifier) -> str:
+def string_modifier(effect: Effect, modifier: Modifier) -> str:
     ...
 
 
 @overload
-def string_modifier(arg1: Effect, arg2: str) -> str:
+def string_modifier(effect: Effect, modifier: str) -> str:
     ...
 
 
 @overload
-def string_modifier(arg1: Item, arg2: Modifier) -> str:
+def string_modifier(item: Item, modifier: Modifier) -> str:
     ...
 
 
 @overload
-def string_modifier(arg1: Item, arg2: str) -> str:
+def string_modifier(item: Item, modifier: str) -> str:
     ...
 
 
 @overload
-def string_modifier(arg1: str, arg2: Modifier) -> str:
+def string_modifier(type: str, modifier: Modifier) -> str:
     ...
 
 
 @overload
-def string_modifier(arg1: str, arg2: str) -> str:
+def string_modifier(type: str, modifier: str) -> str:
     ...
 
 
 @overload
-def string_modifier(arg1: Modifier) -> str:
+def string_modifier(modifier: Modifier) -> str:
     ...
 
 
 @overload
-def string_modifier(arg1: str) -> str:
+def string_modifier(modifier: str) -> str:
     ...
 
 
@@ -3945,12 +3980,12 @@ def stun_skill() -> Skill:
 
 
 @overload
-def substring(arg1: str, arg2: int, arg3: int) -> str:
+def substring(source: str, start: int, finish: int) -> str:
     ...
 
 
 @overload
-def substring(arg1: str, arg2: int) -> str:
+def substring(source: str, start: int) -> str:
     ...
 
 
@@ -3958,16 +3993,16 @@ def substring(*args):
     return LibraryFunction("substring")(*args)
 
 
-def svn_at_head(arg1: str) -> bool:
-    return LibraryFunction("svn_at_head")(arg1)
+def svn_at_head(project: str) -> bool:
+    return LibraryFunction("svn_at_head")(project)
 
 
-def svn_exists(arg1: str) -> bool:
-    return LibraryFunction("svn_exists")(arg1)
+def svn_exists(project: str) -> bool:
+    return LibraryFunction("svn_exists")(project)
 
 
-def svn_info(arg1: str) -> dict[str, Any]:
-    return LibraryFunction("svn_info")(arg1)
+def svn_info(script: str) -> dict[str, Any]:
+    return LibraryFunction("svn_info")(script)
 
 
 def svn_list() -> dict[int, str]:
@@ -3975,32 +4010,32 @@ def svn_list() -> dict[int, str]:
 
 
 @overload
-def sweet_synthesis(arg1: int, arg2: Item, arg3: Item) -> bool:
+def sweet_synthesis(count: int, item1: Item, item2: Item) -> bool:
     ...
 
 
 @overload
-def sweet_synthesis(arg1: Item, arg2: Item) -> bool:
+def sweet_synthesis(item1: Item, item2: Item) -> bool:
     ...
 
 
 @overload
-def sweet_synthesis(arg1: int, arg2: Effect, arg3: int) -> bool:
+def sweet_synthesis(count: int, effect: Effect, flags: int) -> bool:
     ...
 
 
 @overload
-def sweet_synthesis(arg1: Effect, arg2: int) -> bool:
+def sweet_synthesis(effect: Effect, count: int) -> bool:
     ...
 
 
 @overload
-def sweet_synthesis(arg1: int, arg2: Effect) -> bool:
+def sweet_synthesis(count: int, effect: Effect) -> bool:
     ...
 
 
 @overload
-def sweet_synthesis(arg1: Effect) -> bool:
+def sweet_synthesis(effect: Effect) -> bool:
     ...
 
 
@@ -4009,12 +4044,12 @@ def sweet_synthesis(*args):
 
 
 @overload
-def sweet_synthesis_pair(arg1: Effect, arg2: int) -> dict[int, Item]:
+def sweet_synthesis_pair(effect: Effect, flags: int) -> dict[int, Item]:
     ...
 
 
 @overload
-def sweet_synthesis_pair(arg1: Effect) -> dict[int, Item]:
+def sweet_synthesis_pair(effect: Effect) -> dict[int, Item]:
     ...
 
 
@@ -4023,12 +4058,12 @@ def sweet_synthesis_pair(*args):
 
 
 @overload
-def sweet_synthesis_pairing(arg1: Effect, arg2: Item, arg3: int) -> dict[int, Item]:
+def sweet_synthesis_pairing(effect: Effect, item: Item, flags: int) -> dict[int, Item]:
     ...
 
 
 @overload
-def sweet_synthesis_pairing(arg1: Effect, arg2: Item) -> dict[int, Item]:
+def sweet_synthesis_pairing(effect: Effect, item: Item) -> dict[int, Item]:
     ...
 
 
@@ -4036,27 +4071,27 @@ def sweet_synthesis_pairing(*args):
     return LibraryFunction("sweet_synthesis_pairing")(*args)
 
 
-def sweet_synthesis_result(arg1: Item, arg2: Item) -> Effect:
-    return LibraryFunction("sweet_synthesis_result")(arg1, arg2)
+def sweet_synthesis_result(item1: Item, item2: Item) -> Effect:
+    return LibraryFunction("sweet_synthesis_result")(item1, item2)
 
 
 @overload
-def take_closet(arg1: int, arg2: Item) -> bool:
+def take_closet(count: int, item: Item) -> bool:
     ...
 
 
 @overload
-def take_closet(arg1: Item, arg2: int) -> bool:
+def take_closet(item: Item, count: int) -> bool:
     ...
 
 
 @overload
-def take_closet(arg1: Item) -> bool:
+def take_closet(item: Item) -> bool:
     ...
 
 
 @overload
-def take_closet(arg1: int) -> bool:
+def take_closet(meat: int) -> bool:
     ...
 
 
@@ -4065,12 +4100,12 @@ def take_closet(*args):
 
 
 @overload
-def take_display(arg1: int, arg2: Item) -> bool:
+def take_display(count: int, item: Item) -> bool:
     ...
 
 
 @overload
-def take_display(arg1: Item, arg2: int) -> bool:
+def take_display(item: Item, count: int) -> bool:
     ...
 
 
@@ -4079,12 +4114,12 @@ def take_display(*args):
 
 
 @overload
-def take_shop(arg1: int, arg2: Item) -> bool:
+def take_shop(count: int, item: Item) -> bool:
     ...
 
 
 @overload
-def take_shop(arg1: Item) -> bool:
+def take_shop(itemValue: Item) -> bool:
     ...
 
 
@@ -4093,12 +4128,12 @@ def take_shop(*args):
 
 
 @overload
-def take_stash(arg1: int, arg2: Item) -> bool:
+def take_stash(count: int, item: Item) -> bool:
     ...
 
 
 @overload
-def take_stash(arg1: Item, arg2: int) -> bool:
+def take_stash(item: Item, count: int) -> bool:
     ...
 
 
@@ -4107,12 +4142,12 @@ def take_stash(*args):
 
 
 @overload
-def take_storage(arg1: int, arg2: Item) -> bool:
+def take_storage(count: int, item: Item) -> bool:
     ...
 
 
 @overload
-def take_storage(arg1: Item, arg2: int) -> bool:
+def take_storage(item: Item, count: int) -> bool:
     ...
 
 
@@ -4121,7 +4156,7 @@ def take_storage(*args):
 
 
 @overload
-def tavern(arg1: str) -> int:
+def tavern(goal: str) -> int:
     ...
 
 
@@ -4134,38 +4169,38 @@ def tavern(*args):
     return LibraryFunction("tavern")(*args)
 
 
-def throw_item(arg1: Item) -> str:
-    return LibraryFunction("throw_item")(arg1)
+def throw_item(item: Item) -> str:
+    return LibraryFunction("throw_item")(item)
 
 
-def throw_items(arg1: Item, arg2: Item) -> str:
-    return LibraryFunction("throw_items")(arg1, arg2)
+def throw_items(item1: Item, item2: Item) -> str:
+    return LibraryFunction("throw_items")(item1, item2)
 
 
-def thunder_cost(arg1: Skill) -> int:
-    return LibraryFunction("thunder_cost")(arg1)
+def thunder_cost(skill: Skill) -> int:
+    return LibraryFunction("thunder_cost")(skill)
 
 
 def time_to_string() -> str:
     return LibraryFunction("time_to_string")()
 
 
-def timestamp_to_date(arg1: int, arg2: str) -> str:
-    return LibraryFunction("timestamp_to_date")(arg1, arg2)
+def timestamp_to_date(timestamp: int, outFormat: str) -> str:
+    return LibraryFunction("timestamp_to_date")(timestamp, outFormat)
 
 
 @overload
-def to_boolean(arg1: int) -> bool:
+def to_boolean(value: int) -> bool:
     ...
 
 
 @overload
-def to_boolean(arg1: bool) -> bool:
+def to_boolean(value: bool) -> bool:
     ...
 
 
 @overload
-def to_boolean(arg1: str) -> bool:
+def to_boolean(value: str) -> bool:
     ...
 
 
@@ -4173,17 +4208,17 @@ def to_boolean(*args):
     return LibraryFunction("to_boolean")(*args)
 
 
-def to_bounty(arg1: str) -> Bounty:
-    return LibraryFunction("to_bounty")(arg1)
+def to_bounty(value: str) -> Bounty:
+    return LibraryFunction("to_bounty")(value)
 
 
 @overload
-def to_buffer(arg1: str) -> str:
+def to_buffer(value: str) -> str:
     ...
 
 
 @overload
-def to_buffer(arg1: str) -> str:
+def to_buffer(value: str) -> str:
     ...
 
 
@@ -4192,12 +4227,12 @@ def to_buffer(*args):
 
 
 @overload
-def to_class(arg1: int) -> Class:
+def to_class(value: int) -> Class:
     ...
 
 
 @overload
-def to_class(arg1: str) -> Class:
+def to_class(value: str) -> Class:
     ...
 
 
@@ -4205,22 +4240,22 @@ def to_class(*args):
     return LibraryFunction("to_class")(*args)
 
 
-def to_coinmaster(arg1: str) -> Coinmaster:
-    return LibraryFunction("to_coinmaster")(arg1)
+def to_coinmaster(value: str) -> Coinmaster:
+    return LibraryFunction("to_coinmaster")(value)
 
 
 @overload
-def to_effect(arg1: Skill) -> Effect:
+def to_effect(skill: Skill) -> Effect:
     ...
 
 
 @overload
-def to_effect(arg1: int) -> Effect:
+def to_effect(id: int) -> Effect:
     ...
 
 
 @overload
-def to_effect(arg1: str) -> Effect:
+def to_effect(name: str) -> Effect:
     ...
 
 
@@ -4228,17 +4263,17 @@ def to_effect(*args):
     return LibraryFunction("to_effect")(*args)
 
 
-def to_element(arg1: str) -> Element:
-    return LibraryFunction("to_element")(arg1)
+def to_element(value: str) -> Element:
+    return LibraryFunction("to_element")(value)
 
 
 @overload
-def to_familiar(arg1: int) -> Familiar:
+def to_familiar(id: int) -> Familiar:
     ...
 
 
 @overload
-def to_familiar(arg1: str) -> Familiar:
+def to_familiar(name: str) -> Familiar:
     ...
 
 
@@ -4247,22 +4282,22 @@ def to_familiar(*args):
 
 
 @overload
-def to_float(arg1: float) -> float:
+def to_float(value: float) -> float:
     ...
 
 
 @overload
-def to_float(arg1: int) -> float:
+def to_float(value: int) -> float:
     ...
 
 
 @overload
-def to_float(arg1: bool) -> float:
+def to_float(value: bool) -> float:
     ...
 
 
 @overload
-def to_float(arg1: str) -> float:
+def to_float(value: str) -> float:
     ...
 
 
@@ -4271,77 +4306,77 @@ def to_float(*args):
 
 
 @overload
-def to_int(arg1: Path) -> int:
+def to_int(value: Path) -> int:
     ...
 
 
 @overload
-def to_int(arg1: Vykea) -> int:
+def to_int(value: Vykea) -> int:
     ...
 
 
 @overload
-def to_int(arg1: Servant) -> int:
+def to_int(value: Servant) -> int:
     ...
 
 
 @overload
-def to_int(arg1: Thrall) -> int:
+def to_int(value: Thrall) -> int:
     ...
 
 
 @overload
-def to_int(arg1: Monster) -> int:
+def to_int(value: Monster) -> int:
     ...
 
 
 @overload
-def to_int(arg1: Class) -> int:
+def to_int(value: Class) -> int:
     ...
 
 
 @overload
-def to_int(arg1: Effect) -> int:
+def to_int(value: Effect) -> int:
     ...
 
 
 @overload
-def to_int(arg1: Skill) -> int:
+def to_int(value: Skill) -> int:
     ...
 
 
 @overload
-def to_int(arg1: Location) -> int:
+def to_int(value: Location) -> int:
     ...
 
 
 @overload
-def to_int(arg1: Familiar) -> int:
+def to_int(value: Familiar) -> int:
     ...
 
 
 @overload
-def to_int(arg1: Item) -> int:
+def to_int(value: Item) -> int:
     ...
 
 
 @overload
-def to_int(arg1: float) -> int:
+def to_int(value: float) -> int:
     ...
 
 
 @overload
-def to_int(arg1: int) -> int:
+def to_int(value: int) -> int:
     ...
 
 
 @overload
-def to_int(arg1: bool) -> int:
+def to_int(value: bool) -> int:
     ...
 
 
 @overload
-def to_int(arg1: str) -> int:
+def to_int(value: str) -> int:
     ...
 
 
@@ -4350,17 +4385,17 @@ def to_int(*args):
 
 
 @overload
-def to_item(arg1: str, arg2: int) -> Item:
+def to_item(name: str, count: int) -> Item:
     ...
 
 
 @overload
-def to_item(arg1: int) -> Item:
+def to_item(value: int) -> Item:
     ...
 
 
 @overload
-def to_item(arg1: str) -> Item:
+def to_item(value: str) -> Item:
     ...
 
 
@@ -4368,17 +4403,17 @@ def to_item(*args):
     return LibraryFunction("to_item")(*args)
 
 
-def to_json(arg1: Any) -> str:
-    return LibraryFunction("to_json")(arg1)
+def to_json(val: Any) -> str:
+    return LibraryFunction("to_json")(val)
 
 
 @overload
-def to_location(arg1: int) -> Location:
+def to_location(value: int) -> Location:
     ...
 
 
 @overload
-def to_location(arg1: str) -> Location:
+def to_location(value: str) -> Location:
     ...
 
 
@@ -4386,17 +4421,17 @@ def to_location(*args):
     return LibraryFunction("to_location")(*args)
 
 
-def to_lower_case(arg1: str) -> str:
-    return LibraryFunction("to_lower_case")(arg1)
+def to_lower_case(string: str) -> str:
+    return LibraryFunction("to_lower_case")(string)
 
 
 @overload
-def to_monster(arg1: int) -> Monster:
+def to_monster(id: int) -> Monster:
     ...
 
 
 @overload
-def to_monster(arg1: str) -> Monster:
+def to_monster(name: str) -> Monster:
     ...
 
 
@@ -4405,12 +4440,12 @@ def to_monster(*args):
 
 
 @overload
-def to_path(arg1: int) -> Path:
+def to_path(value: int) -> Path:
     ...
 
 
 @overload
-def to_path(arg1: str) -> Path:
+def to_path(value: str) -> Path:
     ...
 
 
@@ -4418,21 +4453,21 @@ def to_path(*args):
     return LibraryFunction("to_path")(*args)
 
 
-def to_phylum(arg1: str) -> Phylum:
-    return LibraryFunction("to_phylum")(arg1)
+def to_phylum(value: str) -> Phylum:
+    return LibraryFunction("to_phylum")(value)
 
 
-def to_plural(arg1: Item) -> str:
-    return LibraryFunction("to_plural")(arg1)
+def to_plural(item: Item) -> str:
+    return LibraryFunction("to_plural")(item)
 
 
 @overload
-def to_servant(arg1: int) -> Servant:
+def to_servant(value: int) -> Servant:
     ...
 
 
 @overload
-def to_servant(arg1: str) -> Servant:
+def to_servant(value: str) -> Servant:
     ...
 
 
@@ -4441,22 +4476,22 @@ def to_servant(*args):
 
 
 @overload
-def to_skill(arg1: Effect) -> Skill:
+def to_skill(effect: Effect) -> Skill:
     ...
 
 
 @overload
-def to_skill(arg1: int) -> Skill:
+def to_skill(id: int) -> Skill:
     ...
 
 
 @overload
-def to_skill(arg1: str, arg2: str) -> Skill:
+def to_skill(name: str, type: str) -> Skill:
     ...
 
 
 @overload
-def to_skill(arg1: str) -> Skill:
+def to_skill(name: str) -> Skill:
     ...
 
 
@@ -4465,12 +4500,12 @@ def to_skill(*args):
 
 
 @overload
-def to_slot(arg1: Item) -> Slot:
+def to_slot(item: Item) -> Slot:
     ...
 
 
 @overload
-def to_slot(arg1: str) -> Slot:
+def to_slot(item: str) -> Slot:
     ...
 
 
@@ -4478,22 +4513,22 @@ def to_slot(*args):
     return LibraryFunction("to_slot")(*args)
 
 
-def to_stat(arg1: str) -> Stat:
-    return LibraryFunction("to_stat")(arg1)
+def to_stat(value: str) -> Stat:
+    return LibraryFunction("to_stat")(value)
 
 
 @overload
-def to_string(arg1: float, arg2: str) -> str:
+def to_string(val: float, fmt: str) -> str:
     ...
 
 
 @overload
-def to_string(arg1: int, arg2: str) -> str:
+def to_string(val: int, fmt: str) -> str:
     ...
 
 
 @overload
-def to_string(arg1: str) -> str:
+def to_string(val: str) -> str:
     ...
 
 
@@ -4502,12 +4537,12 @@ def to_string(*args):
 
 
 @overload
-def to_thrall(arg1: int) -> Thrall:
+def to_thrall(value: int) -> Thrall:
     ...
 
 
 @overload
-def to_thrall(arg1: str) -> Thrall:
+def to_thrall(value: str) -> Thrall:
     ...
 
 
@@ -4515,40 +4550,40 @@ def to_thrall(*args):
     return LibraryFunction("to_thrall")(*args)
 
 
-def to_upper_case(arg1: str) -> str:
-    return LibraryFunction("to_upper_case")(arg1)
+def to_upper_case(string: str) -> str:
+    return LibraryFunction("to_upper_case")(string)
 
 
-def to_url(arg1: Location) -> str:
-    return LibraryFunction("to_url")(arg1)
+def to_url(value: Location) -> str:
+    return LibraryFunction("to_url")(value)
 
 
-def to_vykea(arg1: str) -> Vykea:
-    return LibraryFunction("to_vykea")(arg1)
+def to_vykea(value: str) -> Vykea:
+    return LibraryFunction("to_vykea")(value)
 
 
 @overload
-def to_wiki_url(arg1: Monster) -> str:
+def to_wiki_url(value: Monster) -> str:
     ...
 
 
 @overload
-def to_wiki_url(arg1: Skill) -> str:
+def to_wiki_url(value: Skill) -> str:
     ...
 
 
 @overload
-def to_wiki_url(arg1: Effect) -> str:
+def to_wiki_url(value: Effect) -> str:
     ...
 
 
 @overload
-def to_wiki_url(arg1: Item) -> str:
+def to_wiki_url(value: Item) -> str:
     ...
 
 
 @overload
-def to_wiki_url(arg1: str) -> str:
+def to_wiki_url(value: str) -> str:
     ...
 
 
@@ -4572,28 +4607,28 @@ def tower_door() -> bool:
     return LibraryFunction("tower_door")()
 
 
-def traceprint(arg1: str) -> None:
-    return LibraryFunction("traceprint")(arg1)
+def traceprint(string: str) -> None:
+    return LibraryFunction("traceprint")(string)
 
 
-def track_copy_count(arg1: Monster) -> int:
-    return LibraryFunction("track_copy_count")(arg1)
+def track_copy_count(monster: Monster) -> int:
+    return LibraryFunction("track_copy_count")(monster)
 
 
-def track_ignore_queue(arg1: Monster) -> bool:
-    return LibraryFunction("track_ignore_queue")(arg1)
+def track_ignore_queue(monster: Monster) -> bool:
+    return LibraryFunction("track_ignore_queue")(monster)
 
 
-def tracked_by(arg1: Monster) -> dict[int, str]:
-    return LibraryFunction("tracked_by")(arg1)
+def tracked_by(monster: Monster) -> dict[int, str]:
+    return LibraryFunction("tracked_by")(monster)
 
 
-def truncate(arg1: float) -> int:
-    return LibraryFunction("truncate")(arg1)
+def truncate(val: float) -> int:
+    return LibraryFunction("truncate")(val)
 
 
-def turns_per_cast(arg1: Skill) -> int:
-    return LibraryFunction("turns_per_cast")(arg1)
+def turns_per_cast(skill: Skill) -> int:
+    return LibraryFunction("turns_per_cast")(skill)
 
 
 def turns_played() -> int:
@@ -4612,26 +4647,26 @@ def update_candy_prices() -> None:
     return LibraryFunction("update_candy_prices")()
 
 
-def url_decode(arg1: str) -> str:
-    return LibraryFunction("url_decode")(arg1)
+def url_decode(string: str) -> str:
+    return LibraryFunction("url_decode")(string)
 
 
-def url_encode(arg1: str) -> str:
-    return LibraryFunction("url_encode")(arg1)
+def url_encode(string: str) -> str:
+    return LibraryFunction("url_encode")(string)
 
 
 @overload
-def use(arg1: int, arg2: Item) -> bool:
+def use(count: int, item: Item) -> bool:
     ...
 
 
 @overload
-def use(arg1: Item, arg2: int) -> bool:
+def use(item: Item, count: int) -> bool:
     ...
 
 
 @overload
-def use(arg1: Item) -> bool:
+def use(item: Item) -> bool:
     ...
 
 
@@ -4639,36 +4674,36 @@ def use(*args):
     return LibraryFunction("use")(*args)
 
 
-def use_familiar(arg1: Familiar) -> bool:
-    return LibraryFunction("use_familiar")(arg1)
+def use_familiar(familiar: Familiar) -> bool:
+    return LibraryFunction("use_familiar")(familiar)
 
 
-def use_servant(arg1: Servant) -> bool:
-    return LibraryFunction("use_servant")(arg1)
+def use_servant(servant: Servant) -> bool:
+    return LibraryFunction("use_servant")(servant)
 
 
 @overload
-def use_skill(arg1: Skill) -> str:
+def use_skill(skill: Skill) -> str:
     ...
 
 
 @overload
-def use_skill(arg1: int, arg2: Skill, arg3: str) -> bool:
+def use_skill(count: int, skill: Skill, target: str) -> bool:
     ...
 
 
 @overload
-def use_skill(arg1: Skill, arg2: int, arg3: str) -> bool:
+def use_skill(skill: Skill, count: int, target: str) -> bool:
     ...
 
 
 @overload
-def use_skill(arg1: int, arg2: Skill) -> bool:
+def use_skill(count: int, skill: Skill) -> bool:
     ...
 
 
 @overload
-def use_skill(arg1: Skill, arg2: int) -> bool:
+def use_skill(skill: Skill, count: int) -> bool:
     ...
 
 
@@ -4677,12 +4712,12 @@ def use_skill(*args):
 
 
 @overload
-def user_confirm(arg1: str, arg2: int, arg3: bool) -> bool:
+def user_confirm(message: str, timeOut: int, defaultBoolean: bool) -> bool:
     ...
 
 
 @overload
-def user_confirm(arg1: str) -> bool:
+def user_confirm(message: str) -> bool:
     ...
 
 
@@ -4691,12 +4726,12 @@ def user_confirm(*args):
 
 
 @overload
-def user_notify(arg1: str, arg2: bool) -> None:
+def user_notify(message: str, onlyShowWhenHidden: bool) -> None:
     ...
 
 
 @overload
-def user_notify(arg1: str) -> None:
+def user_notify(message: str) -> None:
     ...
 
 
@@ -4705,17 +4740,17 @@ def user_notify(*args):
 
 
 @overload
-def user_prompt(arg1: str, arg2: int, arg3: str) -> str:
+def user_prompt(message: str, timeOut: int, defaultString: str) -> str:
     ...
 
 
 @overload
-def user_prompt(arg1: str, arg2: dict[Any, Any]) -> str:
+def user_prompt(message: str, options: dict[Any, Any]) -> str:
     ...
 
 
 @overload
-def user_prompt(arg1: str) -> str:
+def user_prompt(message: str) -> str:
     ...
 
 
@@ -4723,22 +4758,22 @@ def user_prompt(*args):
     return LibraryFunction("user_prompt")(*args)
 
 
-def visit(arg1: Coinmaster) -> bool:
-    return LibraryFunction("visit")(arg1)
+def visit(master: Coinmaster) -> bool:
+    return LibraryFunction("visit")(master)
 
 
 @overload
-def visit_url(arg1: str, arg2: bool, arg3: bool) -> str:
+def visit_url(string: str, usePostMethod: bool, encoded: bool) -> str:
     ...
 
 
 @overload
-def visit_url(arg1: str, arg2: bool) -> str:
+def visit_url(string: str, usePostMethod: bool) -> str:
     ...
 
 
 @overload
-def visit_url(arg1: str) -> str:
+def visit_url(string: str) -> str:
     ...
 
 
@@ -4752,12 +4787,12 @@ def visit_url(*args):
 
 
 @overload
-def voting_booth_initiatives(arg1: int, arg2: int, arg3: int) -> dict[str, bool]:
+def voting_booth_initiatives(clss: int, path: int, daycount: int) -> dict[str, bool]:
     ...
 
 
 @overload
-def voting_booth_initiatives(arg1: Class, arg2: Path, arg3: int) -> dict[str, bool]:
+def voting_booth_initiatives(clss: Class, path: Path, daycount: int) -> dict[str, bool]:
     ...
 
 
@@ -4765,28 +4800,28 @@ def voting_booth_initiatives(*args):
     return LibraryFunction("voting_booth_initiatives")(*args)
 
 
-def wait(arg1: int) -> None:
-    return LibraryFunction("wait")(arg1)
+def wait(delay: int) -> None:
+    return LibraryFunction("wait")(delay)
 
 
-def waitq(arg1: int) -> None:
-    return LibraryFunction("waitq")(arg1)
+def waitq(delay: int) -> None:
+    return LibraryFunction("waitq")(delay)
 
 
-def weapon_hands(arg1: Item) -> int:
-    return LibraryFunction("weapon_hands")(arg1)
+def weapon_hands(item: Item) -> int:
+    return LibraryFunction("weapon_hands")(item)
 
 
-def weapon_type(arg1: Item) -> Stat:
-    return LibraryFunction("weapon_type")(arg1)
+def weapon_type(item: Item) -> Stat:
+    return LibraryFunction("weapon_type")(item)
 
 
 def weight_adjustment() -> int:
     return LibraryFunction("weight_adjustment")()
 
 
-def well_stocked(arg1: str, arg2: int, arg3: int) -> bool:
-    return LibraryFunction("well_stocked")(arg1, arg2, arg3)
+def well_stocked(itemName: str, quantity: int, price: int) -> bool:
+    return LibraryFunction("well_stocked")(itemName, quantity, price)
 
 
 def white_citadel_available() -> bool:
@@ -4805,21 +4840,21 @@ def will_usually_miss() -> bool:
     return LibraryFunction("will_usually_miss")()
 
 
-def write(arg1: str) -> None:
-    return LibraryFunction("write")(arg1)
+def write(string: str) -> None:
+    return LibraryFunction("write")(string)
 
 
-def write_ccs(arg1: str, arg2: str) -> bool:
-    return LibraryFunction("write_ccs")(arg1, arg2)
+def write_ccs(data: str, name: str) -> bool:
+    return LibraryFunction("write_ccs")(data, name)
 
 
-def writeln(arg1: str) -> None:
-    return LibraryFunction("writeln")(arg1)
+def writeln(string: str) -> None:
+    return LibraryFunction("writeln")(string)
 
 
-def xpath(arg1: str, arg2: str) -> dict[int, str]:
-    return LibraryFunction("xpath")(arg1, arg2)
+def xpath(html: str, xpath: str) -> dict[int, str]:
+    return LibraryFunction("xpath")(html, xpath)
 
 
-def zap(arg1: Item) -> Item:
-    return LibraryFunction("zap")(arg1)
+def zap(item: Item) -> Item:
+    return LibraryFunction("zap")(item)
