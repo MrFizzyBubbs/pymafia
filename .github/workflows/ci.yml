@@ -1,4 +1,4 @@
-name: Continuous Integration
+name: CI
 on:
   push:
     branches: [main]
@@ -10,11 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Set up Poetry
         uses: ./.github/actions/setup-poetry
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
           cache: "poetry"
@@ -30,16 +30,16 @@ jobs:
     name: test (Python ${{ matrix.python-version }})
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Set up Poetry
         uses: ./.github/actions/setup-poetry
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
           cache: "poetry"
       - name: Set up Java
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version-file: .java-version
           distribution: temurin
