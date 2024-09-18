@@ -3,25 +3,56 @@ on:
   release:
     types: [published]
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Set up Poetry
-        uses: ./.github/actions/setup-poetry
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v2
+        with:
+          enable-cache: true
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
-          cache: "poetry"
-      - name: Install poetry-dynamic-versioning
-        run: poetry self add 'poetry-dynamic-versioning[plugin]'
-      - name: Install dependencies
-        run: poetry install --no-root
-      - name: Publish package
-        run: |-
-          poetry config pypi-token.pypi ${{ secrets.PYPI_API_TOKEN }}
-          poetry publish --build
+          python-version-file: "pyproject.toml"
+      - name: Build package
+        run: |
+          VERSION=$(uvx dunamai from any --no-metadata --style pep440)
+          uvx --from=toml-cli toml set --toml-path=pyproject.toml project.version $VERSION
+          uv build
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version-file: .java-version
+          distribution: temurin
+      - name: Validate distributions
+        run: |
+          for file in $(find dist -type f); do
+              echo "Validating $file"
+              uv run --with $file --no-project --refresh-package pymafia -- python -c "import pymafia"
+          done
+      - name: Upload distributions
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/pymafia
+    permissions:
+      # Required for PyPI's trusted publishing
+      id-token: write
+    steps:
+      - name: Download distributions
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1

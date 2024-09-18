@@ -3,19 +3,19 @@ all:
 
 .PHONY: install
 install:
-	poetry install
+	uv sync --all-extras --dev
 
 .PHONY: format
 format:
-	poetry run ruff check . --fix
-	poetry run ruff format .
+	uv run ruff check . --fix
+	uv run ruff format .
 
 .PHONY: lint
 lint:
-	poetry run ruff check .
-	poetry run ruff format . --check
-	poetry run mypy src	
+	uv run ruff check .
+	uv run ruff format . --check
+	uv run mypy src	
 
 .PHONY: test
 test:
-	poetry run pytest . -p no:faulthandler
+	uv run pytest . -p no:faulthandler

@@ -1,39 +1,32 @@
-[tool.poetry]
+[project]
 name = "pymafia"
-version = "0.0.0" # Standard placeholder for poetry-dynamic-versioning
+version = "0.0.1"
 description = "A Python module and bridge for reflecting KoLmafia's Java environment"
-license = "MIT"
-authors = ["MrFizzyBubbs <mrfizzybubbs@protonmail.com>"]
+authors = [{ name = "MrFizzyBubbs", email = "mrfizzybubbs@protonmail.com" }]
 readme = "README.md"
-repository = "https://github.com/MrFizzyBubbs/pymafia"
-packages = [
-  { include = "pymafia", from = "src" },
-  { include = "pymafia_config.py", from = "src" },
+requires-python = ">=3.10"
+dependencies = ["JPype1>=1.4.1", "wrapt>=1.15.0"]
+
+[project.urls]
+Repository = "https://github.com/MrFizzyBubbs/pymafia"
+Releases = "https://github.com/MrFizzyBubbs/pymafia/releases"
+
+[tool.uv]
+dev-dependencies = [
+    "ipykernel>=6.29.5",
+    "mypy>=1.11.2",
+    "pre-commit>=3.8.0",
+    "pytest>=8.3.3",
+    "ruff>=0.6.5",
 ]
 
-[tool.poetry.dependencies]
-python = "^3.10"
-JPype1 = "^1.4.1"
-wrapt = "^1.15.0"
-
-[tool.poetry.group.dev.dependencies]
-ipykernel = "^6.15.1"
-ruff = "^0.1.2"
-yamlfix = "^1.9.0"
-docformatter = "^1.5.0"
-mypy = "^0.971"
-pytest = "^7.2.2"
-pytest-cov = "^4.0.0"
-pre-commit = "^3.2.2"
-
-[tool.ruff]
-src = ["src"]
+[tool.ruff.lint]
 extend-select = ["I"]
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "__init__.py" = [
-  "F401", # Unused import
-  "F403", # Wildcard import
+    "F401", # Unused import
+    "F403", # Wildcard import
 ]
 
 [tool.mypy]
@@ -47,15 +40,12 @@ ignore_errors = true
 [tool.yamlfix]
 explicit_start = false
 
-[tool.poetry-dynamic-versioning]
-enable = true
-format = "{base}"
-style = "pep440"
-strict = true
-
 [tool.pytest.ini_options]
 pythonpath = "src"
 
 [build-system]
-requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]
-build-backend = "poetry_dynamic_versioning.backend"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pymafia", "src/pymafia_config.py"]
