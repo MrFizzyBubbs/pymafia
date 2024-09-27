@@ -11,15 +11,16 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Set up Poetry
-        uses: ./.github/actions/setup-poetry
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v2
+        with:
+          enable-cache: true
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
-          cache: "poetry"
+          python-version-file: "pyproject.toml"
       - name: Install dependencies
-        run: poetry install
+        run: uv sync --all-extras --dev
       - name: Lint
         run: make lint
   test:
@@ -31,19 +32,20 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Set up Poetry
-        uses: ./.github/actions/setup-poetry
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "latest"
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-          cache: "poetry"
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
           java-version-file: .java-version
           distribution: temurin
       - name: Install dependencies
-        run: poetry install
+        run: make install
       - name: Test
         run: make test

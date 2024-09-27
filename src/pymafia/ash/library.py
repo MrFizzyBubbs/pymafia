@@ -517,6 +517,7 @@ __all__ = [
     "to_json",
     "to_location",
     "to_lower_case",
+    "to_modifier",
     "to_monster",
     "to_path",
     "to_phylum",
@@ -601,13 +602,11 @@ from pymafia.datatypes import (
 
 
 @overload
-def abort() -> None:
-    ...
+def abort() -> None: ...
 
 
 @overload
-def abort(string: str) -> None:
-    ...
+def abort(string: str) -> None: ...
 
 
 def abort(*args):
@@ -619,13 +618,11 @@ def absorbed_monsters() -> dict[Monster, bool]:
 
 
 @overload
-def add_item_condition(item: Item, count: int) -> None:
-    ...
+def add_item_condition(item: Item, count: int) -> None: ...
 
 
 @overload
-def add_item_condition(count: int, item: Item) -> None:
-    ...
+def add_item_condition(count: int, item: Item) -> None: ...
 
 
 def add_item_condition(*args):
@@ -633,20 +630,17 @@ def add_item_condition(*args):
 
 
 @overload
-def adv1(locationValue: Location) -> bool:
-    ...
+def adv1(locationValue: Location) -> bool: ...
 
 
 @overload
-def adv1(locationValue: Location, adventuresUsedValue: int) -> bool:
-    ...
+def adv1(locationValue: Location, adventuresUsedValue: int) -> bool: ...
 
 
 @overload
 def adv1(
     locationValue: Location, adventuresUsedValue: int, filterFunction: str
-) -> bool:
-    ...
+) -> bool: ...
 
 
 def adv1(*args):
@@ -658,23 +652,19 @@ def adv_cost(skill: Skill) -> int:
 
 
 @overload
-def adventure(count: int, location: Location, filterFunction: str) -> bool:
-    ...
+def adventure(count: int, location: Location, filterFunction: str) -> bool: ...
 
 
 @overload
-def adventure(count: int, location: Location) -> bool:
-    ...
+def adventure(count: int, location: Location) -> bool: ...
 
 
 @overload
-def adventure(location: Location, count: int, filterFunction: str) -> bool:
-    ...
+def adventure(location: Location, count: int, filterFunction: str) -> bool: ...
 
 
 @overload
-def adventure(location: Location, count: int) -> bool:
-    ...
+def adventure(location: Location, count: int) -> bool: ...
 
 
 def adventure(*args):
@@ -690,13 +680,13 @@ def all_normal_outfits() -> dict[int, str]:
 
 
 @overload
-def appearance_rates(location: Location, includeQueue: bool) -> dict[Monster, float]:
-    ...
+def appearance_rates(
+    location: Location, includeQueue: bool
+) -> dict[Monster, float]: ...
 
 
 @overload
-def appearance_rates(location: Location) -> dict[Monster, float]:
-    ...
+def appearance_rates(location: Location) -> dict[Monster, float]: ...
 
 
 def appearance_rates(*args):
@@ -720,13 +710,11 @@ def attack() -> str:
 
 
 @overload
-def autosell(count: int, item: Item) -> bool:
-    ...
+def autosell(count: int, item: Item) -> bool: ...
 
 
 @overload
-def autosell(item: Item, count: int) -> bool:
-    ...
+def autosell(item: Item, count: int) -> bool: ...
 
 
 def autosell(*args):
@@ -742,13 +730,11 @@ def available_amount(item: Item) -> int:
 
 
 @overload
-def available_choice_options(spoilers: bool) -> dict[int, str]:
-    ...
+def available_choice_options(spoilers: bool) -> dict[int, str]: ...
 
 
 @overload
-def available_choice_options() -> dict[int, str]:
-    ...
+def available_choice_options() -> dict[int, str]: ...
 
 
 def available_choice_options(*args):
@@ -764,23 +750,19 @@ def available_choice_text_inputs(decision: int) -> dict[str, str]:
 
 
 @overload
-def available_pocket(stat: Stat) -> int:
-    ...
+def available_pocket(stat: Stat) -> int: ...
 
 
 @overload
-def available_pocket(item: Item) -> int:
-    ...
+def available_pocket(item: Item) -> int: ...
 
 
 @overload
-def available_pocket(effect: Effect) -> int:
-    ...
+def available_pocket(effect: Effect) -> int: ...
 
 
 @overload
-def available_pocket(monster: Monster) -> int:
-    ...
+def available_pocket(monster: Monster) -> int: ...
 
 
 def available_pocket(*args):
@@ -808,43 +790,35 @@ def black_market_available() -> bool:
 
 
 @overload
-def boolean_modifier(effect: Effect, modifier: Modifier) -> bool:
-    ...
+def boolean_modifier(effect: Effect, modifier: Modifier) -> bool: ...
 
 
 @overload
-def boolean_modifier(effect: Effect, modifier: str) -> bool:
-    ...
+def boolean_modifier(effect: Effect, modifier: str) -> bool: ...
 
 
 @overload
-def boolean_modifier(item: Item, modifier: Modifier) -> bool:
-    ...
+def boolean_modifier(item: Item, modifier: Modifier) -> bool: ...
 
 
 @overload
-def boolean_modifier(item: Item, modifier: str) -> bool:
-    ...
+def boolean_modifier(item: Item, modifier: str) -> bool: ...
 
 
 @overload
-def boolean_modifier(type: str, modifier: Modifier) -> bool:
-    ...
+def boolean_modifier(type: str, modifier: Modifier) -> bool: ...
 
 
 @overload
-def boolean_modifier(type: str, modifier: str) -> bool:
-    ...
+def boolean_modifier(type: str, modifier: str) -> bool: ...
 
 
 @overload
-def boolean_modifier(modifier: Modifier) -> bool:
-    ...
+def boolean_modifier(modifier: Modifier) -> bool: ...
 
 
 @overload
-def boolean_modifier(modifier: str) -> bool:
-    ...
+def boolean_modifier(modifier: str) -> bool: ...
 
 
 def boolean_modifier(*args):
@@ -860,33 +834,27 @@ def buffer_to_file(buffer: str, filename: str) -> bool:
 
 
 @overload
-def buy(coinmaster: Coinmaster, quantity: int, item: Item) -> bool:
-    ...
+def buy(coinmaster: Coinmaster, quantity: int, item: Item) -> bool: ...
 
 
 @overload
-def buy(quantity: int, item: Item, price: int) -> int:
-    ...
+def buy(quantity: int, item: Item, price: int) -> int: ...
 
 
 @overload
-def buy(quantity: int, item: Item) -> bool:
-    ...
+def buy(quantity: int, item: Item) -> bool: ...
 
 
 @overload
-def buy(item: Item, quantity: int, price: int) -> int:
-    ...
+def buy(item: Item, quantity: int, price: int) -> int: ...
 
 
 @overload
-def buy(item: Item, quantity: int) -> bool:
-    ...
+def buy(item: Item, quantity: int) -> bool: ...
 
 
 @overload
-def buy(item: Item) -> bool:
-    ...
+def buy(item: Item) -> bool: ...
 
 
 def buy(*args):
@@ -898,28 +866,23 @@ def buy_price(master: Coinmaster, item: Item) -> int:
 
 
 @overload
-def buy_using_storage(quantity: int, item: Item, price: int) -> int:
-    ...
+def buy_using_storage(quantity: int, item: Item, price: int) -> int: ...
 
 
 @overload
-def buy_using_storage(quantity: int, item: Item) -> bool:
-    ...
+def buy_using_storage(quantity: int, item: Item) -> bool: ...
 
 
 @overload
-def buy_using_storage(item: Item, quantity: int, price: int) -> int:
-    ...
+def buy_using_storage(item: Item, quantity: int, price: int) -> int: ...
 
 
 @overload
-def buy_using_storage(item: Item, quantity: int) -> bool:
-    ...
+def buy_using_storage(item: Item, quantity: int) -> bool: ...
 
 
 @overload
-def buy_using_storage(item: Item) -> bool:
-    ...
+def buy_using_storage(item: Item) -> bool: ...
 
 
 def buy_using_storage(*args):
@@ -943,18 +906,15 @@ def can_eat() -> bool:
 
 
 @overload
-def can_equip(familiar: Familiar, item: Item) -> bool:
-    ...
+def can_equip(familiar: Familiar, item: Item) -> bool: ...
 
 
 @overload
-def can_equip(familiar: Familiar) -> bool:
-    ...
+def can_equip(familiar: Familiar) -> bool: ...
 
 
 @overload
-def can_equip(equipment: Item) -> bool:
-    ...
+def can_equip(equipment: Item) -> bool: ...
 
 
 def can_equip(*args):
@@ -962,13 +922,11 @@ def can_equip(*args):
 
 
 @overload
-def can_faxbot(monster: Monster, faxbot: str) -> bool:
-    ...
+def can_faxbot(monster: Monster, faxbot: str) -> bool: ...
 
 
 @overload
-def can_faxbot(monster: Monster) -> bool:
-    ...
+def can_faxbot(monster: Monster) -> bool: ...
 
 
 def can_faxbot(*args):
@@ -988,13 +946,11 @@ def canadia_available() -> bool:
 
 
 @overload
-def candy_for_tier(tier: int, flags: int) -> dict[int, Item]:
-    ...
+def candy_for_tier(tier: int, flags: int) -> dict[int, Item]: ...
 
 
 @overload
-def candy_for_tier(tier: int) -> dict[int, Item]:
-    ...
+def candy_for_tier(tier: int) -> dict[int, Item]: ...
 
 
 def candy_for_tier(*args):
@@ -1014,13 +970,11 @@ def char_at(source: str, index: int) -> str:
 
 
 @overload
-def chat_clan(messageValue: str, recipientValue: str) -> None:
-    ...
+def chat_clan(messageValue: str, recipientValue: str) -> None: ...
 
 
 @overload
-def chat_clan(messageValue: str) -> None:
-    ...
+def chat_clan(messageValue: str) -> None: ...
 
 
 def chat_clan(*args):
@@ -1040,18 +994,15 @@ def chat_private(recipientValue: str, messageValue: str) -> None:
 
 
 @overload
-def chew(count: int, item: Item) -> bool:
-    ...
+def chew(count: int, item: Item) -> bool: ...
 
 
 @overload
-def chew(item: Item, count: int) -> bool:
-    ...
+def chew(item: Item, count: int) -> bool: ...
 
 
 @overload
-def chew(item: Item) -> bool:
-    ...
+def chew(item: Item) -> bool: ...
 
 
 def chew(*args):
@@ -1063,23 +1014,19 @@ def choice_follows_fight() -> bool:
 
 
 @overload
-def class_modifier(item: Item, modifier: Modifier) -> Class:
-    ...
+def class_modifier(item: Item, modifier: Modifier) -> Class: ...
 
 
 @overload
-def class_modifier(item: Item, modifier: str) -> Class:
-    ...
+def class_modifier(item: Item, modifier: str) -> Class: ...
 
 
 @overload
-def class_modifier(type: str, modifier: Modifier) -> Class:
-    ...
+def class_modifier(type: str, modifier: Modifier) -> Class: ...
 
 
 @overload
-def class_modifier(type: str, modifier: str) -> Class:
-    ...
+def class_modifier(type: str, modifier: str) -> Class: ...
 
 
 def class_modifier(*args):
@@ -1123,13 +1070,11 @@ def combat_skill_available(skill: Skill) -> bool:
 
 
 @overload
-def concoction_price(value: Vykea) -> int:
-    ...
+def concoction_price(value: Vykea) -> int: ...
 
 
 @overload
-def concoction_price(value: Item) -> int:
-    ...
+def concoction_price(value: Item) -> int: ...
 
 
 def concoction_price(*args):
@@ -1161,18 +1106,15 @@ def creatable_amount(item: Item) -> int:
 
 
 @overload
-def creatable_turns(itemId: Item, count: int, freeCrafting: bool) -> int:
-    ...
+def creatable_turns(itemId: Item, count: int, freeCrafting: bool) -> int: ...
 
 
 @overload
-def creatable_turns(itemId: Item, count: int) -> int:
-    ...
+def creatable_turns(itemId: Item, count: int) -> int: ...
 
 
 @overload
-def creatable_turns(itemId: Item) -> int:
-    ...
+def creatable_turns(itemId: Item) -> int: ...
 
 
 def creatable_turns(*args):
@@ -1180,18 +1122,15 @@ def creatable_turns(*args):
 
 
 @overload
-def create(count: int, item: Item) -> bool:
-    ...
+def create(count: int, item: Item) -> bool: ...
 
 
 @overload
-def create(item: Item, count: int) -> bool:
-    ...
+def create(item: Item, count: int) -> bool: ...
 
 
 @overload
-def create(item: Item) -> bool:
-    ...
+def create(item: Item) -> bool: ...
 
 
 def create(*args):
@@ -1223,18 +1162,15 @@ def current_round() -> int:
 
 
 @overload
-def curse(quantity: int, itemId: Item, target: str, message: str) -> bool:
-    ...
+def curse(quantity: int, itemId: Item, target: str, message: str) -> bool: ...
 
 
 @overload
-def curse(itemId: Item, target: str, message: str) -> bool:
-    ...
+def curse(itemId: Item, target: str, message: str) -> bool: ...
 
 
 @overload
-def curse(itemId: Item, target: str) -> bool:
-    ...
+def curse(itemId: Item, target: str) -> bool: ...
 
 
 def curse(*args):
@@ -1302,18 +1238,15 @@ def display_amount(item: Item) -> int:
 
 
 @overload
-def drink(count: int, item: Item) -> bool:
-    ...
+def drink(count: int, item: Item) -> bool: ...
 
 
 @overload
-def drink(item: Item, count: int) -> bool:
-    ...
+def drink(item: Item, count: int) -> bool: ...
 
 
 @overload
-def drink(item: Item) -> bool:
-    ...
+def drink(item: Item) -> bool: ...
 
 
 def drink(*args):
@@ -1321,18 +1254,15 @@ def drink(*args):
 
 
 @overload
-def drinksilent(count: int, item: Item) -> bool:
-    ...
+def drinksilent(count: int, item: Item) -> bool: ...
 
 
 @overload
-def drinksilent(item: Item, count: int) -> bool:
-    ...
+def drinksilent(item: Item, count: int) -> bool: ...
 
 
 @overload
-def drinksilent(item: Item) -> bool:
-    ...
+def drinksilent(item: Item) -> bool: ...
 
 
 def drinksilent(*args):
@@ -1340,13 +1270,11 @@ def drinksilent(*args):
 
 
 @overload
-def dump(arg: Any, color: str) -> None:
-    ...
+def dump(arg: Any, color: str) -> None: ...
 
 
 @overload
-def dump(arg: Any) -> None:
-    ...
+def dump(arg: Any) -> None: ...
 
 
 def dump(*args):
@@ -1354,18 +1282,15 @@ def dump(*args):
 
 
 @overload
-def eat(count: int, item: Item) -> bool:
-    ...
+def eat(count: int, item: Item) -> bool: ...
 
 
 @overload
-def eat(item: Item, count: int) -> bool:
-    ...
+def eat(item: Item, count: int) -> bool: ...
 
 
 @overload
-def eat(item: Item) -> bool:
-    ...
+def eat(item: Item) -> bool: ...
 
 
 def eat(*args):
@@ -1373,18 +1298,15 @@ def eat(*args):
 
 
 @overload
-def eatsilent(count: int, item: Item) -> bool:
-    ...
+def eatsilent(count: int, item: Item) -> bool: ...
 
 
 @overload
-def eatsilent(item: Item, count: int) -> bool:
-    ...
+def eatsilent(item: Item, count: int) -> bool: ...
 
 
 @overload
-def eatsilent(item: Item) -> bool:
-    ...
+def eatsilent(item: Item) -> bool: ...
 
 
 def eatsilent(*args):
@@ -1392,13 +1314,11 @@ def eatsilent(*args):
 
 
 @overload
-def effect_fact(monster: Monster) -> Effect:
-    ...
+def effect_fact(monster: Monster) -> Effect: ...
 
 
 @overload
-def effect_fact(cls: Class, path: Path, monster: Monster) -> Effect:
-    ...
+def effect_fact(cls: Class, path: Path, monster: Monster) -> Effect: ...
 
 
 def effect_fact(*args):
@@ -1406,23 +1326,19 @@ def effect_fact(*args):
 
 
 @overload
-def effect_modifier(item: Item, modifier: Modifier) -> Effect:
-    ...
+def effect_modifier(item: Item, modifier: Modifier) -> Effect: ...
 
 
 @overload
-def effect_modifier(item: Item, modifier: str) -> Effect:
-    ...
+def effect_modifier(item: Item, modifier: str) -> Effect: ...
 
 
 @overload
-def effect_modifier(type: str, modifier: Modifier) -> Effect:
-    ...
+def effect_modifier(type: str, modifier: Modifier) -> Effect: ...
 
 
 @overload
-def effect_modifier(type: str, modifier: str) -> Effect:
-    ...
+def effect_modifier(type: str, modifier: str) -> Effect: ...
 
 
 def effect_modifier(*args):
@@ -1434,13 +1350,13 @@ def effect_pockets() -> dict[int, bool]:
 
 
 @overload
-def eight_bit_points(locationValue: Location, colorValue: str, modValue: float) -> int:
-    ...
+def eight_bit_points(
+    locationValue: Location, colorValue: str, modValue: float
+) -> int: ...
 
 
 @overload
-def eight_bit_points(locationValue: Location) -> int:
-    ...
+def eight_bit_points(locationValue: Location) -> int: ...
 
 
 def eight_bit_points(*args):
@@ -1448,18 +1364,15 @@ def eight_bit_points(*args):
 
 
 @overload
-def elemental_resistance(monster: Monster) -> float:
-    ...
+def elemental_resistance(monster: Monster) -> float: ...
 
 
 @overload
-def elemental_resistance() -> float:
-    ...
+def elemental_resistance() -> float: ...
 
 
 @overload
-def elemental_resistance(element: Element) -> float:
-    ...
+def elemental_resistance(element: Element) -> float: ...
 
 
 def elemental_resistance(*args):
@@ -1475,13 +1388,11 @@ def enable(name: str) -> None:
 
 
 @overload
-def end(matcher: Matcher, group: int) -> int:
-    ...
+def end(matcher: Matcher, group: int) -> int: ...
 
 
 @overload
-def end(matcher: Matcher) -> int:
-    ...
+def end(matcher: Matcher) -> int: ...
 
 
 def end(*args):
@@ -1505,28 +1416,23 @@ def entity_encode(string: str) -> str:
 
 
 @overload
-def equip(familiar: Familiar, item: Item) -> bool:
-    ...
+def equip(familiar: Familiar, item: Item) -> bool: ...
 
 
 @overload
-def equip(item: Item, familiar: Familiar) -> bool:
-    ...
+def equip(item: Item, familiar: Familiar) -> bool: ...
 
 
 @overload
-def equip(slot: Slot, item: Item) -> bool:
-    ...
+def equip(slot: Slot, item: Item) -> bool: ...
 
 
 @overload
-def equip(item: Item, slot: Slot) -> bool:
-    ...
+def equip(item: Item, slot: Slot) -> bool: ...
 
 
 @overload
-def equip(item: Item) -> bool:
-    ...
+def equip(item: Item) -> bool: ...
 
 
 def equip(*args):
@@ -1538,13 +1444,11 @@ def equip_all_familiars() -> bool:
 
 
 @overload
-def equipped_amount(item: Item, includeAllFamiliars: bool) -> int:
-    ...
+def equipped_amount(item: Item, includeAllFamiliars: bool) -> int: ...
 
 
 @overload
-def equipped_amount(item: Item) -> int:
-    ...
+def equipped_amount(item: Item) -> int: ...
 
 
 def equipped_amount(*args):
@@ -1556,13 +1460,11 @@ def equipped_item(slot: Slot) -> Item:
 
 
 @overload
-def eudora(newEudora: str) -> bool:
-    ...
+def eudora(newEudora: str) -> bool: ...
 
 
 @overload
-def eudora() -> str:
-    ...
+def eudora() -> str: ...
 
 
 def eudora(*args):
@@ -1582,13 +1484,11 @@ def expected_cold_medicine_cabinet() -> dict[str, Item]:
 
 
 @overload
-def expected_damage(monster: Monster) -> int:
-    ...
+def expected_damage(monster: Monster) -> int: ...
 
 
 @overload
-def expected_damage() -> int:
-    ...
+def expected_damage() -> int: ...
 
 
 def expected_damage(*args):
@@ -1612,13 +1512,11 @@ def extract_meat(string: str) -> int:
 
 
 @overload
-def fact_type(monster: Monster) -> str:
-    ...
+def fact_type(monster: Monster) -> str: ...
 
 
 @overload
-def fact_type(cls: Class, path: Path, monster: Monster) -> str:
-    ...
+def fact_type(cls: Class, path: Path, monster: Monster) -> str: ...
 
 
 def fact_type(*args):
@@ -1642,13 +1540,11 @@ def favorite_familiars() -> dict[Familiar, bool]:
 
 
 @overload
-def faxbot(monsterName: Monster, botName: str) -> bool:
-    ...
+def faxbot(monsterName: Monster, botName: str) -> bool: ...
 
 
 @overload
-def faxbot(monsterName: Monster) -> bool:
-    ...
+def faxbot(monsterName: Monster) -> bool: ...
 
 
 def faxbot(*args):
@@ -1668,13 +1564,11 @@ def file_to_buffer(filename: str) -> str:
 
 
 @overload
-def file_to_map(filename: str, result: dict[Any, Any], compact: bool) -> bool:
-    ...
+def file_to_map(filename: str, result: dict[Any, Any], compact: bool) -> bool: ...
 
 
 @overload
-def file_to_map(filename: str, result: dict[Any, Any]) -> bool:
-    ...
+def file_to_map(filename: str, result: dict[Any, Any]) -> bool: ...
 
 
 def file_to_map(*args):
@@ -1838,13 +1732,11 @@ def get_locket_monsters() -> dict[Monster, bool]:
 
 
 @overload
-def get_monster_mapping(path: str) -> dict[Monster, Monster]:
-    ...
+def get_monster_mapping(path: str) -> dict[Monster, Monster]: ...
 
 
 @overload
-def get_monster_mapping() -> dict[Monster, Monster]:
-    ...
+def get_monster_mapping() -> dict[Monster, Monster]: ...
 
 
 def get_monster_mapping(*args):
@@ -1892,13 +1784,11 @@ def get_power(item: Item) -> int:
 
 
 @overload
-def get_property(name: str, globalValue: bool) -> str:
-    ...
+def get_property(name: str, globalValue: bool) -> str: ...
 
 
 @overload
-def get_property(name: str) -> str:
-    ...
+def get_property(name: str) -> str: ...
 
 
 def get_property(*args):
@@ -1970,18 +1860,15 @@ def goal_exists(check: str) -> bool:
 
 
 @overload
-def group(matcher: Matcher, group: str) -> str:
-    ...
+def group(matcher: Matcher, group: str) -> str: ...
 
 
 @overload
-def group(matcher: Matcher, group: int) -> str:
-    ...
+def group(matcher: Matcher, group: int) -> str: ...
 
 
 @overload
-def group(matcher: Matcher) -> str:
-    ...
+def group(matcher: Matcher) -> str: ...
 
 
 def group(*args):
@@ -2065,13 +1952,11 @@ def hedge_maze(goal: str) -> bool:
 
 
 @overload
-def heist(num: int, item: Item) -> bool:
-    ...
+def heist(num: int, item: Item) -> bool: ...
 
 
 @overload
-def heist(item: Item) -> bool:
-    ...
+def heist(item: Item) -> bool: ...
 
 
 def heist(*args):
@@ -2083,13 +1968,11 @@ def heist_targets() -> dict[Monster, dict[int, Item]]:
 
 
 @overload
-def hermit(count: int, item: Item) -> bool:
-    ...
+def hermit(count: int, item: Item) -> bool: ...
 
 
 @overload
-def hermit(item: Item, count: int) -> bool:
-    ...
+def hermit(item: Item, count: int) -> bool: ...
 
 
 def hermit(*args):
@@ -2165,13 +2048,11 @@ def inaccessible_reason(master: Coinmaster) -> str:
 
 
 @overload
-def index_of(source: str, search: str, start: int) -> int:
-    ...
+def index_of(source: str, search: str, start: int) -> int: ...
 
 
 @overload
-def index_of(source: str, search: str) -> int:
-    ...
+def index_of(source: str, search: str) -> int: ...
 
 
 def index_of(*args):
@@ -2259,23 +2140,19 @@ def is_tradeable(item: Item) -> bool:
 
 
 @overload
-def is_trendy(thing: str) -> bool:
-    ...
+def is_trendy(thing: str) -> bool: ...
 
 
 @overload
-def is_trendy(thing: Familiar) -> bool:
-    ...
+def is_trendy(thing: Familiar) -> bool: ...
 
 
 @overload
-def is_trendy(thing: Skill) -> bool:
-    ...
+def is_trendy(thing: Skill) -> bool: ...
 
 
 @overload
-def is_trendy(thing: Item) -> bool:
-    ...
+def is_trendy(thing: Item) -> bool: ...
 
 
 def is_trendy(*args):
@@ -2283,23 +2160,19 @@ def is_trendy(*args):
 
 
 @overload
-def is_unrestricted(thing: str) -> bool:
-    ...
+def is_unrestricted(thing: str) -> bool: ...
 
 
 @overload
-def is_unrestricted(thing: Familiar) -> bool:
-    ...
+def is_unrestricted(thing: Familiar) -> bool: ...
 
 
 @overload
-def is_unrestricted(thing: Skill) -> bool:
-    ...
+def is_unrestricted(thing: Skill) -> bool: ...
 
 
 @overload
-def is_unrestricted(thing: Item) -> bool:
-    ...
+def is_unrestricted(thing: Item) -> bool: ...
 
 
 def is_unrestricted(*args):
@@ -2319,13 +2192,11 @@ def item_drop_modifier() -> float:
 
 
 @overload
-def item_drops(monster: Monster) -> dict[Item, float]:
-    ...
+def item_drops(monster: Monster) -> dict[Item, float]: ...
 
 
 @overload
-def item_drops() -> dict[Item, float]:
-    ...
+def item_drops() -> dict[Item, float]: ...
 
 
 def item_drops(*args):
@@ -2333,13 +2204,11 @@ def item_drops(*args):
 
 
 @overload
-def item_drops_array(monster: Monster) -> dict[int, dict[str, Any]]:
-    ...
+def item_drops_array(monster: Monster) -> dict[int, dict[str, Any]]: ...
 
 
 @overload
-def item_drops_array() -> dict[int, dict[str, Any]]:
-    ...
+def item_drops_array() -> dict[int, dict[str, Any]]: ...
 
 
 def item_drops_array(*args):
@@ -2347,13 +2216,11 @@ def item_drops_array(*args):
 
 
 @overload
-def item_fact(monster: Monster) -> Item:
-    ...
+def item_fact(monster: Monster) -> Item: ...
 
 
 @overload
-def item_fact(cls: Class, path: Path, monster: Monster) -> Item:
-    ...
+def item_fact(cls: Class, path: Path, monster: Monster) -> Item: ...
 
 
 def item_fact(*args):
@@ -2369,13 +2236,11 @@ def item_type(item: Item) -> str:
 
 
 @overload
-def join_strings(strings: dict[int, str], joiner: str) -> str:
-    ...
+def join_strings(strings: dict[int, str], joiner: str) -> str: ...
 
 
 @overload
-def join_strings(strings: dict[int, str]) -> str:
-    ...
+def join_strings(strings: dict[int, str]) -> str: ...
 
 
 def join_strings(*args):
@@ -2387,38 +2252,31 @@ def joke_pockets() -> dict[int, bool]:
 
 
 @overload
-def jump_chance(location: Location, init: int, ml: int) -> int:
-    ...
+def jump_chance(location: Location, init: int, ml: int) -> int: ...
 
 
 @overload
-def jump_chance(location: Location, init: int) -> int:
-    ...
+def jump_chance(location: Location, init: int) -> int: ...
 
 
 @overload
-def jump_chance(location: Location) -> int:
-    ...
+def jump_chance(location: Location) -> int: ...
 
 
 @overload
-def jump_chance(monster: Monster, init: int, ml: int) -> int:
-    ...
+def jump_chance(monster: Monster, init: int, ml: int) -> int: ...
 
 
 @overload
-def jump_chance(monster: Monster, init: int) -> int:
-    ...
+def jump_chance(monster: Monster, init: int) -> int: ...
 
 
 @overload
-def jump_chance(monster: Monster) -> int:
-    ...
+def jump_chance(monster: Monster) -> int: ...
 
 
 @overload
-def jump_chance() -> int:
-    ...
+def jump_chance() -> int: ...
 
 
 def jump_chance(*args):
@@ -2438,13 +2296,11 @@ def last_decision() -> int:
 
 
 @overload
-def last_index_of(source: str, search: str, start: int) -> int:
-    ...
+def last_index_of(source: str, search: str, start: int) -> int: ...
 
 
 @overload
-def last_index_of(source: str, search: str) -> int:
-    ...
+def last_index_of(source: str, search: str) -> int: ...
 
 
 def last_index_of(*args):
@@ -2488,13 +2344,11 @@ def lock_familiar_equipment(lock: bool) -> None:
 
 
 @overload
-def log_n(val: float, base: float) -> float:
-    ...
+def log_n(val: float, base: float) -> float: ...
 
 
 @overload
-def log_n(val: float) -> float:
-    ...
+def log_n(val: float) -> float: ...
 
 
 def log_n(*args):
@@ -2510,13 +2364,11 @@ def make_url(string: str, usePostMethod: bool, encoded: bool) -> str:
 
 
 @overload
-def mall_price(item: Item, maxAge: float) -> int:
-    ...
+def mall_price(item: Item, maxAge: float) -> int: ...
 
 
 @overload
-def mall_price(item: Item) -> int:
-    ...
+def mall_price(item: Item) -> int: ...
 
 
 def mall_price(*args):
@@ -2524,18 +2376,15 @@ def mall_price(*args):
 
 
 @overload
-def mall_prices(category: str, tiers: str) -> int:
-    ...
+def mall_prices(category: str, tiers: str) -> int: ...
 
 
 @overload
-def mall_prices(category: str) -> int:
-    ...
+def mall_prices(category: str) -> int: ...
 
 
 @overload
-def mall_prices(items: dict[int, bool]) -> int:
-    ...
+def mall_prices(items: dict[int, bool]) -> int: ...
 
 
 def mall_prices(*args):
@@ -2547,13 +2396,11 @@ def mana_cost_modifier() -> int:
 
 
 @overload
-def map_to_file(map: dict[Any, Any], filename: str, compact: bool) -> bool:
-    ...
+def map_to_file(map: dict[Any, Any], filename: str, compact: bool) -> bool: ...
 
 
 @overload
-def map_to_file(map: dict[Any, Any], filename: str) -> bool:
-    ...
+def map_to_file(map: dict[Any, Any], filename: str) -> bool: ...
 
 
 def map_to_file(*args):
@@ -2561,13 +2408,11 @@ def map_to_file(*args):
 
 
 @overload
-def max(val: int, otherVal: dict[int, int]) -> int:
-    ...
+def max(val: int, otherVal: dict[int, int]) -> int: ...
 
 
 @overload
-def max(val: float, otherVal: dict[int, float]) -> float:
-    ...
+def max(val: float, otherVal: dict[int, float]) -> float: ...
 
 
 def max(*args):
@@ -2581,8 +2426,7 @@ def maximize(
     priceLevelValue: int,
     isSpeculateOnlyValue: bool,
     showEquipment: bool,
-) -> dict[int, dict[str, Any]]:
-    ...
+) -> dict[int, dict[str, Any]]: ...
 
 
 @overload
@@ -2591,13 +2435,11 @@ def maximize(
     maxPriceValue: int,
     priceLevelValue: int,
     isSpeculateOnlyValue: bool,
-) -> bool:
-    ...
+) -> bool: ...
 
 
 @overload
-def maximize(maximizerStringValue: str, isSpeculateOnlyValue: bool) -> bool:
-    ...
+def maximize(maximizerStringValue: str, isSpeculateOnlyValue: bool) -> bool: ...
 
 
 def maximize(*args):
@@ -2605,13 +2447,11 @@ def maximize(*args):
 
 
 @overload
-def meat_drop(monster: Monster) -> int:
-    ...
+def meat_drop(monster: Monster) -> int: ...
 
 
 @overload
-def meat_drop() -> int:
-    ...
+def meat_drop() -> int: ...
 
 
 def meat_drop(*args):
@@ -2627,13 +2467,11 @@ def meat_pockets() -> dict[int, int]:
 
 
 @overload
-def min(val: int, otherVal: dict[int, int]) -> int:
-    ...
+def min(val: int, otherVal: dict[int, int]) -> int: ...
 
 
 @overload
-def min(val: float, otherVal: dict[int, float]) -> float:
-    ...
+def min(val: float, otherVal: dict[int, float]) -> float: ...
 
 
 def min(*args):
@@ -2657,18 +2495,15 @@ def modifier_eval(expr: str) -> float:
 
 
 @overload
-def monkey_paw(wish: str) -> bool:
-    ...
+def monkey_paw(wish: str) -> bool: ...
 
 
 @overload
-def monkey_paw(effect: Effect) -> bool:
-    ...
+def monkey_paw(effect: Effect) -> bool: ...
 
 
 @overload
-def monkey_paw(item: Item) -> bool:
-    ...
+def monkey_paw(item: Item) -> bool: ...
 
 
 def monkey_paw(*args):
@@ -2676,13 +2511,11 @@ def monkey_paw(*args):
 
 
 @overload
-def monster_attack(monster: Monster) -> int:
-    ...
+def monster_attack(monster: Monster) -> int: ...
 
 
 @overload
-def monster_attack() -> int:
-    ...
+def monster_attack() -> int: ...
 
 
 def monster_attack(*args):
@@ -2690,13 +2523,11 @@ def monster_attack(*args):
 
 
 @overload
-def monster_defense(monster: Monster) -> int:
-    ...
+def monster_defense(monster: Monster) -> int: ...
 
 
 @overload
-def monster_defense() -> int:
-    ...
+def monster_defense() -> int: ...
 
 
 def monster_defense(*args):
@@ -2704,13 +2535,11 @@ def monster_defense(*args):
 
 
 @overload
-def monster_element(monster: Monster) -> Element:
-    ...
+def monster_element(monster: Monster) -> Element: ...
 
 
 @overload
-def monster_element() -> Element:
-    ...
+def monster_element() -> Element: ...
 
 
 def monster_element(*args):
@@ -2726,13 +2555,11 @@ def monster_factoids_available(monster: Monster, cachedOnly: bool) -> int:
 
 
 @overload
-def monster_hp(monster: Monster) -> int:
-    ...
+def monster_hp(monster: Monster) -> int: ...
 
 
 @overload
-def monster_hp() -> int:
-    ...
+def monster_hp() -> int: ...
 
 
 def monster_hp(*args):
@@ -2740,13 +2567,11 @@ def monster_hp(*args):
 
 
 @overload
-def monster_initiative(monster: Monster) -> int:
-    ...
+def monster_initiative(monster: Monster) -> int: ...
 
 
 @overload
-def monster_initiative() -> int:
-    ...
+def monster_initiative() -> int: ...
 
 
 def monster_initiative(*args):
@@ -2762,13 +2587,11 @@ def monster_manuel_text(monster: Monster) -> str:
 
 
 @overload
-def monster_modifier(effect: Effect, modifier: Modifier) -> Monster:
-    ...
+def monster_modifier(effect: Effect, modifier: Modifier) -> Monster: ...
 
 
 @overload
-def monster_modifier(effect: Effect, modifier: str) -> Monster:
-    ...
+def monster_modifier(effect: Effect, modifier: str) -> Monster: ...
 
 
 def monster_modifier(*args):
@@ -2776,13 +2599,11 @@ def monster_modifier(*args):
 
 
 @overload
-def monster_phylum(monster: Monster) -> Phylum:
-    ...
+def monster_phylum(monster: Monster) -> Phylum: ...
 
 
 @overload
-def monster_phylum() -> Phylum:
-    ...
+def monster_phylum() -> Phylum: ...
 
 
 def monster_phylum(*args):
@@ -2990,13 +2811,11 @@ def my_session_adv() -> int:
 
 
 @overload
-def my_session_items(item: Item) -> int:
-    ...
+def my_session_items(item: Item) -> int: ...
 
 
 @overload
-def my_session_items() -> dict[Item, int]:
-    ...
+def my_session_items() -> dict[Item, int]: ...
 
 
 def my_session_items(*args):
@@ -3068,13 +2887,11 @@ def numberology_prize(num: int) -> str:
 
 
 @overload
-def numeric_fact(monster: Monster) -> int:
-    ...
+def numeric_fact(monster: Monster) -> int: ...
 
 
 @overload
-def numeric_fact(cls: Class, path: Path, monster: Monster) -> int:
-    ...
+def numeric_fact(cls: Class, path: Path, monster: Monster) -> int: ...
 
 
 def numeric_fact(*args):
@@ -3082,70 +2899,57 @@ def numeric_fact(*args):
 
 
 @overload
-def numeric_modifier(thrall: Thrall, modifier: Modifier) -> float:
-    ...
+def numeric_modifier(thrall: Thrall, modifier: Modifier) -> float: ...
 
 
 @overload
-def numeric_modifier(thrall: Thrall, modifier: str) -> float:
-    ...
+def numeric_modifier(thrall: Thrall, modifier: str) -> float: ...
 
 
 @overload
 def numeric_modifier(
     familiar: Familiar, modifier: str, weight: int, item: Item
-) -> float:
-    ...
+) -> float: ...
 
 
 @overload
-def numeric_modifier(skill: Skill, modifier: Modifier) -> float:
-    ...
+def numeric_modifier(skill: Skill, modifier: Modifier) -> float: ...
 
 
 @overload
-def numeric_modifier(skill: Skill, modifier: str) -> float:
-    ...
+def numeric_modifier(skill: Skill, modifier: str) -> float: ...
 
 
 @overload
-def numeric_modifier(effect: Effect, modifier: Modifier) -> float:
-    ...
+def numeric_modifier(effect: Effect, modifier: Modifier) -> float: ...
 
 
 @overload
-def numeric_modifier(effect: Effect, modifier: str) -> float:
-    ...
+def numeric_modifier(effect: Effect, modifier: str) -> float: ...
 
 
 @overload
-def numeric_modifier(item: Item, modifier: Modifier) -> float:
-    ...
+def numeric_modifier(item: Item, modifier: Modifier) -> float: ...
 
 
 @overload
-def numeric_modifier(item: Item, modifier: str) -> float:
-    ...
+def numeric_modifier(item: Item, modifier: str) -> float: ...
 
 
 @overload
-def numeric_modifier(type: str, modifier: Modifier) -> float:
-    ...
+def numeric_modifier(type: str, modifier: Modifier) -> float: ...
 
 
 @overload
-def numeric_modifier(type: str, modifier: str) -> float:
-    ...
+def numeric_modifier(type: str, modifier: str) -> float: ...
 
 
 @overload
-def numeric_modifier(modifier: Modifier) -> float:
-    ...
+def numeric_modifier(modifier: Modifier) -> float: ...
 
 
 @overload
-def numeric_modifier(modifier: str) -> float:
-    ...
+def numeric_modifier(modifier: str) -> float: ...
 
 
 def numeric_modifier(*args):
@@ -3169,18 +2973,15 @@ def outfit_treats(outfit: str) -> dict[Item, float]:
 
 
 @overload
-def overdrink(count: int, item: Item) -> bool:
-    ...
+def overdrink(count: int, item: Item) -> bool: ...
 
 
 @overload
-def overdrink(item: Item, count: int) -> bool:
-    ...
+def overdrink(item: Item, count: int) -> bool: ...
 
 
 @overload
-def overdrink(item: Item) -> bool:
-    ...
+def overdrink(item: Item) -> bool: ...
 
 
 def overdrink(*args):
@@ -3196,28 +2997,23 @@ def path_name_to_id(value: str) -> int:
 
 
 @overload
-def pick_pocket(pocketNumber: int) -> bool:
-    ...
+def pick_pocket(pocketNumber: int) -> bool: ...
 
 
 @overload
-def pick_pocket(stat: Stat) -> dict[Stat, int]:
-    ...
+def pick_pocket(stat: Stat) -> dict[Stat, int]: ...
 
 
 @overload
-def pick_pocket(item: Item) -> dict[Item, int]:
-    ...
+def pick_pocket(item: Item) -> dict[Item, int]: ...
 
 
 @overload
-def pick_pocket(effect: Effect) -> dict[Effect, int]:
-    ...
+def pick_pocket(effect: Effect) -> dict[Effect, int]: ...
 
 
 @overload
-def pick_pocket(monster: Monster) -> bool:
-    ...
+def pick_pocket(monster: Monster) -> bool: ...
 
 
 def pick_pocket(*args):
@@ -3233,18 +3029,15 @@ def picked_scraps() -> dict[int, bool]:
 
 
 @overload
-def ping(pingTest: str) -> dict[str, Any]:
-    ...
+def ping(pingTest: str) -> dict[str, Any]: ...
 
 
 @overload
-def ping(count: int, page: str) -> dict[str, Any]:
-    ...
+def ping(count: int, page: str) -> dict[str, Any]: ...
 
 
 @overload
-def ping() -> dict[str, Any]:
-    ...
+def ping() -> dict[str, Any]: ...
 
 
 def ping(*args):
@@ -3288,23 +3081,19 @@ def poem_pockets() -> dict[int, int]:
 
 
 @overload
-def potential_pockets(stat: Stat) -> dict[int, int]:
-    ...
+def potential_pockets(stat: Stat) -> dict[int, int]: ...
 
 
 @overload
-def potential_pockets(item: Item) -> dict[int, int]:
-    ...
+def potential_pockets(item: Item) -> dict[int, int]: ...
 
 
 @overload
-def potential_pockets(effect: Effect) -> dict[int, int]:
-    ...
+def potential_pockets(effect: Effect) -> dict[int, int]: ...
 
 
 @overload
-def potential_pockets(monster: Monster) -> dict[int, int]:
-    ...
+def potential_pockets(monster: Monster) -> dict[int, int]: ...
 
 
 def potential_pockets(*args):
@@ -3320,18 +3109,15 @@ def prepare_for_adventure(location: Location) -> bool:
 
 
 @overload
-def print(string: str, color: str) -> None:
-    ...
+def print(string: str, color: str) -> None: ...
 
 
 @overload
-def print(string: str) -> None:
-    ...
+def print(string: str) -> None: ...
 
 
 @overload
-def print() -> None:
-    ...
+def print() -> None: ...
 
 
 def print(*args):
@@ -3339,13 +3125,11 @@ def print(*args):
 
 
 @overload
-def print_html(string: str) -> None:
-    ...
+def print_html(string: str) -> None: ...
 
 
 @overload
-def print_html(string: str, logToSession: bool) -> None:
-    ...
+def print_html(string: str, logToSession: bool) -> None: ...
 
 
 def print_html(*args):
@@ -3357,13 +3141,11 @@ def property_default_value(nameValue: str) -> str:
 
 
 @overload
-def property_exists(nameValue: str, globalValue: bool) -> bool:
-    ...
+def property_exists(nameValue: str, globalValue: bool) -> bool: ...
 
 
 @overload
-def property_exists(nameValue: str) -> bool:
-    ...
+def property_exists(nameValue: str) -> bool: ...
 
 
 def property_exists(*args):
@@ -3379,23 +3161,19 @@ def pulls_remaining() -> int:
 
 
 @overload
-def put_closet(count: int, item: Item) -> bool:
-    ...
+def put_closet(count: int, item: Item) -> bool: ...
 
 
 @overload
-def put_closet(item: Item, count: int) -> bool:
-    ...
+def put_closet(item: Item, count: int) -> bool: ...
 
 
 @overload
-def put_closet(item: Item) -> bool:
-    ...
+def put_closet(item: Item) -> bool: ...
 
 
 @overload
-def put_closet(meat: int) -> bool:
-    ...
+def put_closet(meat: int) -> bool: ...
 
 
 def put_closet(*args):
@@ -3403,13 +3181,11 @@ def put_closet(*args):
 
 
 @overload
-def put_display(item: Item, count: int) -> bool:
-    ...
+def put_display(item: Item, count: int) -> bool: ...
 
 
 @overload
-def put_display(count: int, item: Item) -> bool:
-    ...
+def put_display(count: int, item: Item) -> bool: ...
 
 
 def put_display(*args):
@@ -3417,13 +3193,13 @@ def put_display(*args):
 
 
 @overload
-def put_shop(priceValue: int, limitValue: int, qtyValue: int, itemValue: Item) -> bool:
-    ...
+def put_shop(
+    priceValue: int, limitValue: int, qtyValue: int, itemValue: Item
+) -> bool: ...
 
 
 @overload
-def put_shop(priceValue: int, limitValue: int, itemValue: Item) -> bool:
-    ...
+def put_shop(priceValue: int, limitValue: int, itemValue: Item) -> bool: ...
 
 
 def put_shop(*args):
@@ -3433,13 +3209,13 @@ def put_shop(*args):
 @overload
 def put_shop_using_storage(
     priceValue: int, limitValue: int, qtyValue: int, itemValue: Item
-) -> bool:
-    ...
+) -> bool: ...
 
 
 @overload
-def put_shop_using_storage(priceValue: int, limitValue: int, itemValue: Item) -> bool:
-    ...
+def put_shop_using_storage(
+    priceValue: int, limitValue: int, itemValue: Item
+) -> bool: ...
 
 
 def put_shop_using_storage(*args):
@@ -3447,13 +3223,11 @@ def put_shop_using_storage(*args):
 
 
 @overload
-def put_stash(count: int, item: Item) -> bool:
-    ...
+def put_stash(count: int, item: Item) -> bool: ...
 
 
 @overload
-def put_stash(item: Item, count: int) -> bool:
-    ...
+def put_stash(item: Item, count: int) -> bool: ...
 
 
 def put_stash(*args):
@@ -3497,13 +3271,11 @@ def refresh_status() -> bool:
 
 
 @overload
-def remove_item_condition(item: Item, count: int) -> None:
-    ...
+def remove_item_condition(item: Item, count: int) -> None: ...
 
 
 @overload
-def remove_item_condition(count: int, item: Item) -> None:
-    ...
+def remove_item_condition(count: int, item: Item) -> None: ...
 
 
 def remove_item_condition(*args):
@@ -3511,13 +3283,11 @@ def remove_item_condition(*args):
 
 
 @overload
-def remove_property(nameValue: str, globalValue: bool) -> str:
-    ...
+def remove_property(nameValue: str, globalValue: bool) -> str: ...
 
 
 @overload
-def remove_property(nameValue: str) -> str:
-    ...
+def remove_property(nameValue: str) -> str: ...
 
 
 def remove_property(*args):
@@ -3541,13 +3311,11 @@ def replace_first(matcher: Matcher, replacement: str) -> str:
 
 
 @overload
-def replace_string(source: str, searchValue: str, replaceValue: str) -> str:
-    ...
+def replace_string(source: str, searchValue: str, replaceValue: str) -> str: ...
 
 
 @overload
-def replace_string(source: str, searchValue: str, replaceValue: str) -> str:
-    ...
+def replace_string(source: str, searchValue: str, replaceValue: str) -> str: ...
 
 
 def replace_string(*args):
@@ -3555,13 +3323,11 @@ def replace_string(*args):
 
 
 @overload
-def reprice_shop(priceValue: int, limitValue: int, itemValue: Item) -> bool:
-    ...
+def reprice_shop(priceValue: int, limitValue: int, itemValue: Item) -> bool: ...
 
 
 @overload
-def reprice_shop(priceValue: int, itemValue: Item) -> bool:
-    ...
+def reprice_shop(priceValue: int, itemValue: Item) -> bool: ...
 
 
 def reprice_shop(*args):
@@ -3569,13 +3335,11 @@ def reprice_shop(*args):
 
 
 @overload
-def reset(matcher: Matcher, input: str) -> Matcher:
-    ...
+def reset(matcher: Matcher, input: str) -> Matcher: ...
 
 
 @overload
-def reset(matcher: Matcher) -> Matcher:
-    ...
+def reset(matcher: Matcher) -> Matcher: ...
 
 
 def reset(*args):
@@ -3595,18 +3359,15 @@ def restore_mp(amount: int) -> bool:
 
 
 @overload
-def retrieve_item(count: int, item: Item) -> bool:
-    ...
+def retrieve_item(count: int, item: Item) -> bool: ...
 
 
 @overload
-def retrieve_item(item: Item, count: int) -> bool:
-    ...
+def retrieve_item(item: Item, count: int) -> bool: ...
 
 
 @overload
-def retrieve_item(item: Item) -> bool:
-    ...
+def retrieve_item(item: Item) -> bool: ...
 
 
 def retrieve_item(*args):
@@ -3614,28 +3375,23 @@ def retrieve_item(*args):
 
 
 @overload
-def retrieve_price(count: int, item: Item, exact: bool) -> int:
-    ...
+def retrieve_price(count: int, item: Item, exact: bool) -> int: ...
 
 
 @overload
-def retrieve_price(item: Item, count: int, exact: bool) -> int:
-    ...
+def retrieve_price(item: Item, count: int, exact: bool) -> int: ...
 
 
 @overload
-def retrieve_price(count: int, item: Item) -> int:
-    ...
+def retrieve_price(count: int, item: Item) -> int: ...
 
 
 @overload
-def retrieve_price(item: Item, count: int) -> int:
-    ...
+def retrieve_price(item: Item, count: int) -> int: ...
 
 
 @overload
-def retrieve_price(item: Item) -> int:
-    ...
+def retrieve_price(item: Item) -> int: ...
 
 
 def retrieve_price(*args):
@@ -3643,13 +3399,11 @@ def retrieve_price(*args):
 
 
 @overload
-def reverse_numberology(advDelta: int, spleenDelta: int) -> dict[int, int]:
-    ...
+def reverse_numberology(advDelta: int, spleenDelta: int) -> dict[int, int]: ...
 
 
 @overload
-def reverse_numberology() -> dict[int, int]:
-    ...
+def reverse_numberology() -> dict[int, int]: ...
 
 
 def reverse_numberology(*args):
@@ -3665,23 +3419,19 @@ def round(val: float) -> int:
 
 
 @overload
-def run_choice(decision: int, custom: bool, more: str) -> str:
-    ...
+def run_choice(decision: int, custom: bool, more: str) -> str: ...
 
 
 @overload
-def run_choice(decision: int, extra: bool) -> str:
-    ...
+def run_choice(decision: int, extra: bool) -> str: ...
 
 
 @overload
-def run_choice(decision: int, extra: str) -> str:
-    ...
+def run_choice(decision: int, extra: str) -> str: ...
 
 
 @overload
-def run_choice(decision: int) -> str:
-    ...
+def run_choice(decision: int) -> str: ...
 
 
 def run_choice(*args):
@@ -3689,13 +3439,11 @@ def run_choice(*args):
 
 
 @overload
-def run_combat(filterFunction: str) -> str:
-    ...
+def run_combat(filterFunction: str) -> str: ...
 
 
 @overload
-def run_combat() -> str:
-    ...
+def run_combat() -> str: ...
 
 
 def run_combat(*args):
@@ -3735,18 +3483,15 @@ def send_fax() -> None:
 
 
 @overload
-def session_logs(playerName: str, baseDate: str, count: int) -> dict[int, str]:
-    ...
+def session_logs(playerName: str, baseDate: str, count: int) -> dict[int, str]: ...
 
 
 @overload
-def session_logs(player: str, dayCount: int) -> dict[int, str]:
-    ...
+def session_logs(player: str, dayCount: int) -> dict[int, str]: ...
 
 
 @overload
-def session_logs(dayCount: int) -> dict[int, str]:
-    ...
+def session_logs(dayCount: int) -> dict[int, str]: ...
 
 
 def session_logs(*args):
@@ -3754,13 +3499,11 @@ def session_logs(*args):
 
 
 @overload
-def set_auto_attack(attackValue: str) -> None:
-    ...
+def set_auto_attack(attackValue: str) -> None: ...
 
 
 @overload
-def set_auto_attack(attackValue: int) -> None:
-    ...
+def set_auto_attack(attackValue: int) -> None: ...
 
 
 def set_auto_attack(*args):
@@ -3796,23 +3539,19 @@ def shop_price(item: Item) -> int:
 
 
 @overload
-def skill_modifier(item: Item, modifier: Modifier) -> Skill:
-    ...
+def skill_modifier(item: Item, modifier: Modifier) -> Skill: ...
 
 
 @overload
-def skill_modifier(item: Item, modifier: str) -> Skill:
-    ...
+def skill_modifier(item: Item, modifier: str) -> Skill: ...
 
 
 @overload
-def skill_modifier(type: str, modifier: Modifier) -> Skill:
-    ...
+def skill_modifier(type: str, modifier: Modifier) -> Skill: ...
 
 
 @overload
-def skill_modifier(type: str, modifier: str) -> Skill:
-    ...
+def skill_modifier(type: str, modifier: str) -> Skill: ...
 
 
 def skill_modifier(*args):
@@ -3836,13 +3575,11 @@ def split_modifiers(modifiers: str) -> dict[Modifier, str]:
 
 
 @overload
-def split_string(string: str, regex: str) -> dict[int, str]:
-    ...
+def split_string(string: str, regex: str) -> dict[int, str]: ...
 
 
 @overload
-def split_string(string: str) -> dict[int, str]:
-    ...
+def split_string(string: str) -> dict[int, str]: ...
 
 
 def split_string(*args):
@@ -3854,13 +3591,11 @@ def square_root(val: float) -> float:
 
 
 @overload
-def start(matcher: Matcher, group: int) -> int:
-    ...
+def start(matcher: Matcher, group: int) -> int: ...
 
 
 @overload
-def start(matcher: Matcher) -> int:
-    ...
+def start(matcher: Matcher) -> int: ...
 
 
 def start(*args):
@@ -3884,13 +3619,11 @@ def stat_bonus_tomorrow() -> Stat:
 
 
 @overload
-def stat_modifier(effect: Effect, modifier: Modifier) -> Stat:
-    ...
+def stat_modifier(effect: Effect, modifier: Modifier) -> Stat: ...
 
 
 @overload
-def stat_modifier(effect: Effect, modifier: str) -> Stat:
-    ...
+def stat_modifier(effect: Effect, modifier: str) -> Stat: ...
 
 
 def stat_modifier(*args):
@@ -3918,13 +3651,11 @@ def storage_amount(item: Item) -> int:
 
 
 @overload
-def string_fact(monster: Monster) -> str:
-    ...
+def string_fact(monster: Monster) -> str: ...
 
 
 @overload
-def string_fact(cls: Class, path: Path, monster: Monster) -> str:
-    ...
+def string_fact(cls: Class, path: Path, monster: Monster) -> str: ...
 
 
 def string_fact(*args):
@@ -3932,43 +3663,35 @@ def string_fact(*args):
 
 
 @overload
-def string_modifier(effect: Effect, modifier: Modifier) -> str:
-    ...
+def string_modifier(effect: Effect, modifier: Modifier) -> str: ...
 
 
 @overload
-def string_modifier(effect: Effect, modifier: str) -> str:
-    ...
+def string_modifier(effect: Effect, modifier: str) -> str: ...
 
 
 @overload
-def string_modifier(item: Item, modifier: Modifier) -> str:
-    ...
+def string_modifier(item: Item, modifier: Modifier) -> str: ...
 
 
 @overload
-def string_modifier(item: Item, modifier: str) -> str:
-    ...
+def string_modifier(item: Item, modifier: str) -> str: ...
 
 
 @overload
-def string_modifier(type: str, modifier: Modifier) -> str:
-    ...
+def string_modifier(type: str, modifier: Modifier) -> str: ...
 
 
 @overload
-def string_modifier(type: str, modifier: str) -> str:
-    ...
+def string_modifier(type: str, modifier: str) -> str: ...
 
 
 @overload
-def string_modifier(modifier: Modifier) -> str:
-    ...
+def string_modifier(modifier: Modifier) -> str: ...
 
 
 @overload
-def string_modifier(modifier: str) -> str:
-    ...
+def string_modifier(modifier: str) -> str: ...
 
 
 def string_modifier(*args):
@@ -3980,13 +3703,11 @@ def stun_skill() -> Skill:
 
 
 @overload
-def substring(source: str, start: int, finish: int) -> str:
-    ...
+def substring(source: str, start: int, finish: int) -> str: ...
 
 
 @overload
-def substring(source: str, start: int) -> str:
-    ...
+def substring(source: str, start: int) -> str: ...
 
 
 def substring(*args):
@@ -4010,33 +3731,27 @@ def svn_list() -> dict[int, str]:
 
 
 @overload
-def sweet_synthesis(count: int, item1: Item, item2: Item) -> bool:
-    ...
+def sweet_synthesis(count: int, item1: Item, item2: Item) -> bool: ...
 
 
 @overload
-def sweet_synthesis(item1: Item, item2: Item) -> bool:
-    ...
+def sweet_synthesis(item1: Item, item2: Item) -> bool: ...
 
 
 @overload
-def sweet_synthesis(count: int, effect: Effect, flags: int) -> bool:
-    ...
+def sweet_synthesis(count: int, effect: Effect, flags: int) -> bool: ...
 
 
 @overload
-def sweet_synthesis(effect: Effect, count: int) -> bool:
-    ...
+def sweet_synthesis(effect: Effect, count: int) -> bool: ...
 
 
 @overload
-def sweet_synthesis(count: int, effect: Effect) -> bool:
-    ...
+def sweet_synthesis(count: int, effect: Effect) -> bool: ...
 
 
 @overload
-def sweet_synthesis(effect: Effect) -> bool:
-    ...
+def sweet_synthesis(effect: Effect) -> bool: ...
 
 
 def sweet_synthesis(*args):
@@ -4044,13 +3759,11 @@ def sweet_synthesis(*args):
 
 
 @overload
-def sweet_synthesis_pair(effect: Effect, flags: int) -> dict[int, Item]:
-    ...
+def sweet_synthesis_pair(effect: Effect, flags: int) -> dict[int, Item]: ...
 
 
 @overload
-def sweet_synthesis_pair(effect: Effect) -> dict[int, Item]:
-    ...
+def sweet_synthesis_pair(effect: Effect) -> dict[int, Item]: ...
 
 
 def sweet_synthesis_pair(*args):
@@ -4058,13 +3771,13 @@ def sweet_synthesis_pair(*args):
 
 
 @overload
-def sweet_synthesis_pairing(effect: Effect, item: Item, flags: int) -> dict[int, Item]:
-    ...
+def sweet_synthesis_pairing(
+    effect: Effect, item: Item, flags: int
+) -> dict[int, Item]: ...
 
 
 @overload
-def sweet_synthesis_pairing(effect: Effect, item: Item) -> dict[int, Item]:
-    ...
+def sweet_synthesis_pairing(effect: Effect, item: Item) -> dict[int, Item]: ...
 
 
 def sweet_synthesis_pairing(*args):
@@ -4076,23 +3789,19 @@ def sweet_synthesis_result(item1: Item, item2: Item) -> Effect:
 
 
 @overload
-def take_closet(count: int, item: Item) -> bool:
-    ...
+def take_closet(count: int, item: Item) -> bool: ...
 
 
 @overload
-def take_closet(item: Item, count: int) -> bool:
-    ...
+def take_closet(item: Item, count: int) -> bool: ...
 
 
 @overload
-def take_closet(item: Item) -> bool:
-    ...
+def take_closet(item: Item) -> bool: ...
 
 
 @overload
-def take_closet(meat: int) -> bool:
-    ...
+def take_closet(meat: int) -> bool: ...
 
 
 def take_closet(*args):
@@ -4100,13 +3809,11 @@ def take_closet(*args):
 
 
 @overload
-def take_display(count: int, item: Item) -> bool:
-    ...
+def take_display(count: int, item: Item) -> bool: ...
 
 
 @overload
-def take_display(item: Item, count: int) -> bool:
-    ...
+def take_display(item: Item, count: int) -> bool: ...
 
 
 def take_display(*args):
@@ -4114,13 +3821,11 @@ def take_display(*args):
 
 
 @overload
-def take_shop(count: int, item: Item) -> bool:
-    ...
+def take_shop(count: int, item: Item) -> bool: ...
 
 
 @overload
-def take_shop(itemValue: Item) -> bool:
-    ...
+def take_shop(itemValue: Item) -> bool: ...
 
 
 def take_shop(*args):
@@ -4128,13 +3833,11 @@ def take_shop(*args):
 
 
 @overload
-def take_stash(count: int, item: Item) -> bool:
-    ...
+def take_stash(count: int, item: Item) -> bool: ...
 
 
 @overload
-def take_stash(item: Item, count: int) -> bool:
-    ...
+def take_stash(item: Item, count: int) -> bool: ...
 
 
 def take_stash(*args):
@@ -4142,13 +3845,11 @@ def take_stash(*args):
 
 
 @overload
-def take_storage(count: int, item: Item) -> bool:
-    ...
+def take_storage(count: int, item: Item) -> bool: ...
 
 
 @overload
-def take_storage(item: Item, count: int) -> bool:
-    ...
+def take_storage(item: Item, count: int) -> bool: ...
 
 
 def take_storage(*args):
@@ -4156,13 +3857,11 @@ def take_storage(*args):
 
 
 @overload
-def tavern(goal: str) -> int:
-    ...
+def tavern(goal: str) -> int: ...
 
 
 @overload
-def tavern() -> int:
-    ...
+def tavern() -> int: ...
 
 
 def tavern(*args):
@@ -4190,18 +3889,15 @@ def timestamp_to_date(timestamp: int, outFormat: str) -> str:
 
 
 @overload
-def to_boolean(value: int) -> bool:
-    ...
+def to_boolean(value: int) -> bool: ...
 
 
 @overload
-def to_boolean(value: bool) -> bool:
-    ...
+def to_boolean(value: bool) -> bool: ...
 
 
 @overload
-def to_boolean(value: str) -> bool:
-    ...
+def to_boolean(value: str) -> bool: ...
 
 
 def to_boolean(*args):
@@ -4213,13 +3909,11 @@ def to_bounty(value: str) -> Bounty:
 
 
 @overload
-def to_buffer(value: str) -> str:
-    ...
+def to_buffer(value: str) -> str: ...
 
 
 @overload
-def to_buffer(value: str) -> str:
-    ...
+def to_buffer(value: str) -> str: ...
 
 
 def to_buffer(*args):
@@ -4227,13 +3921,11 @@ def to_buffer(*args):
 
 
 @overload
-def to_class(value: int) -> Class:
-    ...
+def to_class(value: int) -> Class: ...
 
 
 @overload
-def to_class(value: str) -> Class:
-    ...
+def to_class(value: str) -> Class: ...
 
 
 def to_class(*args):
@@ -4245,18 +3937,15 @@ def to_coinmaster(value: str) -> Coinmaster:
 
 
 @overload
-def to_effect(skill: Skill) -> Effect:
-    ...
+def to_effect(skill: Skill) -> Effect: ...
 
 
 @overload
-def to_effect(id: int) -> Effect:
-    ...
+def to_effect(id: int) -> Effect: ...
 
 
 @overload
-def to_effect(name: str) -> Effect:
-    ...
+def to_effect(name: str) -> Effect: ...
 
 
 def to_effect(*args):
@@ -4268,13 +3957,11 @@ def to_element(value: str) -> Element:
 
 
 @overload
-def to_familiar(id: int) -> Familiar:
-    ...
+def to_familiar(id: int) -> Familiar: ...
 
 
 @overload
-def to_familiar(name: str) -> Familiar:
-    ...
+def to_familiar(name: str) -> Familiar: ...
 
 
 def to_familiar(*args):
@@ -4282,23 +3969,19 @@ def to_familiar(*args):
 
 
 @overload
-def to_float(value: float) -> float:
-    ...
+def to_float(value: float) -> float: ...
 
 
 @overload
-def to_float(value: int) -> float:
-    ...
+def to_float(value: int) -> float: ...
 
 
 @overload
-def to_float(value: bool) -> float:
-    ...
+def to_float(value: bool) -> float: ...
 
 
 @overload
-def to_float(value: str) -> float:
-    ...
+def to_float(value: str) -> float: ...
 
 
 def to_float(*args):
@@ -4306,78 +3989,63 @@ def to_float(*args):
 
 
 @overload
-def to_int(value: Path) -> int:
-    ...
+def to_int(value: Path) -> int: ...
 
 
 @overload
-def to_int(value: Vykea) -> int:
-    ...
+def to_int(value: Vykea) -> int: ...
 
 
 @overload
-def to_int(value: Servant) -> int:
-    ...
+def to_int(value: Servant) -> int: ...
 
 
 @overload
-def to_int(value: Thrall) -> int:
-    ...
+def to_int(value: Thrall) -> int: ...
 
 
 @overload
-def to_int(value: Monster) -> int:
-    ...
+def to_int(value: Monster) -> int: ...
 
 
 @overload
-def to_int(value: Class) -> int:
-    ...
+def to_int(value: Class) -> int: ...
 
 
 @overload
-def to_int(value: Effect) -> int:
-    ...
+def to_int(value: Effect) -> int: ...
 
 
 @overload
-def to_int(value: Skill) -> int:
-    ...
+def to_int(value: Skill) -> int: ...
 
 
 @overload
-def to_int(value: Location) -> int:
-    ...
+def to_int(value: Location) -> int: ...
 
 
 @overload
-def to_int(value: Familiar) -> int:
-    ...
+def to_int(value: Familiar) -> int: ...
 
 
 @overload
-def to_int(value: Item) -> int:
-    ...
+def to_int(value: Item) -> int: ...
 
 
 @overload
-def to_int(value: float) -> int:
-    ...
+def to_int(value: float) -> int: ...
 
 
 @overload
-def to_int(value: int) -> int:
-    ...
+def to_int(value: int) -> int: ...
 
 
 @overload
-def to_int(value: bool) -> int:
-    ...
+def to_int(value: bool) -> int: ...
 
 
 @overload
-def to_int(value: str) -> int:
-    ...
+def to_int(value: str) -> int: ...
 
 
 def to_int(*args):
@@ -4385,18 +4053,15 @@ def to_int(*args):
 
 
 @overload
-def to_item(name: str, count: int) -> Item:
-    ...
+def to_item(name: str, count: int) -> Item: ...
 
 
 @overload
-def to_item(value: int) -> Item:
-    ...
+def to_item(value: int) -> Item: ...
 
 
 @overload
-def to_item(value: str) -> Item:
-    ...
+def to_item(value: str) -> Item: ...
 
 
 def to_item(*args):
@@ -4408,13 +4073,11 @@ def to_json(val: Any) -> str:
 
 
 @overload
-def to_location(value: int) -> Location:
-    ...
+def to_location(value: int) -> Location: ...
 
 
 @overload
-def to_location(value: str) -> Location:
-    ...
+def to_location(value: str) -> Location: ...
 
 
 def to_location(*args):
@@ -4425,14 +4088,16 @@ def to_lower_case(string: str) -> str:
     return LibraryFunction("to_lower_case")(string)
 
 
-@overload
-def to_monster(id: int) -> Monster:
-    ...
+def to_modifier(name: str) -> Modifier:
+    return LibraryFunction("to_modifier")(name)
 
 
 @overload
-def to_monster(name: str) -> Monster:
-    ...
+def to_monster(id: int) -> Monster: ...
+
+
+@overload
+def to_monster(name: str) -> Monster: ...
 
 
 def to_monster(*args):
@@ -4440,13 +4105,11 @@ def to_monster(*args):
 
 
 @overload
-def to_path(value: int) -> Path:
-    ...
+def to_path(value: int) -> Path: ...
 
 
 @overload
-def to_path(value: str) -> Path:
-    ...
+def to_path(value: str) -> Path: ...
 
 
 def to_path(*args):
@@ -4462,13 +4125,11 @@ def to_plural(item: Item) -> str:
 
 
 @overload
-def to_servant(value: int) -> Servant:
-    ...
+def to_servant(value: int) -> Servant: ...
 
 
 @overload
-def to_servant(value: str) -> Servant:
-    ...
+def to_servant(value: str) -> Servant: ...
 
 
 def to_servant(*args):
@@ -4476,23 +4137,19 @@ def to_servant(*args):
 
 
 @overload
-def to_skill(effect: Effect) -> Skill:
-    ...
+def to_skill(effect: Effect) -> Skill: ...
 
 
 @overload
-def to_skill(id: int) -> Skill:
-    ...
+def to_skill(id: int) -> Skill: ...
 
 
 @overload
-def to_skill(name: str, type: str) -> Skill:
-    ...
+def to_skill(name: str, type: str) -> Skill: ...
 
 
 @overload
-def to_skill(name: str) -> Skill:
-    ...
+def to_skill(name: str) -> Skill: ...
 
 
 def to_skill(*args):
@@ -4500,13 +4157,11 @@ def to_skill(*args):
 
 
 @overload
-def to_slot(item: Item) -> Slot:
-    ...
+def to_slot(item: Item) -> Slot: ...
 
 
 @overload
-def to_slot(item: str) -> Slot:
-    ...
+def to_slot(item: str) -> Slot: ...
 
 
 def to_slot(*args):
@@ -4518,18 +4173,15 @@ def to_stat(value: str) -> Stat:
 
 
 @overload
-def to_string(val: float, fmt: str) -> str:
-    ...
+def to_string(val: float, fmt: str) -> str: ...
 
 
 @overload
-def to_string(val: int, fmt: str) -> str:
-    ...
+def to_string(val: int, fmt: str) -> str: ...
 
 
 @overload
-def to_string(val: str) -> str:
-    ...
+def to_string(val: str) -> str: ...
 
 
 def to_string(*args):
@@ -4537,13 +4189,11 @@ def to_string(*args):
 
 
 @overload
-def to_thrall(value: int) -> Thrall:
-    ...
+def to_thrall(value: int) -> Thrall: ...
 
 
 @overload
-def to_thrall(value: str) -> Thrall:
-    ...
+def to_thrall(value: str) -> Thrall: ...
 
 
 def to_thrall(*args):
@@ -4563,28 +4213,23 @@ def to_vykea(value: str) -> Vykea:
 
 
 @overload
-def to_wiki_url(value: Monster) -> str:
-    ...
+def to_wiki_url(value: Monster) -> str: ...
 
 
 @overload
-def to_wiki_url(value: Skill) -> str:
-    ...
+def to_wiki_url(value: Skill) -> str: ...
 
 
 @overload
-def to_wiki_url(value: Effect) -> str:
-    ...
+def to_wiki_url(value: Effect) -> str: ...
 
 
 @overload
-def to_wiki_url(value: Item) -> str:
-    ...
+def to_wiki_url(value: Item) -> str: ...
 
 
 @overload
-def to_wiki_url(value: str) -> str:
-    ...
+def to_wiki_url(value: str) -> str: ...
 
 
 def to_wiki_url(*args):
@@ -4656,18 +4301,15 @@ def url_encode(string: str) -> str:
 
 
 @overload
-def use(count: int, item: Item) -> bool:
-    ...
+def use(count: int, item: Item) -> bool: ...
 
 
 @overload
-def use(item: Item, count: int) -> bool:
-    ...
+def use(item: Item, count: int) -> bool: ...
 
 
 @overload
-def use(item: Item) -> bool:
-    ...
+def use(item: Item) -> bool: ...
 
 
 def use(*args):
@@ -4683,28 +4325,23 @@ def use_servant(servant: Servant) -> bool:
 
 
 @overload
-def use_skill(skill: Skill) -> str:
-    ...
+def use_skill(skill: Skill) -> str: ...
 
 
 @overload
-def use_skill(count: int, skill: Skill, target: str) -> bool:
-    ...
+def use_skill(count: int, skill: Skill, target: str) -> bool: ...
 
 
 @overload
-def use_skill(skill: Skill, count: int, target: str) -> bool:
-    ...
+def use_skill(skill: Skill, count: int, target: str) -> bool: ...
 
 
 @overload
-def use_skill(count: int, skill: Skill) -> bool:
-    ...
+def use_skill(count: int, skill: Skill) -> bool: ...
 
 
 @overload
-def use_skill(skill: Skill, count: int) -> bool:
-    ...
+def use_skill(skill: Skill, count: int) -> bool: ...
 
 
 def use_skill(*args):
@@ -4712,13 +4349,11 @@ def use_skill(*args):
 
 
 @overload
-def user_confirm(message: str, timeOut: int, defaultBoolean: bool) -> bool:
-    ...
+def user_confirm(message: str, timeOut: int, defaultBoolean: bool) -> bool: ...
 
 
 @overload
-def user_confirm(message: str) -> bool:
-    ...
+def user_confirm(message: str) -> bool: ...
 
 
 def user_confirm(*args):
@@ -4726,13 +4361,11 @@ def user_confirm(*args):
 
 
 @overload
-def user_notify(message: str, onlyShowWhenHidden: bool) -> None:
-    ...
+def user_notify(message: str, onlyShowWhenHidden: bool) -> None: ...
 
 
 @overload
-def user_notify(message: str) -> None:
-    ...
+def user_notify(message: str) -> None: ...
 
 
 def user_notify(*args):
@@ -4740,18 +4373,15 @@ def user_notify(*args):
 
 
 @overload
-def user_prompt(message: str, timeOut: int, defaultString: str) -> str:
-    ...
+def user_prompt(message: str, timeOut: int, defaultString: str) -> str: ...
 
 
 @overload
-def user_prompt(message: str, options: dict[Any, Any]) -> str:
-    ...
+def user_prompt(message: str, options: dict[Any, Any]) -> str: ...
 
 
 @overload
-def user_prompt(message: str) -> str:
-    ...
+def user_prompt(message: str) -> str: ...
 
 
 def user_prompt(*args):
@@ -4763,23 +4393,19 @@ def visit(master: Coinmaster) -> bool:
 
 
 @overload
-def visit_url(string: str, usePostMethod: bool, encoded: bool) -> str:
-    ...
+def visit_url(string: str, usePostMethod: bool, encoded: bool) -> str: ...
 
 
 @overload
-def visit_url(string: str, usePostMethod: bool) -> str:
-    ...
+def visit_url(string: str, usePostMethod: bool) -> str: ...
 
 
 @overload
-def visit_url(string: str) -> str:
-    ...
+def visit_url(string: str) -> str: ...
 
 
 @overload
-def visit_url() -> str:
-    ...
+def visit_url() -> str: ...
 
 
 def visit_url(*args):
@@ -4787,13 +4413,15 @@ def visit_url(*args):
 
 
 @overload
-def voting_booth_initiatives(clss: int, path: int, daycount: int) -> dict[str, bool]:
-    ...
+def voting_booth_initiatives(
+    clss: int, path: int, daycount: int
+) -> dict[str, bool]: ...
 
 
 @overload
-def voting_booth_initiatives(clss: Class, path: Path, daycount: int) -> dict[str, bool]:
-    ...
+def voting_booth_initiatives(
+    clss: Class, path: Path, daycount: int
+) -> dict[str, bool]: ...
 
 
 def voting_booth_initiatives(*args):

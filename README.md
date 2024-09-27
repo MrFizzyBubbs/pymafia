@@ -1,8 +1,9 @@
 # pymafia
 
-pymafia is a Python package and bridge for reflecting KoLmafia's Java environment. It aims to provide an easy-to-use environment for scripting [Kingdom of Loathing](https://www.kingdomofloathing.com/) (KoL) in Python by reflecting and wrapping the community-developed [KoLmafia](https://github.com/kolmafia/kolmafia) desktop tool. While [other languages](https://loathing-associates-scripting-society.github.io/KoL-Scripting-Resources/) for scripting KoL exist, they can be less approachable to non-developers. 
+pymafia is a Python package and bridge for reflecting KoLmafia's Java environment. It aims to provide an easy-to-use environment for scripting [Kingdom of Loathing](https://www.kingdomofloathing.com/) (KoL) in Python by reflecting and wrapping the community-developed [KoLmafia](https://github.com/kolmafia/kolmafia) desktop tool. While [other languages](https://loathing-associates-scripting-society.github.io/KoL-Scripting-Resources/) for scripting KoL exist, they simply aren't Python.
 
 ## Installation
+
 You can install pymafia from the [Python Package Index (PyPI)](https://pypi.org/project/pymafia/) using the following command:
 
 ```
@@ -12,7 +13,8 @@ pip install pymafia
 pymafia uses [JPype](https://github.com/kivy/pyjnius) to reflect KoLmafia's Java environment, so you will need to install a Java Development Kit (JDK) on your operating system — KoLmafia's developers recommend [Adoptium v17](https://adoptium.net/index.html). For information on troubleshooting your Java installation, see [JPype's troubleshooting guide](https://jpype.readthedocs.io/en/latest/install.html#if-it-fails).
 
 ## Usage
-To get started, simply import `pymafia` or any of its components. Doing so will download a KoLmafia jar file (if it is not present in the configured location) and start a Java Virtual Machine (JVM) with the jar file included in the JVM's classpath. This process can take over a minute depending on your internet connection. 
+
+To get started, simply import `pymafia` or any of its components. Doing so will download a KoLmafia jar file (if it is not present in the configured location) and start a Java Virtual Machine (JVM) with the jar file included in the JVM's classpath. This process can take over a minute depending on your internet connection.
 
 You can choose the revision of KoLmafia to use or location to run it from by setting these properties in the `pymafia_config` module prior to importing `pymafia`. The revision defaults to the last known working revision at the time of release and the location defaults to a folder named "kolmafia" in the current working directory.
 
@@ -43,6 +45,7 @@ Note that almost all `pymafia` objects are available at the top level, although 
 ```
 
 ### Accessing KoLmafia
+
 The reflected KoLmafia jar file can be accessed through a `KoLmafia` wrapper class instance called `km`. Most, if not all, of KoLmafia's Java classes are available as attributes on `km`.
 
 ```python
@@ -63,6 +66,7 @@ False
 ```
 
 ### ASH and Special Datatypes
+
 KoLmafia's runtime library functions are available through the `ash` sub-package, which will automatically handle conversion of the inputs and output for the underlying Java function.
 
 ```python
@@ -116,15 +120,16 @@ Slot('hat')
 ```
 
 ### Non-Documented Functionality
+
 There are modules and subpackages available within pymafia that have not been described here; I hope to provide comprehensive documentation in the future.
 
 ## Contributing
-To contribute to pymafia, you will need to set up a development environment using the following steps:
-1. Install [poetry](https://python-poetry.org/)
-2. *Optional: Install [GnuWin32 Make](https://gnuwin32.sourceforge.net/packages/make.htm) if on Windows OS*
-3. Clone this repository
-4. Run `poetry install` or `make install` inside the cloned repository
 
+To contribute to pymafia, you will need to set up a development environment using the following steps:
+
+1. Install [uv](https://docs.astral.sh/uv/) (and [GnuWin32 Make](https://gnuwin32.sourceforge.net/packages/make.htm) if on Windows)
+2. Clone this repository
+3. Run `make install` inside the cloned repository
 
 ## Acknowledgements
 

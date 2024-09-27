@@ -6,28 +6,57 @@ on:
         description: "Package version"
         type: string
 env:
-  POETRY_DYNAMIC_VERSIONING_OVERRIDE: pymafia = ${{ inputs.version }}
+  SETUPTOOLS_SCM_PRETEND_VERSION: ${{ inputs.version }}
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Set up Poetry
-        uses: ./.github/actions/setup-poetry
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "latest"
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
-          cache: "poetry"
-      - name: Install poetry-dynamic-versioning
-        run: poetry self add 'poetry-dynamic-versioning[plugin]'
-      - name: Install dependencies
-        run: poetry install --no-root
-      - name: Publish package
-        run: |-
-          poetry config repositories.testpypi https://test.pypi.org/legacy/
-          poetry config pypi-token.testpypi ${{ secrets.TEST_PYPI_API_TOKEN }}
-          poetry publish --build -r testpypi
+          python-version-file: "pyproject.toml"
+      - name: Build package
+        run: uv build
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version-file: .java-version
+          distribution: temurin
+      - name: Validate distributions
+        run: |
+          for file in $(find dist -type f); do
+              echo "Validating $file"
+              uv run --with $file --no-project --refresh-package pymafia -- python -c "import pymafia"
+          done
+      - name: Upload distributions
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/p/pymafia
+    permissions:
+      # Required for PyPI's trusted publishing
+      id-token: write
+    steps:
+      - name: Download distributions
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - name: Publish to Test PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
