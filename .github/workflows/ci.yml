@@ -12,15 +12,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Set up uv
-        uses: astral-sh/setup-uv@v2
+        uses: astral-sh/setup-uv@v3
         with:
-          enable-cache: true
+          version: "latest"
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version-file: "pyproject.toml"
       - name: Install dependencies
-        run: uv sync --all-extras --dev
+        run: make install
       - name: Lint
         run: make lint
   test:
@@ -49,3 +49,20 @@ jobs:
         run: make install
       - name: Test
         run: make test
+  check-licenses:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "latest"
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: "pyproject.toml"
+      - name: Install dependencies
+        run: make install
+      - name: Check licenses
+        run: make check-licenses

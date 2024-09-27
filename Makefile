@@ -1,6 +1,3 @@
-.PHONY: all
-all:
-
 .PHONY: install
 install:
 	uv sync --all-extras --dev
@@ -19,3 +16,8 @@ lint:
 .PHONY: test
 test:
 	uv run pytest . -p no:faulthandler
+
+.PHONY: check-licenses
+check-licenses:
+	uv pip freeze --exclude-editable > requirements.txt
+	uv run licensecheck --zero
