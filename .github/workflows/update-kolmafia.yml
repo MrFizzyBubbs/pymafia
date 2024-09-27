@@ -36,8 +36,8 @@ jobs:
         run: make install
       - name: Update .kolmafia-revision
         run: echo -n "${{ env.revision_number }}" > .kolmafia-revision
-      - name: Update library.py
-        run: uv run python scripts/generate_library.py
+      - name: Update ash/library.py
+        run: uv run python scripts/generate_ash_library.py
       - name: Format
         run: make format
         continue-on-error: true
