@@ -6,7 +6,7 @@ on:
         description: "Package version"
         type: string
 env:
-    SETUPTOOLS_SCM_PRETEND_VERSION: ${{ inputs.version }}
+  SETUPTOOLS_SCM_PRETEND_VERSION: ${{ inputs.version }}
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,17 +16,15 @@ jobs:
         with:
           fetch-depth: 0
       - name: Set up uv
-        uses: astral-sh/setup-uv@v2
+        uses: astral-sh/setup-uv@v3
         with:
-          enable-cache: true
+          version: "latest"
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version-file: "pyproject.toml"
       - name: Build package
-        run: |
-          uvx --from=toml-cli toml set --toml-path=pyproject.toml project.version ${{ inputs.version }}
-          uv build
+        run: uv build
       - name: Set up Java
         uses: actions/setup-java@v4
         with:

@@ -6,13 +6,11 @@ T = TypeVar("T")
 
 
 @overload
-def get_property(name: str) -> str:
-    ...
+def get_property(name: str) -> str: ...
 
 
 @overload
-def get_property(name: str, t: Type[T]) -> T:
-    ...
+def get_property(name: str, t: Type[T]) -> T: ...
 
 
 def get_property(name, t=str):
