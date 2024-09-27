@@ -1,6 +1,6 @@
 [project]
 name = "pymafia"
-version = "0.0.1"
+dynamic = ["version"]
 description = "A Python module and bridge for reflecting KoLmafia's Java environment"
 authors = [{ name = "MrFizzyBubbs", email = "mrfizzybubbs@protonmail.com" }]
 readme = "README.md"
@@ -44,8 +44,11 @@ explicit_start = false
 pythonpath = "src"
 
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
+
+[tool.hatch.version]
+source = "vcs"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/pymafia", "src/pymafia_config.py"]

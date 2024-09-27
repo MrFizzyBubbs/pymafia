@@ -19,10 +19,7 @@ jobs:
         with:
           python-version-file: "pyproject.toml"
       - name: Build package
-        run: |
-          VERSION=$(uvx dunamai from any --no-metadata --style pep440)
-          uvx --from=toml-cli toml set --toml-path=pyproject.toml project.version $VERSION
-          uv build
+        run: uv build
       - name: Set up Java
         uses: actions/setup-java@v4
         with:

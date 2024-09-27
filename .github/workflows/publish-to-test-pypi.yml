@@ -5,6 +5,8 @@ on:
       version:
         description: "Package version"
         type: string
+env:
+    SETUPTOOLS_SCM_PRETEND_VERSION: ${{ inputs.version }}
 jobs:
   build:
     runs-on: ubuntu-latest
