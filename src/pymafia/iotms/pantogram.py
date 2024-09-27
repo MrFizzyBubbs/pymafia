@@ -70,12 +70,14 @@ middle_sacrifices = {
 
 
 def have():
-    """Return True if the player has the portable pantogram available, False otherwise."""
+    """Return True if the player has the portable pantogram available, False
+    otherwise."""
     return player.have(ITEM)
 
 
 def have_pants():
-    """Return True if the player has the pantogram pants available today, False otherwise."""
+    """Return True if the player has the pantogram pants available today, False
+    otherwise."""
     return player.have(PANTS)
 
 

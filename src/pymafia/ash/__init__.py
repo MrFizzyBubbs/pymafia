@@ -7,5 +7,9 @@ __all__ = library.__all__
 
 
 def __getattr__(name: str) -> LibraryFunction:
-    """Dynamically create a LibraryFunction for an unknown ASH function name. This ensures support for ASH functions added in KoLmafia revisions newer than what the package was released with."""
+    """Dynamically create a LibraryFunction for an unknown ASH function name.
+
+    This ensures support for ASH functions added in KoLmafia revisions newer than what
+    the package was released with.
+    """
     return LibraryFunction(name)

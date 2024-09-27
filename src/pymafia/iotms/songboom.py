@@ -17,7 +17,8 @@ class SongboomSong(str, Enum):
 
 
 def have() -> bool:
-    """Return True if the player has the SongBoom™ BoomBox available, False otherwise."""
+    """Return True if the player has the SongBoom™ BoomBox available, False
+    otherwise."""
     return player.have(ITEM)
 
 

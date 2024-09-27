@@ -24,7 +24,8 @@ class Ghost(Enum):
 
 
 def have() -> bool:
-    """Return True if the player has the protonic accelerator pack available, False otherwise."""
+    """Return True if the player has the protonic accelerator pack available, False
+    otherwise."""
     return player.have(ITEM)
 
 

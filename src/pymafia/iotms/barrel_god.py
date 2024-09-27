@@ -5,7 +5,8 @@ from pymafia.preference import get_property
 
 
 def have() -> bool:
-    """Return True if the player has the shrine to the Barrel god unlocked, False otherwise."""
+    """Return True if the player has the shrine to the Barrel god unlocked, False
+    otherwise."""
     return get_property("barrelShrineUnlocked", bool)
 
 

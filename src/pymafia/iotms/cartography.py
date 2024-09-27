@@ -8,7 +8,8 @@ SKILL = Skill("Map the Monsters")
 
 
 def have() -> bool:
-    """Return True if the player has the Comprehensive Cartography skill, False otherwise."""
+    """Return True if the player has the Comprehensive Cartography skill, False
+    otherwise."""
     return player.have(PASSIVE)
 
 

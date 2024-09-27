@@ -63,17 +63,28 @@ class Item:
 
     @property
     def tcrs_name(self) -> str:
-        """Return the name of the Item as it appears in your current Two Crazy Random Summer run. If you are not in a TCRS run, the regular Item name is returned."""
+        """Return the name of the Item as it appears in your current Two Crazy Random
+        Summer run.
+
+        If you are not in a TCRS run, the regular Item name is returned.
+        """
         return km.TCRSDatabase.getTCRSName(self.id) or ""
 
     @property
     def plural(self) -> str:
-        """Return the plural of the Item. If the official plural is not known, return the name of the Item with an "s" appended."""
+        """Return the plural of the Item.
+
+        If the official plural is not known, return the name of the Item with an "s"
+        appended.
+        """
         return km.ItemDatabase.getPluralName(self.id)
 
     @property
     def descid(self) -> str:
-        """Return the descid of the Item. This is the identifier used to see the description of the Item."""
+        """Return the descid of the Item.
+
+        This is the identifier used to see the description of the Item.
+        """
         return km.ItemDatabase.getDescriptionId(self.id)
 
     @property
@@ -83,9 +94,11 @@ class Item:
 
     @property
     def smallimage(self) -> str:
-        """Returns the filename of the small image associated with the Item. For items with an image that is usually larger than 30x30, returns their 30x30 equivalent.
+        """Returns the filename of the small image associated with the Item. For items
+        with an image that is usually larger than 30x30, returns their 30x30 equivalent.
 
-        For example, "folders" from the "over-the-shoulder Folder Holder" will normally return a 100x100 image but a 30x30 image here.
+        For example, "folders" from the "over-the-shoulder Folder Holder" will normally
+        return a 100x100 image but a 30x30 image here.
         """
         return km.ItemDatabase.getSmallImage(self.id)
 
@@ -101,37 +114,65 @@ class Item:
 
     @property
     def adventures(self) -> str:
-        """Return the range of adventures gained from consuming the Item. The string will either contain the adventures for invariant gains, or a hyphen-separated minimum and maximum for variant gains."""
+        """Return the range of adventures gained from consuming the Item.
+
+        The string will either contain the adventures for invariant gains, or a hyphen-
+        separated minimum and maximum for variant gains.
+        """
         return km.ConsumablesDatabase.getBaseAdventureRange(self.name)
 
     @property
     def muscle(self) -> str:
-        """Return the range of muscle substats gained from consuming the Item. The string will either contain the substats for invariant gains, or a hyphen-separated minimum and maximum for variant gains. Note that substat gains can be negative."""
+        """Return the range of muscle substats gained from consuming the Item.
+
+        The string will either contain the substats for invariant gains, or a hyphen-
+        separated minimum and maximum for variant gains. Note that substat gains can be
+        negative.
+        """
         return km.ConsumablesDatabase.getBaseMuscleByName(self.name)
 
     @property
     def mysticality(self) -> str:
-        """Return the range of mysticality substats gained from consuming the Item. The string will either contain the substats for invariant gains, or a hyphen-separated minimum and maximum for variant gains. Note that substat gains can be negative."""
+        """Return the range of mysticality substats gained from consuming the Item.
+
+        The string will either contain the substats for invariant gains, or a hyphen-
+        separated minimum and maximum for variant gains. Note that substat gains can be
+        negative.
+        """
         return km.ConsumablesDatabase.getBaseMysticalityByName(self.name)
 
     @property
     def moxie(self) -> str:
-        """Return the range of moxie substats gained from consuming the Item. The string will either contain the substats for invariant gains, or a hyphen-separated minimum and maximum for variant gains. Note that substat gains can be negative."""
+        """Return the range of moxie substats gained from consuming the Item.
+
+        The string will either contain the substats for invariant gains, or a hyphen-
+        separated minimum and maximum for variant gains. Note that substat gains can be
+        negative.
+        """
         return km.ConsumablesDatabase.getBaseMoxieByName(self.name)
 
     @property
     def fullness(self) -> int:
-        """Return the stomach size of Item. If the Item is not edible, return 0."""
+        """Return the stomach size of Item.
+
+        If the Item is not edible, return 0.
+        """
         return km.ConsumablesDatabase.getFullness(self.name)
 
     @property
     def inebriety(self) -> int:
-        """Return the liver size of Item. If the Item is not drinkable, return 0."""
+        """Return the liver size of Item.
+
+        If the Item is not drinkable, return 0.
+        """
         return km.ConsumablesDatabase.getInebriety(self.name)
 
     @property
     def spleen(self) -> int:
-        """Return the spleen size of Item. If the Item is not chewable, return 0."""
+        """Return the spleen size of Item.
+
+        If the Item is not chewable, return 0.
+        """
         return km.ConsumablesDatabase.getSpleenHit(self.name)
 
     @property
@@ -161,7 +202,8 @@ class Item:
 
     @property
     def notes(self) -> str:
-        """Return any notes that exist for the Item. Examples of (comma-separated) contents are:
+        """Return any notes that exist for the Item. Examples of (comma-separated)
+        contents are:
 
         - The name and duration of any effects granted by consumption, if applicable.
         - Items dropped when the item is consumed, if applicable.
@@ -192,7 +234,10 @@ class Item:
 
     @property
     def combat(self) -> bool:
-        """Return True if the Item is usable in combat, else False. This returns True whether the Item is consumed by being used or not."""
+        """Return True if the Item is usable in combat, else False.
+
+        This returns True whether the Item is consumed by being used or not.
+        """
         mask = JEnumSet.of(
             km.ItemDatabase.Attribute.COMBAT,
             km.ItemDatabase.Attribute.COMBAT_REUSABLE,
@@ -201,19 +246,24 @@ class Item:
 
     @property
     def combat_reusable(self) -> bool:
-        """Return True if the Item is usable in combat and is not consumed when doing so, else False."""
+        """Return True if the Item is usable in combat and is not consumed when doing
+        so, else False."""
         return km.ItemDatabase.getAttribute(
             self.id, km.ItemDatabase.Attribute.COMBAT_REUSABLE
         )
 
     @property
     def usable(self) -> bool:
-        """Return True if the Item is usable, else False. This returns True whether the Item is consumed by being used or not."""
+        """Return True if the Item is usable, else False.
+
+        This returns True whether the Item is consumed by being used or not.
+        """
         return km.ItemDatabase.isUsable(self.id)
 
     @property
     def reusable(self) -> bool:
-        """Return True if the Item is usable and is not consumed when doing so, else False."""
+        """Return True if the Item is usable and is not consumed when doing so, else
+        False."""
         return (
             km.ItemDatabase.getConsumptionType(self.id)
             == km.KoLConstants.ConsumptionType.USE_INFINITE

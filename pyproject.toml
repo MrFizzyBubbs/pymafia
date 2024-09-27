@@ -14,6 +14,8 @@ Releases = "https://github.com/MrFizzyBubbs/pymafia/releases"
 
 [tool.uv]
 dev-dependencies = [
+    "docformatter>=1.7.5",
+    "docformatter[tomli]>=1.7.5 ; python_full_version < '3.11'",
     "ipykernel>=6.29.5",
     "licensecheck>=2024.3",
     "mypy>=1.11.2",
@@ -50,6 +52,10 @@ pythonpath = "src"
 
 [tool.licensecheck]
 using = "requirements:requirements.txt"
+
+[tool.docformatter]
+recursive = true
+black = true
 
 [build-system]
 requires = ["hatchling", "hatch-vcs"]

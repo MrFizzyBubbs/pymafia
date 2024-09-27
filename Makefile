@@ -4,11 +4,13 @@ install:
 
 .PHONY: format
 format:
+	uv run docformatter src --in-place
 	uv run ruff check . --fix
 	uv run ruff format .
 
 .PHONY: lint
 lint:
+	uv run docformatter src --check
 	uv run ruff check .
 	uv run ruff format . --check
 	uv run mypy src	
