@@ -52,6 +52,3 @@ build-backend = "hatchling.build"
 
 [tool.hatch.version]
 source = "vcs"
-
-[tool.hatch.build.targets.wheel]
-packages = ["src/pymafia", "src/pymafia_config.py"]
