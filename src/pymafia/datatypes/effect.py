@@ -4,6 +4,8 @@ from dataclasses import dataclass
 from enum import IntEnum
 from typing import ClassVar
 
+import jpype
+
 from pymafia.kolmafia import km
 
 
@@ -18,14 +20,18 @@ class EffectQuality(IntEnum):
 class Effect:
     NONE: ClassVar[Effect]
 
-    id: int = km.DataTypes.EFFECT_INIT.contentLong
-    name: str = km.DataTypes.EFFECT_INIT.contentString
+    id: int
+    name: str
 
     def __init__(self, key: int | str | None = None):
-        if (isinstance(key, str) and key.casefold() == self.name.casefold()) or key in (
-            self.id,
+        if (
+            isinstance(key, str) and key.casefold() == self.default_name.casefold()
+        ) or key in (
+            self.default_id,
             None,
         ):
+            object.__setattr__(self, "id", self.default_id)
+            object.__setattr__(self, "name", self.default_id)
             return
 
         id = km.EffectDatabase.getEffectId(key) if isinstance(key, str) else key
@@ -52,6 +58,14 @@ class Effect:
 
         values = km.DataTypes.EFFECT_TYPE.allValues()
         return sorted(from_java(values))
+
+    @property
+    def default_id(self) -> int:
+        return km.DataTypes.EFFECT_INIT.contentLong
+
+    @property
+    def default_name(self) -> str:
+        return km.DataTypes.EFFECT_INIT.contentString
 
     @property
     def default(self) -> str:
@@ -91,4 +105,6 @@ class Effect:
         return km.EffectDatabase.isSong(self.id)
 
 
-Effect.NONE = Effect()
+@jpype.onJVMStart
+def initialize_effect_instances():
+    Effect.NONE = Effect()

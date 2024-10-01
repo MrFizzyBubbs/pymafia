@@ -3,6 +3,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, ClassVar
 
+import jpype
+
 from pymafia.kolmafia import km
 
 if TYPE_CHECKING:
@@ -13,15 +15,20 @@ if TYPE_CHECKING:
 class Thrall:
     NONE: ClassVar[Thrall]
 
-    data: Any = field(default=km.DataTypes.THRALL_INIT.content, compare=False)
-    id: int = km.DataTypes.THRALL_INIT.contentLong
-    type: str = km.DataTypes.THRALL_INIT.contentString
+    data: Any = field(compare=False)
+    id: int
+    type: str
 
     def __init__(self, key: int | str | None = None):
-        if (isinstance(key, str) and key.casefold() == self.type.casefold()) or key in (
-            self.id,
+        if (
+            isinstance(key, str) and key.casefold() == self.default_type.casefold()
+        ) or key in (
+            self.default_id,
             None,
         ):
+            object.__setattr__(self, "data", self.default_data)
+            object.__setattr__(self, "id", self.default_id)
+            object.__setattr__(self, "type", self.default_type)
             return
 
         data = (
@@ -51,6 +58,18 @@ class Thrall:
 
         values = km.DataTypes.THRALL_TYPE.allValues()
         return sorted(from_java(values))
+
+    @property
+    def default_data(self) -> Any:
+        return km.DataTypes.THRALL_INIT.content
+
+    @property
+    def default_id(self) -> int:
+        return km.DataTypes.THRALL_INIT.contentLong
+
+    @property
+    def default_type(self) -> str:
+        return km.DataTypes.THRALL_INIT.contentString
 
     @property
     def thrall(self) -> Any:
@@ -93,4 +112,6 @@ class Thrall:
         return self.thrall.getCurrentModifiers() if self.thrall else ""
 
 
-Thrall.NONE = Thrall()
+@jpype.onJVMStart
+def initialize_thrall_instances():
+    Thrall.NONE = Thrall()

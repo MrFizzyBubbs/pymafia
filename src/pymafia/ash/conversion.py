@@ -27,37 +27,6 @@ from pymafia.datatypes import (
 )
 from pymafia.kolmafia import km
 
-JTreeMap = JClass("java.util.TreeMap")
-JArrayList = JClass("java.util.ArrayList")
-JMatcher = JClass("java.util.regex.Matcher")
-
-TYPESPEC_CONVERSIONS = {
-    km.DataTypes.TypeSpec.BOOLEAN: bool,
-    km.DataTypes.TypeSpec.INT: int,
-    km.DataTypes.TypeSpec.FLOAT: float,
-    km.DataTypes.TypeSpec.STRING: str,
-    km.DataTypes.TypeSpec.STRICT_STRING: str,
-    km.DataTypes.TypeSpec.BUFFER: str,
-    km.DataTypes.TypeSpec.ITEM: Item,
-    km.DataTypes.TypeSpec.LOCATION: Location,
-    km.DataTypes.TypeSpec.CLASS: Class,
-    km.DataTypes.TypeSpec.STAT: Stat,
-    km.DataTypes.TypeSpec.SKILL: Skill,
-    km.DataTypes.TypeSpec.EFFECT: Effect,
-    km.DataTypes.TypeSpec.FAMILIAR: Familiar,
-    km.DataTypes.TypeSpec.SLOT: Slot,
-    km.DataTypes.TypeSpec.MONSTER: Monster,
-    km.DataTypes.TypeSpec.ELEMENT: Element,
-    km.DataTypes.TypeSpec.COINMASTER: Coinmaster,
-    km.DataTypes.TypeSpec.PHYLUM: Phylum,
-    km.DataTypes.TypeSpec.BOUNTY: Bounty,
-    km.DataTypes.TypeSpec.THRALL: Thrall,
-    km.DataTypes.TypeSpec.SERVANT: Servant,
-    km.DataTypes.TypeSpec.VYKEA: Vykea,
-    km.DataTypes.TypeSpec.PATH: Path,
-    km.DataTypes.TypeSpec.MODIFIER: Modifier,
-}
-
 
 def to_java(obj: Any) -> Any:
     """Convert to a Java KoLmafia Value."""
@@ -71,6 +40,8 @@ def to_java(obj: Any) -> Any:
             km.DataTypes.MATCHER_TYPE, obj.pattern().toString(), obj.__wrapped__
         )
     if isinstance(obj, abc.Mapping):
+        JTreeMap = JClass("java.util.TreeMap")
+
         jmap = JTreeMap()
         for k, v in obj.items():
             jk = to_java(k)
@@ -81,6 +52,8 @@ def to_java(obj: Any) -> Any:
         aggregate_type = km.AggregateType(data_type, index_type)
         return km.MapValue(aggregate_type, jmap)
     if isinstance(obj, abc.Iterable):
+        JArrayList = JClass("java.util.ArrayList")
+
         jlist = JArrayList()
         for item in obj:
             jitem = to_java(item)
@@ -97,12 +70,64 @@ def from_java(obj: Any) -> Any:
     jtype = obj.getType()
     jtypespec = jtype.getType()
 
+    # Primitive types
     if jtypespec == km.DataTypes.TypeSpec.VOID:
         return None
-    if jtypespec in TYPESPEC_CONVERSIONS:
-        return TYPESPEC_CONVERSIONS[jtypespec](obj.toJSON())
+    if jtypespec == km.DataTypes.TypeSpec.BOOLEAN:
+        return bool(obj.toJSON())
+    if jtypespec == km.DataTypes.TypeSpec.INT:
+        return int(obj.toJSON())
+    if jtypespec == km.DataTypes.TypeSpec.FLOAT:
+        return float(obj.toJSON())
+    if jtypespec in (
+        km.DataTypes.TypeSpec.STRING,
+        km.DataTypes.TypeSpec.STRICT_STRING,
+        km.DataTypes.TypeSpec.BUFFER,
+    ):
+        return str(obj.toJSON())
+
+    # Special types
+    if jtypespec == km.DataTypes.TypeSpec.ITEM:
+        return Item(obj.toJSON())
+    if jtypespec == km.DataTypes.TypeSpec.LOCATION:
+        return Location(obj.toJSON())
+    if jtypespec == km.DataTypes.TypeSpec.CLASS:
+        return Class(obj.toJSON())
+    if jtypespec == km.DataTypes.TypeSpec.STAT:
+        return Stat(obj.toJSON())
+    if jtypespec == km.DataTypes.TypeSpec.SKILL:
+        return Skill(obj.toJSON())
+    if jtypespec == km.DataTypes.TypeSpec.EFFECT:
+        return Effect(obj.toJSON())
+    if jtypespec == km.DataTypes.TypeSpec.FAMILIAR:
+        return Familiar(obj.toJSON())
+    if jtypespec == km.DataTypes.TypeSpec.SLOT:
+        return Slot(obj.toJSON())
+    if jtypespec == km.DataTypes.TypeSpec.MONSTER:
+        return Monster(obj.toJSON())
+    if jtypespec == km.DataTypes.TypeSpec.ELEMENT:
+        return Element(obj.toJSON())
+    if jtypespec == km.DataTypes.TypeSpec.COINMASTER:
+        return Coinmaster(obj.toJSON())
+    if jtypespec == km.DataTypes.TypeSpec.PHYLUM:
+        return Phylum(obj.toJSON())
+    if jtypespec == km.DataTypes.TypeSpec.BOUNTY:
+        return Bounty(obj.toJSON())
+    if jtypespec == km.DataTypes.TypeSpec.THRALL:
+        return Thrall(obj.toJSON())
+    if jtypespec == km.DataTypes.TypeSpec.SERVANT:
+        return Servant(obj.toJSON())
+    if jtypespec == km.DataTypes.TypeSpec.VYKEA:
+        return Vykea(obj.toJSON())
+    if jtypespec == km.DataTypes.TypeSpec.PATH:
+        return Path(obj.toJSON())
+    if jtypespec == km.DataTypes.TypeSpec.MODIFIER:
+        return Modifier(obj.toJSON())
+
     if jtypespec == km.DataTypes.TypeSpec.MATCHER:
         return Matcher(obj.rawValue())
+
+    # Composite types
     if jtypespec == km.DataTypes.TypeSpec.AGGREGATE:
         if isinstance(obj.content, abc.Mapping):
             return {from_java(k): from_java(v) for k, v in obj.content.items()}
@@ -110,6 +135,7 @@ def from_java(obj: Any) -> Any:
             return [from_java(x) for x in obj.content]
     if jtypespec == km.DataTypes.TypeSpec.RECORD:
         return {from_java(k): from_java(v) for k, v in zip(obj.keys(), obj.content)}
+
     raise TypeError(
         f"unsupported type {jtype.getName()!r} (TypeSpec.{jtypespec.toString()})"
     )

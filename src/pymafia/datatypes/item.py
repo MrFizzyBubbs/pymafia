@@ -1,39 +1,43 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from enum import Enum
+from functools import partial
 from typing import TYPE_CHECKING, ClassVar
 
+import jpype
 from jpype import JClass
 
 from pymafia.kolmafia import km
+from pymafia.lazy_enum import LazyEnum
 
 if TYPE_CHECKING:
     from pymafia.datatypes.coinmaster import Coinmaster
     from pymafia.datatypes.skill import Skill
 
-JEnumSet = JClass("java.util.EnumSet")
 
-
-class CandyType(Enum):
-    NONE = km.CandyDatabase.CandyType.NONE
-    UNSPADED = km.CandyDatabase.CandyType.UNSPADED
-    SIMPLE = km.CandyDatabase.CandyType.SIMPLE
-    COMPLEX = km.CandyDatabase.CandyType.COMPLEX
+class CandyType(LazyEnum):
+    NONE = partial(lambda: km.CandyDatabase.CandyType.NONE)
+    UNSPADED = partial(lambda: km.CandyDatabase.CandyType.UNSPADED)
+    SIMPLE = partial(lambda: km.CandyDatabase.CandyType.SIMPLE)
+    COMPLEX = partial(lambda: km.CandyDatabase.CandyType.COMPLEX)
 
 
 @dataclass(frozen=True, order=True)
 class Item:
     NONE: ClassVar[Item]
 
-    id: int = km.DataTypes.ITEM_INIT.contentLong
-    name: str = km.DataTypes.ITEM_INIT.contentString
+    id: int
+    name: str
 
     def __init__(self, key: int | str | None = None):
-        if (isinstance(key, str) and key.casefold() == self.name.casefold()) or key in (
-            self.id,
+        if (
+            isinstance(key, str) and key.casefold() == self.default_name.casefold()
+        ) or key in (
+            self.default_id,
             None,
         ):
+            object.__setattr__(self, "id", self.default_id)
+            object.__setattr__(self, "name", self.default_name)
             return
 
         id = km.ItemDatabase.getItemId(key) if isinstance(key, str) else key
@@ -60,6 +64,14 @@ class Item:
 
         values = km.DataTypes.ITEM_TYPE.allValues()
         return sorted(from_java(values))
+
+    @property
+    def default_id(self) -> int:
+        return km.DataTypes.ITEM_INIT.contentLong
+
+    @property
+    def default_name(self) -> str:
+        return km.DataTypes.ITEM_INIT.contentString
 
     @property
     def tcrs_name(self) -> str:
@@ -238,6 +250,7 @@ class Item:
 
         This returns True whether the Item is consumed by being used or not.
         """
+        JEnumSet = JClass("java.util.EnumSet")
         mask = JEnumSet.of(
             km.ItemDatabase.Attribute.COMBAT,
             km.ItemDatabase.Attribute.COMBAT_REUSABLE,
@@ -352,4 +365,6 @@ class Item:
             return Skill()
 
 
-Item.NONE = Item()
+@jpype.onJVMStart
+def initialize_item_instances():
+    Item.NONE = Item()

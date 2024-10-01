@@ -3,6 +3,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, ClassVar
 
+import jpype
+
 from pymafia.kolmafia import km
 
 if TYPE_CHECKING:
@@ -13,15 +15,20 @@ if TYPE_CHECKING:
 class Class:
     NONE: ClassVar[Class]
 
-    ascension_class: Any = field(default=km.DataTypes.CLASS_INIT.content, compare=False)
-    id: int = km.DataTypes.CLASS_INIT.contentLong
-    name: str = km.DataTypes.CLASS_INIT.contentString
+    ascension_class: Any = field(compare=False)
+    id: int
+    name: str
 
     def __init__(self, key: int | str | None = None):
-        if (isinstance(key, str) and key.casefold() == self.name.casefold()) or key in (
-            self.id,
+        if (
+            isinstance(key, str) and key.casefold() == self.default_name.casefold()
+        ) or key in (
+            self.default_id,
             None,
         ):
+            object.__setattr__(self, "ascension_class", self.default_ascension_class)
+            object.__setattr__(self, "id", self.default_id)
+            object.__setattr__(self, "name", self.default_name)
             return
 
         ascension_class = km.AscensionClass.find(key)
@@ -49,6 +56,18 @@ class Class:
         return sorted(from_java(values))
 
     @property
+    def default_ascension_class(self) -> Any:
+        return km.DataTypes.CLASS_INIT.content
+
+    @property
+    def default_id(self) -> int:
+        return km.DataTypes.CLASS_INIT.contentLong
+
+    @property
+    def default_name(self) -> str:
+        return km.DataTypes.CLASS_INIT.contentString
+
+    @property
     def primestat(self) -> Stat:
         from pymafia.datatypes.stat import Stat
 
@@ -59,4 +78,6 @@ class Class:
         return Stat(name)
 
 
-Class.NONE = Class()
+@jpype.onJVMStart
+def initialize_class_instances():
+    Class.NONE = Class()

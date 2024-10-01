@@ -3,6 +3,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, ClassVar
 
+import jpype
+
 from pymafia.kolmafia import km
 
 if TYPE_CHECKING:
@@ -13,14 +15,18 @@ if TYPE_CHECKING:
 class Skill:
     NONE: ClassVar[Skill]
 
-    id: int = km.DataTypes.SKILL_INIT.contentLong
-    name: str = km.DataTypes.SKILL_INIT.contentString
+    id: int
+    name: str
 
     def __init__(self, key: int | str | None = None):
-        if (isinstance(key, str) and key.casefold() == self.name.casefold()) or key in (
-            self.id,
+        if (
+            isinstance(key, str) and key.casefold() == self.default_name.casefold()
+        ) or key in (
+            self.default_id,
             None,
         ):
+            object.__setattr__(self, "id", self.default_id)
+            object.__setattr__(self, "name", self.default_name)
             return
 
         id = km.SkillDatabase.getSkillId(key) if isinstance(key, str) else key
@@ -47,6 +53,14 @@ class Skill:
 
         values = km.DataTypes.SKILL_TYPE.allValues()
         return sorted(from_java(values))
+
+    @property
+    def default_id(self) -> int:
+        return km.DataTypes.SKILL_INIT.contentLong
+
+    @property
+    def default_name(self) -> str:
+        return km.DataTypes.SKILL_INIT.contentString
 
     @property
     def type(self) -> str:
@@ -118,4 +132,6 @@ class Skill:
         return km.SkillDatabase.getCasts(self.id)
 
 
-Skill.NONE = Skill()
+@jpype.onJVMStart
+def initialize_skill_instances():
+    Skill.NONE = Skill()
