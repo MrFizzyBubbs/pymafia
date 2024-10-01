@@ -23,7 +23,8 @@ class Regalia(Enum):
 
 
 def have() -> bool:
-    """Return True if the player has the God Lobster in their terrarium, False otherwise."""
+    """Return True if the player has the God Lobster in their terrarium, False
+    otherwise."""
     return player.have(FAMILIAR)
 
 

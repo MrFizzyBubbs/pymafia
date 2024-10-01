@@ -37,7 +37,8 @@ class Gift(IntEnum):
 
 
 def have() -> bool:
-    """Return True is the player has the Crimbo Shrub in their terrarium, False otherwise."""
+    """Return True is the player has the Crimbo Shrub in their terrarium, False
+    otherwise."""
     return player.have(FAMILIAR)
 
 

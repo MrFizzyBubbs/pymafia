@@ -4,6 +4,7 @@ dynamic = ["version"]
 description = "A Python module and bridge for reflecting KoLmafia's Java environment"
 authors = [{ name = "MrFizzyBubbs", email = "mrfizzybubbs@protonmail.com" }]
 readme = "README.md"
+license = { text = "MIT License" }
 requires-python = ">=3.10, <3.12"
 dependencies = ["jpype1>=1.4.1", "wrapt>=1.15.0"]
 
@@ -13,7 +14,10 @@ Releases = "https://github.com/MrFizzyBubbs/pymafia/releases"
 
 [tool.uv]
 dev-dependencies = [
+    "docformatter>=1.7.5",
+    "docformatter[tomli]>=1.7.5 ; python_full_version < '3.11'",
     "ipykernel>=6.29.5",
+    "licensecheck>=2024.3",
     "mypy>=1.11.2",
     "pre-commit>=3.8.0",
     "pytest>=8.3.3",
@@ -45,6 +49,13 @@ explicit_start = false
 
 [tool.pytest.ini_options]
 pythonpath = "src"
+
+[tool.licensecheck]
+using = "requirements:requirements.txt"
+
+[tool.docformatter]
+recursive = true
+black = true
 
 [build-system]
 requires = ["hatchling", "hatch-vcs"]

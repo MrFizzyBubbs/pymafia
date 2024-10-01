@@ -31,7 +31,8 @@ class LOVItem(IntEnum):
 
 
 def have() -> bool:
-    """Return True if the player has The Tunnel of L.O.V.E available, False otherwise."""
+    """Return True if the player has The Tunnel of L.O.V.E available, False
+    otherwise."""
     return get_property("loveTunnelAvailable", bool)
 
 

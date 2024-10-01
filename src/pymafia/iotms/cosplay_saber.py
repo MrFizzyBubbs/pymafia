@@ -16,7 +16,8 @@ class Upgrade(IntEnum):
 
 
 def have() -> bool:
-    """Return True if the player has the Fourth of May Cosplay Saber available, False otherwise."""
+    """Return True if the player has the Fourth of May Cosplay Saber available, False
+    otherwise."""
     return player.have(ITEM)
 
 
@@ -26,7 +27,8 @@ def current_upgrade() -> Upgrade:
 
 
 def is_upgraded() -> bool:
-    """Return True if the Fourth of May Cosplay Saber has been upgraded today, False otherwise."""
+    """Return True if the Fourth of May Cosplay Saber has been upgraded today, False
+    otherwise."""
     return current_upgrade() is not Upgrade.NONE
 
 

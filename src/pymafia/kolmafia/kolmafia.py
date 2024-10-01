@@ -1,5 +1,6 @@
 import os
 import re
+import sys
 import urllib.request
 import zipfile
 from contextlib import contextmanager
@@ -13,15 +14,19 @@ import pymafia_config
 GITHUB_DOWNLOAD_URL = "https://github.com/kolmafia/kolmafia/releases/download/"
 JAVA_PATTERN = "(net\\/sourceforge\\/kolmafia.*\\/([^\\$]*))\\.class"
 
+if sys.version_info >= (3, 11):
+    # Added in version 3.11
+    from contextlib import chdir
+else:
 
-@contextmanager
-def chdir(path: str):
-    old_cwd = os.getcwd()
-    os.chdir(path)
-    try:
-        yield
-    finally:
-        os.chdir(old_cwd)
+    @contextmanager
+    def chdir(path: str):
+        original_dir = os.getcwd()
+        os.chdir(path)
+        try:
+            yield
+        finally:
+            os.chdir(original_dir)
 
 
 def download_kolmafia(revision: int, filename: str):
@@ -30,6 +35,8 @@ def download_kolmafia(revision: int, filename: str):
 
 
 class KoLmafia:
+    classes = {}
+
     def __init__(self, revision: int, location: str):
         jar_location = os.path.join(location, f"KoLmafia-{revision}.jar")
         os.makedirs(location, exist_ok=True)
@@ -51,8 +58,12 @@ class KoLmafia:
         return sorted(list(self.classes.keys()))
 
     def __getattr__(self, name: str) -> Any:
+        if not jpype.isJVMStarted():
+            raise jpype.JVMNotRunning(
+                "Java Virtual Machine is not running, run pymafia.startJVM to ... (TODO)"
+            )
         if name in self.classes:
-            return jpype.JClass(self.classes[name])
+            return jpype.JClass(self._classes[name])
         return super().__getattribute__(name)
 
 

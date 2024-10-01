@@ -20,7 +20,8 @@ class Piece(Enum):
 
 
 def have() -> bool:
-    """Return True if the player has the Witchess Set in their campground, False otherwise."""
+    """Return True if the player has the Witchess Set in their campground, False
+    otherwise."""
     return ITEM in ash.get_campground()
 
 

@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, ClassVar
 
+import jpype
 from jpype import JClass
 
 from pymafia.kolmafia import km
@@ -10,24 +11,25 @@ from pymafia.kolmafia import km
 if TYPE_CHECKING:
     from pymafia.datatypes.bounty import Bounty
 
-JInteger = JClass("java.lang.Integer")
-
 
 @dataclass(frozen=True, order=True)
 class Location:
     NONE: ClassVar[Location]
 
-    kol_adventure: Any = field(
-        default=km.DataTypes.LOCATION_INIT.content, compare=False
-    )
-    id: int = -1  # LOCATION_INIT does not specify an id
-    name: str = km.DataTypes.LOCATION_INIT.contentString
+    kol_adventure: Any = field(compare=False)
+    id: int
+    name: str
 
     def __init__(self, key: int | str | None = None):
-        if (isinstance(key, str) and key.casefold() == self.name.casefold()) or key in (
-            self.id,
+        if (
+            isinstance(key, str) and key.casefold() == self.default_name.casefold()
+        ) or key in (
+            self.default_id,
             None,
         ):
+            object.__setattr__(self, "kol_adventure", self.default_kol_adventure)
+            object.__setattr__(self, "id", self.default_id)
+            object.__setattr__(self, "name", self.default_name)
             return
 
         kol_adventure = (
@@ -59,6 +61,18 @@ class Location:
 
         values = km.DataTypes.LOCATION_TYPE.allValues()
         return sorted(from_java(values))
+
+    @property
+    def default_kol_adventure(self) -> Any:
+        return km.DataTypes.LOCATION_INIT.content
+
+    @property
+    def default_id(self) -> int:
+        return -1  # DataTypes.LOCATION_INIT does not specify an id
+
+    @property
+    def default_name(self) -> str:
+        return km.DataTypes.LOCATION_INIT.contentString
 
     @property
     def url(self) -> str:
@@ -157,6 +171,8 @@ class Location:
 
     @property
     def poison(self) -> int:
+        JInteger = JClass("java.lang.Integer")
+
         if self.kol_adventure is None:
             return JInteger.MAX_VALUE
         area = self.kol_adventure.getAreaSummary()
@@ -179,4 +195,6 @@ class Location:
         return km.WildfireCampRequest.getFireLevel(self.kol_adventure)
 
 
-Location.NONE = Location()
+@jpype.onJVMStart
+def initialize_location_instances():
+    Location.NONE = Location()

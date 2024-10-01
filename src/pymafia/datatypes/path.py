@@ -3,6 +3,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any, ClassVar
 
+import jpype
+
 from pymafia.kolmafia import km
 
 
@@ -10,15 +12,21 @@ from pymafia.kolmafia import km
 class Path:
     NONE: ClassVar[Path]
 
-    ascension_path: Any = field(default=km.DataTypes.PATH_INIT.content, compare=False)
-    id: int = km.DataTypes.PATH_INIT.contentLong
-    name: str = km.DataTypes.PATH_INIT.contentString
+    ascension_path: Any = field(
+        default_factory=lambda: km.DataTypes.PATH_INIT.content, compare=False
+    )
+    id: int
+    name: str
 
     def __init__(self, key: int | str | None = None):
-        if (isinstance(key, str) and key.casefold() == self.name.casefold()) or key in (
-            self.id,
+        if (
+            isinstance(key, str) and key.casefold() == self.default_name.casefold()
+        ) or key in (
+            self.default_id,
             None,
         ):
+            object.__setattr__(self, "id", self.default_id)
+            object.__setattr__(self, "name", self.default_name)
             return
 
         ascension_path = (
@@ -50,6 +58,14 @@ class Path:
         return sorted(from_java(values))
 
     @property
+    def default_id(self) -> int:
+        return km.DataTypes.PATH_INIT.contentLong
+
+    @property
+    def default_name(self) -> str:
+        return km.DataTypes.PATH_INIT.contentString
+
+    @property
     def avatar(self) -> bool:
         return self.ascension_path.isAvatar()
 
@@ -66,4 +82,6 @@ class Path:
         return self.ascension_path.canUseFamiliars()
 
 
-Path.NONE = Path()
+@jpype.onJVMStart
+def initialize_path_instances():
+    Path.NONE = Path()

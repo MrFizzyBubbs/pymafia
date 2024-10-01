@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, ClassVar
 
+import jpype
 from jpype import JClass
 
 from pymafia.kolmafia import km
@@ -13,22 +14,24 @@ if TYPE_CHECKING:
     from pymafia.datatypes.phylum import Phylum
 
 
-JInteger = JClass("java.lang.Integer")
-
-
 @dataclass(frozen=True, order=True)
 class Monster:
     NONE: ClassVar[Monster]
 
-    monster: Any = field(default=km.DataTypes.MONSTER_INIT.content, compare=False)
-    id: int = km.DataTypes.MONSTER_INIT.contentLong
-    name: str = km.DataTypes.MONSTER_INIT.contentString
+    monster: Any = field(compare=False)
+    id: int
+    name: str
 
     def __init__(self, key: int | str | None = None):
-        if (isinstance(key, str) and key.casefold() == self.name.casefold()) or key in (
-            self.id,
+        if (
+            isinstance(key, str) and key.casefold() == self.default_name.casefold()
+        ) or key in (
+            self.default_id,
             None,
         ):
+            object.__setattr__(self, "monster", self.default_monster)
+            object.__setattr__(self, "id", self.default_id)
+            object.__setattr__(self, "name", self.default_name)
             return
 
         monster = (
@@ -59,6 +62,18 @@ class Monster:
 
         values = km.DataTypes.MONSTER_TYPE.allValues()
         return sorted(from_java(values))
+
+    @property
+    def default_monster(self) -> Any:
+        return km.DataTypes.MONSTER_INIT.content
+
+    @property
+    def default_id(self) -> int:
+        return km.DataTypes.MONSTER_INIT.contentLong
+
+    @property
+    def default_name(self) -> str:
+        return km.DataTypes.MONSTER_INIT.contentString
 
     @property
     def article(self) -> str:
@@ -170,6 +185,8 @@ class Monster:
     def poison(self) -> Effect:
         from pymafia.datatypes.effect import Effect
 
+        JInteger = JClass("java.lang.Integer")
+
         if self.monster is None:
             return Effect()
         poison_level = self.monster.getPoison()
@@ -219,4 +236,6 @@ class Monster:
         return self.monster.getAttributes() if self.monster is not None else ""
 
 
-Monster.NONE = Monster()
+@jpype.onJVMStart
+def initialize_monster_instances():
+    Monster.NONE = Monster()

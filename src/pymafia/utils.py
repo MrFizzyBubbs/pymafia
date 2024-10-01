@@ -8,12 +8,6 @@ from jpype import JClass
 from pymafia.ash import from_java
 from pymafia.kolmafia import km
 
-JByteArrayOutputStream = JClass("java.io.ByteArrayOutputStream")
-JPrintStream = JClass("java.io.PrintStream")
-JOutputStream = JClass("java.io.OutputStream")
-JString = JClass("java.lang.String")
-JByteArrayInputStream = JClass("java.io.ByteArrayInputStream")
-
 
 def launch_gui():
     """Launch the KoLmafia GUI."""
@@ -46,6 +40,10 @@ def log(message: str, html: bool = False):
 
 def execute(command: str) -> str:
     """Execute a command in the KoLmafia CLI and return the output."""
+    JOutputStream = JClass("java.io.OutputStream")
+    JByteArrayOutputStream = JClass("java.io.ByteArrayOutputStream")
+    JPrintStream = JClass("java.io.PrintStream")
+
     ostream = JOutputStream @ JByteArrayOutputStream()
     out = JPrintStream(ostream)
     km.RequestLogger.openCustom(out)
@@ -55,6 +53,9 @@ def execute(command: str) -> str:
 
 def script(lines: str, convert=True) -> Any:
     """Execute an ash script and return the result, optionally converting it."""
+    JString = JClass("java.lang.String")
+    JByteArrayInputStream = JClass("java.io.ByteArrayInputStream")
+
     stream = JByteArrayInputStream(JString(lines).getBytes())
     interpreter = km.AshRuntime()
     interpreter.validate(None, stream)

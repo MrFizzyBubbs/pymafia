@@ -3,6 +3,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any, ClassVar
 
+import jpype
+
 from pymafia.kolmafia import km
 
 
@@ -19,13 +21,15 @@ class Element:
     BADSPELLING: ClassVar[Element]
     SHADOW: ClassVar[Element]
 
-    element: Any = field(default=km.DataTypes.ELEMENT_INIT.content, compare=False)
-    name: str = km.DataTypes.ELEMENT_INIT.contentString
+    element: Any = field(compare=False)
+    name: str
 
     def __init__(self, key: str | None = None):
         if (
-            isinstance(key, str) and key.casefold() == self.name.casefold()
+            isinstance(key, str) and key.casefold() == self.default_name.casefold()
         ) or key is None:
+            object.__setattr__(self, "element", self.default_element)
+            object.__setattr__(self, "name", self.default_name)
             return
 
         element = km.MonsterDatabase.stringToElement(key)
@@ -52,6 +56,14 @@ class Element:
         return from_java(values)
 
     @property
+    def default_element(self) -> Any:
+        return km.DataTypes.ELEMENT_INIT.content
+
+    @property
+    def default_name(self) -> str:
+        return km.DataTypes.ELEMENT_INIT.contentString
+
+    @property
     def image(self) -> str:
         # No image for Slime or Supercold in Manuel
         if self.element in [
@@ -73,13 +85,15 @@ class Element:
         return ""
 
 
-Element.NONE = Element()
-Element.COLD = Element("cold")
-Element.HOT = Element("hot")
-Element.SLEAZE = Element("sleaze")
-Element.SPOOKY = Element("spooky")
-Element.STENCH = Element("stench")
-Element.SLIME = Element("slime")
-Element.SUPERCOLD = Element("supercold")
-Element.BADSPELLING = Element("bad spelling")
-Element.SHADOW = Element("shadow")
+@jpype.onJVMStart
+def initialize_element_instances():
+    Element.NONE = Element()
+    Element.COLD = Element("cold")
+    Element.HOT = Element("hot")
+    Element.SLEAZE = Element("sleaze")
+    Element.SPOOKY = Element("spooky")
+    Element.STENCH = Element("stench")
+    Element.SLIME = Element("slime")
+    Element.SUPERCOLD = Element("supercold")
+    Element.BADSPELLING = Element("bad spelling")
+    Element.SHADOW = Element("shadow")

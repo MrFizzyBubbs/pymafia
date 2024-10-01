@@ -6,7 +6,8 @@ FAMILIAR = Familiar("Pair of Stomping Boots")
 
 
 def have() -> bool:
-    """Return True if the player has the Pair of Stomping Boots in their terrarium, False otherwise."""
+    """Return True if the player has the Pair of Stomping Boots in their terrarium,
+    False otherwise."""
     return player.have(FAMILIAR)
 
 
@@ -16,5 +17,6 @@ def runaways_used() -> int:
 
 
 def runaways_left() -> int:
-    """Return the total number of free bander runaways the player can get from their Stomping Boots."""
+    """Return the total number of free bander runaways the player can get from their
+    Stomping Boots."""
     return (ash.familiar_weight(FAMILIAR) + ash.weight_adjustment()) // 5

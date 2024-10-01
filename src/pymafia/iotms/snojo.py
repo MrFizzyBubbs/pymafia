@@ -15,7 +15,7 @@ class Setting(IntEnum):
 
 
 def have() -> bool:
-    """Return True if the player has The Snojo available, False otherwise"""
+    """Return True if the player has The Snojo available, False otherwise."""
     return get_property("snojoAvailable", bool)
 
 
