@@ -12,9 +12,7 @@ from pymafia.kolmafia import km
 class Path:
     NONE: ClassVar[Path]
 
-    ascension_path: Any = field(
-        default_factory=lambda: km.DataTypes.PATH_INIT.content, compare=False
-    )
+    ascension_path: Any = field(compare=False)
     id: int
     name: str
 
@@ -25,6 +23,7 @@ class Path:
             self.default_id,
             None,
         ):
+            object.__setattr__(self, "id", self.default_ascension_class)
             object.__setattr__(self, "id", self.default_id)
             object.__setattr__(self, "name", self.default_name)
             return
@@ -56,6 +55,10 @@ class Path:
 
         values = km.DataTypes.PATH_TYPE.allValues()
         return sorted(from_java(values))
+
+    @property
+    def default_ascension_class(self) -> Any:
+        return km.DataTypes.PATH_INIT.content
 
     @property
     def default_id(self) -> int:

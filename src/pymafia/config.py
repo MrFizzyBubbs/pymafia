@@ -1,19 +1,19 @@
-__all__ = ["set_kolmafia_revision", "set_jar_location"]
+__all__ = ["set_kolmafia_revision", "set_kolmafia_directory"]
 
 import json
 import os
 import urllib.request
-from typing import Literal
 from pathlib import Path
+from typing import Literal
 
 import jpype
 
 GITHUB_RELEASE_URL = "https://api.github.com/repos/kolmafia/kolmafia/releases/"
 RECOMMENDED_REVISION = int(Path(".kolmafia-revision").read_text())
-DEFAULT_LOCATION = Path.cwd() / "kolmafia"
+DEFAULT_DIRECTORY = Path.cwd() / "kolmafia"
 
 kolmafia_revision = RECOMMENDED_REVISION
-jar_location = DEFAULT_LOCATION
+kolmafia_directory = DEFAULT_DIRECTORY
 
 
 def check_jvm_running() -> None:
@@ -29,7 +29,7 @@ def latest_kolmafia_revision() -> int:
         return int(data["name"])
 
 
-def set_kolmafia_revision(revision: int | str | Literal["latest"]):
+def set_kolmafia_revision(revision: int | str | Literal["latest"]) -> None:
     """Set the revision of KoLmafia to use."""
     check_jvm_running()
 
@@ -40,9 +40,9 @@ def set_kolmafia_revision(revision: int | str | Literal["latest"]):
         kolmafia_revision = int(revision)
 
 
-def set_jar_location(location: str | os.PathLike):
-    """Set the location of KoLmafia."""
+def set_kolmafia_directory(path: str | os.PathLike) -> None:
+    """Set the directory to run the KoLmafia jar file in."""
     check_jvm_running()
 
-    global jar_location
-    jar_location = location
+    global kolmafia_directory
+    kolmafia_directory = Path(path)
