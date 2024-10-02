@@ -3,9 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, ClassVar
 
-from pymafia.kolmafia.kolmafia import on_kolmafia_start
-
-from pymafia.kolmafia import km
+from pymafia.kolmafia import km, on_kolmafia_start
 
 if TYPE_CHECKING:
     from pymafia.datatypes.stat import Stat

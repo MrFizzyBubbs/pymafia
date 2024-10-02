@@ -4,9 +4,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import TYPE_CHECKING, ClassVar
 
-from pymafia.kolmafia.kolmafia import on_kolmafia_start
-
-from pymafia.kolmafia import km
+from pymafia.kolmafia import km, on_kolmafia_start
 
 if TYPE_CHECKING:
     from pymafia.datatypes.location import Location

@@ -4,10 +4,9 @@ from dataclasses import dataclass
 from functools import partial
 from typing import TYPE_CHECKING, ClassVar
 
-from pymafia.kolmafia.kolmafia import on_kolmafia_start
 from jpype import JClass
 
-from pymafia.kolmafia import km
+from pymafia.kolmafia import km, on_kolmafia_start
 from pymafia.lazy_enum import LazyEnum
 
 if TYPE_CHECKING:

@@ -4,9 +4,7 @@ from dataclasses import dataclass
 from enum import IntEnum
 from typing import ClassVar
 
-from pymafia.kolmafia.kolmafia import on_kolmafia_start
-
-from pymafia.kolmafia import km
+from pymafia.kolmafia import km, on_kolmafia_start
 
 
 class EffectQuality(IntEnum):
