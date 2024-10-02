@@ -1,4 +1,6 @@
 from enum import Enum
+from functools import cached_property
+from typing import Any
 
 
 class LazyEnum(Enum):
@@ -15,11 +17,15 @@ class LazyEnum(Enum):
     be used.
     """
 
-    def __getattribute__(self, name):
-        result = super().__getattribute__(name)
-        if name == "value":
-            if callable(result):
-                result = result()
-                setattr(self, "_value_", result)
-                return result
-        return result
+    @classmethod
+    def _missing_(cls, value: object) -> Any:
+        for member in cls:
+            if member.value == value:
+                return member
+        return None
+
+    @cached_property
+    def value(self) -> Any:
+        if callable(self._value_):
+            self._value_ = self._value_()
+        return self._value_
