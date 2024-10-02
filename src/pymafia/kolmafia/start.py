@@ -53,14 +53,13 @@ def start_kolmafia() -> None:
 
     # KoLmafia will place its files in the current working directory, regardless of where the jar file is located.
     with chdir(config.kolmafia_directory):
-        print(jar_location)
         jpype.startJVM(classpath=str(jar_location), convertStrings=True)
     patch.apply()
 
     with zipfile.ZipFile(jar_location) as archive:
         for filename in archive.namelist():
             if match := re.search(JAVA_PATTERN, filename):
-                km._jclasses[match.group(2)] = match.group(1)
+                km._jclass_names[match.group(2)] = match.group(1)
 
     for func in initializers:
         func()
