@@ -8,9 +8,7 @@ class LazyEnum(Enum):
 
     This class allows enum members to have callable values that are evaluated lazily
     (i.e., only when first accessed), and the result is cached by overwriting the
-    original _value_ attribute with the evaluated result. Overwriting _value_ is done so
-    that member lookups by value (e.g., MyEnum('x')) function as expected. This could be
-    improved by subclassing EnumMeta and defining a custom __call__.
+    original _value_ attribute with the evaluated result.
 
     Note that Enum members whose values are functions are considered method definitions
     instead of attributes. To work around this, functools.partial or a wrapper class can
