@@ -64,6 +64,13 @@ class KoLmafia:
 
 km = KoLmafia()
 
+initializers = []
+
+
+def on_kolmafia_start(func):
+    initializers.append(func)
+    return func
+
 
 def start() -> None:
     jar_location = (
@@ -83,3 +90,6 @@ def start() -> None:
         for filename in archive.namelist():
             if match := re.search(JAVA_PATTERN, filename):
                 km._jclasses[match.group(2)] = match.group(1)
+
+    for func in initializers:
+        func()

@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from functools import partial
 from typing import TYPE_CHECKING, ClassVar
 
-import jpype
+from pymafia.kolmafia.kolmafia import on_kolmafia_start
 from jpype import JClass
 
 from pymafia.kolmafia import km
@@ -365,6 +365,6 @@ class Item:
             return Skill()
 
 
-@jpype.onJVMStart
+@on_kolmafia_start
 def initialize_item_instances():
     Item.NONE = Item()

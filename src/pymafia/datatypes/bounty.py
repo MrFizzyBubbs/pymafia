@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import TYPE_CHECKING, ClassVar
 
-import jpype
+from pymafia.kolmafia.kolmafia import on_kolmafia_start
 
 from pymafia.kolmafia import km
 
@@ -100,6 +100,6 @@ class Bounty:
         return Location(km.BountyDatabase.getLocation(self.name))
 
 
-@jpype.onJVMStart
+@on_kolmafia_start
 def initialize_bounty_instances():
     Bounty.NONE = Bounty()

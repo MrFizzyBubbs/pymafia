@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any, ClassVar
 
-import jpype
+from pymafia.kolmafia.kolmafia import on_kolmafia_start
 
 from pymafia.kolmafia import km
 
@@ -83,7 +83,7 @@ class Phylum:
         return self.phylum.getImage()
 
 
-@jpype.onJVMStart
+@on_kolmafia_start
 def initialize_phylum_instances():
     Phylum.NONE = Phylum()
     Phylum.BEAST = Phylum("beast")

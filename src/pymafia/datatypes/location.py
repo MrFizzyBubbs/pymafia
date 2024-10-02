@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, ClassVar
 
-import jpype
+from pymafia.kolmafia.kolmafia import on_kolmafia_start
 from jpype import JClass
 
 from pymafia.kolmafia import km
@@ -195,6 +195,6 @@ class Location:
         return km.WildfireCampRequest.getFireLevel(self.kol_adventure)
 
 
-@jpype.onJVMStart
+@on_kolmafia_start
 def initialize_location_instances():
     Location.NONE = Location()

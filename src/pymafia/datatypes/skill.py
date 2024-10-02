@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, ClassVar
 
-import jpype
+from pymafia.kolmafia.kolmafia import on_kolmafia_start
 
 from pymafia.kolmafia import km
 
@@ -132,6 +132,6 @@ class Skill:
         return km.SkillDatabase.getCasts(self.id)
 
 
-@jpype.onJVMStart
+@on_kolmafia_start
 def initialize_skill_instances():
     Skill.NONE = Skill()

@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 from functools import partial
 from typing import TYPE_CHECKING, Any, ClassVar
 
-import jpype
+from pymafia.kolmafia.kolmafia import on_kolmafia_start
 
 from pymafia.kolmafia import km
 from pymafia.lazy_enum import LazyEnum
@@ -112,6 +112,6 @@ class Vykea:
         return Element(self.companion.getAttackElement().toString())
 
 
-@jpype.onJVMStart
+@on_kolmafia_start
 def initialize_vykea_instances():
     Vykea.NONE = Vykea()

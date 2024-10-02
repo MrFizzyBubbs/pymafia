@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any, ClassVar
 
-import jpype
+from pymafia.kolmafia.kolmafia import on_kolmafia_start
 
 from pymafia.kolmafia import km
 
@@ -85,6 +85,6 @@ class Path:
         return self.ascension_path.canUseFamiliars()
 
 
-@jpype.onJVMStart
+@on_kolmafia_start
 def initialize_path_instances():
     Path.NONE = Path()

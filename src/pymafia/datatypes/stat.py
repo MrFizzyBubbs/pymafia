@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import ClassVar
 
-import jpype
+from pymafia.kolmafia.kolmafia import on_kolmafia_start
 
 from pymafia.kolmafia import km
 
@@ -53,7 +53,7 @@ class Stat:
         return km.DataTypes.STAT_INIT.contentString
 
 
-@jpype.onJVMStart
+@on_kolmafia_start
 def initialize_stat_instances():
     Stat.NONE = Stat()
     Stat.MUSCLE = Stat("Muscle")

@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, ClassVar
 
-import jpype
+from pymafia.kolmafia.kolmafia import on_kolmafia_start
 
 from pymafia.kolmafia import km
 
@@ -243,6 +243,6 @@ class Familiar:
         return data.getAttribute() if data is not None else ""
 
 
-@jpype.onJVMStart
+@on_kolmafia_start
 def initialize_familiar_instances():
     Familiar.NONE = Familiar()

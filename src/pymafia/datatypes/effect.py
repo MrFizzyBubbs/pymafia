@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from enum import IntEnum
 from typing import ClassVar
 
-import jpype
+from pymafia.kolmafia.kolmafia import on_kolmafia_start
 
 from pymafia.kolmafia import km
 
@@ -105,6 +105,6 @@ class Effect:
         return km.EffectDatabase.isSong(self.id)
 
 
-@jpype.onJVMStart
+@on_kolmafia_start
 def initialize_effect_instances():
     Effect.NONE = Effect()

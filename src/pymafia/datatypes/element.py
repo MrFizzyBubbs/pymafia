@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any, ClassVar
 
-import jpype
+from pymafia.kolmafia.kolmafia import on_kolmafia_start
 
 from pymafia.kolmafia import km
 
@@ -85,7 +85,7 @@ class Element:
         return ""
 
 
-@jpype.onJVMStart
+@on_kolmafia_start
 def initialize_element_instances():
     Element.NONE = Element()
     Element.COLD = Element("cold")

@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, ClassVar
 
-import jpype
+from pymafia.kolmafia.kolmafia import on_kolmafia_start
 from jpype import JClass
 
 from pymafia.kolmafia import km
@@ -236,6 +236,6 @@ class Monster:
         return self.monster.getAttributes() if self.monster is not None else ""
 
 
-@jpype.onJVMStart
+@on_kolmafia_start
 def initialize_monster_instances():
     Monster.NONE = Monster()

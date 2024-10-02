@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 from functools import partial
 from typing import Any, ClassVar
 
-import jpype
+from pymafia.kolmafia.kolmafia import on_kolmafia_start
 
 from pymafia.kolmafia import km
 from pymafia.lazy_enum import LazyEnum
@@ -73,6 +73,6 @@ class Modifier:
         return ModifierValueType(modifier_value_type)
 
 
-@jpype.onJVMStart
+@on_kolmafia_start
 def initialize_modifier_instances():
     Modifier.NONE = Modifier()

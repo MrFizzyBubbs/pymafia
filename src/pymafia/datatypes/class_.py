@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, ClassVar
 
-import jpype
+from pymafia.kolmafia.kolmafia import on_kolmafia_start
 
 from pymafia.kolmafia import km
 
@@ -78,6 +78,6 @@ class Class:
         return Stat(name)
 
 
-@jpype.onJVMStart
+@on_kolmafia_start
 def initialize_class_instances():
     Class.NONE = Class()
