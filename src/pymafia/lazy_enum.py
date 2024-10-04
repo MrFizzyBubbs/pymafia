@@ -6,13 +6,16 @@ from typing import Any
 class LazyEnum(Enum):
     """A base class for enums with lazy evaluation of callable values.
 
-    This class allows enum members to have callable values that are evaluated lazily
-    (i.e., only when first accessed), and the result is cached by overwriting the
-    original _value_ attribute with the evaluated result.
+    This class allows enum members to have values that are evaluated lazily (i.e., only
+    when first accessed). If a member's value is a callable, it will be evaluated and
+    cached the first time the `value` property is accessed. The evaluated result
+    replaces the original `_value_` attribute, which ensures that it is reflected in the
+    `__repr__` output. Additionally, the `_missing_` class method ensures that members
+    whose value is a callable can be looked up by the evaluated value.
 
-    Note that Enum members whose values are functions are considered method definitions
-    instead of attributes. To work around this, functools.partial or a wrapper class can
-    be used.
+    Note that enum members whose values are callables are considered method definitions
+    instead of attributes. To avoid this behavior, use `functools.partial`, a wrapper
+    class, or the `enum.member` decorator added in Python 3.11.
     """
 
     @classmethod
