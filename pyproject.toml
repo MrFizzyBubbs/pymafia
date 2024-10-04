@@ -56,7 +56,6 @@ using = "requirements:requirements.txt"
 [tool.docformatter]
 recursive = true
 black = true
-force-wrap = true
 
 [build-system]
 requires = ["hatchling", "hatch-vcs"]

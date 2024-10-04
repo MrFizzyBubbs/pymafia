@@ -11,7 +11,7 @@ class LazyEnum(Enum):
     cached the first time the `value` property is accessed. The evaluated result
     replaces the original `_value_` attribute, which ensures that it is reflected in the
     `__repr__` output. Additionally, the `_missing_` class method ensures that members
-    whose value is a callable can be looked up by the evaluated value.
+    whose value is a callable can be looked up by the evaluted value.
 
     Note that enum members whose values are callables are considered method definitions
     instead of attributes. To avoid this behavior, use `functools.partial`, a wrapper
