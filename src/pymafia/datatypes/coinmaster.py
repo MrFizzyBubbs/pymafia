@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, ClassVar
 
-from pymafia.kolmafia import km
+from pymafia.kolmafia import km, on_kolmafia_start
 
 if TYPE_CHECKING:
     from pymafia.datatypes.item import Item
@@ -13,13 +13,15 @@ if TYPE_CHECKING:
 class Coinmaster:
     NONE: ClassVar[Coinmaster]
 
-    coinmaster: Any = field(default=km.DataTypes.COINMASTER_INIT.content, compare=False)
-    name: str = km.DataTypes.COINMASTER_INIT.contentString
+    coinmaster: Any = field(compare=False)
+    name: str
 
     def __init__(self, key: str | None = None):
         if (
-            isinstance(key, str) and key.casefold() == self.name.casefold()
+            isinstance(key, str) and key.casefold() == self.default_name.casefold()
         ) or key is None:
+            object.__setattr__(self, "coinmaster", self.default_coinmaster)
+            object.__setattr__(self, "name", self.default_name)
             return
 
         coinmaster = km.CoinmasterRegistry.findCoinmaster(key)
@@ -44,6 +46,14 @@ class Coinmaster:
 
         values = km.DataTypes.COINMASTER_TYPE.allValues()
         return from_java(values)
+
+    @property
+    def default_coinmaster(self) -> Any:
+        return km.DataTypes.COINMASTER_INIT.content
+
+    @property
+    def default_name(self) -> str:
+        return km.DataTypes.COINMASTER_INIT.contentString
 
     @property
     def token(self) -> str:
@@ -83,4 +93,6 @@ class Coinmaster:
         return self.coinmaster.getNickname() if self.coinmaster is not None else ""
 
 
-Coinmaster.NONE = Coinmaster()
+@on_kolmafia_start
+def initialize_coinmaster_instances() -> None:
+    Coinmaster.NONE = Coinmaster()

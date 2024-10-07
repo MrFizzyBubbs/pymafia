@@ -703,7 +703,7 @@ wheels = [
 
 [[package]]
 name = "pymafia"
-version = "0.2.4.dev58+gc6f5fce.d20240927"
+version = "0.2.4.dev70+g4271af9.d20241004"
 source = { editable = "." }
 dependencies = [
     { name = "jpype1" },

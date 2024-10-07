@@ -3,22 +3,27 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any, ClassVar
 
-from pymafia.kolmafia import km
+from pymafia.kolmafia import km, on_kolmafia_start
 
 
 @dataclass(frozen=True, order=True)
 class Path:
     NONE: ClassVar[Path]
 
-    ascension_path: Any = field(default=km.DataTypes.PATH_INIT.content, compare=False)
-    id: int = km.DataTypes.PATH_INIT.contentLong
-    name: str = km.DataTypes.PATH_INIT.contentString
+    ascension_path: Any = field(compare=False)
+    id: int
+    name: str
 
     def __init__(self, key: int | str | None = None):
-        if (isinstance(key, str) and key.casefold() == self.name.casefold()) or key in (
-            self.id,
+        if (
+            isinstance(key, str) and key.casefold() == self.default_name.casefold()
+        ) or key in (
+            self.default_id,
             None,
         ):
+            object.__setattr__(self, "ascension_path", self.default_ascension_class)
+            object.__setattr__(self, "id", self.default_id)
+            object.__setattr__(self, "name", self.default_name)
             return
 
         ascension_path = (
@@ -50,6 +55,18 @@ class Path:
         return sorted(from_java(values))
 
     @property
+    def default_ascension_class(self) -> Any:
+        return km.DataTypes.PATH_INIT.content
+
+    @property
+    def default_id(self) -> int:
+        return km.DataTypes.PATH_INIT.contentLong
+
+    @property
+    def default_name(self) -> str:
+        return km.DataTypes.PATH_INIT.contentString
+
+    @property
     def avatar(self) -> bool:
         return self.ascension_path.isAvatar()
 
@@ -66,4 +83,6 @@ class Path:
         return self.ascension_path.canUseFamiliars()
 
 
-Path.NONE = Path()
+@on_kolmafia_start
+def initialize_path_instances() -> None:
+    Path.NONE = Path()

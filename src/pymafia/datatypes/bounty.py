@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import TYPE_CHECKING, ClassVar
 
-from pymafia.kolmafia import km
+from pymafia.kolmafia import km, on_kolmafia_start
 
 if TYPE_CHECKING:
     from pymafia.datatypes.location import Location
@@ -29,12 +29,13 @@ class KoLInternalBountyType(Enum):
 class Bounty:
     NONE: ClassVar[Bounty]
 
-    name: str = km.DataTypes.BOUNTY_INIT.contentString
+    name: str
 
     def __init__(self, key: str | None = None):
         if (
-            isinstance(key, str) and key.casefold() == self.name.casefold()
+            isinstance(key, str) and key.casefold() == self.default_name.casefold()
         ) or key is None:
+            object.__setattr__(self, "name", self.default_name)
             return
 
         bounties = km.BountyDatabase.getMatchingNames(key)
@@ -59,6 +60,10 @@ class Bounty:
 
         values = km.DataTypes.BOUNTY_TYPE.allValues()
         return from_java(values)
+
+    @property
+    def default_name(self) -> str:
+        return km.DataTypes.BOUNTY_INIT.contentString
 
     @property
     def plural(self) -> str:
@@ -93,4 +98,6 @@ class Bounty:
         return Location(km.BountyDatabase.getLocation(self.name))
 
 
-Bounty.NONE = Bounty()
+@on_kolmafia_start
+def initialize_bounty_instances() -> None:
+    Bounty.NONE = Bounty()

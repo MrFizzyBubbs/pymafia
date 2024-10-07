@@ -1,30 +1,33 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from enum import Enum
+from functools import partial
 from typing import Any, ClassVar
 
-from pymafia.kolmafia import km
+from pymafia.kolmafia import km, on_kolmafia_start
+from pymafia.lazy_enum import LazyEnum
 
 
-class ModifierValueType(Enum):
-    NONE = km.ModifierValueType.NONE
-    NUMERIC = km.ModifierValueType.NUMERIC
-    BOOLEAN = km.ModifierValueType.BOOLEAN
-    STRING = km.ModifierValueType.STRING
+class ModifierValueType(LazyEnum):
+    NONE = partial(lambda: km.ModifierValueType.NONE)
+    NUMERIC = partial(lambda: km.ModifierValueType.NUMERIC)
+    BOOLEAN = partial(lambda: km.ModifierValueType.BOOLEAN)
+    STRING = partial(lambda: km.ModifierValueType.STRING)
 
 
 @dataclass(frozen=True, order=True)
 class Modifier:
     NONE: ClassVar[Modifier]
 
-    modifier: Any = field(default=km.DataTypes.MODIFIER_INIT.content, compare=False)
-    name: str = km.DataTypes.MODIFIER_INIT.contentString
+    modifier: Any = field(compare=False)
+    name: str
 
     def __init__(self, key: str | None = None):
         if (
-            isinstance(key, str) and key.casefold() == self.name.casefold()
+            isinstance(key, str) and key.casefold() == self.default_name.casefold()
         ) or key is None:
+            object.__setattr__(self, "modifier", self.default_modifier)
+            object.__setattr__(self, "name", self.default_name)
             return
 
         modifier = km.ModifierDatabase.byCaselessName(key)
@@ -51,6 +54,14 @@ class Modifier:
         return from_java(values)
 
     @property
+    def default_modifier(self) -> Any:
+        return km.DataTypes.MODIFIER_INIT.content
+
+    @property
+    def default_name(self) -> str:
+        return km.DataTypes.MODIFIER_INIT.contentString
+
+    @property
     def type_(self) -> ModifierValueType:
         modifier_value_type = (
             self.modifier.getType()
@@ -60,4 +71,6 @@ class Modifier:
         return ModifierValueType(modifier_value_type)
 
 
-Modifier.NONE = Modifier()
+@on_kolmafia_start
+def initialize_modifier_instances() -> None:
+    Modifier.NONE = Modifier()

@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import ClassVar
 
-from pymafia.kolmafia import km
+from pymafia.kolmafia import km, on_kolmafia_start
 
 
 @dataclass(frozen=True, order=True)
@@ -13,12 +13,13 @@ class Stat:
     MYSTICALITY: ClassVar[Stat]
     MOXIE: ClassVar[Stat]
 
-    name: str = km.DataTypes.STAT_INIT.contentString
+    name: str
 
     def __init__(self, key: str | None = None):
         if (
-            isinstance(key, str) and key.casefold() == self.name.casefold()
+            isinstance(key, str) and key.casefold() == self.default_name.casefold()
         ) or key is None:
+            object.__setattr__(self, "name", self.default_name)
             return
 
         for stat in km.DataTypes.STAT_VALUES:
@@ -45,8 +46,14 @@ class Stat:
         values = km.DataTypes.STAT_TYPE.allValues()
         return from_java(values)
 
+    @property
+    def default_name(self) -> str:
+        return km.DataTypes.STAT_INIT.contentString
 
-Stat.NONE = Stat()
-Stat.MUSCLE = Stat("Muscle")
-Stat.MYSTICALITY = Stat("Mysticality")
-Stat.MOXIE = Stat("Moxie")
+
+@on_kolmafia_start
+def initialize_stat_instances() -> None:
+    Stat.NONE = Stat()
+    Stat.MUSCLE = Stat("Muscle")
+    Stat.MYSTICALITY = Stat("Mysticality")
+    Stat.MOXIE = Stat("Moxie")

@@ -1,46 +1,51 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from enum import Enum
+from functools import partial
 from typing import TYPE_CHECKING, Any, ClassVar
 
-from pymafia.kolmafia import km
+from pymafia.kolmafia import km, on_kolmafia_start
+from pymafia.lazy_enum import LazyEnum
 
 if TYPE_CHECKING:
     from pymafia.datatypes.element import Element
 
 
-class VykeaCompanionType(Enum):
-    NONE = km.VYKEACompanionData.VYKEACompanionType.NONE
-    BOOKSHELF = km.VYKEACompanionData.VYKEACompanionType.BOOKSHELF
-    DRESSER = km.VYKEACompanionData.VYKEACompanionType.DRESSER
-    CEILING_FAN = km.VYKEACompanionData.VYKEACompanionType.CEILING_FAN
-    COUCH = km.VYKEACompanionData.VYKEACompanionType.COUCH
-    LAMP = km.VYKEACompanionData.VYKEACompanionType.LAMP
-    DISHRACK = km.VYKEACompanionData.VYKEACompanionType.DISHRACK
+class VykeaCompanionType(LazyEnum):
+    NONE = partial(lambda: km.VYKEACompanionData.VYKEACompanionType.NONE)
+    BOOKSHELF = partial(lambda: km.VYKEACompanionData.VYKEACompanionType.BOOKSHELF)
+    DRESSER = partial(lambda: km.VYKEACompanionData.VYKEACompanionType.DRESSER)
+    CEILING_FAN = partial(lambda: km.VYKEACompanionData.VYKEACompanionType.CEILING_FAN)
+    COUCH = partial(lambda: km.VYKEACompanionData.VYKEACompanionType.COUCH)
+    LAMP = partial(lambda: km.VYKEACompanionData.VYKEACompanionType.LAMP)
+    DISHRACK = partial(lambda: km.VYKEACompanionData.VYKEACompanionType.DISHRACK)
 
 
-class VykeaRune(Enum):
-    NONE = km.VYKEACompanionData.NO_RUNE
-    FRENZY = km.VYKEACompanionData.FRENZY_RUNE
-    BLOOD = km.VYKEACompanionData.BLOOD_RUNE
-    LIGHTNING = km.VYKEACompanionData.LIGHTNING_RUNE
+class VykeaRune(LazyEnum):
+    NONE = partial(lambda: km.VYKEACompanionData.NO_RUNE)
+    FRENZY = partial(lambda: km.VYKEACompanionData.FRENZY_RUNE)
+    BLOOD = partial(lambda: km.VYKEACompanionData.BLOOD_RUNE)
+    LIGHTNING = partial(lambda: km.VYKEACompanionData.LIGHTNING_RUNE)
 
 
 @dataclass(frozen=True, order=True)
 class Vykea:
     NONE: ClassVar[Vykea]
 
-    companion: Any = field(default=km.VYKEACompanionData.NO_COMPANION, compare=False)
-    type: VykeaCompanionType = VykeaCompanionType(companion.default.getType())
-    rune: VykeaRune = VykeaRune(companion.default.getRune())
-    level: int = companion.default.getLevel()
+    companion: Any = field(compare=False)
+    type: VykeaCompanionType
+    rune: VykeaRune
+    level: int
 
     def __init__(self, key: str | None = None):
         if (
             isinstance(key, str)
             and key.casefold() == km.DataTypes.VYKEA_INIT.contentString.casefold()
         ) or key is None:
+            object.__setattr__(self, "companion", self.default_companion)
+            object.__setattr__(self, "type", self.default_type)
+            object.__setattr__(self, "rune", self.default_rune)
+            object.__setattr__(self, "level", self.default_level)
             return
 
         companion = km.VYKEACompanionData.fromString(key)
@@ -71,6 +76,22 @@ class Vykea:
         return from_java(values)
 
     @property
+    def default_companion(self) -> Any:
+        return km.VYKEACompanionData.NO_COMPANION
+
+    @property
+    def default_type(self) -> VykeaCompanionType:
+        return VykeaCompanionType(self.default_companion.getType())
+
+    @property
+    def default_rune(self) -> VykeaRune:
+        return VykeaRune(self.default_companion.getRune())
+
+    @property
+    def default_level(self) -> int:
+        return self.default_companion.getLevel()
+
+    @property
     def name(self) -> str:
         return self.companion.getName()
 
@@ -89,4 +110,6 @@ class Vykea:
         return Element(self.companion.getAttackElement().toString())
 
 
-Vykea.NONE = Vykea()
+@on_kolmafia_start
+def initialize_vykea_instances() -> None:
+    Vykea.NONE = Vykea()

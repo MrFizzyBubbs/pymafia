@@ -1,4 +1,5 @@
-__all__ = ["KoLmafiaError", "km"]
+__all__ = ["KoLmafiaError", "km", "on_kolmafia_start", "start_kolmafia"]
 
-from pymafia.kolmafia.kolmafia import km
+import pymafia.kolmafia.km as km
 from pymafia.kolmafia.patch import KoLmafiaError
+from pymafia.kolmafia.startup import on_kolmafia_start, start_kolmafia
