@@ -21,7 +21,7 @@ class Path:
             self.default_id,
             None,
         ):
-            object.__setattr__(self, "id", self.default_ascension_class)
+            object.__setattr__(self, "ascension_path", self.default_ascension_class)
             object.__setattr__(self, "id", self.default_id)
             object.__setattr__(self, "name", self.default_name)
             return

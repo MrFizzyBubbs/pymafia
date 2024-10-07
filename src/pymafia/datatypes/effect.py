@@ -29,7 +29,7 @@ class Effect:
             None,
         ):
             object.__setattr__(self, "id", self.default_id)
-            object.__setattr__(self, "name", self.default_id)
+            object.__setattr__(self, "name", self.default_name)
             return
 
         id = km.EffectDatabase.getEffectId(key) if isinstance(key, str) else key
