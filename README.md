@@ -14,18 +14,26 @@ pymafia uses [JPype](https://github.com/kivy/pyjnius) to reflect KoLmafia's Java
 
 ## Usage
 
-To get started, simply import `pymafia` or any of its components. Doing so will download a KoLmafia jar file (if it is not present in the configured location) and start a Java Virtual Machine (JVM) with the jar file included in the JVM's classpath. This process can take over a minute depending on your internet connection.
+### Configuration
 
-You can choose the revision of KoLmafia to use or location to run it from by setting these properties in the `pymafia_config` module prior to importing `pymafia`. The revision defaults to the last known working revision at the time of release and the location defaults to a folder named "kolmafia" in the current working directory.
+You can choose the revision of KoLmafia to use or location to run it from by setting these properties in the `config` module prior to starting the Java Virtual Machine (JVM). The revision defaults to the last known working revision at the time of release and the location defaults to a folder named "kolmafia" in the current working directory.
 
 ```python
->>> import pymafia_config
+>>> from pymafia import config
 
->>> pymafia_config.set_revision(27469)
+>>> config.set_revision(27469)
 
->>> pymafia_config.set_location('C:\\Users\\Documents\\kolmafia\\')
+>>> config.set_location('C:\\Users\\Documents\\kolmafia\\')
+```
 
->>> import pymafia # Start the JVM
+### Starting the JVM
+
+To start KoLmafia, call the `start_kolmafia()` method from the `kolmafia` sub-package. Doing so will download a KoLmafia jar file (if it is not present in the configured location) and start a JVM with the jar file included in the JVM's classpath. This process can take over a minute depending on your internet connection.
+
+```python
+>>> from pymafia.kolmafia import start_kolmafia
+
+>>> start_kolmafia()
 ```
 
 Once you have configured and started pymafia, you will most likely want to launch the KoLmafia GUI and login to your character. Both of these actions can be performed using the `utils` module.
@@ -44,9 +52,9 @@ Note that almost all `pymafia` objects are available at the top level, although 
 >>> from pymafia import launch_gui
 ```
 
-### Accessing KoLmafia
+### Accessing Java Classes
 
-The reflected KoLmafia jar file can be accessed through a `KoLmafia` wrapper class instance called `km`. Most, if not all, of KoLmafia's Java classes are available as attributes on `km`.
+The reflected KoLmafia jar file can be accessed through a `KoLmafia` wrapper class instance called `km`. Most, if not all, of KoLmafia's Java classes are available as attributes through `km`.
 
 ```python
 >>> from pymafia.kolmafia import km
