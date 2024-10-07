@@ -52,7 +52,7 @@ class Stat:
 
 
 @on_kolmafia_start
-def initialize_stat_instances():
+def initialize_stat_instances() -> None:
     Stat.NONE = Stat()
     Stat.MUSCLE = Stat("Muscle")
     Stat.MYSTICALITY = Stat("Mysticality")

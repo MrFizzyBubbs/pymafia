@@ -365,5 +365,5 @@ class Item:
 
 
 @on_kolmafia_start
-def initialize_item_instances():
+def initialize_item_instances() -> None:
     Item.NONE = Item()

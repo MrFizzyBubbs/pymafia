@@ -77,5 +77,5 @@ class Class:
 
 
 @on_kolmafia_start
-def initialize_class_instances():
+def initialize_class_instances() -> None:
     Class.NONE = Class()

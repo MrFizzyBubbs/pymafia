@@ -242,5 +242,5 @@ class Familiar:
 
 
 @on_kolmafia_start
-def initialize_familiar_instances():
+def initialize_familiar_instances() -> None:
     Familiar.NONE = Familiar()

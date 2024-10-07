@@ -111,5 +111,5 @@ class Thrall:
 
 
 @on_kolmafia_start
-def initialize_thrall_instances():
+def initialize_thrall_instances() -> None:
     Thrall.NONE = Thrall()

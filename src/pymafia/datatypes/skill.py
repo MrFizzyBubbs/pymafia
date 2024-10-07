@@ -131,5 +131,5 @@ class Skill:
 
 
 @on_kolmafia_start
-def initialize_skill_instances():
+def initialize_skill_instances() -> None:
     Skill.NONE = Skill()

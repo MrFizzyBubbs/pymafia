@@ -82,7 +82,7 @@ class Phylum:
 
 
 @on_kolmafia_start
-def initialize_phylum_instances():
+def initialize_phylum_instances() -> None:
     Phylum.NONE = Phylum()
     Phylum.BEAST = Phylum("beast")
     Phylum.BUG = Phylum("bug")

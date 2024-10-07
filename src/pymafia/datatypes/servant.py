@@ -116,5 +116,5 @@ class Servant:
 
 
 @on_kolmafia_start
-def initialize_servant_instances():
+def initialize_servant_instances() -> None:
     Servant.NONE = Servant()

@@ -16,7 +16,7 @@ def wrap_function_wrapper(module, name, wrapper, enabled=None):
     )
 
 
-def apply():
+def patch_jpype() -> None:
     """Patch the JPype module to intercept all Java method calls.
 
     This patch does the following:

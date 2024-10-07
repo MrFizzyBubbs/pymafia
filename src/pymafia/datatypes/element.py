@@ -84,7 +84,7 @@ class Element:
 
 
 @on_kolmafia_start
-def initialize_element_instances():
+def initialize_element_instances() -> None:
     Element.NONE = Element()
     Element.COLD = Element("cold")
     Element.HOT = Element("hot")

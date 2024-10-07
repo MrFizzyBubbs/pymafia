@@ -195,5 +195,5 @@ class Location:
 
 
 @on_kolmafia_start
-def initialize_location_instances():
+def initialize_location_instances() -> None:
     Location.NONE = Location()

@@ -94,5 +94,5 @@ class Coinmaster:
 
 
 @on_kolmafia_start
-def initialize_coinmaster_instances():
+def initialize_coinmaster_instances() -> None:
     Coinmaster.NONE = Coinmaster()

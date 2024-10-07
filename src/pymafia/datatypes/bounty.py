@@ -99,5 +99,5 @@ class Bounty:
 
 
 @on_kolmafia_start
-def initialize_bounty_instances():
+def initialize_bounty_instances() -> None:
     Bounty.NONE = Bounty()

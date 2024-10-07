@@ -72,5 +72,5 @@ class Modifier:
 
 
 @on_kolmafia_start
-def initialize_modifier_instances():
+def initialize_modifier_instances() -> None:
     Modifier.NONE = Modifier()

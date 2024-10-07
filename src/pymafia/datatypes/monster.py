@@ -236,5 +236,5 @@ class Monster:
 
 
 @on_kolmafia_start
-def initialize_monster_instances():
+def initialize_monster_instances() -> None:
     Monster.NONE = Monster()

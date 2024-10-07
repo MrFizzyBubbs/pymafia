@@ -72,7 +72,7 @@ class Slot:
 
 
 @on_kolmafia_start
-def initialize_slot_instances():
+def initialize_slot_instances() -> None:
     Slot.NONE = Slot()
     Slot.HAT = Slot("hat")
     Slot.WEAPON = Slot("weapon")

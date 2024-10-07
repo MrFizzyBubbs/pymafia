@@ -111,5 +111,5 @@ class Vykea:
 
 
 @on_kolmafia_start
-def initialize_vykea_instances():
+def initialize_vykea_instances() -> None:
     Vykea.NONE = Vykea()

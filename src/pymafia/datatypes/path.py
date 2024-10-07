@@ -84,5 +84,5 @@ class Path:
 
 
 @on_kolmafia_start
-def initialize_path_instances():
+def initialize_path_instances() -> None:
     Path.NONE = Path()

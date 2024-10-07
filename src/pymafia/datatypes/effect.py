@@ -104,5 +104,5 @@ class Effect:
 
 
 @on_kolmafia_start
-def initialize_effect_instances():
+def initialize_effect_instances() -> None:
     Effect.NONE = Effect()
