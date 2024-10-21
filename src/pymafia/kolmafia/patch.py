@@ -1,3 +1,5 @@
+from typing import Any
+
 import _jpype
 import jpype
 import wrapt
@@ -5,15 +7,15 @@ import wrapt
 enabled = True
 
 
-class KoLmafiaError(Exception):
+class KoLmafiaError(RuntimeError):
     pass
 
 
-# wrapt's wrap_function_wrapper does not allow specifying "enabled"
-def wrap_function_wrapper(module, name, wrapper, enabled=None):
-    return wrapt.wrap_object(
-        module, name, wrapt.FunctionWrapper, (wrapper,), {"enabled": enabled}
-    )
+def int_to_jint(value: Any) -> Any:
+    """Cast to JInt if the argument is an int, else return unchanged."""
+    if isinstance(value, int) and not isinstance(value, bool):
+        return jpype.JInt(value)
+    return value
 
 
 def patch_jpype() -> None:
@@ -30,13 +32,9 @@ def patch_jpype() -> None:
         try:
             enabled = False
 
-            args = [
-                jpype.JInt(arg)
-                if isinstance(arg, int) and not isinstance(arg, bool)
-                else arg
-                for arg in args
-            ]
-            result = wrapped(*args, **kwargs)
+            jargs = tuple(int_to_jint(arg) for arg in args)
+            jkwargs = {name: int_to_jint(value) for name, value in kwargs.items()}
+            result = wrapped(*jargs, **jkwargs)
 
             if not JKoLmafia.permitsContinue():
                 JKoLmafia.forceContinue()
@@ -46,5 +44,5 @@ def patch_jpype() -> None:
         finally:
             enabled = True
 
-    wrap_function_wrapper(_jpype, "_JMethod.__call__", wrapper, enabled=lambda: enabled)
-    wrap_function_wrapper(_jpype, "_JClass.__call__", wrapper, enabled=lambda: enabled)
+    for name in ["_JMethod.__call__", "_JClass.__call__"]:
+        wrapt.patch_function_wrapper(_jpype, name, enabled=lambda: enabled)(wrapper)
