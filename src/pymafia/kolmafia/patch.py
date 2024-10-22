@@ -33,8 +33,8 @@ def patch_jpype() -> None:
             enabled = False
 
             jargs = tuple(int_to_jint(arg) for arg in args)
-            jkwargs = {name: int_to_jint(value) for name, value in kwargs.items()}
-            result = wrapped(*jargs, **jkwargs)
+            # _jpype does not support keyword arguments in method calls
+            result = wrapped(*jargs)
 
             if not JKoLmafia.permitsContinue():
                 JKoLmafia.forceContinue()
