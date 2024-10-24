@@ -26,6 +26,7 @@ from pymafia.datatypes import (
     VykeaCompanionType,
     VykeaRune,
 )
+from pymafia.kolmafia import km
 
 STANDARD_NONE_KEYS = [None, "none", "NONE"]
 
@@ -33,6 +34,12 @@ STANDARD_NONE_KEYS = [None, "none", "NONE"]
 def get_property_names(cls):
     members = inspect.getmembers(cls, lambda x: isinstance(x, property))
     return [name for (name, _) in members]
+
+
+def test_all_enumerated_types_exist():
+    expected_names = set(x.getName().capitalize() for x in km.DataTypes.enumeratedTypes)
+    actual_names = set(x.__name__ for x in SPECIAL_DATATYPES)
+    assert actual_names == expected_names
 
 
 @pytest.mark.parametrize(

@@ -4,6 +4,10 @@ from pymafia.ash.function import LibraryFunction
 from pymafia.ash.library import *
 
 __all__ = ["from_java", "to_java"]
+if not set(__all__).isdisjoint(library.__all__):
+    raise ImportError(
+        "Conflicting names found in __all__ between the current module and pymafia.ash.library."
+    )
 __all__.extend(library.__all__)
 
 
