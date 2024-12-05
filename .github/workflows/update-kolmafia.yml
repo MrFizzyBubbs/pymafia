@@ -27,10 +27,10 @@ jobs:
             fi
           )" >> $GITHUB_ENV
       - name: Validate desired revision
-        if: env.desired-revision <env.current-revision
+        if: env.desired-revision < env.current-revision
         uses: actions/github-script@v7
         with:
-          script: core.setFailed('cannot downgrade KoLmafia versions')
+          script: core.setFailed('The desired revision (${process.env.desired_revision}) is less than the current revision (${process.env.current_revision}).')
   update:
     runs-on: ubuntu-latest
     needs: validate
