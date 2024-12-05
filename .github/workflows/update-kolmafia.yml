@@ -30,7 +30,7 @@ jobs:
         if: env.desired-revision < env.current-revision
         uses: actions/github-script@v7
         with:
-          script: core.setFailed('The desired revision (${process.env.desired_revision}) is less than the current revision (${process.env.current_revision}).')
+          script: core.setFailed('The desired revision (${{ env.desired_revision }}) is less than the current revision (${{ env.current_revision }}).')
   update:
     runs-on: ubuntu-latest
     needs: validate
