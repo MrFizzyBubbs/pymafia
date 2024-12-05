@@ -9,9 +9,9 @@ on:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    outputs:
-      desired-revision: ${{ env.desired_revision }}
-      current-revision: ${{ env.current_revision }}
+    # outputs:
+    #   desired-revision: ${{ env.desired_revision }}
+    #   current-revision: ${{ env.current_revision }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -26,11 +26,16 @@ jobs:
               echo ${{ github.event.inputs.revision }}
             fi
           )" >> $GITHUB_ENV
-      - name: Fail invalid revision
+      - name: Fail lesser revision
         if: env.desired-revision < env.current-revision
         uses: actions/github-script@v7
         with:
           script: core.setFailed('The desired revision (${{ env.desired-revision }}) is less than the current revision (${{ env.current-revision }}).')
+      - name: Set outputs
+        id: set-outputs
+        run: |
+          echo "::set-output name=desired-revision::${{ env.desired_revision }}"
+          echo "::set-output name=current-revision::${{ env.current_revision }}"
   update:
     runs-on: ubuntu-latest
     needs: validate
