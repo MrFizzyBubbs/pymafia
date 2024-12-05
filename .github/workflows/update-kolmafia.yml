@@ -35,7 +35,7 @@ jobs:
         id: set-outputs
         run: |
           echo "desired-revision=${{ env.desired-revision }}" >> $GITHUB_OUTPUT
-          echo "current-revision::${{ env.current-revision }}" >> $GITHUB_OUTPUT
+          echo "current-revision=${{ env.current-revision }}" >> $GITHUB_OUTPUT
   update:
     runs-on: ubuntu-latest
     needs: validate
