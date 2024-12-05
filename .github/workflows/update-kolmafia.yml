@@ -7,16 +7,30 @@ on:
         default: "latest"
         type: string
 jobs:
-  update:
+  validate:
     runs-on: ubuntu-latest
     steps:
-      - name: Determine revision number
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Get current revision
+        run: echo "current_revision=$(cat .kolmafia-revision)" >> $GITHUB_ENV
+      - name: Determine desired revision
         run: |
-          echo "revision_number=$(( 
+          echo "desired_revision=$(( 
             ${{ github.event.inputs.revision }} == "latest" 
             ? $(curl https://api.github.com/repos/kolmafia/kolmafia/releases/latest -s | jq .name -r) 
             : ${{ github.event.inputs.revision }}))
           " >> $GITHUB_ENV
+      - name: Validate desired revision
+        run: |
+          if [[ ${{ env.desired_revision }} -lt ${{ env.current_revision }} ]]; then
+            exit 1
+
+  update:
+    runs-on: ubuntu-latest
+    needs: validate
+    if: env.desired_revision > env.current_revision
+    steps:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Set up uv
