@@ -21,7 +21,7 @@ jobs:
         run: |
           echo "desired-revision=$(
             if [[ ${{ github.event.inputs.revision }} == "latest" ]]; then
-              curl https://api.github.com/repos/kolmafia/kolmafia/releases/latest -s | jq .name -r)
+              curl https://api.github.com/repos/kolmafia/kolmafia/releases/latest -s | jq .name -r
             else
               echo ${{ github.event.inputs.revision }}
             fi
