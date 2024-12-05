@@ -23,15 +23,11 @@ jobs:
         uses: astral-sh/setup-uv@v3
         with:
           version: "latest"
-      - name: Set up Python
-        uses: actions/setup-python@v5
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
           java-version-file: .java-version
           distribution: temurin
-      - name: Install dependencies
-        run: make install
       - name: Update .kolmafia-revision
         run: echo -n "${{ env.revision_number }}" > .kolmafia-revision
       - name: Update ash/library.py
