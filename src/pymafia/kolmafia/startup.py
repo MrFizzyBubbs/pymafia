@@ -12,7 +12,6 @@ from pymafia import config
 from pymafia.kolmafia import km
 from pymafia.kolmafia.patch import patch_jpype
 
-
 if sys.version_info >= (3, 11):
     # Added in Python 3.11
     from contextlib import chdir
