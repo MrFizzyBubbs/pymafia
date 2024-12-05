@@ -9,9 +9,9 @@ on:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    # outputs:
-    #   desired-revision: ${{ env.desired_revision }}
-    #   current-revision: ${{ env.current_revision }}
+    outputs:
+      desired-revision: ${{ steps.set-output.outputs.desired-revision }}
+      current-revision: ${{ steps.set-output.outputs.current-revision }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -34,8 +34,8 @@ jobs:
       - name: Set outputs
         id: set-outputs
         run: |
-          echo "::set-output name=desired-revision::${{ env.desired_revision }}"
-          echo "::set-output name=current-revision::${{ env.current_revision }}"
+          echo "desired-revision=${{ env.desired-revision }}" >> $GITHUB_OUTPUT
+          echo "current-revision::${{ env.current-revision }}" >> $GITHUB_OUTPUT
   update:
     runs-on: ubuntu-latest
     needs: validate
