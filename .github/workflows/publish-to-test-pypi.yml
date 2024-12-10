@@ -17,12 +17,6 @@ jobs:
           fetch-depth: 0
       - name: Set up uv
         uses: astral-sh/setup-uv@v3
-        with:
-          version: "latest"
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version-file: "pyproject.toml"
       - name: Build package
         run: uv build
       - name: Set up Java
@@ -30,12 +24,10 @@ jobs:
         with:
           java-version-file: .java-version
           distribution: temurin
-      - name: Validate distributions
-        run: |
-          for file in $(find dist -type f); do
-              echo "Validating $file"
-              uv run --with $file --no-project --refresh-package pymafia -- python -c "import pymafia"
-          done
+      - name: Smoke test (wheel)
+        run: uv run --isolated --no-project --with dist/*.whl scripts/smoke_test.py
+      - name: Smoke test (source distribution)
+        run: uv run --isolated --no-project --with dist/*.tar.gz scripts/smoke_test.py
       - name: Upload distributions
         uses: actions/upload-artifact@v4
         with:

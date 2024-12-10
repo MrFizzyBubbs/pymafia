@@ -3,7 +3,7 @@ import re
 import sys
 import urllib.request
 import zipfile
-from collections.abc import Callable
+from collections.abc import Callable, Generator
 from contextlib import contextmanager
 
 import jpype
@@ -18,7 +18,7 @@ if sys.version_info >= (3, 11):
 else:
 
     @contextmanager
-    def chdir(path: str) -> None:
+    def chdir(path: str | os.PathLike[str]) -> Generator[None]:
         """Non thread-safe context manager to change the current working directory."""
         original_dir = os.getcwd()
         os.chdir(path)

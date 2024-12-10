@@ -7,35 +7,45 @@ on:
         default: "latest"
         type: string
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      current-revision: ${{ steps.get-current-revision.outputs.current-revision }}
+      desired-revision: ${{ steps.determine-desired-revision.outputs.desired-revision }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Get current revision
+        id: get-current-revision
+        run: echo "current-revision=$(cat .kolmafia-revision)" >> $GITHUB_OUTPUT
+      - name: Determine desired revision
+        id: determine-desired-revision
+        run: |
+          echo "desired-revision=$(
+            if [[ ${{ github.event.inputs.revision }} == "latest" ]]; then
+              curl https://api.github.com/repos/kolmafia/kolmafia/releases/latest -s | jq .name -r
+            else
+              echo ${{ github.event.inputs.revision }}
+            fi
+          )" >> $GITHUB_OUTPUT
   update:
     runs-on: ubuntu-latest
+    needs: check
+    if: needs.check.outputs.desired-revision != needs.check.outputs.current-revision
     steps:
-      - name: Determine revision number
-        run: |
-          echo "revision_number=$(( 
-            ${{ github.event.inputs.revision }} == "latest" 
-            ? $(curl https://api.github.com/repos/kolmafia/kolmafia/releases/latest -s | jq .name -r) 
-            : ${{ github.event.inputs.revision }}))
-          " >> $GITHUB_ENV
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Set up uv
         uses: astral-sh/setup-uv@v3
         with:
           version: "latest"
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version-file: "pyproject.toml"
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
           java-version-file: .java-version
           distribution: temurin
-      - name: Install dependencies
-        run: make install
       - name: Update .kolmafia-revision
-        run: echo -n "${{ env.revision_number }}" > .kolmafia-revision
+        run: echo -n "${{ needs.check.outputs.desired-revision  }}" > .kolmafia-revision
       - name: Update ash/library.py
         run: uv run python scripts/generate_ash_library.py
       - name: Format
@@ -49,4 +59,4 @@ jobs:
         uses: EndBug/add-and-commit@v9
         with:
           default_author: github_actions
-          message: "Update KoLmafia to r${{ env.revision_number }}"
+          message: "Update KoLmafia to r${{ needs.check.outputs.desired-revision }}"
