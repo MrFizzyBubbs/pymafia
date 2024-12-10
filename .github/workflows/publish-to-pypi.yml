@@ -22,9 +22,9 @@ jobs:
           java-version-file: .java-version
           distribution: temurin
       - name: Smoke test (wheel)
-        run: uv run --isolated --no-project --with dist/*.whl tests/smoke_test.py -- python -c "import pymafia"
+        run: uv run --isolated --no-project --with dist/*.whl -- python -c "import pymafia"
       - name: Smoke test (source distribution)
-        run: uv run --isolated --no-project --with dist/*.tar.gz tests/smoke_test.py -- python -c "import pymafia"
+        run: uv run --isolated --no-project --with dist/*.tar.gz -- python -c "import pymafia"
       - name: Upload distributions
         uses: actions/upload-artifact@v4
         with:
