@@ -22,9 +22,9 @@ jobs:
           java-version-file: .java-version
           distribution: temurin
       - name: Smoke test (wheel)
-        run: uv run --isolated --no-project --with dist/*.whl -- python -c "import pymafia"
+        run: uv run --isolated --no-project --with dist/*.whl scripts/smoke_test.py
       - name: Smoke test (source distribution)
-        run: uv run --isolated --no-project --with dist/*.tar.gz -- python -c "import pymafia"
+        run: uv run --isolated --no-project --with dist/*.tar.gz scripts/smoke_test.py
       - name: Upload distributions
         uses: actions/upload-artifact@v4
         with:
@@ -46,4 +46,6 @@ jobs:
           name: dist
           path: dist/
       - name: Publish to PyPI
+        # `--trusted-publishing always` is recommended for debugging as it show errors earlier when there is a problem
+        # See https://github.com/astral-sh/uv/issues/8584#issuecomment-2440923698
         uses: uv publish --trusted-publishing always
