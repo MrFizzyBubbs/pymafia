@@ -33,6 +33,12 @@ jobs:
     needs: check
     if: needs.check.outputs.desired-revision > needs.check.outputs.current-revision
     steps:
+      - name: Job Skipped Message
+        if: ${{ always() }}
+        run: |
+          if [ "${{ job.status }}" == "skipped" ]; then
+            echo "Job was skipped because it did not meet the condition."
+          fi
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Set up uv
