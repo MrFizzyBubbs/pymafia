@@ -28,11 +28,6 @@ jobs:
               echo ${{ github.event.inputs.revision }}
             fi
           )" >> $GITHUB_OUTPUT
-      - name: Fail lesser revision
-        if: steps.determine-desired-revision.outputs.desired-revision < steps.get-current-revision.outputs.current-revision
-        uses: actions/github-script@v7
-        with:
-          script: core.setFailed('The desired revision (${{ steps.determine-desired-revision.outputs.desired-revision }}) is less than the current revision (${{ steps.get-current-revision.outputs.current-revision }}).')
   update:
     runs-on: ubuntu-latest
     needs: check
