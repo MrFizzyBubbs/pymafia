@@ -14,8 +14,6 @@ jobs:
         uses: astral-sh/setup-uv@v3
         with:
           version: "latest"
-      - name: Set up Python
-        uses: actions/setup-python@v5
       - name: Build package
         run: uv build
       - name: Set up Java
@@ -23,31 +21,31 @@ jobs:
         with:
           java-version-file: .java-version
           distribution: temurin
-      - name: Validate distributions
-        run: |
-          for file in $(find dist -type f); do
-              echo "Validating $file"
-              uv run --with $file --no-project --refresh-package pymafia -- python -c "import pymafia"
-          done
+      - name: Smoke test (wheel)
+        run: uv run --isolated --no-project --with dist/*.whl tests/smoke_test.py -- python -c "import pymafia"
+      - name: Smoke test (source distribution)
+        run: uv run --isolated --no-project --with dist/*.tar.gz tests/smoke_test.py -- python -c "import pymafia"
       - name: Upload distributions
         uses: actions/upload-artifact@v4
         with:
           name: dist
           path: dist/
-  publish:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: pypi
-      url: https://pypi.org/p/pymafia
-    permissions:
-      # Required for PyPI's trusted publishing
-      id-token: write
-    steps:
-      - name: Download distributions
-        uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist/
-      - name: Publish to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
+#   publish:
+#     needs: build
+#     runs-on: ubuntu-latest
+#     environment:
+#       name: pypi
+#       url: https://pypi.org/p/pymafia
+#     permissions:
+#       # Required for PyPI's trusted publishing
+#       id-token: write
+#     steps:
+#       - name: Download distributions
+#         uses: actions/download-artifact@v4
+#         with:
+#           name: dist
+#           path: dist/
+#       - name: Publish to PyPI
+#         # `--trusted-publishing always` is recommended for debugging as it show errors earlier when there is a problem
+#         # See https://github.com/astral-sh/uv/issues/8584#issuecomment-2440923698
+#         uses: uv publish --trusted-publishing always
