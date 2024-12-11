@@ -46,4 +46,4 @@ jobs:
       - name: Publish to PyPI
         # `--trusted-publishing always` is recommended for debugging as it show errors earlier when there is a problem
         # See https://github.com/astral-sh/uv/issues/8584#issuecomment-2440923698
-        uses: uv publish --trusted-publishing always
+        run: uv publish --trusted-publishing always
