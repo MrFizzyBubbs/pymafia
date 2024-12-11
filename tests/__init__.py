@@ -1,3 +1,6 @@
+import jpype
+
 from pymafia import start_kolmafia
 
-start_kolmafia()
+if not jpype.isJVMStarted():
+    start_kolmafia()
